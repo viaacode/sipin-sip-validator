@@ -3,9 +3,13 @@ from pathlib import Path
 
 from lxml import etree
 from rdflib import Graph
+from pyshacl import validate as shacl_validate
+
 
 SPARQL_ANYTHING_JAR: Path = Path("app", "resources", "sparql-anything-0.8.1.jar")
 QUERY_BASIC: Path = Path("app", "resources", "sparql", "basic.sparql")
+SHACL_BASIC: Path = Path("app", "resources", "shacl", "basic.shacl")
+
 
 PREMIS_XSD: Path = Path("app", "resources", "xsd", "premis-v3-0.xsd")
 METS_XSD: Path = Path("app", "resources", "xsd", "mets.xsd")
@@ -17,6 +21,10 @@ class XMLNotValidError(Exception):
 
 
 class GraphParseError(Exception):
+    pass
+
+
+class GraphNotConformError(Exception):
     pass
 
 
@@ -173,6 +181,22 @@ class BasicProfile(Profile):
         data_graph.parse(data=output.stdout, format="turtle")
         return data_graph
 
+    def validate_graph(self, data_graph: Graph):
+        """Validate if the graph is conform
+
+        Raises:
+            GraphNotConformError: If not conform, containing the reason why.
+        """
+        shacl_graph = Graph()
+        shacl_graph.parse(str(SHACL_BASIC), format="turtle")
+        conforms, results_graph, results_text = shacl_validate(
+            data_graph=data_graph,
+            shacl_graph=shacl_graph,
+        )
+
+        if not conforms:
+            raise GraphNotConformError(results_text)
+
     def handle(self):
         # Validate XML files to XSD
         self.validate_premis()
@@ -181,3 +205,6 @@ class BasicProfile(Profile):
 
         # Parse to graph
         data_graph = self.parse_graph()
+
+        # Validate with shacl
+        self.validate_graph(data_graph)

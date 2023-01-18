@@ -1,0 +1,249 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema> .
+
+@base <https://data.hetarchief.be/ns/sip_basic/shapes> .
+
+#? @ attributes?
+
+<#IntellectualEntityShape> a sh:NodeShape ;
+  sh:targetClass premis:IntellectualEntity ;
+  sh:property <#objectIdentifierShape>,
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:isr ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:Representation ;
+    sh:name "is represented by"@en ;
+    sh:description "The representation of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#RepresentationShape> a sh:NodeShape ;
+  sh:targetClass premis:Representation ;
+  sh:property <#objectIdentifierShape>, 
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:rep ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:IntellectualEntity ;
+    sh:name "represents"@en ;
+    sh:description "The intellectual entity represented by the representation."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:inc ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:File ;
+    sh:name "includes"@en ;
+    sh:description "The file included in the representation."@en ;
+    sh:minCount 1 ;
+  ] .
+  
+<#FileShape> a sh:NodeShape ;
+  sh:targetClass premis:File ;
+  sh:property <#objectIdentifierShape>,
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:isi ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:Representation ;
+    sh:name "is included in"@en ;
+    sh:description "The representation in which the file is included."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:objectCharacteristics ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:ObjectCharacteristics ;
+    sh:name "has object characteristics"@en ;
+    sh:description "The object characteristics of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#ObjectCharacteristicsShape> a sh:NodeShape ;
+  sh:targetClass premis:ObjectCharacteristics ;
+  sh:property [
+    a sh:PropertyShape ;
+    sh:path premis:fixity ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:Fixity ;
+    sh:name "has fixity"@en ;
+    sh:description "The calculated fixity checksum of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:size ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:name "has size"@en ;
+    sh:description "The size of the file in bytes."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:format ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:Format ;
+    sh:name "has format"@en ;
+    sh:description "The format of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:originalName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has original name"@en ;
+    sh:description "The original name of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#FixityShape> a sh:NodeShape ;
+  sh:targetClass premis:Fixity ;
+  sh:property [
+    a sh:PropertyShape ;
+    sh:path premis:messageDigestAlgorithm ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has message digest algorithm"@en ;
+    sh:description "The algorithm used to calculate the message digest."@en ;
+    sh:in ( "MD5" ) ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:messageDigest ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has message digest"@en ;
+    sh:description "The calculated message digest."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#FormatShape> a sh:NodeShape ;
+  sh:targetClass premis:Format ;
+  sh:property [
+    a sh:PropertyShape ;
+    sh:path premis:formatDesignation ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:FormatDesignation ;
+    sh:name "has format designation"@en ;
+    sh:description "The format designation of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:formatRegistry ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:FormatRegistry ;
+    sh:name "has format registry"@en ;
+    sh:description "The format registry of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#FormatDesignationShape> a sh:NodeShape ;
+  sh:targetClass premis:FormatDesignation ;
+  sh:property [
+    a sh:PropertyShape ;
+    sh:path premis:formatName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has format name"@en ;
+    sh:description "The name of the format of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:formatVersion ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has format version"@en ;
+    sh:description "The version of the format of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#FormatRegistryShape> a sh:NodeShape ;
+  sh:targetClass premis:FormatRegistry ;
+  sh:property [
+    a sh:PropertyShape ;
+    sh:path premis:formatRegistryName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has format registry name"@en ;
+    sh:description "The name of the format registry of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:formatRegistryKey ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has format registry key"@en ;
+    sh:description "The key of the format registry of the file."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:formatRegistryRole ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has format registry role"@en ;
+    sh:description "The role of the format registry of the file."@en ;
+    sh:in ( "specification" ) ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#ObjectIdentifierShape> a sh:NodeShape ;
+  sh:targetClass premis:ObjectIdentifier ;
+  sh:property [
+    a sh:PropertyShape ;
+    sh:path premis:objectIdentifierType ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has object identifier type"@en ;
+    sh:description "The type of the object identifier."@en ;
+    # sh:in ( "Vocabulary" ) ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:objectIdentifierValue ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has object identifier value"@en ;
+    sh:description "The value of the object identifier."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#objectIdentifierShape> a sh:PropertyShape ;
+  sh:path premis:objectIdentifier ;
+  sh:nodeKind sh:IRI ;
+  sh:class premis:ObjectIdentifier ;
+  sh:name "has object identifier"@en ;
+  sh:description "The identifier of the object."@en ;
+  sh:minCount 1 .
