@@ -1,7 +1,11 @@
+import subprocess
 from pathlib import Path
 
 from lxml import etree
+from rdflib import Graph
 
+SPARQL_ANYTHING_JAR: Path = Path("app", "resources", "sparql-anything-0.8.1.jar")
+QUERY_BASIC: Path = Path("app", "resources", "sparql", "basic.sparql")
 
 PREMIS_XSD: Path = Path("app", "resources", "xsd", "premis-v3-0.xsd")
 METS_XSD: Path = Path("app", "resources", "xsd", "mets.xsd")
@@ -9,6 +13,10 @@ DCTERMS_XSD: Path = Path("app", "resources", "xsd", "dcterms.xsd")
 
 
 class XMLNotValidError(Exception):
+    pass
+
+
+class GraphParseError(Exception):
     pass
 
 
@@ -135,8 +143,41 @@ class BasicProfile(Profile):
         except etree.DocumentInvalid as e:
             raise XMLNotValidError(str(e))
 
+    def parse_graph(self) -> Graph:
+        """Parse the metadata as a graph.
+
+        Transform the metadata to rdf and then load it into a graph.
+
+        Returns:
+            The graph.
+        Raises:
+            GraphParseError: If parsing failed.
+        """
+        try:
+            output = subprocess.run(
+                [
+                    "java",
+                    "-jar",
+                    str(SPARQL_ANYTHING_JAR),
+                    "-q",
+                    str(QUERY_BASIC),
+                ],
+                capture_output=True,
+                check=True,
+                universal_newlines=True,
+            )
+        except subprocess.CalledProcessError as e:
+            raise GraphParseError(f"Error when parsing graph: {str(e)}")
+
+        data_graph = Graph()
+        data_graph.parse(data=output.stdout, format="turtle")
+        return data_graph
+
     def handle(self):
         # Validate XML files to XSD
         self.validate_premis()
         self.validate_dcterms()
         self.validate_mets()
+
+        # Parse to graph
+        data_graph = self.parse_graph()
