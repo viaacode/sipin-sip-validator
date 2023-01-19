@@ -34,15 +34,14 @@ class Profile:
 
 
 class BasicProfile(Profile):
-    def validate_premis(self):
+    def _validate_premis(self) -> list[XMLNotValidError]:
         """Validate the PREMIS files.
 
         Basic profile has two premis files, one on the package level and
         one on the representation level.
 
-        Raise:
-            XMLNotValidError: If the PREMIS file cannot be parsed or does not
-            validate against its XSD.
+        Returns:
+            A list with errors detailing the parse/validation errors.
         """
         premis_xsd = etree.XMLSchema(etree.parse(PREMIS_XSD))
 
@@ -58,36 +57,30 @@ class BasicProfile(Profile):
             "premis.xml",
         )
 
+        errors = []
         # PREMIS on package level
         try:
             premis_package = etree.parse(premis_package_path)
-        except etree.ParseError as e:
-            raise XMLNotValidError(str(e))
-
-        try:
             premis_xsd.assertValid(premis_package)
-        except etree.DocumentInvalid as e:
-            raise XMLNotValidError(str(e))
+        except (etree.DocumentInvalid, etree.ParseError) as e:
+            errors.append(XMLNotValidError(str(e)))
 
         # PREMIS on representation level
         try:
             premis_representation = etree.parse(premis_representation_path)
-        except etree.ParseError as e:
-            raise XMLNotValidError(str(e))
-
-        try:
             premis_xsd.assertValid(premis_representation)
-        except etree.DocumentInvalid as e:
-            raise XMLNotValidError(str(e))
+        except (etree.DocumentInvalid, etree.ParseError) as e:
+            errors.append(XMLNotValidError(str(e)))
 
-    def validate_dcterms(self):
+        return errors
+
+    def _validate_dcterms(self) -> XMLNotValidError | None:
         """Validate the dcterms file.
 
         Basic profile has one file with the descriptive metadata.
 
-        Raise:
-            XMLNotValidError: If the dcterms file cannot be parsed or does not
-            validate against its XSD.
+        Returns:
+            A parse/validation error if applicable.
         """
         dcterms_xsd = etree.XMLSchema(etree.parse(PREMIS_XSD))
 
@@ -104,23 +97,20 @@ class BasicProfile(Profile):
         # DCTERMS on package level
         try:
             dcterms_package = etree.parse(dcterms_package_path)
-        except etree.ParseError as e:
-            raise XMLNotValidError(str(e))
-
-        try:
             dcterms_xsd.assertValid(dcterms_package)
-        except etree.DocumentInvalid as e:
-            raise XMLNotValidError(str(e))
+        except (etree.DocumentInvalid, etree.ParseError) as e:
+            error = XMLNotValidError(str(e))
 
-    def validate_mets(self):
+        return error
+
+    def _validate_mets(self) -> list[XMLNotValidError]:
         """Validate the METS files.
 
         Basic profile has two METS files, one on the package level and one on
         the representation level.
 
-        Raise:
-            XMLNotValidError: If the METS file cannot be parsed or does not
-            validate against its XSD.
+        Returns:
+            A list with errors detailing the parse/validation errors.
         """
 
         mets_xsd = etree.XMLSchema(etree.parse(METS_XSD))
@@ -130,26 +120,41 @@ class BasicProfile(Profile):
             "data", "representations", "representation_1", "mets.xml"
         )
 
+        errors = []
         # METS on package level
         try:
             mets_package = etree.parse(mets_package_path)
-        except etree.ParseError as e:
-            raise XMLNotValidError(str(e))
-
-        try:
             mets_xsd.assertValid(mets_package)
-        except etree.DocumentInvalid as e:
-            raise XMLNotValidError(str(e))
+        except (etree.DocumentInvalid, etree.ParseError) as e:
+            errors.append(XMLNotValidError(str(e)))
 
         # METS on representation level
         try:
             mets_representation = etree.parse(mets_representation_path)
-        except etree.ParseError as e:
-            raise XMLNotValidError(str(e))
-        try:
             mets_xsd.assertValid(mets_representation)
-        except etree.DocumentInvalid as e:
-            raise XMLNotValidError(str(e))
+        except (etree.DocumentInvalid, etree.ParseError) as e:
+            errors.append(XMLNotValidError(str(e)))
+
+        return errors
+
+    def validate_metadata(self) -> list[XMLNotValidError]:
+        """Validate the metadata files.
+
+        Basic profile has:
+            - Two METS files (package and representation level).
+            - Two PREMIS files (package and representation level).
+            - One descriptive metadata file (dcterms).
+
+        Returns:
+            A list with errors detailing the parse/validation errors.
+        """
+        errors: list = self._validate_premis()
+        errors.extend(self._validate_mets())
+        result = self._validate_dcterms()
+        if result:
+            errors.append(result)
+
+        return errors
 
     def parse_graph(self) -> Graph:
         """Parse the metadata as a graph.
@@ -196,15 +201,3 @@ class BasicProfile(Profile):
 
         if not conforms:
             raise GraphNotConformError(results_text)
-
-    def handle(self):
-        # Validate XML files to XSD
-        self.validate_premis()
-        self.validate_dcterms()
-        self.validate_mets()
-
-        # Parse to graph
-        data_graph = self.parse_graph()
-
-        # Validate with shacl
-        self.validate_graph(data_graph)

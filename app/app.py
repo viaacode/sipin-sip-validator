@@ -2,11 +2,23 @@ from pathlib import Path
 
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
+from cloudevents.events import Event, EventOutcome, EventAttributes, PulsarBinding
 
-from app.models.profile import BasicProfile, Profile
-from app.services.pulsar import PulsarClient
-from cloudevents.events import EventOutcome, PulsarBinding
+from app.models.profile import (
+    BasicProfile,
+    GraphNotConformError,
+    GraphParseError,
+    Profile,
+)
+from app.services.pulsar import (
+    PulsarClient,
+    SIP_VALIDATE_XSD_TOPIC,
+    SIP_LOAD_GRAPH_TOPIC,
+    SIP_VALIDATE_SHACL_TOPIC,
+)
 from lxml import etree
+
+APP_NAME = "sipin-sip-validator"
 
 
 NAMESPACES = {
@@ -22,6 +34,34 @@ class EventListener:
         self.config = config_parser.app_cfg
         # Init Pulsar client
         self.pulsar_client = PulsarClient()
+
+    def produce_event(
+        self,
+        topic: str,
+        data: dict,
+        subject: str,
+        outcome: EventOutcome,
+        correlation_id: str,
+    ):
+        """Produce an event on a Pulsar topic.
+
+        Args:
+            topic: The topic to send the cloudevent to.
+            data: The data payload.
+            subject: The subject of the event.
+            outcome: The attributes outcome of the Event.
+            correlation_id: The correlation ID.
+        """
+        attributes = EventAttributes(
+            type=topic,
+            source=APP_NAME,
+            subject=subject,
+            correlation_id=correlation_id,
+            outcome=outcome,
+        )
+
+        event = Event(attributes, data)
+        self.pulsar_client.produce_event(topic, event)
 
     def determine_profile(self, path: Path) -> Profile:
         """Parse the root METS in order to determine the profile.
@@ -67,11 +107,92 @@ class EventListener:
 
                     # Determine profile
                     profile = self.determine_profile(bag_path)
-                    profile.handle()
+
+                    # Validate XML files
+                    xml_validation_errors = profile.validate_metadata()
+                    if xml_validation_errors:
+                        self.produce_event(
+                            SIP_VALIDATE_XSD_TOPIC,
+                            {
+                                "message": "Metadata files are not valid against XSD",
+                                "errors": [str(e) for e in xml_validation_errors],
+                            },
+                            msg_data["destination"],
+                            EventOutcome.FAIL,
+                            incoming_event.correlation_id,
+                        )
+                        self.pulsar_client.acknowledge(msg)
+                        return
+
+                    self.produce_event(
+                        SIP_VALIDATE_XSD_TOPIC,
+                        {
+                            "message": "Metadata files are valid against XSD",
+                        },
+                        msg_data["destination"],
+                        EventOutcome.SUCCESS,
+                        incoming_event.correlation_id,
+                    )
+
+                    # Parse graph
+                    try:
+                        profile.parse_graph()
+                    except GraphParseError as e:
+                        self.produce_event(
+                            SIP_LOAD_GRAPH_TOPIC,
+                            {
+                                "message": "Cannot transform metadata into a graph.",
+                                "errors": str(e),
+                            },
+                            msg_data["destination"],
+                            EventOutcome.FAIL,
+                            incoming_event.correlation_id,
+                        )
+                        self.pulsar_client.acknowledge(msg)
+                        return
+
+                    self.produce_event(
+                        SIP_LOAD_GRAPH_TOPIC,
+                        {
+                            "message": "Metadata can be transformed into a graph.",
+                        },
+                        msg_data["destination"],
+                        EventOutcome.SUCCESS,
+                        incoming_event.correlation_id,
+                    )
+
+                    # Validate graph
+                    try:
+                        profile.validate_graph()
+                    except GraphNotConformError as e:
+                        self.produce_event(
+                            SIP_VALIDATE_SHACL_TOPIC,
+                            {
+                                "message": "Graph is not conform.",
+                                "errors": str(e),
+                            },
+                            msg_data["destination"],
+                            EventOutcome.FAIL,
+                            incoming_event.correlation_id,
+                        )
+                        self.pulsar_client.acknowledge(msg)
+                        return
+
+                    # Send event
+                    self.produce_event(
+                        SIP_VALIDATE_SHACL_TOPIC,
+                        {
+                            "message": "Graph is conform.",
+                        },
+                        msg_data["destination"],
+                        EventOutcome.SUCCESS,
+                        incoming_event.correlation_id,
+                    )
 
                     self.pulsar_client.acknowledge(msg)
 
             except Exception as e:
+                # Generic catch all remaining errors.
                 self.log.error(f"Error: {e}")
                 # Message failed to be processed
                 self.pulsar_client.negative_acknowledge(msg)

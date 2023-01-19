@@ -5,6 +5,12 @@ from pulsar import Client, Consumer
 
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
+from cloudevents.events import Event, CEMessageMode, PulsarBinding
+
+
+SIP_VALIDATE_XSD_TOPIC = "sip.validate.xsd"
+SIP_LOAD_GRAPH_TOPIC = "sip.loadgraph"
+SIP_VALIDATE_SHACL_TOPIC = "sip.validate.shacl"
 
 
 class PulsarClient:
@@ -31,6 +37,26 @@ class PulsarClient:
             self.app_config["consumer_topic"], "sipin-sip-parser"
         )
         self.log.info(f"Started consuming topic: {self.app_config['consumer_topic']}")
+        self.producers = {}
+
+    def produce_event(self, topic: str, event: Event):
+        """Produce a cloudevent on a topic.
+
+        If there is no producer yet for the given topic, a new one will be created.
+
+        Args:
+            topic: The topic to send the cloudevent to.
+            event: The cloudevent to send to the topic.
+        """
+        if topic not in self.producers:
+            self.producers[topic] = self.client.create_producer(topic)
+
+        msg = PulsarBinding.to_protocol(event, CEMessageMode.STRUCTURED)
+        self.producers[topic].send(
+            msg.data,
+            properties=msg.attributes,
+            event_timestamp=event.get_event_time_as_int(),
+        )
 
     def receive(self):
         """Receive a message from the open consumer.
@@ -57,6 +83,7 @@ class PulsarClient:
         self.consumer.negative_acknowledge(msg)
 
     def close(self):
-        """Close the open producer and consumer."""
-        self.producer.close()
+        """Close the open producers and consumer."""
+        for producer in self.producers.values():
+            producer.close()
         self.consumer.close()
