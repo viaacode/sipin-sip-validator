@@ -82,11 +82,8 @@ class BasicProfile(Profile):
         Returns:
             A parse/validation error if applicable.
         """
-        dcterms_xsd = etree.XMLSchema(etree.parse(PREMIS_XSD))
+        dcterms_xsd = etree.XMLSchema(etree.parse(DCTERMS_XSD))
 
-        dcterms_package_path: Path = self.bag_path.joinpath(
-            "data", "metadata", "preservation", "premis.xml"
-        )
         dcterms_package_path: Path = self.bag_path.joinpath(
             "data",
             "metadata",
