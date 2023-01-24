@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
@@ -136,7 +137,7 @@ class EventListener:
 
                     # Parse graph
                     try:
-                        profile.parse_graph()
+                        graph = profile.parse_graph()
                     except GraphParseError as e:
                         self.produce_event(
                             SIP_LOAD_GRAPH_TOPIC,
@@ -163,7 +164,7 @@ class EventListener:
 
                     # Validate graph
                     try:
-                        profile.validate_graph()
+                        profile.validate_graph(graph)
                     except GraphNotConformError as e:
                         self.produce_event(
                             SIP_VALIDATE_SHACL_TOPIC,
@@ -183,6 +184,9 @@ class EventListener:
                         SIP_VALIDATE_SHACL_TOPIC,
                         {
                             "message": "Graph is conform.",
+                            "metadata_graph": json.loads(
+                                graph.serialize(format="json-ld")
+                            ),
                         },
                         msg_data["destination"],
                         EventOutcome.SUCCESS,
@@ -195,5 +199,5 @@ class EventListener:
                 # Generic catch all remaining errors.
                 self.log.error(f"Error: {e}")
                 # Message failed to be processed
-                self.pulsar_client.negative_acknowledge(msg)
+                self.pulsar_client.acknowledge(msg)
         self.pulsar_client.close()
