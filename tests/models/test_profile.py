@@ -63,14 +63,14 @@ class TestBasicProfile:
         )
 
     def test_validate_dcterms(self, profile):
-        errors = profile._validate_dcterms()
+        error = profile._validate_dcterms()
 
-        assert not errors
+        assert not error
 
     def test_validate_dcterms_not_valid(self, profile_invalid_xml):
-        errors = profile_invalid_xml._validate_dcterms()
+        error = profile_invalid_xml._validate_dcterms()
 
-        assert errors
+        assert error
 
     def test_validate_mets(self, profile):
         errors = profile._validate_mets()

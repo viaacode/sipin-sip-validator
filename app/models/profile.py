@@ -102,8 +102,9 @@ class BasicProfile(Profile):
             dcterms_xsd.assertValid(dcterms_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
             error = XMLNotValidError(str(e))
+            return error
 
-        return error
+        return None
 
     def _validate_mets(self) -> list[XMLNotValidError]:
         """Validate the METS files.

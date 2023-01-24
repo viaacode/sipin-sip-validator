@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
+  targetNamespace="https://data.hetarchief.be/id/sip/1.0/basic"
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation xml:lang="en"> </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+    schemaLocation="http://www.w3.org/2001/03/xml.xsd">
+  </xs:import>
+  <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="dc.xsd" />
+  <xs:import namespace="http://purl.org/dc/terms/" schemaLocation="dcterms.xsd" />
+  <xs:import namespace="http://id.loc.gov/datatypes/edtf/" schemaLocation="edtf.xsd" />
+
+  <xs:element name="metadata" type="dcterms:elementOrRefinementContainer" />
+
+</xs:schema>
