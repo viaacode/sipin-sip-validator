@@ -1,5 +1,6 @@
 import subprocess
 from pathlib import Path
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from lxml import etree
 from rdflib import Graph
@@ -31,6 +32,10 @@ class GraphNotConformError(Exception):
 class Profile:
     def __init__(self, bag_path: Path):
         self.bag_path = bag_path
+        self.jinja_env = Environment(
+            loader=FileSystemLoader(QUERY_BASIC.parent),
+            autoescape=select_autoescape(),
+        )
 
 
 class BasicProfile(Profile):
@@ -156,6 +161,9 @@ class BasicProfile(Profile):
     def parse_graph(self) -> Graph:
         """Parse the metadata as a graph.
 
+        As the paths in SPARQL service are dynamic, we need to instantiate
+        the SPARQL file and write it in the bag folder.
+
         Transform the metadata to rdf and then load it into a graph.
 
         Returns:
@@ -163,6 +171,12 @@ class BasicProfile(Profile):
         Raises:
             GraphParseError: If parsing failed.
         """
+
+        query_basic_destination = self.bag_path.joinpath(QUERY_BASIC.name)
+        template = self.jinja_env.get_template(str(QUERY_BASIC.name))
+        with open(str(query_basic_destination), "w") as f:
+            f.write(template.render(bag_path=self.bag_path))
+
         try:
             output = subprocess.run(
                 [
@@ -170,7 +184,7 @@ class BasicProfile(Profile):
                     "-jar",
                     str(SPARQL_ANYTHING_JAR),
                     "-q",
-                    str(QUERY_BASIC),
+                    query_basic_destination,
                 ],
                 capture_output=True,
                 check=True,

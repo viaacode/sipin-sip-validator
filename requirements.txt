@@ -4,3 +4,4 @@ meemoo-cloudevents==0.1.0rc3
 lxml==4.9.2
 rdflib==6.2.0
 pyshacl==0.20.0
+jinja2==3.1.2

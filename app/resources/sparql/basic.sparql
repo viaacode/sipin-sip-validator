@@ -40,7 +40,7 @@ CONSTRUCT
 
 WHERE
   {
-    SERVICE <x-sparql-anything:location=basic_deec5d89-3024-4cbd-afcd-e18af4ad33ec/data/metadata/preservation/premis.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/preservation/premis.xml> {
         {
             {
                 SELECT DISTINCT ?local_id_type ?local_id_val
@@ -93,7 +93,7 @@ WHERE
         )
         BIND(iri(concat(str(haObjId:), ?ie_rel_rep_id)) AS  ?rep)
     }
-    SERVICE <x-sparql-anything:location=basic_deec5d89-3024-4cbd-afcd-e18af4ad33ec/data/representations/representation_1/metadata/preservation/premis.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/representations/representation_1/metadata/preservation/premis.xml> {
         {
             [] a premis:object;
                 xsi:type "premis:representation";
@@ -184,7 +184,7 @@ WHERE
                 BIND(iri(concat(str(haObjId:), ?file_rel_rep_id)) AS ?rep)
         }
     }
-    SERVICE <x-sparql-anything:location=basic_deec5d89-3024-4cbd-afcd-e18af4ad33ec/data/metadata/descriptive/dc_1.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc_1.xml> {
         [] a fx:root;
             ?dc_1 [
                 a dct:identifier;
