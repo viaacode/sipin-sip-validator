@@ -2,11 +2,31 @@
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <https://schema.org/> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+
+
 
 @base <https://data.hetarchief.be/ns/sip_basic/shapes> .
 
 #? @ attributes?
+<>  a owl:Ontology ;
+    dct:author  [
+        schema:name   "Lennert Van de Velde" ;
+        schema:email  "lennert.vandevelde@meemoo.be"
+    ] ;
+    dct:title     "Data model BASIC"@en ;
+    dct:created   "2023-01-06" ;
+    dct:modified  "2021-01-06" ;
+    dct:description """Data model to describe the content of objects."""@en ;
+    pav:version "0.0.1" .
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
@@ -19,6 +39,174 @@
     sh:name "is represented by"@en ;
     sh:description "The representation of the intellectual entity."@en ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:title ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has title"@en ;
+    sh:description "The title of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:alternative ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has alternative title"@en ;
+    sh:description "An alternative title of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:identifier ;
+    sh:nodeKinde sh:IRI ;
+    sh:class haObj:Identifier ;
+    sh:name "has identifier"@en ;
+    sh:description "The identifier of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:extent ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has extent"@en ;
+    sh:description "The extent of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:available ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:date ;
+    sh:name "is available"@en ;
+    sh:description "The date on which the intellectual entity is available."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:description ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has description"@en ;
+    sh:description "The description of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:abstract ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has abstract"@en ;
+    sh:description "The abstract of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:created ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype edtf:EDTF-level1 ;
+    sh:name "has creation date"@en ;
+    sh:description "The creation date of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:issued ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype edtf:EDTF-level1 ;
+    sh:name "has issue date"@en ;
+    sh:description "The issue date of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:publisher ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has publisher"@en ;
+    sh:description "The publisher of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:contributor ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has contributor"@en ;
+    sh:description "The contributor of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:creator ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has creator"@en ;
+    sh:description "The creator of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:spatial ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has spatial coverage"@en ;
+    sh:description "The spatial coverage of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:temporal ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has temporal coverage"@en ;
+    sh:description "The temporal coverage of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:subject ;
+    sh:NodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has subject"@en ;
+    sh:description "The subject or keywords of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:language ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has language"@en ;
+    sh:description "The language of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:rightsHolder ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has rights holder"@en ;
+    sh:description "The rights holder of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:rights ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has rights"@en ;
+    sh:description "The rights of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:type ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has type"@en ;
+    sh:description "The classification of the intellectual entity."@en ;
     sh:maxCount 1 ;
   ] .
 
@@ -41,7 +229,7 @@
     sh:nodeKind sh:IRI ;
     sh:class premis:File ;
     sh:name "includes"@en ;
-    sh:description "The file included in the representation."@en ;
+    sh:description "The file(s) included in the representation."@en ;
     sh:minCount 1 ;
   ] .
   
@@ -67,15 +255,12 @@
     sh:description "The object characteristics of the file."@en ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-  ] .
-
-<#ObjectCharacteristicsShape> a sh:NodeShape ;
-  sh:targetClass premis:ObjectCharacteristics ;
-  sh:property [
+  ],
+  [
     a sh:PropertyShape ;
     sh:path premis:fixity ;
     sh:nodeKind sh:IRI ;
-    sh:class premis:Fixity ;
+    sh:class <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5> ;
     sh:name "has fixity"@en ;
     sh:description "The calculated fixity checksum of the file."@en ;
     sh:minCount 1 ;
@@ -93,9 +278,9 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path premis:format ;
+    sh:path dct:format ;
     sh:nodeKind sh:IRI ;
-    sh:class premis:Format ;
+    sh:class dct:FileFormat ;
     sh:name "has format"@en ;
     sh:description "The format of the file."@en ;
     sh:minCount 1 ;
@@ -112,22 +297,11 @@
     sh:maxCount 1 ;
   ] .
 
-<#FixityShape> a sh:NodeShape ;
-  sh:targetClass premis:Fixity ;
+<#Md5Shape> a sh:NodeShape ;
+  sh:targetClass <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5> ;
   sh:property [
     a sh:PropertyShape ;
-    sh:path premis:messageDigestAlgorithm ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has message digest algorithm"@en ;
-    sh:description "The algorithm used to calculate the message digest."@en ;
-    sh:in ( "MD5" ) ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path premis:messageDigest ;
+    sh:path rdf:value ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has message digest"@en ;
@@ -136,102 +310,47 @@
     sh:maxCount 1 ;
   ] .
 
-<#FormatShape> a sh:NodeShape ;
-  sh:targetClass premis:Format ;
+<#FileFormatShape> a sh:NodeShape ;
+  sh:targetClass dct:FileFormat ;
   sh:property [
     a sh:PropertyShape ;
-    sh:path premis:formatDesignation ;
+    sh:path rdfs:label ;
+    sh:nodeKind sh:Literal ;
+    sh:class xsd:string ;
+    sh:name "format name"@en ;
+    sh:description "The name of the format."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:version ;
+    sh:nodeKind sh:Literal ;
+    sh:class xsd:string ;
+    sh:name "format version"@en ;
+    sh:description "The version of the format."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path skos:exactMatch ;
+    # maps to IRI of format in registry: https://www.nationalarchives.gov.uk/aboutapps/pronom/release-notes.xml
+    # e.g.: xml = https://www.nationalarchives.gov.uk/PRONOM/fmt/101
     sh:nodeKind sh:IRI ;
-    sh:class premis:FormatDesignation ;
-    sh:name "has format designation"@en ;
-    sh:description "The format designation of the file."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path premis:formatRegistry ;
-    sh:nodeKind sh:IRI ;
-    sh:class premis:FormatRegistry ;
-    sh:name "has format registry"@en ;
-    sh:description "The format registry of the file."@en ;
+    sh:name "format registry"@en ;
+    sh:description "The format registry of the format."@en ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] .
-
-<#FormatDesignationShape> a sh:NodeShape ;
-  sh:targetClass premis:FormatDesignation ;
-  sh:property [
-    a sh:PropertyShape ;
-    sh:path premis:formatName ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has format name"@en ;
-    sh:description "The name of the format of the file."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path premis:formatVersion ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has format version"@en ;
-    sh:description "The version of the format of the file."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] .
-
-<#FormatRegistryShape> a sh:NodeShape ;
-  sh:targetClass premis:FormatRegistry ;
-  sh:property [
-    a sh:PropertyShape ;
-    sh:path premis:formatRegistryName ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has format registry name"@en ;
-    sh:description "The name of the format registry of the file."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path premis:formatRegistryKey ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has format registry key"@en ;
-    sh:description "The key of the format registry of the file."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path premis:formatRegistryRole ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has format registry role"@en ;
-    sh:description "The role of the format registry of the file."@en ;
-    sh:in ( "specification" ) ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] .
+  #? RegistryRole? .
 
 <#ObjectIdentifierShape> a sh:NodeShape ;
-  sh:targetClass premis:ObjectIdentifier ;
-  sh:property [
-    a sh:PropertyShape ;
-    sh:path premis:objectIdentifierType ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has object identifier type"@en ;
-    sh:description "The type of the object identifier."@en ;
-    # sh:in ( "Vocabulary" ) ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
+  sh:targetClass haObj:LocalIdentifier ;
+  sh:property 
   [
     a sh:PropertyShape ;
-    sh:path premis:objectIdentifierValue ;
+    sh:path rdf:value ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has object identifier value"@en ;
@@ -241,9 +360,9 @@
   ] .
 
 <#objectIdentifierShape> a sh:PropertyShape ;
-  sh:path premis:objectIdentifier ;
+  sh:path premis:identifier ;
   sh:nodeKind sh:IRI ;
-  sh:class premis:ObjectIdentifier ;
+  sh:class haObj:LocalIdentifier ;
   sh:name "has object identifier"@en ;
   sh:description "The identifier of the object."@en ;
   sh:minCount 1 .
