@@ -14,7 +14,7 @@ SHACL_BASIC: Path = Path("app", "resources", "shacl", "basic.shacl")
 
 PREMIS_XSD: Path = Path("app", "resources", "xsd", "premis-v3-0.xsd")
 METS_XSD: Path = Path("app", "resources", "xsd", "mets.xsd")
-DCTERMS_XSD: Path = Path("app", "resources", "xsd", "dcterms.xsd")
+DCTERMS_XSD: Path = Path("app", "resources", "xsd", "dc_basic.xsd")
 
 
 class XMLNotValidError(Exception):
@@ -114,7 +114,6 @@ class BasicProfile(Profile):
         Returns:
             A list with errors detailing the parse/validation errors.
         """
-
         mets_xsd = etree.XMLSchema(etree.parse(METS_XSD))
 
         mets_package_path: Path = self.bag_path.joinpath("data", "mets.xml")
@@ -161,7 +160,7 @@ class BasicProfile(Profile):
     def parse_graph(self) -> Graph:
         """Parse the metadata as a graph.
 
-        As the paths in SPARQL service are dynamic, we need to instantiate
+        As the SPARQL service paths are dynamic, we need to instantiate
         the SPARQL file and write it in the bag folder.
 
         Transform the metadata to rdf and then load it into a graph.
@@ -171,12 +170,13 @@ class BasicProfile(Profile):
         Raises:
             GraphParseError: If parsing failed.
         """
-
+        # write SPARQL-anything query for the SIP.
         query_basic_destination = self.bag_path.joinpath(QUERY_BASIC.name)
         template = self.jinja_env.get_template(str(QUERY_BASIC.name))
         with open(str(query_basic_destination), "w") as f:
             f.write(template.render(bag_path=self.bag_path))
 
+        # Run SPARQL-anything transformation.
         try:
             output = subprocess.run(
                 [
@@ -193,12 +193,15 @@ class BasicProfile(Profile):
         except subprocess.CalledProcessError as e:
             raise GraphParseError(f"Error when parsing graph: {str(e)}")
 
+        # Parse graph
         data_graph = Graph()
         data_graph.parse(data=output.stdout, format="turtle")
         return data_graph
 
-    def validate_graph(self, data_graph: Graph):
+    def validate_graph(self, data_graph: Graph) -> bool:
         """Validate if the graph is conform
+
+        Returns: True if the graph was conform.
 
         Raises:
             GraphNotConformError: If not conform, containing the reason why.
@@ -212,3 +215,5 @@ class BasicProfile(Profile):
 
         if not conforms:
             raise GraphNotConformError(results_text)
+
+        return True
