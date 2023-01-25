@@ -5,6 +5,11 @@ from viaa.configuration import ConfigParser
 from viaa.observability import logging
 from cloudevents.events import Event, EventOutcome, EventAttributes, PulsarBinding
 
+from app.models.bag import (
+    Bag,
+    BagParseError,
+    BagNotValidError,
+)
 from app.models.profile import (
     BasicProfile,
     GraphNotConformError,
@@ -26,6 +31,8 @@ NAMESPACES = {
     "mets": "http://www.loc.gov/METS/",
     "csip": "https://DILCIS.eu/XML/METS/CSIPExtensionMETS",
 }
+
+BAG_VALIDATE_TOPIC = "bag.validate"
 
 
 class EventListener:
@@ -105,6 +112,42 @@ class EventListener:
                     # Get data of event
                     msg_data = incoming_event.get_data()
                     bag_path = Path(msg_data["destination"])
+
+                    bag = Bag(bag_path)
+                    # Parse and validate bag
+                    try:
+                        bag.parse_validate()
+                    except (BagParseError) as e:
+                        self.produce_event(
+                            BAG_VALIDATE_TOPIC,
+                            {
+                                "message": f"{bag_path} is not a valid bag: {str(e)}",
+                            },
+                            msg_data["destination"],
+                            EventOutcome.FAIL,
+                            incoming_event.correlation_id,
+                        )
+                        return
+                    except (BagNotValidError) as e:
+                        self.produce_event(
+                            BAG_VALIDATE_TOPIC,
+                            {
+                                "message": f"{bag_path} is not a valid bag",
+                                "errors": e.errors,
+                            },
+                            msg_data["destination"],
+                            EventOutcome.FAIL,
+                            incoming_event.correlation_id,
+                        )
+                        return
+
+                    self.produce_event(
+                        BAG_VALIDATE_TOPIC,
+                        {"message": f"{bag_path} is a valid bag"},
+                        msg_data["destination"],
+                        EventOutcome.SUCCESS,
+                        incoming_event.correlation_id,
+                    )
 
                     # Determine profile
                     profile = self.determine_profile(bag_path)

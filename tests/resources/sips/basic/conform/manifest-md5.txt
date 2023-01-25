@@ -1,8 +1,7 @@
 eaa2c609ff6371712f623f5531945b44  ./bagit.txt
-a889da5606c4aada639c9bd84a0e661b  ./manifest-md5.txt
 80c501580dc75d883cdf8548a09a72d1  ./data/representations/representation_1/mets.xml
 18513a8d61c6f2cbaaeeedd754b01d6b  ./data/representations/representation_1/data/D523F963.jpg
-a8041a1a240fc7f6ec9c838e78819613  ./data/representations/representation_1/metadata/preservation/premis.xml
+605d988361524f40a0fdf99544fe0c0e  ./data/representations/representation_1/metadata/preservation/premis.xml
 d56724353336bd7ea93ad0bb935dbad9  ./data/mets.xml
-23cc828ed22090e0ab1ca7bae13afac4  ./data/metadata/preservation/premis.xml
-bc2be547a41f93d7c8b582eeb2d575dc  ./data/metadata/descriptive/dc_1.xml
+88144e83a57865effc204cc9ae4e0561  ./data/metadata/preservation/premis.xml
+6444bb88d7b589e39f6d127f06817e6c  ./data/metadata/descriptive/dc_1.xml
