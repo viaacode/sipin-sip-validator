@@ -84,8 +84,8 @@ class EventListener:
         """
         try:
             root = etree.parse(path.joinpath("data", "mets.xml"))
-        except etree.ParseError as e:
-            ValueError(f"METS could not be parsed: {e}.")
+        except (etree.ParseError, OSError) as e:
+            raise ValueError(f"METS could not be parsed: {e}.")
 
         # Parse the meemoo profile in the IE METS
         try:
@@ -94,7 +94,9 @@ class EventListener:
                 namespaces=NAMESPACES,
             )[0]
         except IndexError:
-            ValueError("METS does not contain a CONTENTINFORMATIONTYPE attribute.")
+            raise ValueError(
+                "METS does not contain a CONTENTINFORMATIONTYPE attribute."
+            )
 
         if profile_type == "https://data.hetarchief.be/id/sip/1.0/basic":
             return BasicProfile(path)

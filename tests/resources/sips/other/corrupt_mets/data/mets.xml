@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS"
+    xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink"
+    OBJID="uuid-de61d4af-d19c-4cc7-864d-55573875b438" TYPE="Photographs – Digital"
+    PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml"
+    csip:CONTENTINFORMATIONTYPE="https://data.hetarchief.be/id/sip/1.0/basic">
+
+<metsHdr CREATEDATE="2022-02-16T10:01:15.014+02:00" csip:OAISPACKAGETYPE="SIP">
+    <!-- information about the software -->
+    <agent ROLE="CREATOR" TYPE="OTHER" OTHERTYPE="SOFTWARE">
+        <name>meemoo SIP creator</name>
+        <note csip:NOTETYPE="SOFTWARE VERSION">0.1.</note>
+    </agent>
+    <!-- information about the archival creator-->
+    <agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">
+        <name>Flemish Cat Museum</name>
+        <note csip:NOTETYPE="IDENTIFICATIONCODE">OR-m30wc4t</note>
+    </agent>
+    <!-- information about the submitting organisation -->
+    <agent ROLE="CREATOR" TYPE="ORGANIZATION">
+        <name>Flemish Cat Museum</name>
+        <note csip:NOTETYPE="IDENTIFICATIONCODE">OR-m30wc4t</note>
+    </agent>
+</metsHdr>
