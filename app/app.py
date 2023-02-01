@@ -4,6 +4,7 @@ import json
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
 from cloudevents.events import Event, EventOutcome, EventAttributes, PulsarBinding
+from pulsar import Message
 
 from app.models.bag import (
     Bag,
@@ -102,147 +103,148 @@ class EventListener:
             return BasicProfile(path)
         raise ValueError(f"Profile not known: {profile_type}.")
 
-    def main(self):
-        while True:
-            msg = self.pulsar_client.receive()
-            try:
-                incoming_event = PulsarBinding.from_protocol(msg)
-                if (
-                    incoming_event.has_successful_outcome()
-                    and incoming_event.get_data().get("outcome") != EventOutcome.FAIL
-                ):
-                    # Get data of event
-                    msg_data = incoming_event.get_data()
-                    bag_path = Path(msg_data["destination"])
+    def handle_incoming_message(self, message: Message):
+        try:
+            incoming_event = PulsarBinding.from_protocol(message)
+            if (
+                incoming_event.has_successful_outcome()
+                and incoming_event.get_data().get("outcome") != EventOutcome.FAIL
+            ):
+                # Get data of event
+                msg_data = incoming_event.get_data()
+                bag_path = Path(msg_data["destination"])
 
-                    bag = Bag(bag_path)
-                    # Parse and validate bag
-                    try:
-                        bag.parse_validate()
-                    except (BagParseError) as e:
-                        self.produce_event(
-                            BAG_VALIDATE_TOPIC,
-                            {
-                                "message": f"{bag_path} is not a valid bag: {str(e)}",
-                            },
-                            msg_data["destination"],
-                            EventOutcome.FAIL,
-                            incoming_event.correlation_id,
-                        )
-                        return
-                    except (BagNotValidError) as e:
-                        self.produce_event(
-                            BAG_VALIDATE_TOPIC,
-                            {
-                                "message": f"{bag_path} is not a valid bag",
-                                "errors": e.errors,
-                            },
-                            msg_data["destination"],
-                            EventOutcome.FAIL,
-                            incoming_event.correlation_id,
-                        )
-                        return
-
+                bag = Bag(bag_path)
+                # Parse and validate bag
+                try:
+                    bag.parse_validate()
+                except (BagParseError) as e:
                     self.produce_event(
                         BAG_VALIDATE_TOPIC,
-                        {"message": f"{bag_path} is a valid bag"},
+                        {
+                            "message": f"{bag_path} is not a valid bag: {str(e)}",
+                        },
                         msg_data["destination"],
-                        EventOutcome.SUCCESS,
+                        EventOutcome.FAIL,
                         incoming_event.correlation_id,
                     )
+                    return
+                except (BagNotValidError) as e:
+                    self.produce_event(
+                        BAG_VALIDATE_TOPIC,
+                        {
+                            "message": f"{bag_path} is not a valid bag",
+                            "errors": e.errors,
+                        },
+                        msg_data["destination"],
+                        EventOutcome.FAIL,
+                        incoming_event.correlation_id,
+                    )
+                    return
 
-                    # Determine profile
-                    profile = self.determine_profile(bag_path)
+                self.produce_event(
+                    BAG_VALIDATE_TOPIC,
+                    {"message": f"{bag_path} is a valid bag"},
+                    msg_data["destination"],
+                    EventOutcome.SUCCESS,
+                    incoming_event.correlation_id,
+                )
 
-                    # Validate XML files
-                    xml_validation_errors = profile.validate_metadata()
-                    if xml_validation_errors:
-                        self.produce_event(
-                            SIP_VALIDATE_XSD_TOPIC,
-                            {
-                                "message": "Metadata files are not valid against XSD",
-                                "errors": [str(e) for e in xml_validation_errors],
-                            },
-                            msg_data["destination"],
-                            EventOutcome.FAIL,
-                            incoming_event.correlation_id,
-                        )
-                        self.pulsar_client.acknowledge(msg)
-                        return
+                # Determine profile
+                profile = self.determine_profile(bag_path)
 
+                # Validate XML files
+                xml_validation_errors = profile.validate_metadata()
+                if xml_validation_errors:
                     self.produce_event(
                         SIP_VALIDATE_XSD_TOPIC,
                         {
-                            "message": "Metadata files are valid against XSD",
+                            "message": "Metadata files are not valid against XSD",
+                            "errors": [str(e) for e in xml_validation_errors],
                         },
                         msg_data["destination"],
-                        EventOutcome.SUCCESS,
+                        EventOutcome.FAIL,
                         incoming_event.correlation_id,
                     )
+                    self.pulsar_client.acknowledge(message)
+                    return
 
-                    # Parse graph
-                    try:
-                        graph = profile.parse_graph()
-                    except GraphParseError as e:
-                        self.produce_event(
-                            SIP_LOAD_GRAPH_TOPIC,
-                            {
-                                "message": "Cannot transform metadata into a graph.",
-                                "errors": str(e),
-                            },
-                            msg_data["destination"],
-                            EventOutcome.FAIL,
-                            incoming_event.correlation_id,
-                        )
-                        self.pulsar_client.acknowledge(msg)
-                        return
+                self.produce_event(
+                    SIP_VALIDATE_XSD_TOPIC,
+                    {
+                        "message": "Metadata files are valid against XSD",
+                    },
+                    msg_data["destination"],
+                    EventOutcome.SUCCESS,
+                    incoming_event.correlation_id,
+                )
 
+                # Parse graph
+                try:
+                    graph = profile.parse_graph()
+                except GraphParseError as e:
                     self.produce_event(
                         SIP_LOAD_GRAPH_TOPIC,
                         {
-                            "message": "Metadata can be transformed into a graph.",
+                            "message": "Cannot transform metadata into a graph.",
+                            "errors": str(e),
                         },
                         msg_data["destination"],
-                        EventOutcome.SUCCESS,
+                        EventOutcome.FAIL,
                         incoming_event.correlation_id,
                     )
+                    self.pulsar_client.acknowledge(message)
+                    return
 
-                    # Validate graph
-                    try:
-                        profile.validate_graph(graph)
-                    except GraphNotConformError as e:
-                        self.produce_event(
-                            SIP_VALIDATE_SHACL_TOPIC,
-                            {
-                                "message": "Graph is not conform.",
-                                "errors": str(e),
-                            },
-                            msg_data["destination"],
-                            EventOutcome.FAIL,
-                            incoming_event.correlation_id,
-                        )
-                        self.pulsar_client.acknowledge(msg)
-                        return
+                self.produce_event(
+                    SIP_LOAD_GRAPH_TOPIC,
+                    {
+                        "message": "Metadata can be transformed into a graph.",
+                    },
+                    msg_data["destination"],
+                    EventOutcome.SUCCESS,
+                    incoming_event.correlation_id,
+                )
 
-                    # Send event
+                # Validate graph
+                try:
+                    profile.validate_graph(graph)
+                except GraphNotConformError as e:
                     self.produce_event(
                         SIP_VALIDATE_SHACL_TOPIC,
                         {
-                            "message": "Graph is conform.",
-                            "metadata_graph": json.loads(
-                                graph.serialize(format="json-ld")
-                            ),
+                            "message": "Graph is not conform.",
+                            "errors": str(e),
                         },
                         msg_data["destination"],
-                        EventOutcome.SUCCESS,
+                        EventOutcome.FAIL,
                         incoming_event.correlation_id,
                     )
+                    self.pulsar_client.acknowledge(message)
+                    return
 
-                    self.pulsar_client.acknowledge(msg)
+                # Send event
+                self.produce_event(
+                    SIP_VALIDATE_SHACL_TOPIC,
+                    {
+                        "message": "Graph is conform.",
+                        "metadata_graph": json.loads(graph.serialize(format="json-ld")),
+                    },
+                    msg_data["destination"],
+                    EventOutcome.SUCCESS,
+                    incoming_event.correlation_id,
+                )
 
-            except Exception as e:
-                # Generic catch all remaining errors.
-                self.log.error(f"Error: {e}")
-                # Message failed to be processed
-                self.pulsar_client.acknowledge(msg)
+                self.pulsar_client.acknowledge(message)
+        except Exception as e:
+            # Generic catch all remaining errors.
+            self.log.error(f"Error: {e}")
+            # Message failed to be processed
+            self.pulsar_client.negative_acknowledge(message)
+
+    def main(self):
+        while True:
+            msg = self.pulsar_client.receive()
+            self.handle_incoming_message(msg)
+
         self.pulsar_client.close()
