@@ -6,6 +6,7 @@ from cloudevents.events import EventOutcome
 
 from app.app import EventListener
 from app.models.profile import BasicProfile
+from app.models.bag import BagParseError, BagNotValidError
 
 
 class PulsarEventMock:
@@ -157,4 +158,45 @@ class TestEventListener:
                 "555",
             ),
         ]
+        event_listener.pulsar_client.acknowledge.assert_called_once()
+
+    @patch("app.app.PulsarBinding")
+    @patch("app.app.Bag")
+    @patch("app.app.EventListener.produce_event")
+    @pytest.mark.parametrize(
+        "error, bag_error",
+        [
+            (BagParseError("Not a bag"), "could not be parsed"),
+            (BagNotValidError("Not valid"), "is not a valid bag"),
+        ],
+    )
+    def test_handle_incoming_message_bag_not_parsable(
+        self,
+        produce_event_mock,
+        bag_mock,
+        pulsar_binding_mock,
+        event_listener,
+        event,
+        error,
+        bag_error,
+    ):
+        # Arrange
+        # Return an CloudEvent from a Pulsar message
+        pulsar_binding_mock.from_protocol.return_value = event
+        # Error when parsing the bag
+        bag_mock().parse_validate.side_effect = error
+
+        # Act
+        event_listener.handle_incoming_message("")
+
+        # Assert
+        assert produce_event_mock.call_count == 1
+        assert produce_event_mock.call_args.args == (
+            "bag.validate",
+            {"message": f"test {bag_error}: {str(error)}"},
+            "test",
+            EventOutcome.FAIL,
+            "555",
+        )
+
         event_listener.pulsar_client.acknowledge.assert_called_once()

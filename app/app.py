@@ -122,24 +122,25 @@ class EventListener:
                     self.produce_event(
                         BAG_VALIDATE_TOPIC,
                         {
+                            "message": f"{bag_path} could not be parsed: {str(e)}",
+                        },
+                        msg_data["destination"],
+                        EventOutcome.FAIL,
+                        incoming_event.correlation_id,
+                    )
+                    self.pulsar_client.acknowledge(message)
+                    return
+                except (BagNotValidError) as e:
+                    self.produce_event(
+                        BAG_VALIDATE_TOPIC,
+                        {
                             "message": f"{bag_path} is not a valid bag: {str(e)}",
                         },
                         msg_data["destination"],
                         EventOutcome.FAIL,
                         incoming_event.correlation_id,
                     )
-                    return
-                except (BagNotValidError) as e:
-                    self.produce_event(
-                        BAG_VALIDATE_TOPIC,
-                        {
-                            "message": f"{bag_path} is not a valid bag",
-                            "errors": e.errors,
-                        },
-                        msg_data["destination"],
-                        EventOutcome.FAIL,
-                        incoming_event.correlation_id,
-                    )
+                    self.pulsar_client.acknowledge(message)
                     return
 
                 self.produce_event(
