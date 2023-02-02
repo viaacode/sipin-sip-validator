@@ -52,7 +52,4 @@ class TestBag:
         with pytest.raises(BagParseError) as e:
             not_a_bag.parse_validate()
 
-        assert (
-            str(e.value)
-            == "Expected bagit.txt does not exist: /home/sapcid/Documents/Repos/sipin-sip-parser/tests/resources/bags/not_a_bag/bagit.txt"
-        )
+        assert "Expected bagit.txt does not exist" in str(e.value)
