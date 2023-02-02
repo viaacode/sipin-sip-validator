@@ -15,27 +15,27 @@ PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 
 CONSTRUCT
   {
-    ?ie a premis:IntellectualEntity;
-        premis:identifier ?local_id;
+    ?ie a premisowl:IntellectualEntity;
+        premisowl:identifier ?local_id;
         relSubType:isr ?rep;
         ?dcterm_p ?dcterm_o .
 
     ?local_id  a ?local_id_type_uri; 
          rdf:value ?local_id_val .
 
-    ?f_uri a premis:fixity;
+    ?f_uri a premisowl:fixity;
         rdf:value ?file_digest.
 
-    ?rep a premis:Representation;
+    ?rep a premisowl:Representation;
         relSubType:rep ?ie;
         relSubType:inc ?file .
 
-     ?file a premis:File;
+     ?file a premisowl:File;
         relSubType:isi ?rep;
-        premis:originalName ?file_original_name;
-        premis:format ?file_format;
-        premis:size ?file_size;
-        premis:fixity ?f_uri.
+        premisowl:originalName ?file_original_name;
+        premisowl:format ?file_format;
+        premisowl:size ?file_size;
+        premisowl:fixity ?f_uri.
   }
 
 WHERE
