@@ -230,7 +230,7 @@
             [
                 sh:class madsrdf:GivenNameElement
             ]
-        )
+        ) ;
         sh:name "Element"@en ;
         sh:description "The element of a person associated with the newspaper."@en ;
         sh:minCount 1 ;
@@ -247,7 +247,7 @@
             [
                 sh:hasValue rdf:nil ;
             ]
-        )
+        ) ;
         sh:name "Element list"@en ;
         sh:description "The element list of a person associated with the newspaper."@en ;
         sh:minCount 1 ;
@@ -255,7 +255,7 @@
     ] .
 
 <#ElementShape> a sh:NodeShape ;
-    sh:targetClass madsrdf:FamilyNameElement, madsrdf:GivenNameElement ;
+    # sh:targetClass madsrdf:FamilyNameElement, madsrdf:GivenNameElement ;
     sh:property
     [
         a sh:PropertyShape ;
