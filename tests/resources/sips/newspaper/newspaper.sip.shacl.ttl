@@ -86,7 +86,6 @@
         sh:node <#RoleRelationshipShape> ;
         sh:name "Role relationship"@en ;
         sh:description "The role relationship of a person associated with the newspaper."@en ;
-        sh:maxCount 1 ;
     ],
     [
         a sh:PropertyShape ;
