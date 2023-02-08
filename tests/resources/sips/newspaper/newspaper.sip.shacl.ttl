@@ -51,6 +51,19 @@
         sh:maxCount 1 ;
     ],
     # typeOfResource?
+    # Usage of dct:type found at:
+    # https://samvera.atlassian.net/wiki/spaces/samvera/pages/405212204/MODS+Type+of+Resource+Individual+Institution+Usage+And+RDF+Conversion
+    [
+        a sh:PropertyShape ;
+        sh:path dct:type ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:hasValue "newspaper edition" ;
+        sh:name "MODS type"@en ;
+        sh:description "The type of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ]
     [
         a sh:PropertyShape ;
         sh:path mods:abstract ;
@@ -98,6 +111,16 @@
         sh:maxCount 1 ;
     ],
     # DateIssued?
+    [
+        a sh:PropertyShape ;
+        sh:path dct:issued ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype edtf:EDTF-level1 ;
+        sh:name "Date issued"@en ;
+        sh:description "The date of issue of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
     [
         a sh:PropertyShape ;
         sh:path mods:identifierGroup ;
