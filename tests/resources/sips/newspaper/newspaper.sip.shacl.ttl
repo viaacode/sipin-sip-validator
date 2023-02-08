@@ -44,7 +44,8 @@
         a sh:PropertyShape ;
         sh:path mods:identifier ;
         sh:nodeKind sh:IRI ;
-        sh:class haObj:LocalIdentifier ;
+        # sh:class haObj:LocalIdentifier ;
+        sh:node <#ObjectIdentifierShape> ;
         sh:name "Mods identifier"@en ;
         sh:description "The identifier of the newspaper."@en ;
         sh:minCount 1 ;
@@ -73,17 +74,17 @@
         a sh:PropertyShape ; 
         sh:path mods:name ;
         sh:nodeKind sh:IRI ;
-        sh:class madsrdf:PersonalName ;
+        # sh:class madsrdf:PersonalName ;
+        sh:node <#PersonalNameShape> ;
         sh:name "Name of a person"@en ;
         sh:description "The name of a person associated with the newspaper."@en ;
-        sh:maxCount 1 ;
     ],
-    # TODO: family and given (madsrdf)
     [
         a sh:PropertyShape ;
         sh:path mods:roleRelationship ;
         sh:nodeKind sh:IRI ;
-        sh:class mods:RoleRelationship ;
+        # sh:class mods:RoleRelationship ;
+        sh:node <#RoleRelationshipShape> ;
         sh:name "Role relationship"@en ;
         sh:description "The role relationship of a person associated with the newspaper."@en ;
         sh:maxCount 1 ;
@@ -103,7 +104,8 @@
         a sh:PropertyShape ;
         sh:path mods:identifierGroup ;
         sh:nodeKind sh:IRI ;
-        sh:class mods:IdentifierGroup ;
+        # sh:class mods:IdentifierGroup ;
+        sh:node <#IdentifierGroupShape> ;
         sh:name "Identifier group"@en ;
         sh:description "The identifier group of the newspaper."@en ;
     ],
@@ -111,7 +113,8 @@
         a sh:PropertyShape ;
         sh:path mods:noteGroup ;
         sh:nodeKind sh:IRI ;
-        sh:class mods:NoteGroup ;
+        # sh:class mods:NoteGroup ;
+        sh:node <#NoteGroupShape> ;
         sh:name "Note group"@en ;
         sh:description "The note group of the newspaper (for licenses)."@en ;
     ] .
@@ -124,7 +127,7 @@
         sh:path mods:noteGroupType ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
-        sh:in ("license")
+        sh:in ("license") ;
         sh:name "Note group type"@en ;
         sh:description "The note group type of the newspaper."@en ;
         sh:maxCount 1 ;
@@ -147,7 +150,7 @@
         sh:path mods:identifierGroupType ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
-        sh:in ("abraham_id" "abraham_uri")
+        sh:in ("abraham_id" "abraham_uri") ;
         sh:name "Identifier group type"@en ;
         sh:description "The identifier group type of the newspaper."@en ;
         sh:maxCount 1 ;
@@ -169,8 +172,9 @@
         a sh:PropertyShape ;
         sh:path mods:roleRelationshipName ;
         sh:nodeKind sh:IRI ;
-        sh:class madsrdf:PersonalName ;
-        sh:name "Role relationship - name"@en ;
+        # sh:class madsrdf:PersonalName ;
+        sh:node <#PersonalNameShape> ;
+        sh:name "Role relationship name"@en ;
         sh:description "The role relationship name of a person associated with the newspaper."@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -201,12 +205,60 @@
         sh:maxCount 1 ;
     ],
     [
+        # Property for FamilyNameElement and GivenNameElement
+        # See example at:
+        # https://loc.gov/standards/mads/rdf/#tab2:~:text=bnode1680267008)%3B%0A%20%20a%20madsrdf%3AAuthority%2C-,madsrdf%3APersonalName,-.%0A_%3Abnode104199680%20madsrdf%3AelementValue.
         a sh:PropertyShape ;
         sh:path madsrdf:elementList ;
         sh:nodeKind sh:IRI ;
-        sh:class madsrdf:ElementList ;
+        sh:node <#ElementListShape> ;
         sh:name "Element list"@en ;
         sh:description "The element list of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+<#ElementListShape> a sh:NodeShape ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:first ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#ElementShape> ;
+        sh:or (
+            [
+                sh:class madsrdf:FamilyNameElement
+            ]
+            [
+                sh:class madsrdf:GivenNameElement
+            ]
+        )
+        sh:name "Element"@en ;
+        sh:description "The element of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:rest ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#ElementListShape> ;
+        sh:name "Element list"@en ;
+        sh:description "The element list of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+<#ElementShape> a sh:NodeShape ;
+    sh:targetClass madsrdf:FamilyNameElement, madsrdf:GivenNameElement ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path madsrdf:elementValue ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Element value"@en ;
+        sh:description "The element value of a person associated with the newspaper."@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
