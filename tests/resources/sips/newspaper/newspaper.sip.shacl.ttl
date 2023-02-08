@@ -1,0 +1,226 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <https://schema.org/> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix mods: <http://www.loc.gov/mods/rdf/v1#> .
+@prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
+
+
+@base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
+<>  a owl:Ontology ;
+    dct:author  [
+        schema:name   "Lennert Van de Velde" ;
+        schema:email  "lennert.vandevelde@meemoo.be"
+    ] ;
+    dct:title     "Data model NEWSPAPER"@en ;
+    dct:created   "2023-02-08" ;
+    dct:modified  "2023-02-08" ;
+    dct:description """Data model to describe the content of objects."""@en ;
+    pav:version "0.0.1" .
+
+<#IntellectualEntityShape> a sh:NodeShape ;
+    sh:targetClass premis:IntellectualEntity ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path mods:title ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods title"@en ;
+        sh:description "The title of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path mods:identifier ;
+        sh:nodeKind sh:IRI ;
+        sh:class haObj:LocalIdentifier ;
+        sh:name "Mods identifier"@en ;
+        sh:description "The identifier of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    # typeOfResource?
+    [
+        a sh:PropertyShape ;
+        sh:path mods:abstract ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods abstract"@en ;
+        sh:description "The abstract of the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path mods:subjectTopic ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods subject topic"@en ;
+        sh:description "The subject of the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ; 
+        sh:path mods:name ;
+        sh:nodeKind sh:IRI ;
+        sh:class madsrdf:PersonalName ;
+        sh:name "Name of a person"@en ;
+        sh:description "The name of a person associated with the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
+    # TODO: family and given (madsrdf)
+    [
+        a sh:PropertyShape ;
+        sh:path mods:roleRelationship ;
+        sh:nodeKind sh:IRI ;
+        sh:class mods:RoleRelationship ;
+        sh:name "Role relationship"@en ;
+        sh:description "The role relationship of a person associated with the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path mods:dateCreated ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype edtf:EDTF-level1 ;
+        sh:name "Date created"@en ;
+        sh:description "The date of creation of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    # DateIssued?
+    [
+        a sh:PropertyShape ;
+        sh:path mods:identifierGroup ;
+        sh:nodeKind sh:IRI ;
+        sh:class mods:IdentifierGroup ;
+        sh:name "Identifier group"@en ;
+        sh:description "The identifier group of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path mods:noteGroup ;
+        sh:nodeKind sh:IRI ;
+        sh:class mods:NoteGroup ;
+        sh:name "Note group"@en ;
+        sh:description "The note group of the newspaper (for licenses)."@en ;
+    ] .
+
+<#NoteGroupShape> a sh:NodeShape ;
+    sh:targetClass mods:NoteGroup ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path mods:noteGroupType ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:in ("license")
+        sh:name "Note group type"@en ;
+        sh:description "The note group type of the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path mods:noteGroupValue ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Note group value"@en ;
+        sh:description "The note group value of the newspaper."@en ;
+        sh:maxCount 1 ;
+    ] .
+
+<#IdentifierGroupShape> a sh:NodeShape ;
+    sh:targetClass mods:IdentifierGroup ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path mods:identifierGroupType ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:in ("abraham_id" "abraham_uri")
+        sh:name "Identifier group type"@en ;
+        sh:description "The identifier group type of the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path mods:identifierGroupValue ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Identifier group value"@en ;
+        sh:description "The identifier group value of the newspaper."@en ;
+        sh:maxCount 1 ;
+    ] .
+
+<#RoleRelationshipShape> a sh:NodeShape ;
+    sh:targetClass mods:RoleRelationship ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path mods:roleRelationshipName ;
+        sh:nodeKind sh:IRI ;
+        sh:class madsrdf:PersonalName ;
+        sh:name "Role relationship - name"@en ;
+        sh:description "The role relationship name of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        #roleTerm
+        a sh:PropertyShape ;
+        sh:path mods:roleRelationshipRole ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Role relationship - role"@en ;
+        sh:description "The role associated with a name, where the name and role are bound together in a roleRelationship."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+<#PersonalNameShape> a sh:NodeShape ;
+    sh:targetClass madsrdf:PersonalName ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path madsrdf:authoritativeLabel ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Authoritative label"@en ;
+        sh:description "The name of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path madsrdf:elementList ;
+        sh:nodeKind sh:IRI ;
+        sh:class madsrdf:ElementList ;
+        sh:name "Element list"@en ;
+        sh:description "The element list of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+<#ObjectIdentifierShape> a sh:NodeShape ;
+  sh:targetClass haObj:LocalIdentifier ;
+  sh:property 
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has object identifier value"@en ;
+    sh:description "The value of the object identifier."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
