@@ -115,6 +115,7 @@
     sh:description "The creation date of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
   ],
   [
     a sh:PropertyShape ;
