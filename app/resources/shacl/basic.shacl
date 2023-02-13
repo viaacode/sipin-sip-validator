@@ -61,16 +61,6 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:identifier ;
-    sh:nodeKinde sh:IRI ;
-    sh:class haObj:Identifier ;
-    sh:name "has identifier"@en ;
-    sh:description "The identifier of the intellectual entity."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
     sh:path dct:extent ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
@@ -248,16 +238,6 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path premis:objectCharacteristics ;
-    sh:nodeKind sh:IRI ;
-    sh:class premis:ObjectCharacteristics ;
-    sh:name "has object characteristics"@en ;
-    sh:description "The object characteristics of the file."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
     sh:path premis:fixity ;
     sh:nodeKind sh:IRI ;
     sh:class <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5> ;
@@ -310,39 +290,39 @@
     sh:maxCount 1 ;
   ] .
 
-<#FileFormatShape> a sh:NodeShape ;
-  sh:targetClass dct:FileFormat ;
-  sh:property [
-    a sh:PropertyShape ;
-    sh:path rdfs:label ;
-    sh:nodeKind sh:Literal ;
-    sh:class xsd:string ;
-    sh:name "format name"@en ;
-    sh:description "The name of the format."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path premis:version ;
-    sh:nodeKind sh:Literal ;
-    sh:class xsd:string ;
-    sh:name "format version"@en ;
-    sh:description "The version of the format."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path skos:exactMatch ;
-    # maps to IRI of format in registry: https://www.nationalarchives.gov.uk/aboutapps/pronom/release-notes.xml
-    # e.g.: xml = https://www.nationalarchives.gov.uk/PRONOM/fmt/101
-    sh:nodeKind sh:IRI ;
-    sh:name "format registry"@en ;
-    sh:description "The format registry of the format."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] .
+# <#FileFormatShape> a sh:NodeShape ;
+#   sh:targetClass dct:FileFormat ;
+  # sh:property [
+  #   a sh:PropertyShape ;
+  #   sh:path rdfs:label ;
+  #   sh:nodeKind sh:Literal ;
+  #   sh:class xsd:string ;
+  #   sh:name "format name"@en ;
+  #   sh:description "The name of the format."@en ;
+  #   sh:minCount 1 ;
+  #   sh:maxCount 1 ;
+  # ],
+  # [
+  #   a sh:PropertyShape ;
+  #   sh:path premis:version ;
+  #   sh:nodeKind sh:Literal ;
+  #   sh:class xsd:string ;
+  #   sh:name "format version"@en ;
+  #   sh:description "The version of the format."@en ;
+  #   sh:minCount 0 ;
+  #   sh:maxCount 1 ;
+  # ],
+  # [
+  #   a sh:PropertyShape ;
+  #   sh:path skos:exactMatch ;
+  #   # maps to IRI of format in registry: https://www.nationalarchives.gov.uk/aboutapps/pronom/release-notes.xml
+  #   # e.g.: xml = https://www.nationalarchives.gov.uk/PRONOM/fmt/101
+  #   sh:nodeKind sh:IRI ;
+  #   sh:name "format registry"@en ;
+  #   sh:description "The format registry of the format."@en ;
+  #   sh:minCount 1 ;
+  #   sh:maxCount 1 ;
+  # ] .
   #? RegistryRole? .
 
 <#ObjectIdentifierShape> a sh:NodeShape ;
@@ -365,4 +345,4 @@
   sh:class haObj:LocalIdentifier ;
   sh:name "has object identifier"@en ;
   sh:description "The identifier of the object."@en ;
-  sh:minCount 1 .
+  sh:minCount 0 .
