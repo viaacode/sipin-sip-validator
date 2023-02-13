@@ -1,4 +1,4 @@
-pulsar-client==2.10.1
+pulsar-client==2.10.2
 viaa-chassis==0.2.0rc1
 meemoo-cloudevents==0.1.0rc3
 lxml==4.9.2

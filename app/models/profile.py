@@ -1,4 +1,3 @@
-import subprocess
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -181,30 +180,15 @@ class BasicProfile(Profile):
         # Run SPARQL-anything transformation.
         sa = SparqlAnything()
         try:
-            output = sa.run(q="query_basic_destination", f='TTL')
-            # output = subprocess.run(
-            #     [
-            #         "java",
-            #         "-jar",
-            #         str(SPARQL_ANYTHING_JAR),
-            #         "-q",
-            #         query_basic_destination,
-            #     ],
-            #     capture_output=True,
-            #     check=True,
-            #     universal_newlines=True,
-            # )
-        # except subprocess.CalledProcessError as e:
+            data_graph = sa.construct(q=str(query_basic_destination), f="TTL")
+
         except Exception as e:
             raise GraphParseError(f"Error when parsing graph: {str(e)}")
 
-        # Parse graph
-        data_graph = Graph()
-        data_graph.parse(data=output.stdout, format="turtle")
         return data_graph
 
     def validate_graph(self, data_graph: Graph) -> bool:
-        """Validate if the graph is conform
+        """Validate if the graph is conform.
 
         Returns: True if the graph was conform.
 
@@ -214,9 +198,7 @@ class BasicProfile(Profile):
         shacl_graph = Graph()
         shacl_graph.parse(str(SHACL_BASIC), format="turtle")
         conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph,
-            shacl_graph=shacl_graph,
-            meta_shacl=True
+            data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True
         )
 
         if not conforms:
