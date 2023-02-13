@@ -5,6 +5,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from lxml import etree
 from rdflib import Graph
 from pyshacl import validate as shacl_validate
+from pysparql_anything import SparqlAnything
 
 
 SPARQL_ANYTHING_JAR: Path = Path("app", "resources", "sparql-anything-0.8.1.jar")
@@ -178,20 +179,23 @@ class BasicProfile(Profile):
             f.write(template.render(bag_path=self.bag_path))
 
         # Run SPARQL-anything transformation.
+        sa = SparqlAnything()
         try:
-            output = subprocess.run(
-                [
-                    "java",
-                    "-jar",
-                    str(SPARQL_ANYTHING_JAR),
-                    "-q",
-                    query_basic_destination,
-                ],
-                capture_output=True,
-                check=True,
-                universal_newlines=True,
-            )
-        except subprocess.CalledProcessError as e:
+            output = sa.run(q="query_basic_destination", f='TTL')
+            # output = subprocess.run(
+            #     [
+            #         "java",
+            #         "-jar",
+            #         str(SPARQL_ANYTHING_JAR),
+            #         "-q",
+            #         query_basic_destination,
+            #     ],
+            #     capture_output=True,
+            #     check=True,
+            #     universal_newlines=True,
+            # )
+        # except subprocess.CalledProcessError as e:
+        except Exception as e:
             raise GraphParseError(f"Error when parsing graph: {str(e)}")
 
         # Parse graph
@@ -212,6 +216,7 @@ class BasicProfile(Profile):
         conforms, results_graph, results_text = shacl_validate(
             data_graph=data_graph,
             shacl_graph=shacl_graph,
+            meta_shacl=True
         )
 
         if not conforms:
