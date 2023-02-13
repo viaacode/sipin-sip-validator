@@ -3,7 +3,9 @@ PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
 PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
 PREFIX xml: <http://www.w3.org/XML/1998/namespace>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX haObjId: <https://data.hetarchief.be/id/object/>
+PREFIX haObj: <https://data.hetarchief.be/ns/object/>
 PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
 PREFIX fx: <http://sparql.xyz/facade-x/ns/>
 PREFIX dct: <http://purl.org/dc/terms/>
@@ -12,18 +14,22 @@ PREFIX cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cr
 PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
 PREFIX schema: <https://schema.org/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 CONSTRUCT
   {
     ?ie a premisowl:IntellectualEntity;
         premisowl:identifier ?local_id;
         relSubType:isr ?rep;
-        ?dcterm_p ?dcterm_o .
+        ?dcterm_p ?dcterm_o;
+        a ?dcterm_xsi_type .
 
-    ?local_id  a ?local_id_type_uri; 
+    ?local_id a ?local_id_type_uri; 
          rdf:value ?local_id_val .
 
-    ?f_uri a premisowl:fixity;
+    ?local_id_type_uri rdfs:subClassOf haObj:LocalIdentifier .
+
+    ?md5_uri a ?f_uri;
         rdf:value ?file_digest.
 
     ?rep a premisowl:Representation;
@@ -33,9 +39,11 @@ CONSTRUCT
      ?file a premisowl:File;
         relSubType:isi ?rep;
         premisowl:originalName ?file_original_name;
-        premisowl:format ?file_format;
-        premisowl:size ?file_size;
-        premisowl:fixity ?f_uri.
+        dct:format ?format_uri;
+        premisowl:size ?file_size_int;
+        premisowl:fixity ?md5_uri.
+
+    ?format_uri a dct:FileFormat.
   }
 
 WHERE
@@ -75,7 +83,7 @@ WHERE
                         ];
                         ?ie_3 [
                             a premis:objectIdentifierValue;
-                                rdf:_1 ?ie_val
+                                rdf:_1 ?id
                         ]
                     ];
             ?ie_4 [
@@ -89,7 +97,7 @@ WHERE
                 ]
             ]
             FILTER (?ie_type = "UUID")
-            BIND(iri(concat(str(haObjId:), ?ie_val)) AS ?ie
+            BIND(iri(concat(str(haObjId:), ?id)) AS ?ie
         )
         BIND(iri(concat(str(haObjId:), ?ie_rel_rep_id)) AS  ?rep)
     }
@@ -180,8 +188,11 @@ WHERE
                     rdf:_1 ?file_original_name
                 ]
                 BIND(iri(?fixity_uri) AS ?f_uri)
+                BIND(iri(concat(str(haObjId:), ?file_digest)) AS ?md5_uri)
                 BIND(iri(concat(str(haObjId:), ?file_uuid)) AS ?file)
                 BIND(iri(concat(str(haObjId:), ?file_rel_rep_id)) AS ?rep)
+                BIND(STRDT(?file_size, xsd:integer) AS ?file_size_int)
+                BIND(iri(REPLACE(?file_format, "fmt-", "http://the-fr.org/id/file-format/")) AS ?format_uri)
         }
     }
     SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc_1.xml> {
@@ -198,9 +209,12 @@ WHERE
         OPTIONAL {
             ?dcterm xsi:type ?dcterm_xsi_type.
         }
+        BIND(iri(REPLACE(?dcterm_xsi_type, "edtf:", "http://id.loc.gov/datatypes/edtf/")) AS ?edtf_dt)
 
         BIND(
-            IF(bound(?dcterm_xsi_type), STRDT(?dcterm_value, iri(?dcterm_xsi_type)), ?dcterm_value )
+            IF(bound(?dcterm_xsi_type), STRDT(?dcterm_value, ?edtf_dt), ?dcterm_value)
             AS ?dcterm_o)
+
+        FILTER (?dcterm_p != dct:identifier)
     }
   }
