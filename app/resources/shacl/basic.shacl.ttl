@@ -48,7 +48,7 @@
     sh:name "has title"@en ;
     sh:description "The title of the intellectual entity."@en ;
     sh:minCount 1 ;
-		sh:uniqueLang true ;
+    sh:uniqueLang true ;
     sh:datatype rdf:langString;
   ],
   [
