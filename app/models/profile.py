@@ -9,7 +9,7 @@ from pyshacl import validate as shacl_validate
 
 SPARQL_ANYTHING_JAR: Path = Path("app", "resources", "sparql-anything-0.8.1.jar")
 QUERY_BASIC: Path = Path("app", "resources", "sparql", "basic.sparql")
-SHACL_BASIC: Path = Path("app", "resources", "shacl", "basic.shacl")
+SHACL_BASIC: Path = Path("app", "resources", "shacl", "basic.shacl.ttl")
 
 
 PREMIS_XSD: Path = Path("app", "resources", "xsd", "premis-v3-0.xsd")
