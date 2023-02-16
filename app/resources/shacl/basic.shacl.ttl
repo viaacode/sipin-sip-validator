@@ -45,17 +45,17 @@
     a sh:PropertyShape ;
     sh:path dct:title ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
     sh:name "has title"@en ;
     sh:description "The title of the intellectual entity."@en ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
+		sh:uniqueLang true ;
+    sh:datatype rdf:langString;
   ],
   [
     a sh:PropertyShape ;
     sh:path dct:alternative ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
+    sh:datatype rdf:langString;
     sh:name "has alternative title"@en ;
     sh:description "An alternative title of the intellectual entity."@en ;
   ],
@@ -81,20 +81,20 @@
     a sh:PropertyShape ;
     sh:path dct:description ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
+    sh:uniqueLang true ;
+    sh:datatype rdf:langString;
     sh:name "has description"@en ;
     sh:description "The description of the intellectual entity."@en ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dct:abstract ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
+    sh:uniqueLang true ;
+    sh:datatype rdf:langString;
     sh:name "has abstract"@en ;
     sh:description "The abstract of the intellectual entity."@en ;
-    sh:maxCount 1 ;
   ],
   [
     a sh:PropertyShape ;
@@ -185,10 +185,10 @@
     a sh:PropertyShape ;
     sh:path dct:rights ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
+    sh:datatype rdf:langString ;
+    sh:uniqueLang true ;
     sh:name "has rights"@en ;
     sh:description "The rights of the intellectual entity."@en ;
-    sh:maxCount 1 ;
   ],
   [
     a sh:PropertyShape ;
