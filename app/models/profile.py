@@ -195,6 +195,11 @@ class BasicProfile(Profile):
         Raises:
             GraphNotConformError: If not conform, containing the reason why.
         """
+
+        # Check if the graph is empty, as this conforms against the SHACL.
+        if len(data_graph) == 0:
+            raise GraphNotConformError("Empty graph")
+
         shacl_graph = Graph()
         shacl_graph.parse(str(SHACL_BASIC), format="turtle")
         conforms, results_graph, results_text = shacl_validate(
