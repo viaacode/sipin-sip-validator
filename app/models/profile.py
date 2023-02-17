@@ -1,10 +1,10 @@
-import subprocess
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from lxml import etree
 from rdflib import Graph
 from pyshacl import validate as shacl_validate
+from pysparql_anything import SparqlAnything
 
 
 SPARQL_ANYTHING_JAR: Path = Path("app", "resources", "sparql-anything-0.8.1.jar")
@@ -178,29 +178,17 @@ class BasicProfile(Profile):
             f.write(template.render(bag_path=self.bag_path))
 
         # Run SPARQL-anything transformation.
+        sa = SparqlAnything()
         try:
-            output = subprocess.run(
-                [
-                    "java",
-                    "-jar",
-                    str(SPARQL_ANYTHING_JAR),
-                    "-q",
-                    query_basic_destination,
-                ],
-                capture_output=True,
-                check=True,
-                universal_newlines=True,
-            )
-        except subprocess.CalledProcessError as e:
+            data_graph = sa.construct(q=str(query_basic_destination), f="TTL")
+
+        except Exception as e:
             raise GraphParseError(f"Error when parsing graph: {str(e)}")
 
-        # Parse graph
-        data_graph = Graph()
-        data_graph.parse(data=output.stdout, format="turtle")
         return data_graph
 
     def validate_graph(self, data_graph: Graph) -> bool:
-        """Validate if the graph is conform
+        """Validate if the graph is conform.
 
         Returns: True if the graph was conform.
 
@@ -210,8 +198,7 @@ class BasicProfile(Profile):
         shacl_graph = Graph()
         shacl_graph.parse(str(SHACL_BASIC), format="turtle")
         conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph,
-            shacl_graph=shacl_graph,
+            data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True
         )
 
         if not conforms:

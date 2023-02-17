@@ -5,7 +5,7 @@ A service that parse and validates the unzipped SIP:
  - Parse the bag folder and validate it.
  - Parse the SIP:
    - Validate the metadata files with the corresponding XSDs.
-   - Transform the SIP to a graph using SPARQL-anything and RDFLib.
+   - Transform the SIP to a graph using SPARQL-anything.
    - Validate it with the respective SHACL file.
 
 ## Prerequisites
@@ -25,9 +25,7 @@ A service that parse and validates the unzipped SIP:
 
     `$ cd sipin-sip-creator`
 
-3. Download [SPARQLAnything v0.8.1]([linkurl](https://github.com/SPARQL-Anything/sparql.anything/releases/download/v0.8.1/sparql-anything-0.8.1.jar)) and store it in `app/resources`.
-
-4. Set the needed config:
+3. Set the needed config:
 
 Included in this repository is a config.yml file detailing the required configuration. There is also an .env.example file containing all the needed env variables used in the config.yml file. All values in the config have to be set in order for the application to function correctly. You can use !ENV ${EXAMPLE} as a config value to make the application get the EXAMPLE environment variable.
 
@@ -52,11 +50,15 @@ Included in this repository is a config.yml file detailing the required configur
 
 4. Make sure to load in the ENV vars.
 
-5. Run the tests with:
+5. Set Java path. On linux, for example: 
+
+    `export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/`
+
+6. Run the tests with:
 
     `$ python -m pytest -v --cov=./app`
 
-6. Run the application:
+7. Run the application:
 
     `$ python -m main`
 
@@ -64,7 +66,7 @@ Included in this repository is a config.yml file detailing the required configur
 
 1. Build the container:
 
-   `$ docker build -t sipin-sip-parser .`
+    `$ docker build -t sipin-sip-parser .`
 
 2. Run the tests in a container:
 
@@ -72,4 +74,4 @@ Included in this repository is a config.yml file detailing the required configur
 
 3. Run the container (with specified `.env` file):
 
-   `$ docker run --env-file .env --rm sipin-sip-parser:latest`
+    `$ docker run --env-file .env --rm sipin-sip-parser:latest`

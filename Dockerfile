@@ -1,5 +1,17 @@
 FROM python:3.10-slim
 
+# Install OpenJDK-17 and wget
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk-headless wget && \
+    apt-get clean;
+
+# Set Java path.
+RUN export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
+
+# Download pysparql_anything in correct folder.
+RUN mkdir /usr/local/lib/python3.10/site-packages/pysparql_anything/ && \
+    wget -O /usr/local/lib/python3.10/site-packages/pysparql_anything/sparql-anything-v0.8.1.jar https://github.com/SPARQL-Anything/sparql.anything/releases/download/v0.8.1/sparql-anything-0.8.1.jar 
+
 # Make a new group and user so we don't run as root.
 RUN addgroup --system appgroup && adduser --system appuser --ingroup appgroup
 
