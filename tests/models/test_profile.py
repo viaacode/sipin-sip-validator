@@ -39,6 +39,17 @@ class TestBasicProfile:
         )
         return BasicProfile(path)
 
+    @pytest.fixture
+    def profile_empty_graph(self):
+        path = Path(
+            "tests",
+            "resources",
+            "sips",
+            "other",
+            "empty_graph",
+        )
+        return BasicProfile(path)
+
     def test_validate_premis(self, profile):
         errors = profile._validate_premis()
 
@@ -113,3 +124,9 @@ class TestBasicProfile:
         graph = profile_not_conform.parse_graph()
         with pytest.raises(GraphNotConformError):
             profile_not_conform.validate_graph(graph)
+
+    def test_parse_validate_profile_empty_graph(self, profile_empty_graph):
+        graph = profile_empty_graph.parse_graph()
+        with pytest.raises(GraphNotConformError) as e:
+            profile_empty_graph.validate_graph(graph)
+        assert str(e.value) == "Empty graph"
