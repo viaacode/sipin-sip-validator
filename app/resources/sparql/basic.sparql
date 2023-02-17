@@ -216,17 +216,19 @@ WHERE
         BIND(iri(REPLACE(?dcterm_xsi_type, "edtf:", "http://id.loc.gov/datatypes/edtf/")) AS ?edtf_dt)
 
         BIND(
-            IF(?dcterm_p = dct:extent, xsd:time(?dcterm_value),
-                IF(
-                    bound(?dcterm_xsi_type),
-                    STRDT(?dcterm_value, ?edtf_dt),
+            IF(?dcterm_p = dct:available, xsd:dateTime(?dcterm_value),
+                IF(?dcterm_p = dct:extent, xsd:time(?dcterm_value),
                     IF(
-                        bound(?dcterm_xml_lang),
-                        STRLANG(?dcterm_value, ?dcterm_xml_lang),
+                        bound(?dcterm_xsi_type),
+                        STRDT(?dcterm_value, ?edtf_dt),
                         IF(
-                            ?dcterm_p IN (dct:title, dct:alternative, dct:description, dct:abstract, dct:rights),
-                            STRLANG(?dcterm_value, 'nl'),
-                            ?dcterm_value
+                            bound(?dcterm_xml_lang),
+                            STRLANG(?dcterm_value, ?dcterm_xml_lang),
+                            IF(
+                                ?dcterm_p IN (dct:title, dct:alternative, dct:description, dct:abstract, dct:rights),
+                                STRLANG(?dcterm_value, 'nl'),
+                                ?dcterm_value
+                            )
                         )
                     )
                 )

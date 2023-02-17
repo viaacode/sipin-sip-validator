@@ -72,9 +72,9 @@
     a sh:PropertyShape ;
     sh:path dct:available ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:date ;
+    sh:datatype xsd:dateTime ;
     sh:name "is available"@en ;
-    sh:description "The date on which the intellectual entity is available."@en ;
+    sh:description "The datetime on which the intellectual entity is available."@en ;
     sh:maxCount 1 ;
   ],
   [
