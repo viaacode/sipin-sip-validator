@@ -160,7 +160,8 @@
     a sh:PropertyShape ;
     sh:path dct:subject ;
     sh:NodeKind sh:Literal ;
-    sh:datatype xsd:string ;
+    sh:uniqueLang false ;
+    sh:datatype rdf:langString ;
     sh:name "has subject"@en ;
     sh:description "The subject or keywords of the intellectual entity."@en ;
   ],
