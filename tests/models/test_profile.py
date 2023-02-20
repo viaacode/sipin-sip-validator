@@ -7,13 +7,24 @@ from app.models.profile import BasicProfile, XMLNotValidError, GraphNotConformEr
 
 class TestBasicProfile:
     @pytest.fixture
-    def profile(self):
+    def profile_conform(self):
         path = Path(
             "tests",
             "resources",
             "sips",
             "basic",
             "conform",
+        )
+        return BasicProfile(path)
+
+    @pytest.fixture
+    def profile_conform_extended(self):
+        path = Path(
+            "tests",
+            "resources",
+            "sips",
+            "basic",
+            "conform_extended",
         )
         return BasicProfile(path)
 
@@ -50,7 +61,12 @@ class TestBasicProfile:
         )
         return BasicProfile(path)
 
-    def test_validate_premis(self, profile):
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_conform", "profile_conform_extended"],
+    )
+    def test_validate_premis(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
         errors = profile._validate_premis()
 
         assert not errors
@@ -73,7 +89,12 @@ class TestBasicProfile:
             == "Element '{http://www.loc.gov/premis/v3}objectCharacteristics': Missing child element(s). Expected is ( {http://www.loc.gov/premis/v3}format )., line 49"
         )
 
-    def test_validate_dcterms(self, profile):
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_conform", "profile_conform_extended"],
+    )
+    def test_validate_dcterms(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
         error = profile._validate_dcterms()
 
         assert not error
@@ -83,7 +104,12 @@ class TestBasicProfile:
 
         assert error
 
-    def test_validate_mets(self, profile):
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_conform", "profile_conform_extended"],
+    )
+    def test_validate_mets(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
         errors = profile._validate_mets()
 
         assert not errors
@@ -106,7 +132,12 @@ class TestBasicProfile:
             == "Element '{http://www.loc.gov/METS/}unknownSpec': This element is not expected. Expected is one of ( {http://www.loc.gov/METS/}dmdSec, {http://www.loc.gov/METS/}amdSec, {http://www.loc.gov/METS/}fileSec, {http://www.loc.gov/METS/}structMap )., line 10"
         )
 
-    def test_validate_metadata(self, profile):
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_conform", "profile_conform_extended"],
+    )
+    def test_validate_metadata(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
         errors = profile.validate_metadata()
 
         assert not errors
@@ -116,7 +147,12 @@ class TestBasicProfile:
 
         assert errors
 
-    def test_parse_validate_graph(self, profile):
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_conform", "profile_conform_extended"],
+    )
+    def test_parse_validate_graph(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
         graph = profile.parse_graph()
         assert profile.validate_graph(graph)
 
