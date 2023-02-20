@@ -1,7 +1,7 @@
 PREFIX premis: <http://www.loc.gov/premis/v3#>
 PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
 PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX haObjId: <https://data.hetarchief.be/id/object/>
