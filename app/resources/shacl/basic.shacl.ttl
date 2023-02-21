@@ -100,18 +100,27 @@
     a sh:PropertyShape ;
     sh:path dct:created ;
     sh:nodeKind sh:Literal ;
-    sh:datatype edtf:EDTF-level1 ;
+    sh:or (
+      [ sh:datatype edtf:EDTF-level0 ]
+      [ sh:datatype edtf:EDTF-level1 ]
+      [ sh:datatype edtf:EDTF-level2 ]
+      [ sh:datatype edtf:EDTF ]
+    ) ;
     sh:name "has creation date"@en ;
     sh:description "The creation date of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:severity sh:Violation ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dct:issued ;
     sh:nodeKind sh:Literal ;
-    sh:datatype edtf:EDTF-level1 ;
+    sh:or (
+      [ sh:datatype edtf:EDTF-level0 ]
+      [ sh:datatype edtf:EDTF-level1 ]
+      [ sh:datatype edtf:EDTF-level2 ]
+      [ sh:datatype edtf:EDTF ]
+    ) ;
     sh:name "has issue date"@en ;
     sh:description "The issue date of the intellectual entity."@en ;
     sh:maxCount 1 ;
