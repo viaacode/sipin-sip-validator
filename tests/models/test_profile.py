@@ -1,6 +1,8 @@
 from pathlib import Path
 
 import pytest
+from rdflib import Graph
+from rdflib.compare import isomorphic
 
 from app.models.profile import BasicProfile, XMLNotValidError, GraphNotConformError
 
@@ -148,13 +150,22 @@ class TestBasicProfile:
         assert errors
 
     @pytest.mark.parametrize(
-        "profile_name",
-        ["profile_conform", "profile_conform_extended"],
+        "profile_name, expected_graph_path",
+        [
+            ("profile_conform", "conform"),
+            ("profile_conform_extended", "conform_extended"),
+        ],
     )
-    def test_parse_validate_graph(self, profile_name, request):
+    def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
         profile = request.getfixturevalue(profile_name)
         graph = profile.parse_graph()
+        # Check if valid
         assert profile.validate_graph(graph)
+
+        # Check if expected
+        expected = Graph()
+        expected.parse(f"tests/resources/graph/basic/{expected_graph_path}/graph.ttl")
+        assert isomorphic(graph, expected)
 
     def test_parse_validate_profile_not_conform(self, profile_not_conform):
         graph = profile_not_conform.parse_graph()
