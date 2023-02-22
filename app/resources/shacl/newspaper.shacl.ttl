@@ -167,32 +167,6 @@
     ] .
 
 
-<#RoleShape> a sh:NodeShape ;
-    sh:targetClass mods:RoleRelationship ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path mods:roleRelationshipName ;
-        sh:nodeKind sh:IRI ;
-        # sh:class madsrdf:PersonalName ;
-        sh:node <#PersonShape> ;
-        sh:name "Role relationship name"@en ;
-        sh:description "The role relationship name of a person associated with the newspaper."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ],
-    [
-        #roleTerm
-        a sh:PropertyShape ;
-        sh:path mods:roleRelationshipRole ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Role relationship - role"@en ;
-        sh:description "The role associated with a name, where the name and role are bound together in a roleRelationship."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] .
-
 <#PersonShape> a sh:NodeShape ;
     sh:targetClass schema:Person ;
     sh:property
