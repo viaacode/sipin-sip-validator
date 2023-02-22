@@ -1,0 +1,275 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <https://schema.org/> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix mods: <http://www.loc.gov/mods/rdf/v1#> .
+@prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix edm: <http://www.europeana.eu/schemas/edm/> .
+@prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
+
+
+@base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
+<>  a owl:Ontology ;
+    dct:author  [
+        schema:name   "Lennert Van de Velde" ;
+        schema:email  "lennert.vandevelde@meemoo.be"
+    ] ;
+    dct:title     "Data model NEWSPAPER"@en ;
+    dct:created   "2023-02-08" ;
+    dct:modified  "2023-02-08" ;
+    dct:description """Data model to describe the content of objects."""@en ;
+    pav:version "0.0.1" .
+
+<#IntellectualEntityShape> a sh:NodeShape ;
+    sh:targetClass premis:IntellectualEntity ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:property ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#TitleShape> ;
+        sh:name "Title"@en ;
+        sh:description "The title of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    #LocalIDS?
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:nodeKind sh:IRI ;
+        # sh:class haObj:LocalIdentifier ;
+        sh:node <#ObjectIdentifierShape> ;
+        sh:name "Identifier"@en ;
+        sh:description "The identifier of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    ## TYPE?
+    [
+        a sh:PropertyShape ;
+        sh:path bf:summary ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#SummaryShape> ;
+        sh:name "Mods abstract"@en ;
+        sh:description "The abstract of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:subject ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#TopicShape> ;
+        sh:name "Mods subject topic"@en ;
+        sh:description "The subject of the newspaper."@en ;
+        sh:uniqueLang true ;
+    ],
+    [
+        a sh:PropertyShape ; 
+        sh:path bf:contribution ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#ContributionShape> ;
+        sh:name "Mods name"@en ;
+        sh:description "The name of a person who contributed to the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:originDate ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype edtf:EDTF-level1 ;
+        sh:name "Date created"@en ;
+        sh:description "The date of creation of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:provisionActivity ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#PublicationShape> ;
+        sh:name "Date issued"@en ;
+        sh:description "The date of issue of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    #? Abraham URI en ID met Type?
+    [
+        a sh:PropertyShape ;
+        sh:path bf:credits ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Credits"@en ;
+        sh:description "The credits of the newspaper."@en ;
+    ],
+    # mods:genre
+    [
+        a sh:PropertyShape ;
+        sh:path bf:genreForm ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#GenreFormShape> ;
+        sh:name "Genre form"@en ;
+        sh:description "The genre form of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path mods:issuance ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Issuance"@en ;
+        sh:description "The issuance of the newspaper."@en ;
+    ] .
+
+<#GenreFormShape> a sh:NodeShape ;
+    sh:targetClass bf:GenreForm ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Genre form "@en ;
+        sh:hasValue "newspaper"@en ;
+        sh:description "The genre form of the newspaper."@en ;
+    ] .
+
+<#PublicationShape> a sh:NodeShape ;
+    sh:targetClass bf:Publication ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:place ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#PlaceShape> ;
+        sh:name "Place of publication"@en ;
+        sh:description "The place of publication of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:date ; 
+        sh:nodeKind sh:Literal ;
+        sh:datatype edtf:EDTF-level1 ;
+        sh:name "Date of publication"@en ;
+        sh:description "The date of publication of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+<#ContributionShape> a sh:NodeShape ;
+    sh:targetClass bf:Contribution ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:agent ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#AgentShape> ;
+        sh:name "Mods name"@en ;
+        sh:description "The name of a person who contributed to the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:role ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#RoleShape> ;
+        sh:name "Mods role"@en ;
+        sh:description "The role of a person who contributed to the newspaper."@en ;
+    ] .
+
+<#RoleShape> a sh:NodeShape ; 
+    sh:targetClass bf:Role ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:roleTerm ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods role term"@en ;
+        sh:description "The role term of a person who contributed to the newspaper."@en ;
+        sh:maxCount 1 ;
+    ] .
+
+<#AgentShape> a sh:NodeShape ;
+    sh:targetClass bf:Agent ;
+    sh:property
+    # Official docs say, concat nameParts, here use schema props?
+    [
+        a sh:PropertyShape ;
+        sh:path schema:givenName ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods name part"@en ;
+        sh:description "The given name part of a person who contributed to the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:familyName ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods family name part"@en ;
+        sh:description "The family name part of a person who contributed to the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+<#SummaryShape> a sh:NodeShape ;
+    sh:targetClass bf:Topic ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods subject topic"@en ;
+        sh:description "The subject of the newspaper."@en ;
+        sh:uniqueLang true ;
+    ] .
+
+<#SummaryShape> a sh:NodeShape ;
+    sh:targetClass bf:Summary ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods abstract"@en ;
+        sh:description "The abstract of the newspaper."@en ;
+        sh:uniqueLang true ;
+    ] .
+
+
+<#TitleShape> a sh:NodeShape ;
+    sh:targetClass bf:Title ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:mainTitle ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Main title"@en ;
+        sh:description "The main title of the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:uniqueLang true ;
+    ] .
+
+<#ObjectIdentifierShape> a sh:NodeShape ;
+  sh:targetClass haObj:LocalIdentifier ;
+  sh:property 
+  ## ? Type van id?
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has object identifier value"@en ;
+    sh:description "The value of the object identifier."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
