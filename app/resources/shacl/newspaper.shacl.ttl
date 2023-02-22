@@ -12,6 +12,7 @@
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
 @prefix mods: <http://www.loc.gov/mods/rdf/v1#> .
 @prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix edm: <http://www.europeana.eu/schemas/edm/> .
 
 
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
@@ -31,28 +32,25 @@
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path mods:title ;
+        sh:path dct:title ;
         sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Mods title"@en ;
+        sh:datatype rdf:langString ;
+        sh:name "Title"@en ;
         sh:description "The title of the newspaper."@en ;
         sh:minCount 1 ;
-        sh:maxCount 1 ;
+        sh:uniqueLang true ;
     ],
     [
         a sh:PropertyShape ;
-        sh:path mods:identifier ;
+        sh:path dct:identifier ;
         sh:nodeKind sh:IRI ;
         # sh:class haObj:LocalIdentifier ;
         sh:node <#ObjectIdentifierShape> ;
-        sh:name "Mods identifier"@en ;
+        sh:name "Identifier"@en ;
         sh:description "The identifier of the newspaper."@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
-    # typeOfResource?
-    # Usage of dct:type found at:
-    # https://samvera.atlassian.net/wiki/spaces/samvera/pages/405212204/MODS+Type+of+Resource+Individual+Institution+Usage+And+RDF+Conversion
     [
         a sh:PropertyShape ;
         sh:path dct:type ;
@@ -66,43 +64,33 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path mods:abstract ;
+        sh:path dcterms:abstract ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Mods abstract"@en ;
         sh:description "The abstract of the newspaper."@en ;
-        sh:maxCount 1 ;
+        sh:uniqueLang true ;
     ],
     [
         a sh:PropertyShape ;
-        sh:path mods:subjectTopic ;
+        sh:path dcterms:subject ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Mods subject topic"@en ;
         sh:description "The subject of the newspaper."@en ;
-        sh:maxCount 1 ;
+        sh:uniqueLang true ;
     ],
     [
         a sh:PropertyShape ; 
-        sh:path mods:name ;
+        sh:path dct:creator ;
         sh:nodeKind sh:IRI ;
-        # sh:class madsrdf:PersonalName ;
-        sh:node <#PersonalNameShape> ;
+        sh:node <#RoleShape> ;
         sh:name "Name of a person"@en ;
         sh:description "The name of a person associated with the newspaper."@en ;
     ],
     [
         a sh:PropertyShape ;
-        sh:path mods:roleRelationship ;
-        sh:nodeKind sh:IRI ;
-        # sh:class mods:RoleRelationship ;
-        sh:node <#RoleRelationshipShape> ;
-        sh:name "Role relationship"@en ;
-        sh:description "The role relationship of a person associated with the newspaper."@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path mods:dateCreated ;
+        sh:path dcterms:created ;
         sh:nodeKind sh:Literal ;
         sh:datatype edtf:EDTF-level1 ;
         sh:name "Date created"@en ;
@@ -110,7 +98,6 @@
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
-    # DateIssued?
     [
         a sh:PropertyShape ;
         sh:path dct:issued ;
@@ -121,72 +108,66 @@
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
+    #? Abraham URI en ID met Type?
     [
         a sh:PropertyShape ;
-        sh:path mods:identifierGroup ;
-        sh:nodeKind sh:IRI ;
-        # sh:class mods:IdentifierGroup ;
-        sh:node <#IdentifierGroupShape> ;
-        sh:name "Identifier group"@en ;
-        sh:description "The identifier group of the newspaper."@en ;
+        sh:path dct:license ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "License note"@en ;
+        sh:description "The license note of the newspaper."@en ;
+    ],
+    # mods:genre
+    [
+        a sh:PropertyShape ;
+        sh:path edm:hasType ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Genre"@en ;
+        sh:description "The genre of the newspaper."@en ;
     ],
     [
         a sh:PropertyShape ;
-        sh:path mods:noteGroup ;
-        sh:nodeKind sh:IRI ;
-        # sh:class mods:NoteGroup ;
-        sh:node <#NoteGroupShape> ;
-        sh:name "Note group"@en ;
-        sh:description "The note group of the newspaper (for licenses)."@en ;
+        sh:path mods:issuance ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Issuance"@en ;
+        sh:description "The issuance of the newspaper."@en ;
     ] .
 
-<#NoteGroupShape> a sh:NodeShape ;
-    sh:targetClass mods:NoteGroup ;
+<#RoleShape> a sh:NodeShape ; 
+    sh:targetClass schema:Role ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path mods:noteGroupType ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:in ("license") ;
-        sh:name "Note group type"@en ;
-        sh:description "The note group type of the newspaper."@en ;
-        sh:maxCount 1 ;
+        sh:path schema:contributor ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#PersonShape> ;
+        sh:name "contributor"@en ;
+        sh:name "bijdrager"@nl ;
+        sh:name "contributeur"@fr ;
+        sh:severity sh:Violation ;
+        sh:message "schema:contributor is not of class schema:Person or org:Organization"@en ;
+        sh:message "schema:contributor is niet van de klasse schema:Person of org:Organization"@nl ;
+        sh:message "schema:contributor n'est pas de la classe schema:Person ou org:Organization"@fr ;
     ],
     [
         a sh:PropertyShape ;
-        sh:path mods:noteGroupValue ;
+        sh:path schema:roleName ;
         sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Note group value"@en ;
-        sh:description "The note group value of the newspaper."@en ;
-        sh:maxCount 1 ;
+        sh:datatype xsd:string ; 
+        sh:minCount 1 ;
+        sh:name "role name"@en ;
+        sh:name "rolenaam"@nl ;
+        sh:name "nom de rôle"@fr ;
+        sh:severity sh:Violation ;
+        sh:message "schema:roleName is missing or not of type string or of class skos:Concept"@en ;
+        sh:message "schema:roleName ontbreekt of is niet van het type string of van de klasse skos:Concept"@nl ;
+        sh:message "schema:roleName est manquant ou n'est pas de type string ou de la classe skos:Concept"@fr ;
     ] .
 
-<#IdentifierGroupShape> a sh:NodeShape ;
-    sh:targetClass mods:IdentifierGroup ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path mods:identifierGroupType ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:in ("abraham_id" "abraham_uri") ;
-        sh:name "Identifier group type"@en ;
-        sh:description "The identifier group type of the newspaper."@en ;
-        sh:maxCount 1 ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path mods:identifierGroupValue ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Identifier group value"@en ;
-        sh:description "The identifier group value of the newspaper."@en ;
-        sh:maxCount 1 ;
-    ] .
 
-<#RoleRelationshipShape> a sh:NodeShape ;
+<#RoleShape> a sh:NodeShape ;
     sh:targetClass mods:RoleRelationship ;
     sh:property
     [
@@ -194,7 +175,7 @@
         sh:path mods:roleRelationshipName ;
         sh:nodeKind sh:IRI ;
         # sh:class madsrdf:PersonalName ;
-        sh:node <#PersonalNameShape> ;
+        sh:node <#PersonShape> ;
         sh:name "Role relationship name"@en ;
         sh:description "The role relationship name of a person associated with the newspaper."@en ;
         sh:minCount 1 ;
@@ -212,81 +193,26 @@
         sh:maxCount 1 ;
     ] .
 
-<#PersonalNameShape> a sh:NodeShape ;
-    sh:targetClass madsrdf:PersonalName ;
+<#PersonShape> a sh:NodeShape ;
+    sh:targetClass schema:Person ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path madsrdf:authoritativeLabel ;
+        sh:path schema:familyName ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
-        sh:name "Authoritative label"@en ;
-        sh:description "The name of a person associated with the newspaper."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ],
-    [
-        # Property for FamilyNameElement and GivenNameElement
-        # See example at:
-        # https://loc.gov/standards/mads/rdf/#tab2:~:text=bnode1680267008)%3B%0A%20%20a%20madsrdf%3AAuthority%2C-,madsrdf%3APersonalName,-.%0A_%3Abnode104199680%20madsrdf%3AelementValue.
-        a sh:PropertyShape ;
-        sh:path madsrdf:elementList ;
-        sh:nodeKind sh:IRI ;
-        sh:node <#ElementListShape> ;
-        sh:name "Element list"@en ;
-        sh:description "The element list of a person associated with the newspaper."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] .
-
-<#ElementListShape> a sh:NodeShape ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path rdf:first ;
-        sh:nodeKind sh:IRI ;
-        sh:node <#ElementShape> ;
-        sh:or (
-            [
-                sh:class madsrdf:FamilyNameElement
-            ]
-            [
-                sh:class madsrdf:GivenNameElement
-            ]
-        ) ;
-        sh:name "Element"@en ;
-        sh:description "The element of a person associated with the newspaper."@en ;
+        sh:name "Family name"@en ;
+        sh:description "The family name of a person associated with the newspaper."@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
     [
         a sh:PropertyShape ;
-        sh:path rdf:rest ;
-        sh:nodeKind sh:IRI ;
-        sh:or (
-            [
-                sh:node <#ElementListShape> ;
-            ]
-            [
-                sh:hasValue rdf:nil ;
-            ]
-        ) ;
-        sh:name "Element list"@en ;
-        sh:description "The element list of a person associated with the newspaper."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] .
-
-<#ElementShape> a sh:NodeShape ;
-    # sh:targetClass madsrdf:FamilyNameElement, madsrdf:GivenNameElement ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path madsrdf:elementValue ;
+        sh:path schema:givenName ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
-        sh:name "Element value"@en ;
-        sh:description "The element value of a person associated with the newspaper."@en ;
+        sh:name "Given name"@en ;
+        sh:description "The given name of a person associated with the newspaper."@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
@@ -294,6 +220,7 @@
 <#ObjectIdentifierShape> a sh:NodeShape ;
   sh:targetClass haObj:LocalIdentifier ;
   sh:property 
+  ## ? Type van id?
   [
     a sh:PropertyShape ;
     sh:path rdf:value ;
