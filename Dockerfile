@@ -6,7 +6,8 @@ RUN apt-get update && \
     apt-get clean;
 
 # Set Java path.
-RUN export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64/
+ENV PATH $JAVA_HOME/bin:$PATH
 
 # Download pysparql_anything in correct folder.
 RUN mkdir /usr/local/lib/python3.10/site-packages/pysparql_anything/ && \
