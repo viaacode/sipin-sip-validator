@@ -163,7 +163,7 @@
         a sh:PropertyShape ;
         sh:path rdfs:value ;
         sh:nodeKind sh:IRI ;
-        sh:datatype xsd:string ;
+        # sh:datatype xsd:string ;
         sh:name "Abraham URI"@en ;
         sh:description "The Abraham URI of the newspaper."@en ;
     ] .
