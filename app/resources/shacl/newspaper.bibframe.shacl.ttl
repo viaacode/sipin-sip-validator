@@ -99,7 +99,24 @@
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
-    #? Abraham URI en ID met Type?
+    [
+        a sh:PropertyShape ;
+        # sh:path haObj:abraham_id ; path?
+        sh:nodeKind sh:IRI ;
+        sh:node <#AbrahamURIShape> ;
+        sh:name "Abraham URI"@en ;
+        sh:description "The Abraham URI of the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        # sh:path haObj:abraham_id ; path?
+        sh:nodeKind sh:IRI ;
+        sh:node <#AbrahamIdShape> ;
+        sh:name "Abraham ID"@en ;
+        sh:description "The Abraham ID of the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
     [
         a sh:PropertyShape ;
         sh:path bf:credits ;
@@ -137,6 +154,30 @@
         sh:name "Genre form "@en ;
         sh:hasValue "newspaper"@en ;
         sh:description "The genre form of the newspaper."@en ;
+    ] .
+    
+<#AbrahamURIShape> a sh:NodeShape ;
+    sh:targetClass haObj:AbrahamURI ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:value ;
+        sh:nodeKind sh:IRI ;
+        sh:datatype xsd:string ;
+        sh:name "Abraham URI"@en ;
+        sh:description "The Abraham URI of the newspaper."@en ;
+    ] .
+
+<#AbrahamIdShape> a sh:NodeShape ;
+    sh:targetClass haObj:AbrahamId ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Abraham ID"@en ;
+        sh:description "The Abraham ID of the newspaper."@en ;
     ] .
 
 <#PublicationShape> a sh:NodeShape ;
@@ -262,7 +303,6 @@
 <#ObjectIdentifierShape> a sh:NodeShape ;
   sh:targetClass haObj:LocalIdentifier ;
   sh:property 
-  ## ? Type van id?
   [
     a sh:PropertyShape ;
     sh:path rdf:value ;
