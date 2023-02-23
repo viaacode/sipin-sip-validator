@@ -119,7 +119,7 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path mods:issuance ;
+        sh:path bf:issuance ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Issuance"@en ;
