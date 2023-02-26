@@ -6,4 +6,8 @@ app:
     host: !ENV ${PULSAR_HOST}
     port: !ENV ${PULSAR_PORT}
   sip-parser:
-    consumer_topic: !ENV ${PARSER_CONSUMER_TOPIC}
+    consumer_topic: !ENV ${VALIDATOR_CONSUMER_TOPIC}
+    bag_validate_topic: !ENV ${BAG_VALIDATE_TOPIC}
+    sip_validate_xsd_topic: !ENV ${SIP_VALIDATE_XSD_TOPIC}
+    sip_load_graph_topic: !ENV ${SIP_LOAD_GRAPH_TOPIC}
+    sip_validate_shacl_topic: !ENV ${SIP_VALIDATE_SHACL_TOPIC}

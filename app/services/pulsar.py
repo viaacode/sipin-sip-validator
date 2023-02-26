@@ -8,11 +8,6 @@ from viaa.observability import logging
 from cloudevents.events import Event, CEMessageMode, PulsarBinding
 
 
-SIP_VALIDATE_XSD_TOPIC = "sip.validate.xsd"
-SIP_LOAD_GRAPH_TOPIC = "sip.loadgraph"
-SIP_VALIDATE_SHACL_TOPIC = "sip.validate.shacl"
-
-
 class PulsarClient:
     """Abstraction for a Pulsar Client.
 
@@ -34,7 +29,7 @@ class PulsarClient:
             f'pulsar://{self.pulsar_config["host"]}:{self.pulsar_config["port"]}'
         )
         self.consumer: Consumer = self.client.subscribe(
-            self.app_config["consumer_topic"], "sipin-sip-parser"
+            self.app_config["consumer_topic"], "sipin-sip-validator"
         )
         self.log.info(f"Started consuming topic: {self.app_config['consumer_topic']}")
         self.producers = {}

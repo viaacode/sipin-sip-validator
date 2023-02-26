@@ -19,21 +19,15 @@ from app.models.profile import (
 )
 from app.services.pulsar import (
     PulsarClient,
-    SIP_VALIDATE_XSD_TOPIC,
-    SIP_LOAD_GRAPH_TOPIC,
-    SIP_VALIDATE_SHACL_TOPIC,
 )
 from lxml import etree
 
 APP_NAME = "sipin-sip-validator"
 
-
 NAMESPACES = {
     "mets": "http://www.loc.gov/METS/",
     "csip": "https://DILCIS.eu/XML/METS/CSIPExtensionMETS",
 }
-
-BAG_VALIDATE_TOPIC = "bag.validate"
 
 
 class EventListener:
@@ -43,6 +37,13 @@ class EventListener:
         self.config = config_parser.app_cfg
         # Init Pulsar client
         self.pulsar_client = PulsarClient()
+
+        # Topics
+        app_config = self.config["sip-parser"]
+        self.bag_validate_topic = app_config["bag_validate_topic"]
+        self.sip_validate_xsd_topic = app_config["sip_validate_xsd_topic"]
+        self.sip_load_graph_topic = app_config["sip_load_graph_topic"]
+        self.sip_validate_shacl_topic = app_config["sip_validate_shacl_topic"]
 
     def produce_event(
         self,
@@ -120,7 +121,7 @@ class EventListener:
                     bag.parse_validate()
                 except (BagParseError) as e:
                     self.produce_event(
-                        BAG_VALIDATE_TOPIC,
+                        self.bag_validate_topic,
                         {
                             "message": f"{bag_path} could not be parsed: {str(e)}",
                         },
@@ -132,7 +133,7 @@ class EventListener:
                     return
                 except (BagNotValidError) as e:
                     self.produce_event(
-                        BAG_VALIDATE_TOPIC,
+                        self.bag_validate_topic,
                         {
                             "message": f"{bag_path} is not a valid bag: {str(e)}",
                         },
@@ -144,7 +145,7 @@ class EventListener:
                     return
 
                 self.produce_event(
-                    BAG_VALIDATE_TOPIC,
+                    self.bag_validate_topic,
                     {"message": f"{bag_path} is a valid bag"},
                     msg_data["destination"],
                     EventOutcome.SUCCESS,
@@ -158,7 +159,7 @@ class EventListener:
                 xml_validation_errors = profile.validate_metadata()
                 if xml_validation_errors:
                     self.produce_event(
-                        SIP_VALIDATE_XSD_TOPIC,
+                        self.sip_validate_xsd_topic,
                         {
                             "message": "Metadata files are not valid against XSD",
                             "errors": [str(e) for e in xml_validation_errors],
@@ -171,7 +172,7 @@ class EventListener:
                     return
 
                 self.produce_event(
-                    SIP_VALIDATE_XSD_TOPIC,
+                    self.sip_validate_xsd_topic,
                     {
                         "message": "Metadata files are valid against XSD",
                     },
@@ -185,7 +186,7 @@ class EventListener:
                     graph = profile.parse_graph()
                 except GraphParseError as e:
                     self.produce_event(
-                        SIP_LOAD_GRAPH_TOPIC,
+                        self.sip_load_graph_topic,
                         {
                             "message": "Cannot transform metadata into a graph.",
                             "errors": str(e),
@@ -198,7 +199,7 @@ class EventListener:
                     return
 
                 self.produce_event(
-                    SIP_LOAD_GRAPH_TOPIC,
+                    self.sip_load_graph_topic,
                     {
                         "message": "Metadata can be transformed into a graph.",
                     },
@@ -212,7 +213,7 @@ class EventListener:
                     profile.validate_graph(graph)
                 except GraphNotConformError as e:
                     self.produce_event(
-                        SIP_VALIDATE_SHACL_TOPIC,
+                        self.sip_validate_shacl_topic,
                         {
                             "message": "Graph is not conform.",
                             "errors": str(e),
@@ -226,7 +227,7 @@ class EventListener:
 
                 # Send event
                 self.produce_event(
-                    SIP_VALIDATE_SHACL_TOPIC,
+                    self.sip_validate_shacl_topic,
                     {
                         "message": "Graph is conform.",
                         "metadata_graph": json.loads(graph.serialize(format="json-ld")),
