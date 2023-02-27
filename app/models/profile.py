@@ -2,7 +2,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from lxml import etree
-from rdflib import Graph
+from rdflib import Graph, URIRef
 from pyshacl import validate as shacl_validate
 from pysparql_anything import SparqlAnything
 
@@ -205,10 +205,16 @@ class BasicProfile(Profile):
         Raises:
             GraphNotConformError: If not conform, containing the reason why.
         """
-
-        # Check if the graph is empty, as this conforms against the SHACL.
-        if len(data_graph) == 0:
-            raise GraphNotConformError("Empty graph")
+        # An empty graph conforms with the SHACL. Check if the graph has at least
+        # a premis:intellecutalEntity node.
+        if (
+            None,
+            URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+            URIRef("http://www.loc.gov/premis/rdf/v3/IntellectualEntity"),
+        ) not in data_graph:
+            raise GraphNotConformError(
+                "Graph is perceived as empty as it does not contain an intellectual entity."
+            )
 
         shacl_graph = Graph()
         shacl_graph.parse(str(SHACL_SIP), format="turtle")

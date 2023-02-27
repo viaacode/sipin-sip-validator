@@ -176,4 +176,7 @@ class TestBasicProfile:
         graph = profile_empty_graph.parse_graph()
         with pytest.raises(GraphNotConformError) as e:
             profile_empty_graph.validate_graph(graph)
-        assert str(e.value) == "Empty graph"
+        assert (
+            str(e.value)
+            == "Graph is perceived as empty as it does not contain an intellectual entity."
+        )
