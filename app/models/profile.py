@@ -188,7 +188,7 @@ class BasicProfile(Profile):
         # Run SPARQL-anything transformation.
         sa = SparqlAnything()
         try:
-            sip_graph = sa.construct(q=str(query_basic_destination), f="TTL")
+            sip_graph = sa.construct(q=str(query_sip_destination), f="TTL")
             profile_graph = sa.construct(q=str(query_basic_destination), f="TTL")
             data_graph = sip_graph + profile_graph
 

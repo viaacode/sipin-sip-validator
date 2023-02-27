@@ -38,7 +38,7 @@ CONSTRUCT {
             schema:identifier ?agent_id
 }
 WHERE {
-    SERVICE <x-sparql-anything:location={{ bag_path }}/mets.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/mets.xml> {
         [
             a mets:mets;
             xyz:OBJID ?sip_id;
