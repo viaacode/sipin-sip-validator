@@ -1,7 +1,7 @@
-# SIPin SIP Parser
+# SIPin SIP Validator
 
 ## Synopsis
-A service that parse and validates the unzipped SIP:
+A service that parses and validates the unzipped SIP:
  - Parse the bag folder and validate it.
  - Parse the SIP:
    - Validate the metadata files with the corresponding XSDs.
@@ -19,11 +19,11 @@ A service that parse and validates the unzipped SIP:
 
 1. Clone this repository with:
 
-    `$ git clone https://github.com/viaacode/sipin-sip-creator.git`
+    `$ git clone https://github.com/viaacode/sipin-sip-validator.git`
 
 2. Change into the new directory:
 
-    `$ cd sipin-sip-creator`
+    `$ cd sipin-sip-validator`
 
 3. Set the needed config:
 
@@ -66,12 +66,12 @@ Included in this repository is a config.yml file detailing the required configur
 
 1. Build the container:
 
-    `$ docker build -t sipin-sip-parser .`
+    `$ docker build -t sipin-sip-validator .`
 
 2. Run the tests in a container:
 
-    `$ docker run --env-file .env.example --rm --entrypoint python sipin-sip-parser:latest -m pytest -v --cov=./app`
+    `$ docker run --env-file .env.example --rm --entrypoint python sipin-sip-validator:latest -m pytest -v --cov=./app`
 
 3. Run the container (with specified `.env` file):
 
-    `$ docker run --env-file .env --rm sipin-sip-parser:latest`
+    `$ docker run --env-file .env --rm sipin-sip-validator:latest`
