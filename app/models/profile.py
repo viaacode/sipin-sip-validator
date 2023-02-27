@@ -2,13 +2,15 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from lxml import etree
-from rdflib import Graph
+from rdflib import Graph, URIRef
 from pyshacl import validate as shacl_validate
 from pysparql_anything import SparqlAnything
 
 
 SPARQL_ANYTHING_JAR: Path = Path("app", "resources", "sparql-anything-0.8.1.jar")
+QUERY_SIP: Path = Path("app", "resources", "sparql", "sip.sparql")
 QUERY_BASIC: Path = Path("app", "resources", "sparql", "basic.sparql")
+SHACL_SIP: Path = Path("app", "resources", "shacl", "sip.shacl.ttl")
 SHACL_BASIC: Path = Path("app", "resources", "shacl", "basic.shacl.ttl")
 
 
@@ -172,15 +174,23 @@ class BasicProfile(Profile):
             GraphParseError: If parsing failed.
         """
         # write SPARQL-anything query for the SIP.
+        query_sip_destination = self.bag_path.joinpath(QUERY_SIP.name)
+        sip_template = self.jinja_env.get_template(str(QUERY_SIP.name))
+        with open(str(query_sip_destination), "w") as f:
+            f.write(sip_template.render(bag_path=self.bag_path))
+
+        # write SPARQL-anything query for the BASIC profile.
         query_basic_destination = self.bag_path.joinpath(QUERY_BASIC.name)
-        template = self.jinja_env.get_template(str(QUERY_BASIC.name))
+        profile_template = self.jinja_env.get_template(str(QUERY_BASIC.name))
         with open(str(query_basic_destination), "w") as f:
-            f.write(template.render(bag_path=self.bag_path))
+            f.write(profile_template.render(bag_path=self.bag_path))
 
         # Run SPARQL-anything transformation.
         sa = SparqlAnything()
         try:
-            data_graph = sa.construct(q=str(query_basic_destination), f="TTL")
+            sip_graph = sa.construct(q=str(query_sip_destination), f="TTL")
+            profile_graph = sa.construct(q=str(query_basic_destination), f="TTL")
+            data_graph = sip_graph + profile_graph
 
         except Exception as e:
             raise GraphParseError(f"Error when parsing graph: {str(e)}")
@@ -195,12 +205,19 @@ class BasicProfile(Profile):
         Raises:
             GraphNotConformError: If not conform, containing the reason why.
         """
-
-        # Check if the graph is empty, as this conforms against the SHACL.
-        if len(data_graph) == 0:
-            raise GraphNotConformError("Empty graph")
+        # An empty graph conforms with the SHACL. Check if the graph has at least
+        # a premis:intellecutalEntity node.
+        if (
+            None,
+            URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+            URIRef("http://www.loc.gov/premis/rdf/v3/IntellectualEntity"),
+        ) not in data_graph:
+            raise GraphNotConformError(
+                "Graph is perceived as empty as it does not contain an intellectual entity."
+            )
 
         shacl_graph = Graph()
+        shacl_graph.parse(str(SHACL_SIP), format="turtle")
         shacl_graph.parse(str(SHACL_BASIC), format="turtle")
         conforms, results_graph, results_text = shacl_validate(
             data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True
