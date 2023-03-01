@@ -65,11 +65,7 @@
     a sh:PropertyShape ;
     sh:path relSubType:isr ;
     sh:nodeKind sh:IRI ;
-<<<<<<< HEAD
-    sh:class premis:Representation ;
-=======
     # sh:class premis:Representation ;
->>>>>>> DEV-2306 change sh:class to sh:node
     sh:node <#RepresentationShape> ;
     sh:name "is represented by"@en ;
     sh:description "The representation of the intellectual entity."@en ;
@@ -361,11 +357,7 @@
     a sh:PropertyShape ;
     sh:path relSubType:rep ;
     sh:nodeKind sh:IRI ;
-<<<<<<< HEAD
-    sh:class premis:IntellectualEntity ;
-=======
     # sh:class premis:IntellectualEntity ;
->>>>>>> DEV-2306 change sh:class to sh:node
     sh:node <#IntellectualEntityShape> ;
     sh:name "represents"@en ;
     sh:description "The intellectual entity represented by the representation."@en ;
@@ -389,11 +381,7 @@
     a sh:PropertyShape ;
     sh:path relSubType:inc ;
     sh:nodeKind sh:IRI ;
-<<<<<<< HEAD
-    sh:class premis:File ;
-=======
     # sh:class premis:File ;
->>>>>>> DEV-2306 change sh:class to sh:node
     sh:node <#FileShape> ;
     sh:name "includes"@en ;
     sh:description "The file(s) included in the representation."@en ;
@@ -409,11 +397,7 @@
     a sh:PropertyShape ;
     sh:path relSubType:isi ;
     sh:nodeKind sh:IRI ;
-<<<<<<< HEAD
-    sh:class premis:Representation ;
-=======
     # sh:class premis:Representation ;
->>>>>>> DEV-2306 change sh:class to sh:node
     sh:node <#RepresentationShape> ;
     sh:name "is included in"@en ;
     sh:description "The representation in which the file is included."@en ;
@@ -539,8 +523,6 @@
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] .
-<<<<<<< HEAD
-=======
 
 <#objectIdentifierShape> a sh:PropertyShape ;
   sh:path premis:identifier ;
@@ -550,4 +532,4 @@
   sh:name "has object identifier"@en ;
   sh:description "The identifier of the object."@en ;
   sh:minCount 0 .
->>>>>>> DEV-2306 change sh:class to sh:node
+
