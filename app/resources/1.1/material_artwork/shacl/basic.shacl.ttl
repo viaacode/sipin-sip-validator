@@ -30,7 +30,87 @@
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
-  sh:property <#objectIdentifierShape>,
+  # sh:property <#objectIdentifierShape>,
+  sh:or (
+    [
+      sh:property [
+          a sh:propertyShape ;
+          sh:path premis:identifier ;
+          sh:node <#LocalIdentifierShape> ;
+          sh:qualifiedValueShape [
+            sh:class haObj:LOCAL_ID ;
+          ] ;
+          sh:qualifiedValueShapesDisjoint true ;
+          sh:qualifiedMinCount 1 ;
+          sh:qualifiedMaxCount 1 ;
+      ] ;
+      sh:property  [
+          a sh:propertyShape ;
+          sh:path premis:identifier ;
+          sh:node <#LocalIdentifierShape> ;
+          sh:qualifiedValueShape [
+            sh:or (
+              [ sh:class haObj:Acquisition_number ]
+              [ sh:class haObj:Alternative_number ]
+              [ sh:class haObj:Analoge_drager ]
+              [ sh:class haObj:Ardome ]
+              [ sh:class haObj:Basis ]
+              [ sh:class haObj:Historical_carrier ]
+              [ sh:class haObj:Historical_record_number ]
+              [ sh:class haObj:Inventarisnummer ]
+              [ sh:class haObj:MEDIA_ID ]
+              [ sh:class haObj:Priref ]
+              [ sh:class haObj:Word_ID ]
+              [ sh:class haObj:Topstuk_ID ]
+              [ sh:class haObj:WorkPID ]
+              [ sh:class haObj:DataPID ]
+              [ sh:class haObj:Bestandsnaam ]
+              [ sh:class haObj:Api ]
+              [ sh:class haObj:Pdf ]
+              [ sh:class haObj:PersistenteURI_Record ]
+              [ sh:class haObj:PersistenteURI_Werk ]
+              [ sh:class haObj:PersistenteURI_VKC_Record ]
+              [ sh:class haObj:PersistenteURI_VKC_Werk ]
+            );
+          ] ;
+          sh:qualifiedValueShapesDisjoint true ;
+          sh:qualifiedMinCount 0 ;
+          sh:qualifiedMaxCount 1 ;
+        ]
+    ]
+    [
+      sh:property [
+        a sh:propertyShape ;
+        sh:path premis:identifier ;
+        sh:minCount 2;
+        sh:node <#LocalIdentifierShape> ;
+        sh:or (
+          [ sh:class haObj:Acquisition_number ]
+          [ sh:class haObj:Alternative_number ]
+          [ sh:class haObj:Analoge_drager ]
+          [ sh:class haObj:Ardome ]
+          [ sh:class haObj:Basis ]
+          [ sh:class haObj:Historical_carrier ]
+          [ sh:class haObj:Historical_record_number ]
+          [ sh:class haObj:Inventarisnummer ]
+          [ sh:class haObj:MEDIA_ID ]
+          [ sh:class haObj:Priref ]
+          [ sh:class haObj:Word_ID ]
+          [ sh:class haObj:Topstuk_ID ]
+          [ sh:class haObj:WorkPID ]
+          [ sh:class haObj:DataPID ]
+          [ sh:class haObj:Bestandsnaam ]
+          [ sh:class haObj:Api ]
+          [ sh:class haObj:Pdf ]
+          [ sh:class haObj:PersistenteURI_Record ]
+          [ sh:class haObj:PersistenteURI_Werk ]
+          [ sh:class haObj:PersistenteURI_VKC_Record ]
+          [ sh:class haObj:PersistenteURI_VKC_Werk ]
+        );
+      ]
+    ]
+  );
+  sh:property
   [
     a sh:PropertyShape ;
     sh:path relSubType:isr ;
@@ -470,7 +550,7 @@
     sh:maxCount 1 ;
   ] .
 
-<#ObjectIdentifierShape> a sh:NodeShape ;
+<#LocalIdentifierShape> a sh:NodeShape ;
   sh:targetClass haObj:LocalIdentifier ;
   sh:property 
   [
@@ -484,11 +564,11 @@
     sh:maxCount 1 ;
   ] .
 
-<#objectIdentifierShape> a sh:PropertyShape ;
-  sh:path premis:identifier ;
-  sh:nodeKind sh:IRI ;
-  # sh:class haObj:LocalIdentifier ;
-  sh:node <#ObjectIdentifierShape> ;
-  sh:name "has object identifier"@en ;
-  sh:description "The identifier of the object."@en ;
-  sh:minCount 0 .
+# <#objectIdentifierShape> a sh:PropertyShape ;
+#   sh:path premis:identifier ;
+#   sh:nodeKind sh:IRI ;
+#   # sh:class haObj:LocalIdentifier ;
+#   sh:node <#ObjectIdentifierShape> ;
+#   sh:name "has object identifier"@en ;
+#   sh:description "The identifier of the object."@en ;
+#   sh:minCount 0 .
