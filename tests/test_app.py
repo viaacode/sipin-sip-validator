@@ -5,7 +5,7 @@ import pytest
 from cloudevents.events import EventOutcome
 
 from app.app import EventListener
-from app.models.profile import BasicProfile
+from app.models.profile import BasicProfile, GraphParseError, GraphNotConformError
 from app.models.bag import BagParseError, BagNotValidError
 
 
@@ -194,6 +194,128 @@ class TestEventListener:
         assert produce_event_mock.call_args.args == (
             "bag.validate",
             {"message": f"test {bag_error}: {str(error)}"},
+            "test",
+            EventOutcome.FAIL,
+            "555",
+        )
+
+        event_listener.pulsar_client.acknowledge.assert_called_once()
+
+    @patch("app.app.PulsarBinding")
+    @patch("app.app.Bag")
+    @patch("app.app.EventListener.produce_event")
+    @patch("app.app.EventListener.determine_profile")
+    def test_handle_incoming_message_xsd_validation_errors(
+        self,
+        determine_profile_mock,
+        produce_event_mock,
+        bag_mock,
+        pulsar_binding_mock,
+        event_listener,
+        event,
+    ):
+        # Arrange
+        # Return an CloudEvent from a Pulsar message
+        pulsar_binding_mock.from_protocol.return_value = event
+        # Error when validating the metadata
+        determine_profile_mock().validate_metadata.return_value = ["Not valid PREMIS"]
+
+        # Act
+        event_listener.handle_incoming_message("")
+
+        # Assert
+        assert produce_event_mock.call_count == 2
+        assert produce_event_mock.call_args.args == (
+            "sip.validate.xsd",
+            {
+                "message": "Metadata files are not valid against XSD",
+                "errors": ["Not valid PREMIS"],
+            },
+            "test",
+            EventOutcome.FAIL,
+            "555",
+        )
+
+        event_listener.pulsar_client.acknowledge.assert_called_once()
+
+    @patch("app.app.PulsarBinding")
+    @patch("app.app.Bag")
+    @patch("app.app.EventListener.produce_event")
+    @patch("app.app.EventListener.determine_profile")
+    def test_handle_incoming_message_parse_graph_error(
+        self,
+        determine_profile_mock,
+        produce_event_mock,
+        bag_mock,
+        pulsar_binding_mock,
+        event_listener,
+        event,
+    ):
+        # Arrange
+        # Return an CloudEvent from a Pulsar message
+        pulsar_binding_mock.from_protocol.return_value = event
+        # There should be no errors when validating the metadata
+        determine_profile_mock().validate_metadata.return_value = []
+        # There should be a ParseGraphError when parsing the graph.
+        determine_profile_mock().parse_graph.side_effect = GraphParseError(
+            "Could not parse"
+        )
+
+        # Act
+        event_listener.handle_incoming_message("")
+
+        # Assert
+        assert produce_event_mock.call_count == 3
+        assert produce_event_mock.call_args.args == (
+            "sip.loadgraph",
+            {
+                "message": "Cannot transform metadata into a graph.",
+                "errors": "Could not parse",
+            },
+            "test",
+            EventOutcome.FAIL,
+            "555",
+        )
+
+        event_listener.pulsar_client.acknowledge.assert_called_once()
+
+    @patch("app.app.PulsarBinding")
+    @patch("app.app.Bag")
+    @patch("app.app.EventListener.produce_event")
+    @patch("app.app.EventListener.determine_profile")
+    def test_handle_incoming_message_graph_not_conform_error(
+        self,
+        determine_profile_mock,
+        produce_event_mock,
+        bag_mock,
+        pulsar_binding_mock,
+        event_listener,
+        event,
+    ):
+        # Arrange
+        # Return an CloudEvent from a Pulsar message
+        pulsar_binding_mock.from_protocol.return_value = event
+        # There should be no errors when validating the metadata
+        determine_profile_mock().validate_metadata.return_value = []
+        # Return JSON serialized in byte format when parsing the graph
+        determine_profile_mock().parse_graph().serialize.return_value = (
+            b'{"graph": "info"}'
+        )
+        # There should be a GraphNotConformError when validating the graph
+        determine_profile_mock().validate_graph.side_effect = GraphNotConformError(
+            "Missing node"
+        )
+        # Act
+        event_listener.handle_incoming_message("")
+
+        # Assert
+        assert produce_event_mock.call_count == 4
+        assert produce_event_mock.call_args.args == (
+            "sip.validate.shacl",
+            {
+                "message": "Graph is not conform.",
+                "errors": "Missing node",
+            },
             "test",
             EventOutcome.FAIL,
             "555",
