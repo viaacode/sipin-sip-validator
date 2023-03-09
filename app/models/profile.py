@@ -13,10 +13,14 @@ QUERY_BASIC: Path = Path("app", "resources", "sparql", "basic.sparql")
 SHACL_SIP: Path = Path("app", "resources", "shacl", "sip.shacl.ttl")
 SHACL_BASIC: Path = Path("app", "resources", "shacl", "basic.shacl.ttl")
 
-
 PREMIS_XSD: Path = Path("app", "resources", "xsd", "premis-v3-0.xsd")
 METS_XSD: Path = Path("app", "resources", "xsd", "mets.xsd")
 DCTERMS_XSD: Path = Path("app", "resources", "xsd", "dc_basic.xsd")
+
+NAMESPACES = {
+    "mets": "http://www.loc.gov/METS/",
+    "csip": "https://DILCIS.eu/XML/METS/CSIPExtensionMETS",
+}
 
 
 class XMLNotValidError(Exception):
@@ -227,3 +231,33 @@ class BasicProfile(Profile):
             raise GraphNotConformError(results_text)
 
         return True
+
+
+def determine_profile(path: Path) -> Profile:
+    """Parse the root METS in order to determine the profile.
+
+    Returns:
+        The instantiated Profile
+    Raises:
+        ValueError:
+            - If the package METS could not be parsed.
+            - If there is no profile information in the package METS.
+            - If the profile is not known.
+    """
+    try:
+        root = etree.parse(path.joinpath("data", "mets.xml"))
+    except (etree.ParseError, OSError) as e:
+        raise ValueError(f"METS could not be parsed: {e}.")
+
+    # Parse the meemoo profile in the IE METS
+    try:
+        profile_type = root.xpath(
+            "/mets:mets/@csip:CONTENTINFORMATIONTYPE",
+            namespaces=NAMESPACES,
+        )[0]
+    except IndexError:
+        raise ValueError("METS does not contain a CONTENTINFORMATIONTYPE attribute.")
+
+    if profile_type == "https://data.hetarchief.be/id/sip/1.0/basic":
+        return BasicProfile(path)
+    raise ValueError(f"Profile not known: {profile_type}.")

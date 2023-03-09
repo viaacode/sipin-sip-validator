@@ -55,57 +55,10 @@ class TestEventListener:
         event_listener = EventListener()
         return event_listener
 
-    def test_determine_profile_basic(self, event_listener):
-        profile = event_listener.determine_profile(
-            Path("tests", "resources", "sips", "basic", "conform")
-        )
-        assert type(profile) == BasicProfile
-
-    def test_determine_profile_unknown(self, event_listener):
-
-        with pytest.raises(ValueError) as e:
-            event_listener.determine_profile(
-                Path("tests", "resources", "sips", "other", "unknown_profile")
-            )
-
-        assert (
-            str(e.value)
-            == "Profile not known: https://data.hetarchief.be/id/sip/1.0/unknown."
-        )
-
-    def test_determine_profile_missing(self, event_listener):
-        with pytest.raises(ValueError) as e:
-            event_listener.determine_profile(
-                Path("tests", "resources", "sips", "other", "missing_profile")
-            )
-
-        assert (
-            str(e.value) == "METS does not contain a CONTENTINFORMATIONTYPE attribute."
-        )
-
-    def test_determine_profile_no_mets(self, event_listener):
-        with pytest.raises(ValueError) as e:
-            event_listener.determine_profile(
-                Path("tests", "resources", "sips", "other", "no_mets")
-            )
-
-        assert "METS could not be parsed: Error reading file" in str(e.value)
-
-    def test_determine_profile_corrupt_mets(self, event_listener):
-        with pytest.raises(ValueError) as e:
-            event_listener.determine_profile(
-                Path("tests", "resources", "sips", "other", "corrupt_mets")
-            )
-
-        assert (
-            str(e.value)
-            == "METS could not be parsed: Premature end of data in tag mets line 2, line 25, column 11 (mets.xml, line 25)."
-        )
-
     @patch("app.app.PulsarBinding")
     @patch("app.app.Bag")
     @patch("app.app.EventListener.produce_event")
-    @patch("app.app.EventListener.determine_profile")
+    @patch("app.app.determine_profile")
     def test_handle_incoming_message(
         self,
         determine_profile_mock,
@@ -219,7 +172,7 @@ class TestEventListener:
     @patch("app.app.PulsarBinding")
     @patch("app.app.Bag")
     @patch("app.app.EventListener.produce_event")
-    @patch("app.app.EventListener.determine_profile")
+    @patch("app.app.determine_profile")
     def test_handle_incoming_message_xsd_validation_errors(
         self,
         determine_profile_mock,
@@ -263,7 +216,7 @@ class TestEventListener:
     @patch("app.app.PulsarBinding")
     @patch("app.app.Bag")
     @patch("app.app.EventListener.produce_event")
-    @patch("app.app.EventListener.determine_profile")
+    @patch("app.app.determine_profile")
     def test_handle_incoming_message_parse_graph_error(
         self,
         determine_profile_mock,
@@ -311,7 +264,7 @@ class TestEventListener:
     @patch("app.app.PulsarBinding")
     @patch("app.app.Bag")
     @patch("app.app.EventListener.produce_event")
-    @patch("app.app.EventListener.determine_profile")
+    @patch("app.app.determine_profile")
     def test_handle_incoming_message_graph_not_conform_error(
         self,
         determine_profile_mock,

@@ -4,7 +4,55 @@ import pytest
 from rdflib import Graph
 from rdflib.compare import isomorphic
 
-from app.models.profile import BasicProfile, XMLNotValidError, GraphNotConformError
+from app.models.profile import (
+    BasicProfile,
+    determine_profile,
+    XMLNotValidError,
+    GraphNotConformError,
+)
+
+
+def test_determine_profile_basic():
+    profile = determine_profile(Path("tests", "resources", "sips", "basic", "conform"))
+    assert type(profile) == BasicProfile
+
+
+def test_determine_profile_unknown():
+    with pytest.raises(ValueError) as e:
+        determine_profile(
+            Path("tests", "resources", "sips", "other", "unknown_profile")
+        )
+
+    assert (
+        str(e.value)
+        == "Profile not known: https://data.hetarchief.be/id/sip/1.0/unknown."
+    )
+
+
+def test_determine_profile_missing():
+    with pytest.raises(ValueError) as e:
+        determine_profile(
+            Path("tests", "resources", "sips", "other", "missing_profile")
+        )
+
+    assert str(e.value) == "METS does not contain a CONTENTINFORMATIONTYPE attribute."
+
+
+def test_determine_profile_no_mets():
+    with pytest.raises(ValueError) as e:
+        determine_profile(Path("tests", "resources", "sips", "other", "no_mets"))
+
+    assert "METS could not be parsed: Error reading file" in str(e.value)
+
+
+def test_determine_profile_corrupt_mets():
+    with pytest.raises(ValueError) as e:
+        determine_profile(Path("tests", "resources", "sips", "other", "corrupt_mets"))
+
+    assert (
+        str(e.value)
+        == "METS could not be parsed: Premature end of data in tag mets line 2, line 25, column 11 (mets.xml, line 25)."
+    )
 
 
 class TestBasicProfile:
