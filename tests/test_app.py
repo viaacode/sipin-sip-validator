@@ -1,5 +1,6 @@
 from pathlib import Path
 from unittest.mock import patch
+import logging
 
 import pytest
 from cloudevents.events import EventOutcome
@@ -113,6 +114,7 @@ class TestEventListener:
         pulsar_binding_mock,
         event_listener,
         event,
+        caplog,
     ):
         # Arrange
         # Return an CloudEvent from a Pulsar message
@@ -158,6 +160,12 @@ class TestEventListener:
                 "555",
             ),
         ]
+
+        assert caplog.record_tuples == [
+            ("app.app", 10, "Incoming event: {'destination': 'test'}"),
+            ("app.app", 20, "'test' is a valid and conform SIP."),
+        ]
+
         event_listener.pulsar_client.acknowledge.assert_called_once()
 
     @patch("app.app.PulsarBinding")
@@ -179,6 +187,7 @@ class TestEventListener:
         event,
         error,
         bag_error,
+        caplog,
     ):
         # Arrange
         # Return an CloudEvent from a Pulsar message
@@ -193,10 +202,16 @@ class TestEventListener:
         assert produce_event_mock.call_count == 1
         assert produce_event_mock.call_args.args == (
             "bag.validate",
-            {"message": f"test {bag_error}: {str(error)}"},
+            {"message": f"'test' {bag_error}: {str(error)}"},
             "test",
             EventOutcome.FAIL,
             "555",
+        )
+
+        assert caplog.record_tuples[1] == (
+            "app.app",
+            logging.ERROR,
+            f"'test' {bag_error}: {str(error)}",
         )
 
         event_listener.pulsar_client.acknowledge.assert_called_once()
@@ -213,6 +228,7 @@ class TestEventListener:
         pulsar_binding_mock,
         event_listener,
         event,
+        caplog,
     ):
         # Arrange
         # Return an CloudEvent from a Pulsar message
@@ -236,6 +252,12 @@ class TestEventListener:
             "555",
         )
 
+        assert caplog.record_tuples[1] == (
+            "app.app",
+            logging.ERROR,
+            "test: Metadata files are not valid against XSD",
+        )
+
         event_listener.pulsar_client.acknowledge.assert_called_once()
 
     @patch("app.app.PulsarBinding")
@@ -250,6 +272,7 @@ class TestEventListener:
         pulsar_binding_mock,
         event_listener,
         event,
+        caplog,
     ):
         # Arrange
         # Return an CloudEvent from a Pulsar message
@@ -277,6 +300,12 @@ class TestEventListener:
             "555",
         )
 
+        assert caplog.record_tuples[1] == (
+            "app.app",
+            logging.ERROR,
+            "test: Cannot transform metadata into a graph.",
+        )
+
         event_listener.pulsar_client.acknowledge.assert_called_once()
 
     @patch("app.app.PulsarBinding")
@@ -291,6 +320,7 @@ class TestEventListener:
         pulsar_binding_mock,
         event_listener,
         event,
+        caplog,
     ):
         # Arrange
         # Return an CloudEvent from a Pulsar message
@@ -319,6 +349,12 @@ class TestEventListener:
             "test",
             EventOutcome.FAIL,
             "555",
+        )
+
+        assert caplog.record_tuples[1] == (
+            "app.app",
+            logging.ERROR,
+            "test: Graph is not conform.",
         )
 
         event_listener.pulsar_client.acknowledge.assert_called_once()

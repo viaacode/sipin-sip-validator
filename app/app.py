@@ -107,6 +107,7 @@ class EventListener:
     def handle_incoming_message(self, message: Message):
         try:
             incoming_event = PulsarBinding.from_protocol(message)
+            self.log.debug(f"Incoming event: {incoming_event.get_data()}")
             if (
                 incoming_event.has_successful_outcome()
                 and incoming_event.get_data().get("outcome") != EventOutcome.FAIL
@@ -120,10 +121,11 @@ class EventListener:
                 try:
                     bag.parse_validate()
                 except (BagParseError) as e:
+                    self.log.error(f"'{bag_path}' could not be parsed: {str(e)}")
                     self.produce_event(
                         self.bag_validate_topic,
                         {
-                            "message": f"{bag_path} could not be parsed: {str(e)}",
+                            "message": f"'{bag_path}' could not be parsed: {str(e)}",
                         },
                         msg_data["destination"],
                         EventOutcome.FAIL,
@@ -132,10 +134,11 @@ class EventListener:
                     self.pulsar_client.acknowledge(message)
                     return
                 except (BagNotValidError) as e:
+                    self.log.error(f"'{bag_path}' is not a valid bag: {str(e)}")
                     self.produce_event(
                         self.bag_validate_topic,
                         {
-                            "message": f"{bag_path} is not a valid bag: {str(e)}",
+                            "message": f"'{bag_path}' is not a valid bag: {str(e)}",
                         },
                         msg_data["destination"],
                         EventOutcome.FAIL,
@@ -158,6 +161,10 @@ class EventListener:
                 # Validate XML files
                 xml_validation_errors = profile.validate_metadata()
                 if xml_validation_errors:
+                    self.log.error(
+                        f"{bag_path}: Metadata files are not valid against XSD",
+                        errors=[str(e) for e in xml_validation_errors],
+                    )
                     self.produce_event(
                         self.sip_validate_xsd_topic,
                         {
@@ -185,6 +192,10 @@ class EventListener:
                 try:
                     graph = profile.parse_graph()
                 except GraphParseError as e:
+                    self.log.error(
+                        f"{bag_path}: Cannot transform metadata into a graph.",
+                        errors=str(e),
+                    )
                     self.produce_event(
                         self.sip_load_graph_topic,
                         {
@@ -212,6 +223,7 @@ class EventListener:
                 try:
                     profile.validate_graph(graph)
                 except GraphNotConformError as e:
+                    self.log.error(f"{bag_path}: Graph is not conform.", errors=str(e))
                     self.produce_event(
                         self.sip_validate_shacl_topic,
                         {
@@ -238,6 +250,9 @@ class EventListener:
                 )
 
                 self.pulsar_client.acknowledge(message)
+
+                self.log.info(f"'{bag_path}' is a valid and conform SIP.")
+
         except Exception as e:
             # Generic catch all remaining errors.
             self.log.error(f"Error: {e}")
