@@ -19,7 +19,7 @@
     a sh:PropertyShape ;
     sh:path schema:creator ;
     sh:nodeKind sh:IRI ;
-    # sh:class premis:Representation ;
+    sh:class schema:Role ;
     sh:node <#RoleShape> ;
     sh:name "is represented by"@en ;
     sh:description "The representation of the intellectual entity."@en ;
