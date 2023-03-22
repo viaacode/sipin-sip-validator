@@ -242,6 +242,7 @@
 
 <#RepresentationShape> a sh:NodeShape ;
   sh:targetClass premis:Representation ;
+  sh:property
   [
     a sh:PropertyShape ;
     sh:path relSubType:rep ;
