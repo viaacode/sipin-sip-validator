@@ -30,7 +30,6 @@
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
-  # sh:property <#objectIdentifierShape>,
   sh:property
   [
     a sh:propertyShape ;
@@ -433,7 +432,7 @@
   
 <#FileShape> a sh:NodeShape ;
   sh:targetClass premis:File ;
-  sh:property <#objectIdentifierShape>,
+  sh:property 
   [
     a sh:PropertyShape ;
     sh:path relSubType:isi ;
