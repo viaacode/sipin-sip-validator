@@ -70,6 +70,8 @@
     sh:name "is represented by"@en ;
     sh:description "The representation of the intellectual entity."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No representation or mismatch between IE's `objectIdentifier` and Representation's `objectIdentifier` and their relationships."@en ;
   ],
   [
     a sh:PropertyShape ;
