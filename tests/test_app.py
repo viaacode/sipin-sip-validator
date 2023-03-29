@@ -1,4 +1,3 @@
-from pathlib import Path
 from unittest.mock import patch
 import logging
 
@@ -6,7 +5,7 @@ import pytest
 from cloudevents.events import EventOutcome
 
 from app.app import EventListener
-from app.models.profile import BasicProfile, GraphParseError, GraphNotConformError
+from app.models.profile import GraphParseError, GraphNotConformError
 from app.models.bag import BagParseError, BagNotValidError
 
 

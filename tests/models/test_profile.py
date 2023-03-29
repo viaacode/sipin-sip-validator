@@ -5,16 +5,24 @@ from rdflib import Graph
 from rdflib.compare import isomorphic
 
 from app.models.profile import (
-    BasicProfile,
+    BasicProfile10,
+    BasicProfile11,
     determine_profile,
     XMLNotValidError,
     GraphNotConformError,
 )
 
 
-def test_determine_profile_basic():
-    profile = determine_profile(Path("tests", "resources", "sips", "basic", "conform"))
-    assert type(profile) == BasicProfile
+@pytest.mark.parametrize(
+    "path, profile_class",
+    [
+        (Path("1.0", "basic", "sips", "conform"), BasicProfile10),
+        (Path("1.1", "basic", "sips", "conform"), BasicProfile11),
+    ],
+)
+def test_determine_profile(path, profile_class):
+    profile = determine_profile(Path("tests", "resources").joinpath(path))
+    assert type(profile) == profile_class
 
 
 def test_determine_profile_unknown():
@@ -55,61 +63,75 @@ def test_determine_profile_corrupt_mets():
     )
 
 
-class TestBasicProfile:
+class TestBasicProfile10:
     @pytest.fixture
     def profile_conform(self):
         path = Path(
             "tests",
             "resources",
-            "sips",
+            "1.0",
             "basic",
+            "sips",
             "conform",
         )
-        return BasicProfile(path)
+        return BasicProfile10(path)
 
     @pytest.fixture
     def profile_conform_extended(self):
         path = Path(
             "tests",
             "resources",
-            "sips",
+            "1.0",
             "basic",
+            "sips",
             "conform_extended",
         )
-        return BasicProfile(path)
+        return BasicProfile10(path)
 
     @pytest.fixture
     def profile_invalid_xml(self):
         path = Path(
             "tests",
             "resources",
-            "sips",
+            "1.0",
             "basic",
+            "sips",
             "invalid_xml",
         )
-        return BasicProfile(path)
+        return BasicProfile10(path)
 
     @pytest.fixture
     def profile_not_conform(self):
         path = Path(
             "tests",
             "resources",
-            "sips",
+            "1.0",
             "basic",
+            "sips",
             "not_conform",
         )
-        return BasicProfile(path)
+        return BasicProfile10(path)
 
     @pytest.fixture
     def profile_empty_graph(self):
         path = Path(
             "tests",
             "resources",
+            "1.0",
+            "basic",
             "sips",
-            "other",
             "empty_graph",
         )
-        return BasicProfile(path)
+        return BasicProfile10(path)
+
+    def graph_path(self) -> Path:
+        return Path(
+            "tests",
+            "resources",
+            "1.0",
+            "basic",
+            "graph",
+        )
 
     @pytest.mark.parametrize(
         "profile_name",
@@ -212,7 +234,8 @@ class TestBasicProfile:
 
         # Check if expected
         expected = Graph()
-        expected.parse(f"tests/resources/graph/basic/{expected_graph_path}/graph.ttl")
+        path = self.graph_path().joinpath(expected_graph_path, "graph.ttl")
+        expected.parse(str(path))
         assert isomorphic(graph, expected)
 
     def test_parse_validate_profile_not_conform(self, profile_not_conform):
@@ -227,4 +250,75 @@ class TestBasicProfile:
         assert (
             str(e.value)
             == "Graph is perceived as empty as it does not contain an intellectual entity."
+        )
+
+
+class TestBasicProfile11(TestBasicProfile10):
+    @pytest.fixture
+    def profile_conform(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "conform",
+        )
+        return BasicProfile11(path)
+
+    @pytest.fixture
+    def profile_conform_extended(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "conform_extended",
+        )
+        return BasicProfile11(path)
+
+    @pytest.fixture
+    def profile_invalid_xml(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "invalid_xml",
+        )
+        return BasicProfile11(path)
+
+    @pytest.fixture
+    def profile_not_conform(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "not_conform",
+        )
+        return BasicProfile11(path)
+
+    @pytest.fixture
+    def profile_empty_graph(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "empty_graph",
+        )
+        return BasicProfile11(path)
+
+    def graph_path(self) -> Path:
+        return Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "graph",
         )
