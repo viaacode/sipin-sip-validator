@@ -1,0 +1,189 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <https://schema.org/> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+
+<#IntellectualEntityShape> a sh:NodeShape ;
+  sh:targetClass premis:IntellectualEntity ;
+  sh:property <#objectIdentifierShape>,
+  [
+    a sh:PropertyShape ;
+    sh:path schema:creator ;
+    sh:nodeKind sh:IRI ;
+    sh:node <#RoleShape> ;
+    sh:name "is represented by"@en ;
+    sh:description "The representation of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:height ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node <#QuantitativeValueShape> ;
+    sh:name "height"@en ;
+    sh:description "The height of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:width ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node <#QuantitativeValueShape> ;
+    sh:name "height"@en ;
+    sh:description "The height of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:depth ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node <#QuantitativeValueShape> ;
+    sh:name "height"@en ;
+    sh:description "The height of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ] ,
+  [
+    a sh:PropertyShape ;
+    sh:path schema:artMedium ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The art medium is not a string or occurs more than once."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:artForm ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The artform is not a string or occurs more than once."@en ;
+    sh:maxCount 1 ;
+  ].
+
+<#QuantitativeValueShape> a sh:NodeShape ; 
+    sh:targetClass schema:QuantitativeValue ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path schema:unitCode ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "unit code"@en ;
+        sh:description "The unit of measurement given using the UN/CEFACT Common Code (3 characters)."@en ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:unitText ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "unit text"@en ;
+        sh:description "A string or text indicating the unit of measurement. Useful if you cannot provide a standard unit code for unitCode."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:float ;
+        sh:name "value"@en ;
+        sh:description "The value of the quantitative value or property value node."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+<#RoleShape> a sh:NodeShape ; 
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path schema:creator ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#PersonShape> ;
+        sh:severity sh:Violation ;
+        sh:message "schema:creator is not of class schema:Person"@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:roleName ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ; 
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:name "role name"@en ;
+        sh:severity sh:Violation ;
+        sh:message "schema:roleName is missing or not of type string"@en ;    ] .
+
+
+<#PersonShape> a sh:NodeShape ;
+    sh:targetClass schema:Person ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path schema:name ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "name"@en ;
+        sh:description "The  name of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:familyName ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Family name"@en ;
+        sh:description "The family name of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:givenName ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Given name"@en ;
+        sh:description "The given name of a person associated with the newspaper."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:birthDate ;
+        sh:nodeKind sh:Literal ;
+        sh:or (
+            [ sh:datatype edtf:EDTF-level0 ]
+            [ sh:datatype edtf:EDTF-level1 ]
+            [ sh:datatype edtf:EDTF-level2 ]
+            [ sh:datatype edtf:EDTF ]
+        ) ;
+        sh:name "Birth date"@en ;
+        sh:description "The birth date of a person associated with the newspaper."@en ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:deathDate ;
+        sh:nodeKind sh:Literal ;
+        sh:or (
+            [ sh:datatype edtf:EDTF-level0 ]
+            [ sh:datatype edtf:EDTF-level1 ]
+            [ sh:datatype edtf:EDTF-level2 ]
+            [ sh:datatype edtf:EDTF ]
+        ) ;
+        sh:name "Death date"@en ;
+        sh:description "The death date of a person associated with the newspaper."@en ;
+        sh:maxCount 1 ;
+    ] .
