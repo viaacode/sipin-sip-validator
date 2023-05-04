@@ -28,7 +28,7 @@ PREFIX schema: <https://schema.org/>
 select *
 WHERE
     { 
-        SERVICE <x-sparql-anything:location=./material_artwork/data/metadata/descriptive/dc+schema.xml> { 
+        SERVICE <x-sparql-anything:location=./sips/material_artwork/data/metadata/descriptive/dc+schema.xml> { 
             
             
             [] a fx:root;
