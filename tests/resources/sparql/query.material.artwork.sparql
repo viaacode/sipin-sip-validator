@@ -9,23 +9,22 @@ PREFIX premis: <http://www.loc.gov/premis/v3#>
 PREFIX schema: <https://schema.org/>
 
 
-# CONSTRUCT
-#     {
-#         ?ie a premisowl:IntellectualEntity ;
-#             ?p ?o;
-#             schema:creator ?creatorRole .
-#         ?creatorRole a schema:Role;
-#             schema:roleName ?creatorRoleName;
-#             schema:creator ?creator .
-#         ?creator a schema:Person;
-#             ?creator_p ?creator_o .
+CONSTRUCT
+{
+    ?ie a premisowl:IntellectualEntity ;
+        ?p ?o;
+        schema:creator ?creatorRole .
+    ?creatorRole a schema:Role;
+        schema:roleName ?creatorRoleName;
+        schema:creator ?creator .
+    ?creator a schema:Person;
+        ?creator_p ?creator_o .
 
-#         #     ?creator_p ?creator_b_value .
-#         # ?creator_b_value a ?creator_b_type ;
-#         # ?ie a ?creator_b_type .
+    #     ?creator_p ?creator_b_value .
+    # ?creator_b_value a ?creator_b_type ;
+    # ?ie a ?creator_b_type .
 
-#     }
-select *
+}
 WHERE
     { 
         SERVICE <x-sparql-anything:location=./sips/material_artwork/data/metadata/descriptive/dc+schema.xml> { 
@@ -59,18 +58,20 @@ WHERE
             OPTIONAL {
                 ?creator_b xml:lang ?creator_b_lang .
             }
+
+            # Workaround: SA returns prefixed values in attributes as prefixed strings, not as IRIs. STRDT will fail silently when provided a string as datatype.
+            BIND(iri(
+                REPLACE(
+                REPLACE(?creator_b_type, "xsd:", "http://www.w3.org/2001/XMLSchema#"),
+                "edtf:", "http://id.loc.gov/datatypes/edtf/"
+            )) AS ?creator_b_dt)
+            
             BIND(
-                ?creator_b_value
-                #  STRDT(?creator_b_value, ?creator_b_type)
-                # IF(
-                #     bound(?creator_b_type), 
-                #     STRDT(?creator_b_value, ?creator_b_type), 
-                #     IF(
-                #         bound(?creator_b_lang), 
-                #         STRLANG(str(?creator_b_value), ?creator_b_lang), 
-                #         ?creator_b_value 
-                #     )
-                # )
+                COALESCE(
+                    IF(bound(?creator_b_type), STRDT(?creator_b_value, ?creator_b_dt), 1/0),
+                    IF(bound(?dcterm_xml_lang), STRLANG(?creator_b_value, ?creator_b_lang), 1/0),
+                    ?creator_b_value
+                )
             AS ?creator_o)
             BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT("?creatorName", "Role")))) AS ?creatorRole)
             BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT("?creatorName", "Creator")))) AS ?creator)
