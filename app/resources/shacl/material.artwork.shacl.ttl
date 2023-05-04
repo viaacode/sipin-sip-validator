@@ -51,7 +51,23 @@
     sh:name "height"@en ;
     sh:description "The height of the intellectual entity."@en ;
     sh:maxCount 1 ;
-  ] .
+  ] ,
+  [
+    a sh:PropertyShape ;
+    sh:path schema:artMedium ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The art medium is not a string or occurs more than once."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:artForm ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The artform is not a string or occurs more than once."@en ;
+    sh:maxCount 1 ;
+  ].
 
 <#QuantitativeValueShape> a sh:NodeShape ; 
     sh:targetClass schema:QuantitativeValue ;
