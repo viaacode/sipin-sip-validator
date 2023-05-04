@@ -19,7 +19,6 @@
     a sh:PropertyShape ;
     sh:path schema:creator ;
     sh:nodeKind sh:IRI ;
-    sh:class schema:Role ;
     sh:node <#RoleShape> ;
     sh:name "is represented by"@en ;
     sh:description "The representation of the intellectual entity."@en ;
@@ -30,7 +29,6 @@
     a sh:PropertyShape ;
     sh:path schema:height ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:class schema:QuantitativeValue ;
     sh:node <#QuantitativeValueShape> ;
     sh:name "height"@en ;
     sh:description "The height of the intellectual entity."@en ;
@@ -40,7 +38,6 @@
     a sh:PropertyShape ;
     sh:path schema:width ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:class schema:QuantitativeValue ;
     sh:node <#QuantitativeValueShape> ;
     sh:name "height"@en ;
     sh:description "The height of the intellectual entity."@en ;
@@ -50,7 +47,6 @@
     a sh:PropertyShape ;
     sh:path schema:depth ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:class schema:QuantitativeValue ;
     sh:node <#QuantitativeValueShape> ;
     sh:name "height"@en ;
     sh:description "The height of the intellectual entity."@en ;
@@ -76,6 +72,7 @@
         sh:datatype xsd:string ;
         sh:name "unit text"@en ;
         sh:description "A string or text indicating the unit of measurement. Useful if you cannot provide a standard unit code for unitCode."@en ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
     [
@@ -90,16 +87,14 @@
     ] .
 
 <#RoleShape> a sh:NodeShape ; 
-    sh:targetClass schema:Role ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path schema:contributor ;
+        sh:path schema:creator ;
         sh:nodeKind sh:IRI ;
         sh:node <#PersonShape> ;
-        sh:name "contributor"@en ;;
         sh:severity sh:Violation ;
-        sh:message "schema:contributor is not of class schema:Person or org:Organization"@en ;
+        sh:message "schema:creator is not of class schema:Person"@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
@@ -109,9 +104,10 @@
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ; 
         sh:minCount 1 ;
+        sh:maxCount 1 ;
         sh:name "role name"@en ;
         sh:severity sh:Violation ;
-        sh:message "schema:roleName is missing or not of type string or of class skos:Concept"@en ;    ] .
+        sh:message "schema:roleName is missing or not of type string"@en ;    ] .
 
 
 <#PersonShape> a sh:NodeShape ;
