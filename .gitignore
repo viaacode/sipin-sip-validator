@@ -132,4 +132,4 @@ dmypy.json
 .vscode
 
 # Other
-tests/resources/sips/*/*.sparql
+tests/resources/**/*.sparql

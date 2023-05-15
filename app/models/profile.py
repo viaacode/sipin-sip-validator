@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -7,16 +8,10 @@ from pyshacl import validate as shacl_validate
 from pysparql_anything import SparqlAnything
 
 
-SPARQL_ANYTHING_JAR: Path = Path("app", "resources", "sparql-anything-0.8.1.jar")
-QUERY_SIP: Path = Path("app", "resources", "sparql", "sip.sparql")
-QUERY_BASIC: Path = Path("app", "resources", "sparql", "basic.sparql")
-SHACL_SIP: Path = Path("app", "resources", "shacl", "sip.shacl.ttl")
-SHACL_BASIC: Path = Path("app", "resources", "shacl", "basic.shacl.ttl")
-
-
-PREMIS_XSD: Path = Path("app", "resources", "xsd", "premis-v3-0.xsd")
-METS_XSD: Path = Path("app", "resources", "xsd", "mets.xsd")
-DCTERMS_XSD: Path = Path("app", "resources", "xsd", "dc_basic.xsd")
+NAMESPACES = {
+    "mets": "http://www.loc.gov/METS/",
+    "csip": "https://DILCIS.eu/XML/METS/CSIPExtensionMETS",
+}
 
 
 class XMLNotValidError(Exception):
@@ -31,16 +26,122 @@ class GraphNotConformError(Exception):
     pass
 
 
-class Profile:
+class Profile(ABC):
     def __init__(self, bag_path: Path):
         self.bag_path = bag_path
         self.jinja_env = Environment(
-            loader=FileSystemLoader(QUERY_BASIC.parent),
+            loader=FileSystemLoader(self.query_sip().parent),
             autoescape=select_autoescape(),
         )
 
+    @staticmethod
+    @abstractmethod
+    def query_sip() -> Path:
+        pass
 
-class BasicProfile(Profile):
+    @staticmethod
+    @abstractmethod
+    def query_profile() -> Path:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def shacl_sip() -> Path:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def shacl_profile() -> Path:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def profile_name() -> str:
+        """The name of the profile, as defined in the SIP spec."""
+        pass
+
+
+class BasicProfile10(Profile):
+    def profile_name() -> str:
+        return "https://data.hetarchief.be/id/sip/1.0/basic"
+
+    @staticmethod
+    def query_sip() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "sparql",
+            "sip.sparql",
+        )
+
+    @staticmethod
+    def query_profile() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "sparql",
+            "basic.sparql",
+        )
+
+    @staticmethod
+    def shacl_sip() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "shacl",
+            "sip.shacl.ttl",
+        )
+
+    @staticmethod
+    def shacl_profile() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "shacl",
+            "basic.shacl.ttl",
+        )
+
+    @staticmethod
+    def premis_xsd() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "xsd",
+            "premis-v3-0.xsd",
+        )
+
+    @staticmethod
+    def mets_xsd() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "xsd",
+            "mets.xsd",
+        )
+
+    @staticmethod
+    def dcterms_xsd() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "xsd",
+            "dc_basic.xsd",
+        )
+
     def _validate_premis(self) -> list[XMLNotValidError]:
         """Validate the PREMIS files.
 
@@ -50,7 +151,7 @@ class BasicProfile(Profile):
         Returns:
             A list with errors detailing the parse/validation errors.
         """
-        premis_xsd = etree.XMLSchema(etree.parse(PREMIS_XSD))
+        premis_xsd = etree.XMLSchema(etree.parse(self.premis_xsd()))
 
         premis_package_path: Path = self.bag_path.joinpath(
             "data", "metadata", "preservation", "premis.xml"
@@ -89,7 +190,7 @@ class BasicProfile(Profile):
         Returns:
             A parse/validation error if applicable.
         """
-        dcterms_xsd = etree.XMLSchema(etree.parse(DCTERMS_XSD))
+        dcterms_xsd = etree.XMLSchema(etree.parse(self.dcterms_xsd()))
 
         dcterms_package_path: Path = self.bag_path.joinpath(
             "data",
@@ -117,7 +218,7 @@ class BasicProfile(Profile):
         Returns:
             A list with errors detailing the parse/validation errors.
         """
-        mets_xsd = etree.XMLSchema(etree.parse(METS_XSD))
+        mets_xsd = etree.XMLSchema(etree.parse(self.mets_xsd()))
 
         mets_package_path: Path = self.bag_path.joinpath("data", "mets.xml")
         mets_representation_path: Path = self.bag_path.joinpath(
@@ -174,14 +275,14 @@ class BasicProfile(Profile):
             GraphParseError: If parsing failed.
         """
         # write SPARQL-anything query for the SIP.
-        query_sip_destination = self.bag_path.joinpath(QUERY_SIP.name)
-        sip_template = self.jinja_env.get_template(str(QUERY_SIP.name))
+        query_sip_destination = self.bag_path.joinpath(self.query_sip().name)
+        sip_template = self.jinja_env.get_template(str(self.query_sip().name))
         with open(str(query_sip_destination), "w") as f:
             f.write(sip_template.render(bag_path=self.bag_path))
 
         # write SPARQL-anything query for the BASIC profile.
-        query_basic_destination = self.bag_path.joinpath(QUERY_BASIC.name)
-        profile_template = self.jinja_env.get_template(str(QUERY_BASIC.name))
+        query_basic_destination = self.bag_path.joinpath(self.query_profile().name)
+        profile_template = self.jinja_env.get_template(str(self.query_profile().name))
         with open(str(query_basic_destination), "w") as f:
             f.write(profile_template.render(bag_path=self.bag_path))
 
@@ -215,10 +316,10 @@ class BasicProfile(Profile):
             raise GraphNotConformError(
                 "Graph is perceived as empty as it does not contain an intellectual entity."
             )
-
+        print(data_graph.serialize())
         shacl_graph = Graph()
-        shacl_graph.parse(str(SHACL_SIP), format="turtle")
-        shacl_graph.parse(str(SHACL_BASIC), format="turtle")
+        shacl_graph.parse(str(self.shacl_sip()), format="turtle")
+        shacl_graph.parse(str(self.shacl_profile()), format="turtle")
         conforms, results_graph, results_text = shacl_validate(
             data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True
         )
@@ -227,3 +328,117 @@ class BasicProfile(Profile):
             raise GraphNotConformError(results_text)
 
         return True
+
+
+class BasicProfile11(BasicProfile10):
+    def profile_name() -> str:
+        return "https://data.hetarchief.be/id/sip/1.1/basic"
+
+    @staticmethod
+    def query_sip() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "sparql",
+            "sip.sparql",
+        )
+
+    @staticmethod
+    def query_profile() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "sparql",
+            "basic.sparql",
+        )
+
+    @staticmethod
+    def shacl_sip() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "shacl",
+            "sip.shacl.ttl",
+        )
+
+    @staticmethod
+    def shacl_profile() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "shacl",
+            "basic.shacl.ttl",
+        )
+
+    @staticmethod
+    def premis_xsd() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "xsd",
+            "premis-v3-0.xsd",
+        )
+
+    @staticmethod
+    def mets_xsd() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "xsd",
+            "mets.xsd",
+        )
+
+    @staticmethod
+    def dcterms_xsd() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "xsd",
+            "dc_basic.xsd",
+        )
+
+
+def determine_profile(path: Path) -> Profile:
+    """Parse the root METS in order to determine the profile.
+
+    Returns:
+        The instantiated Profile
+    Raises:
+        ValueError:
+            - If the package METS could not be parsed.
+            - If there is no profile information in the package METS.
+            - If the profile is not known.
+    """
+    try:
+        root = etree.parse(path.joinpath("data", "mets.xml"))
+    except (etree.ParseError, OSError) as e:
+        raise ValueError(f"METS could not be parsed: {e}.")
+
+    # Parse the meemoo profile in the IE METS
+    try:
+        profile_type = root.xpath(
+            "/mets:mets/@csip:CONTENTINFORMATIONTYPE",
+            namespaces=NAMESPACES,
+        )[0]
+    except IndexError:
+        raise ValueError("METS does not contain a CONTENTINFORMATIONTYPE attribute.")
+
+    if profile_type == BasicProfile10.profile_name():
+        return BasicProfile10(path)
+    if profile_type == BasicProfile11.profile_name():
+        return BasicProfile11(path)
+    raise ValueError(f"Profile not known: {profile_type}.")

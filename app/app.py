@@ -12,22 +12,15 @@ from app.models.bag import (
     BagNotValidError,
 )
 from app.models.profile import (
-    BasicProfile,
+    determine_profile,
     GraphNotConformError,
     GraphParseError,
-    Profile,
 )
 from app.services.pulsar import (
     PulsarClient,
 )
-from lxml import etree
 
 APP_NAME = "sipin-sip-validator"
-
-NAMESPACES = {
-    "mets": "http://www.loc.gov/METS/",
-    "csip": "https://DILCIS.eu/XML/METS/CSIPExtensionMETS",
-}
 
 
 class EventListener:
@@ -72,37 +65,6 @@ class EventListener:
 
         event = Event(attributes, data)
         self.pulsar_client.produce_event(topic, event)
-
-    def determine_profile(self, path: Path) -> Profile:
-        """Parse the root METS in order to determine the profile.
-
-        Returns:
-            The instantiated Profile
-        Raises:
-            ValueError:
-                - If the package METS could not be parsed.
-                - If there is no profile information in the package METS.
-                - If the profile is not known.
-        """
-        try:
-            root = etree.parse(path.joinpath("data", "mets.xml"))
-        except (etree.ParseError, OSError) as e:
-            raise ValueError(f"METS could not be parsed: {e}.")
-
-        # Parse the meemoo profile in the IE METS
-        try:
-            profile_type = root.xpath(
-                "/mets:mets/@csip:CONTENTINFORMATIONTYPE",
-                namespaces=NAMESPACES,
-            )[0]
-        except IndexError:
-            raise ValueError(
-                "METS does not contain a CONTENTINFORMATIONTYPE attribute."
-            )
-
-        if profile_type == "https://data.hetarchief.be/id/sip/1.0/basic":
-            return BasicProfile(path)
-        raise ValueError(f"Profile not known: {profile_type}.")
 
     def handle_incoming_message(self, message: Message):
         try:
@@ -156,7 +118,7 @@ class EventListener:
                 )
 
                 # Determine profile
-                profile = self.determine_profile(bag_path)
+                profile = determine_profile(bag_path)
 
                 # Validate XML files
                 xml_validation_errors = profile.validate_metadata()
