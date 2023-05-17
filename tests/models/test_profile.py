@@ -194,14 +194,14 @@ class TestBasicProfile10:
         assert type(error_1) == XMLNotValidError
         assert (
             str(error_1)
-            == "Element '{http://www.loc.gov/METS/}mets': Missing child element(s). Expected is ( {http://www.loc.gov/METS/}structMap )., line 7"
+            == "Element '{http://www.loc.gov/METS/}mets': Missing child element(s). Expected is ( {http://www.loc.gov/METS/}structMap )., line 2"
         )
 
         error_2 = errors[1]
         assert type(error_2) == XMLNotValidError
         assert (
             str(error_2)
-            == "Element '{http://www.loc.gov/METS/}unknownSpec': This element is not expected. Expected is one of ( {http://www.loc.gov/METS/}dmdSec, {http://www.loc.gov/METS/}amdSec, {http://www.loc.gov/METS/}fileSec, {http://www.loc.gov/METS/}structMap )., line 10"
+            == "Element '{http://www.loc.gov/METS/}unknownSpec': This element is not expected. Expected is one of ( {http://www.loc.gov/METS/}dmdSec, {http://www.loc.gov/METS/}amdSec, {http://www.loc.gov/METS/}fileSec, {http://www.loc.gov/METS/}structMap )., line 6"
         )
 
     @pytest.mark.parametrize(

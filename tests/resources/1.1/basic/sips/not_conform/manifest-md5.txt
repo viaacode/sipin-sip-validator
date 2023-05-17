@@ -1,6 +1,8 @@
-c4c51fe0ca0513d4318c8935c2bfb812  data/mets.xml
+e4e7a1e395d1aed072f4b4f0f6fc0e7b  data/basic.sparql
+23d0885802b69dcfae55276788060925  data/mets.xml
+645f498e2dccca4e2142ca649899324e  data/sip.sparql
 69859860a63ab0aaf221a0a17a5b98e3  data/metadata/descriptive/dc_1.xml
 fda206a31ce2eb27c8713589a53bf0f7  data/metadata/preservation/premis.xml
-80c501580dc75d883cdf8548a09a72d1  data/representations/representation_1/mets.xml
+a321c055122ce2c8d7b1771e0496148e  data/representations/representation_1/mets.xml
 02e4eb2f74ac06dd9cdfab861553697e  data/representations/representation_1/data/D523F963.jpg
 324f3b7ce8a4360726c42ef776180c40  data/representations/representation_1/metadata/preservation/premis.xml
