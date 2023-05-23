@@ -1,0 +1,62 @@
+PREFIX premis: <http://www.loc.gov/premis/v3#>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX haObjId: <https://data.hetarchief.be/id/object/>
+PREFIX haObj: <https://data.hetarchief.be/ns/object/>
+PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX schema: <https://schema.org/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT
+  {
+    ?ie a premisowl:IntellectualEntity;
+        ?dcterm_p ?dcterm_o;
+        a ?dcterm_xsi_type .
+  }
+WHERE
+  {
+    SERVICE <x-sparql-anything:location=/home/lennert/sipin-sip-validator/tests/resources/sips/basic/conform/data/metadata/descriptive/dc_1.xml> { 
+    # SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc_1.xml> {
+        [] a fx:root;
+            ?dc_1 [
+                a dct:identifier;
+                rdf:_1 ?id
+            ];
+            ?dc_2 ?dcterm .
+
+        ?dcterm a ?dcterm_p;
+           rdf:_1 ?dcterm_value .
+        
+        OPTIONAL {
+            ?dcterm xsi:type ?dcterm_xsi_type.
+        }
+        OPTIONAL {
+            ?dcterm xml:lang ?dcterm_xml_lang.
+        }
+
+        BIND(iri(REPLACE(?dcterm_xsi_type, "edtf:", "http://id.loc.gov/datatypes/edtf/")) AS ?edtf_dt)
+        BIND(iri(concat(str(haObjId:), ?id)) AS ?ie)
+
+        BIND(
+            COALESCE(
+                IF(bound(?dcterm_xsi_type), STRDT(?dcterm_value, ?edtf_dt), 1/0),
+                IF(?dcterm_p = dct:available, xsd:dateTime(?dcterm_value), 1/0),
+                IF(?dcterm_p = dct:extent, xsd:time(?dcterm_value), 1/0),
+                IF(bound(?dcterm_xml_lang), STRLANG(?dcterm_value, ?dcterm_xml_lang), 1/0),
+                IF(?dcterm_p IN (dct:title, dct:alternative, dct:description, dct:abstract, dct:rights), STRLANG(?dcterm_value, 'nl'), 1/0),
+                ?dcterm_value
+            )
+            AS ?dcterm_o)
+
+        FILTER (?dcterm_p != dct:identifier)
+    }
+  }

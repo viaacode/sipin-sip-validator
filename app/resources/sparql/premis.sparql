@@ -1,0 +1,90 @@
+PREFIX premis: <http://www.loc.gov/premis/v3#>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX haObjId: <https://data.hetarchief.be/id/object/>
+PREFIX haObj: <https://data.hetarchief.be/ns/object/>
+PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX schema: <https://schema.org/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+CONSTRUCT {
+    ?ie a premisowl:IntellectualEntity;
+        premisowl:identifier ?local_id;
+        relSubType:isr ?rep .
+
+    ?local_id a ?local_id_type_uri; 
+         rdf:value ?local_id_val .
+
+    ?local_id_type_uri rdfs:subClassOf haObj:LocalIdentifier .
+
+
+    ?rep a premisowl:Representation;
+        relSubType:rep ?ie .
+
+}
+WHERE {
+    SERVICE <x-sparql-anything:location=/home/lennert/sipin-sip-validator/tests/resources/sips/basic/conform/data/metadata/preservation/premis.xml> { 
+    # SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/preservation/premis.xml> {
+        {
+            {
+                SELECT DISTINCT ?local_id_type ?local_id_val
+                WHERE {
+                    [] a premis:object;
+                    xsi:type "premis:intellectualEntity";
+                    ?lid_1 [
+                        a premis:objectIdentifier;
+                        ?lid_2 [
+                            a premis:objectIdentifierType;
+                                rdf:_1 ?local_id_type
+                        ];
+                        ?lid_3 [
+                            a premis:objectIdentifierValue;
+                                rdf:_1 ?local_id_val
+                        ]
+                    ]
+                    FILTER (?local_id_type != "UUID")
+                }
+            }
+            BIND(iri(concat(str(haObjId:), ?local_id_type)) AS ?local_id_type_uri)
+            BIND(iri(concat(str(haObjId:), concat(?local_id_type, ENCODE_FOR_URI(?local_id_val)))) AS ?local_id)
+        }
+
+        [] a premis:object;
+            xsi:type "premis:intellectualEntity";
+            ?ie_1 [
+                a premis:objectIdentifier;
+                    ?ie_2 [
+                            a premis:objectIdentifierType;
+                                rdf:_1 ?ie_type
+                        ];
+                        ?ie_3 [
+                            a premis:objectIdentifierValue;
+                                rdf:_1 ?id
+                        ]
+                    ];
+            ?ie_4 [
+                a premis:relationship;
+                ?ie_5 [
+                    a premis:relatedObjectIdentifier;
+                    ?ie_6 [
+                        a premis:relatedObjectIdentifierValue;
+                        rdf:_1 ?ie_rel_rep_id
+                    ]
+                ]
+            ]
+            FILTER (?ie_type = "UUID")
+            BIND(iri(concat(str(haObjId:), ?id)) AS ?ie
+        )
+        BIND(iri(concat(str(haObjId:), ?ie_rel_rep_id)) AS  ?rep)
+    }
+}
