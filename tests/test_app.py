@@ -73,10 +73,12 @@ class TestEventListener:
         pulsar_binding_mock.from_protocol.return_value = event
         # There should be no errors when validating the metadata
         determine_profile_mock().validate_metadata.return_value = []
-        # Return JSON serialized in byte format when parsing the graph
-        determine_profile_mock().parse_graph().serialize.return_value = (
-            b'{"graph": "info"}'
-        )
+        # Return Turtle serialized in byte format when parsing the graph
+        turtle = b"""@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+        @prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+        dc:title "Test" ."""
+        determine_profile_mock().parse_graph().serialize.return_value = turtle
 
         # Act
         event_listener.handle_incoming_message("")
@@ -106,7 +108,11 @@ class TestEventListener:
             ),
             (
                 "sip.validate.shacl",
-                {"message": "Graph is conform.", "metadata_graph": {"graph": "info"}},
+                {
+                    "message": "Graph is conform.",
+                    "metadata_graph_fmt": "turtle",
+                    "metadata_graph": turtle,
+                },
                 "test",
                 EventOutcome.SUCCESS,
                 "555",
