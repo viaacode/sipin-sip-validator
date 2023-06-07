@@ -33,8 +33,7 @@ CONSTRUCT {
 
 }
 WHERE {
-    SERVICE <x-sparql-anything:location=/home/lennert/sipin-sip-validator/tests/resources/sips/basic/conform/data/metadata/preservation/premis.xml> { 
-    # SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/preservation/premis.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/preservation/premis.xml> {
         {
             {
                 SELECT DISTINCT ?local_id_type ?local_id_val

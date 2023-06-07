@@ -41,8 +41,7 @@ CONSTRUCT
 
 WHERE
   {
-    SERVICE <x-sparql-anything:location=/home/lennert/sipin-sip-validator/tests/resources/sips/basic/conform/data/representations/representation_1/metadata/preservation/premis.xml> { 
-    # SERVICE <x-sparql-anything:location={{ bag_path }}/data/representations/representation_1/metadata/preservation/premis.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/representations/representation_1/metadata/preservation/premis.xml> {
         {
             [] a premis:object;
                 xsi:type "premis:representation";

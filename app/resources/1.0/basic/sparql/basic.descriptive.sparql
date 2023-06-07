@@ -24,8 +24,7 @@ CONSTRUCT
   }
 WHERE
   {
-    SERVICE <x-sparql-anything:location=/home/lennert/sipin-sip-validator/tests/resources/sips/basic/conform/data/metadata/descriptive/dc_1.xml> { 
-    # SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc_1.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc_1.xml> {
         [] a fx:root;
             ?dc_1 [
                 a dct:identifier;
