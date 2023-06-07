@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:schema="">
+
+    <!-- linking id between dc and premis -->
+    <dcterms:identifier>uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27</dcterms:identifier>
+
+    <dcterms:title xml:lang="nl">ARCHIVERINGSCOPIE OBJ</dcterms:title>
+
+    <!-- licenses -->
+    <dcterms:license>CCBY-NC-ND-CONTENT</dcterms:license>
+    <dcterms:license>CP-website</dcterms:license>
+
+</metadata>

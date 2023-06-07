@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://data.hetarchief.be/id/sip/1.0/basic">
+
+    <dcterms:title xml:lang="en">the title of the episode</dcterms:title>
+    <dcterms:title xml:lang="nl">de titel van de episode</dcterms:title>
+
+    <dcterms:alternative xml:lang="en">the alternative title of the episode</dcterms:alternative>
+    <dcterms:alternative xml:lang="nl">de alternatieve titel van de episode</dcterms:alternative>
+
+    <!-- linking id between dc and premis -->
+    <!-- matches the identifier of the premis:object defined in the preservation/premis.xml -->
+    <dcterms:identifier>uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4</dcterms:identifier>
+
+    <dcterms:extent>01:59:34</dcterms:extent>
+
+    <dcterms:available>2023-02-14T18:12:36</dcterms:available>
+
+    <dcterms:description xml:lang="en">the description of the episode</dcterms:description>
+    <dcterms:description xml:lang="nl">de beschrijving van de episode</dcterms:description>
+
+    <dcterms:abstract xml:lang="en">the abstract of the episode</dcterms:abstract>
+    <dcterms:abstract xml:lang="nl">de samenvatting van de episode</dcterms:abstract>
+
+    <dcterms:created xsi:type="edtf:EDTF-level1">2023-02-12</dcterms:created>
+
+    <dcterms:issued xsi:type="edtf:EDTF">2023-02-14</dcterms:issued>
+
+    <dcterms:publisher>VIAA</dcterms:publisher>
+    <dcterms:publisher>meemoo</dcterms:publisher>
+
+    <dcterms:contributor>contributor 1</dcterms:contributor>
+    <dcterms:contributor>contributor 2</dcterms:contributor>
+
+    <dcterms:creator>creator 1</dcterms:creator>
+    <dcterms:creator>creator 2</dcterms:creator>
+
+    <dcterms:spatial>Ghent</dcterms:spatial>
+    <dcterms:spatial>Brussels</dcterms:spatial>
+
+    <dcterms:temporal>2023-02-12</dcterms:temporal>
+    <dcterms:temporal>2023-02-14</dcterms:temporal>
+
+    <dcterms:subject xml:lang="en">Keyword 1</dcterms:subject>
+    <dcterms:subject xml:lang="en">Keyword 2</dcterms:subject>
+    <dcterms:subject xml:lang="en">Keyword 3</dcterms:subject>
+    <dcterms:subject xml:lang="nl">Trefwoord 1</dcterms:subject>
+    <dcterms:subject xml:lang="nl">Trefwoord 2</dcterms:subject>
+    <dcterms:subject xml:lang="nl">Trefwoord 3</dcterms:subject>
+
+    <dcterms:language>en</dcterms:language>
+
+    <dcterms:rightsHolder>VIAA</dcterms:rightsHolder>
+
+    <dcterms:rights xml:lang="en">the rights of the episode</dcterms:rights>
+    <dcterms:rights xml:lang="nl">de rechten van de episode</dcterms:rights>
+
+    <dcterms:type>video</dcterms:type>
+
+    <dcterms:license>VIAA-PUBLIEK-METADATA-LTD</dcterms:license>
+    <dcterms:license>VIAA-ONDERWIJS</dcterms:license>
+
+</metadata>
