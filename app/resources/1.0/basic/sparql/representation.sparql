@@ -58,6 +58,10 @@ WHERE
                 ];
                 ?rep_4 [
                     a premis:relationship;
+                    ?rep_7 [
+                        a premis:relationshipSubType;
+                        rdf:_1 "represents"
+                    ];
                     ?rep_5 [
                         a premis:relatedObjectIdentifier;
                         ?rep_6 [
