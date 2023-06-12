@@ -41,7 +41,17 @@ class Profile(ABC):
 
     @staticmethod
     @abstractmethod
-    def query_profile() -> Path:
+    def query_descriptive_ie() -> Path:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def query_premis_ie() -> Path:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def query_premis_representation() -> Path:
         pass
 
     @staticmethod
@@ -77,14 +87,36 @@ class BasicProfile10(Profile):
         )
 
     @staticmethod
-    def query_profile() -> Path:
+    def query_descriptive_ie() -> Path:
         return Path(
             "app",
             "resources",
             "1.0",
             "basic",
             "sparql",
-            "basic.sparql",
+            "descriptive_ie.sparql",
+        )
+
+    @staticmethod
+    def query_premis_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "sparql",
+            "premis_ie.sparql",
+        )
+
+    @staticmethod
+    def query_premis_representation() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.0",
+            "basic",
+            "sparql",
+            "premis_representation.sparql",
         )
 
     @staticmethod
@@ -280,18 +312,54 @@ class BasicProfile10(Profile):
         with open(str(query_sip_destination), "w") as f:
             f.write(sip_template.render(bag_path=self.bag_path))
 
-        # write SPARQL-anything query for the BASIC profile.
-        query_basic_destination = self.bag_path.joinpath(self.query_profile().name)
-        profile_template = self.jinja_env.get_template(str(self.query_profile().name))
-        with open(str(query_basic_destination), "w") as f:
+        # write SPARQL-anything query for the descriptive metadata on IE level.
+        query_descriptive_ie_destination = self.bag_path.joinpath(
+            self.query_descriptive_ie().name
+        )
+        profile_template = self.jinja_env.get_template(
+            str(self.query_descriptive_ie().name)
+        )
+        with open(str(query_descriptive_ie_destination), "w") as f:
+            f.write(profile_template.render(bag_path=self.bag_path))
+
+        # write SPARQL-anything query for the premis metadata on the IE level.
+        query_premis_ie_destination = self.bag_path.joinpath(
+            self.query_premis_ie().name
+        )
+        profile_template = self.jinja_env.get_template(str(self.query_premis_ie().name))
+        with open(str(query_premis_ie_destination), "w") as f:
+            f.write(profile_template.render(bag_path=self.bag_path))
+
+        # write SPARQL-anything query for the premis metadata on the representation level.
+        query_premis_rep_destination = self.bag_path.joinpath(
+            self.query_premis_representation().name
+        )
+        profile_template = self.jinja_env.get_template(
+            str(self.query_premis_representation().name)
+        )
+        with open(str(query_premis_rep_destination), "w") as f:
             f.write(profile_template.render(bag_path=self.bag_path))
 
         # Run SPARQL-anything transformation.
         sa = SparqlAnything()
         try:
             sip_graph = sa.construct(q=str(query_sip_destination), f="TTL")
-            profile_graph = sa.construct(q=str(query_basic_destination), f="TTL")
-            data_graph = sip_graph + profile_graph
+            profile_descriptive_ie = sa.construct(
+                q=str(query_descriptive_ie_destination), f="TTL"
+            )
+            profile_premis_ie = sa.construct(
+                q=str(query_premis_ie_destination), f="TTL"
+            )
+            profile_premis_rep = sa.construct(
+                q=str(query_premis_rep_destination), f="TTL"
+            )
+
+            data_graph = (
+                sip_graph
+                + profile_descriptive_ie
+                + profile_premis_ie
+                + profile_premis_rep
+            )
 
         except Exception as e:
             raise GraphParseError(f"Error when parsing graph: {str(e)}")
@@ -346,14 +414,36 @@ class BasicProfile11(BasicProfile10):
         )
 
     @staticmethod
-    def query_profile() -> Path:
+    def query_descriptive_ie() -> Path:
         return Path(
             "app",
             "resources",
             "1.1",
             "basic",
             "sparql",
-            "basic.sparql",
+            "descriptive_ie.sparql",
+        )
+
+    @staticmethod
+    def query_premis_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "sparql",
+            "premis_ie.sparql",
+        )
+
+    @staticmethod
+    def query_premis_representation() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "sparql",
+            "premis_representation.sparql",
         )
 
     @staticmethod

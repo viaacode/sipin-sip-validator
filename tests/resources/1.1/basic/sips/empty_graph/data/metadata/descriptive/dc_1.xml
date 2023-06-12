@@ -7,7 +7,6 @@
 
     <!-- velden obv. dcterms -->
     <!-- linking id between dc and premis -->
-    <dcterms:identifier>uuid-6b80a848-f2d2-44a4-bc55-56f272a8e111</dcterms:identifier>
     <dcterms:title>VIAA.dc_title</dcterms:title>
     <dcterms:abstract>VIAA.dc_description</dcterms:abstract>
     <dcterms:description>VIAA.dc_description_lang</dcterms:description>

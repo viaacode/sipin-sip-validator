@@ -34,7 +34,7 @@
         valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/rep">represents</premis:relationshipSubType>
       <premis:relatedObjectIdentifier>
         <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
-        <premis:relatedObjectIdentifierValue>uuid-a0a5329c-4ad1-4607-9f6e-ce980d90b992</premis:relatedObjectIdentifierValue>
+        <premis:relatedObjectIdentifierValue>uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4</premis:relatedObjectIdentifierValue>
       </premis:relatedObjectIdentifier>
     </premis:relationship>
   </premis:object>
