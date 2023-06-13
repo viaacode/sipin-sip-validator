@@ -239,10 +239,8 @@
     sh:nodeKind sh:Literal ;
     sh:name "has title"@en ;
     sh:description "The title of the intellectual entity."@en ;
-    sh:minCount 1 ;
     sh:uniqueLang true ;
     sh:datatype rdf:langString;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -251,7 +249,6 @@
     sh:datatype rdf:langString;
     sh:name "has alternative title"@en ;
     sh:description "An alternative title of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -261,7 +258,6 @@
     sh:name "has extent"@en ;
     sh:description "The extent of the intellectual entity."@en ;
     sh:maxCount 1 ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -271,7 +267,6 @@
     sh:name "is available"@en ;
     sh:description "The datetime on which the intellectual entity is available."@en ;
     sh:maxCount 1 ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -281,8 +276,6 @@
     sh:datatype rdf:langString;
     sh:name "has description"@en ;
     sh:description "The description of the intellectual entity."@en ;
-    sh:minCount 1 ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -292,7 +285,6 @@
     sh:datatype rdf:langString;
     sh:name "has abstract"@en ;
     sh:description "The abstract of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -306,9 +298,7 @@
     ) ;
     sh:name "has creation date"@en ;
     sh:description "The creation date of the intellectual entity."@en ;
-    sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -323,7 +313,6 @@
     sh:name "has issue date"@en ;
     sh:description "The issue date of the intellectual entity."@en ;
     sh:maxCount 1 ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -332,7 +321,6 @@
     sh:datatype xsd:string ;
     sh:name "has publisher"@en ;
     sh:description "The publisher of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -341,7 +329,6 @@
     sh:datatype xsd:string ;
     sh:name "has contributor"@en ;
     sh:description "The contributor of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -350,7 +337,6 @@
     sh:datatype xsd:string ;
     sh:name "has creator"@en ;
     sh:description "The creator of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -359,7 +345,6 @@
     sh:datatype xsd:string ;
     sh:name "has spatial coverage"@en ;
     sh:description "The spatial coverage of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -368,7 +353,6 @@
     sh:datatype xsd:string ;
     sh:name "has temporal coverage"@en ;
     sh:description "The temporal coverage of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -378,7 +362,6 @@
     sh:datatype rdf:langString ;
     sh:name "has subject"@en ;
     sh:description "The subject or keywords of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -387,7 +370,6 @@
     sh:datatype xsd:string ;
     sh:name "has language"@en ;
     sh:description "The language of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -397,7 +379,6 @@
     sh:name "has rights holder"@en ;
     sh:description "The rights holder of the intellectual entity."@en ;
     sh:maxCount 1 ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -407,7 +388,6 @@
     sh:uniqueLang true ;
     sh:name "has rights"@en ;
     sh:description "The rights of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -417,7 +397,6 @@
     sh:name "has type"@en ;
     sh:description "The classification of the intellectual entity."@en ;
     sh:maxCount 1 ;
-    sh:severity sh:Warning ;
   ] .
   
 <#FileShape> a sh:NodeShape ;
