@@ -41,7 +41,7 @@ CONSTRUCT
 
 WHERE
   {
-    SERVICE <x-sparql-anything:location={{ bag_path }}/data/representations/representation_1/metadata/preservation/premis.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/representations/{{ rep_subfolder }}/metadata/preservation/premis.xml> {
         {
             [] a premis:object;
                 xsi:type "premis:representation";
@@ -137,7 +137,7 @@ WHERE
                 BIND(iri(concat(str(haObjId:), ?file_uuid)) AS ?file)
                 BIND(iri(concat(str(haObjId:), ?file_rel_rep_id)) AS ?rep)
                 BIND(STRDT(?file_size, xsd:integer) AS ?file_size_int)
-                BIND(iri(REPLACE(?file_format, "fmt-", "http://the-fr.org/id/file-format/")) AS ?format_uri)
+                BIND(iri(REPLACE(?file_format, "fmt/", "http://the-fr.org/id/file-format/")) AS ?format_uri)
         }
     }
   }
