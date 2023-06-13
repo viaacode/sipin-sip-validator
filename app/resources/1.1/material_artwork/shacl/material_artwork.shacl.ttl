@@ -26,7 +26,6 @@
     sh:name "creator"@en ;
     sh:description "The creator of the intellectual entity."@en ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
   ],
   [
     a sh:PropertyShape ;
@@ -123,8 +122,6 @@
         sh:path schema:roleName ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ; 
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
         sh:name "role name"@en ;
         sh:severity sh:Violation ;
         sh:message "schema:roleName is missing or not of type string"@en ;    
