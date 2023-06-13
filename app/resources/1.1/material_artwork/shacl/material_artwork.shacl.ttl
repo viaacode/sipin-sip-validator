@@ -83,6 +83,7 @@
     sh:name "creator"@en ;
     sh:description "The creator of the intellectual entity."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -92,6 +93,7 @@
     sh:name "height"@en ;
     sh:description "The height of the intellectual entity."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -101,6 +103,7 @@
     sh:name "width"@en ;
     sh:description "The width of the intellectual entity."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -110,6 +113,7 @@
     sh:name "depth"@en ;
     sh:description "The depth of the intellectual entity."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Warning ;
   ] ,
   [
     a sh:PropertyShape ;
@@ -117,7 +121,8 @@
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
     sh:description "The art medium is not a string or occurs more than once."@en ;
-    sh:uniqueLang true
+    sh:uniqueLang true ;
+    sh:severity sh:Warning ;
   ],
   [
     a sh:PropertyShape ;
@@ -125,7 +130,8 @@
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:description "The artform is not a string or occurs more than once."@en ;
-    sh:uniqueLang true
+    sh:severity sh:Warning ;
+    sh:uniqueLang true ;
   ] .
 
 <#QuantitativeValueShape> a sh:NodeShape ; 
