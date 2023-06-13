@@ -212,6 +212,7 @@
 <#RepresentationShape> a sh:NodeShape ;
   sh:targetClass premis:Representation ;
   sh:property <#objectIdentifierShape>, 
+  # Premis
   [
     a sh:PropertyShape ;
     sh:path relSubType:rep ;
@@ -230,6 +231,193 @@
     sh:name "includes"@en ;
     sh:description "The file(s) included in the representation."@en ;
     sh:minCount 1 ;
+  ],
+  # Optional DCTERMS
+  [
+    a sh:PropertyShape ;
+    sh:path dct:title ;
+    sh:nodeKind sh:Literal ;
+    sh:name "has title"@en ;
+    sh:description "The title of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:uniqueLang true ;
+    sh:datatype rdf:langString;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:alternative ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype rdf:langString;
+    sh:name "has alternative title"@en ;
+    sh:description "An alternative title of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:extent ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:time ;
+    sh:name "has extent"@en ;
+    sh:description "The extent of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:available ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:name "is available"@en ;
+    sh:description "The datetime on which the intellectual entity is available."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:description ;
+    sh:nodeKind sh:Literal ;
+    sh:uniqueLang true ;
+    sh:datatype rdf:langString;
+    sh:name "has description"@en ;
+    sh:description "The description of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:abstract ;
+    sh:nodeKind sh:Literal ;
+    sh:uniqueLang true ;
+    sh:datatype rdf:langString;
+    sh:name "has abstract"@en ;
+    sh:description "The abstract of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:created ;
+    sh:nodeKind sh:Literal ;
+    sh:or (
+      [ sh:datatype edtf:EDTF-level0 ]
+      [ sh:datatype edtf:EDTF-level1 ]
+      [ sh:datatype edtf:EDTF-level2 ]
+      [ sh:datatype edtf:EDTF ]
+    ) ;
+    sh:name "has creation date"@en ;
+    sh:description "The creation date of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:issued ;
+    sh:nodeKind sh:Literal ;
+    sh:or (
+      [ sh:datatype edtf:EDTF-level0 ]
+      [ sh:datatype edtf:EDTF-level1 ]
+      [ sh:datatype edtf:EDTF-level2 ]
+      [ sh:datatype edtf:EDTF ]
+    ) ;
+    sh:name "has issue date"@en ;
+    sh:description "The issue date of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:publisher ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has publisher"@en ;
+    sh:description "The publisher of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:contributor ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has contributor"@en ;
+    sh:description "The contributor of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:creator ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has creator"@en ;
+    sh:description "The creator of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:spatial ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has spatial coverage"@en ;
+    sh:description "The spatial coverage of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:temporal ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has temporal coverage"@en ;
+    sh:description "The temporal coverage of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:subject ;
+    sh:NodeKind sh:Literal ;
+    sh:uniqueLang false ;
+    sh:datatype rdf:langString ;
+    sh:name "has subject"@en ;
+    sh:description "The subject or keywords of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:language ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has language"@en ;
+    sh:description "The language of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:rightsHolder ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has rights holder"@en ;
+    sh:description "The rights holder of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:rights ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype rdf:langString ;
+    sh:uniqueLang true ;
+    sh:name "has rights"@en ;
+    sh:description "The rights of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:type ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has type"@en ;
+    sh:description "The classification of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Warning ;
   ] .
   
 <#FileShape> a sh:NodeShape ;

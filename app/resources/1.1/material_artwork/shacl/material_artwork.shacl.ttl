@@ -17,7 +17,7 @@
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
-  sh:property <#objectIdentifierShape>,
+  sh:property
   [
     a sh:PropertyShape ;
     sh:path schema:creator ;
@@ -70,6 +70,63 @@
     sh:description "The artform is not a string or occurs more than once."@en ;
     sh:uniqueLang true
   ].
+
+<#RepresentationShape> a sh:NodeShape ;
+  sh:targetClass premis:Representation ;
+  sh:property
+  # Optional schema.org
+  [
+    a sh:PropertyShape ;
+    sh:path schema:creator ;
+    sh:nodeKind sh:IRI ;
+    sh:node <#RoleShape> ;
+    sh:name "creator"@en ;
+    sh:description "The creator of the intellectual entity."@en ;
+    sh:minCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:height ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node <#QuantitativeValueShape> ;
+    sh:name "height"@en ;
+    sh:description "The height of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:width ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node <#QuantitativeValueShape> ;
+    sh:name "width"@en ;
+    sh:description "The width of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:depth ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node <#QuantitativeValueShape> ;
+    sh:name "depth"@en ;
+    sh:description "The depth of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ] ,
+  [
+    a sh:PropertyShape ;
+    sh:path schema:artMedium ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype rdf:langString ;
+    sh:description "The art medium is not a string or occurs more than once."@en ;
+    sh:uniqueLang true
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:artForm ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The artform is not a string or occurs more than once."@en ;
+    sh:uniqueLang true
+  ] .
 
 <#QuantitativeValueShape> a sh:NodeShape ; 
     sh:targetClass schema:QuantitativeValue ;
