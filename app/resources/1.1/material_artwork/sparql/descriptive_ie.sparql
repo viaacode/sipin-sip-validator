@@ -17,7 +17,8 @@ CONSTRUCT
         schema:creator ?creatorRole ;
         schema:height ?height ;
         schema:width ?width ;
-        schema:depth ?depth .
+        schema:depth ?depth ;
+        schema:weight ?weight .
 
     ?height a schema:QuantitativeValue ;
         ?height_p ?height_b_value_dt .
@@ -27,6 +28,9 @@ CONSTRUCT
 
     ?depth a schema:QuantitativeValue ;
         ?depth_p ?depth_b_value_dt .
+
+    ?weight a schema:QuantitativeValue ;
+        ?weight_p ?weight_b_value_dt .
 
     ?creatorRole a schema:Role;
         schema:roleName ?creatorRoleName;
@@ -90,7 +94,7 @@ WHERE
 
         # Quantitative values
 
-            # Height
+        # Height
         OPTIONAL {
             [] a fx:root;
 
@@ -113,7 +117,7 @@ WHERE
             )
         AS ?height)
 
-            # Width
+        # Width
         OPTIONAL {
             [] a fx:root;
 
@@ -136,7 +140,7 @@ WHERE
         AS ?width)
 
 
-            # Depth
+        # Depth
         OPTIONAL {
             [] a fx:root;
 
@@ -159,6 +163,28 @@ WHERE
             )
         AS ?depth)
 
+        # Weight
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_6 [
+                a schema:weight ;
+                ?weight_list ?weight_b ;
+            ] .
+
+            ?weight_b a ?weight_p ;
+                rdf:_1 ?weight_b_value .
+
+            BIND(IF(?weight_p = schema:value, STRDT(?weight_b_value, xsd:float),?weight_b_value) AS ?weight_b_value_dt)
+
+        }
+        BIND(
+            IF(
+                bound(?root_list_6),
+                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Weight")))),
+                ?root_list_6
+            )
+        AS ?weight)
 
         # Rest of properties
         [] a fx:root;
@@ -192,5 +218,6 @@ WHERE
         FILTER (?p != schema:height)
         FILTER (?p != schema:width)
         FILTER (?p != schema:depth)
+        FILTER (?p != schema:weight)
     }
 }   
