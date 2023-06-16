@@ -41,7 +41,7 @@ CONSTRUCT
 
 WHERE
   {
-    SERVICE <x-sparql-anything:location={{ bag_path }}/data/representations/{{ rep_subfolder }}/metadata/preservation/premis.xml> {
+    SERVICE <x-sparql-anything:location={{ path }}> {
         {
             [] a premis:object;
                 xsi:type "premis:representation";
