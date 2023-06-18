@@ -18,10 +18,10 @@
     <fileSec ID="uuid-170f9654-bf8d-45df-8451-48d6203b9f03">
         <fileGrp USE="data" ID="uuid-d020d7d1-f258-40af-8788-04cf62a0032b">
             <file ID="uuid-3413CA40-26DA-47D2-89E8-AA8942E67BBD" MIMETYPE="image/tiff"
-                SIZE="1735648" CREATED="2022-02-16T10:02:37.009+02:00"
-                CHECKSUM="18513a8d61c6f2cbaaeeedd754b01d6b" CHECKSUMTYPE="MD5">
+                SIZE="1067" CREATED="2022-02-16T10:02:37.009+02:00"
+                CHECKSUM="516255bf4553dc6530be6a9a4f7c4515" CHECKSUMTYPE="MD5">
                 <FLocat LOCTYPE="URL" xlink:type="simple"
-                    xlink:href="./data/7m03z1634f_target_tiff.tif" />
+                    xlink:href="./data/7m03z1634f_target_tiff.tiff" />
             </file>
         </fileGrp>
     </fileSec>

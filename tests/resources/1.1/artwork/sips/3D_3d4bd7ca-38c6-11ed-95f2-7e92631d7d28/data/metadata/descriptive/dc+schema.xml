@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:schema="">
+<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:schema="https://schema.org/">
 
 
   <!-- general title for the resource -->
@@ -11,7 +11,7 @@
   <dcterms:description xml:lang="en">part of the Van Herck collection of terracotta sculptures.</dcterms:description>
 
   <!-- linking id between dc and premis -->
-  <dcterms:identifier>7m03z1634f</dcterms:identifier>
+  <dcterms:identifier>qv3bz95m19</dcterms:identifier>
 
   <!-- creationdate -->
   <dcterms:created xsi:type="edtf:EDTF-level1">1701/1800</dcterms:created>
@@ -35,8 +35,8 @@
   <!-- creator -->
   <schema:creator schema:roleName="auteur">
     <schema:name>Walter Pompe</schema:name>
-    <schema:birthDate xsi:type="xsd:dateTime">1703</schema:birthDate>
-    <schema:deathDate xsi:type="xsd:dateTime">1777</schema:deathDate>
+    <schema:birthDate xsi:type="edtf:EDTF-level1">1703-11-22</schema:birthDate>
+    <schema:deathDate xsi:type="edtf:EDTF-level1">1777-02-16</schema:deathDate>
   </schema:creator>
 
   <!-- dimensions -->
@@ -56,7 +56,7 @@
     <schema:unitCode>MMT</schema:unitCode>
   </schema:depth>
   <schema:weight>
-    <schema:value>2,3</schema:value>
+    <schema:value>2.3</schema:value>
     <schema:unitText>kg</schema:unitText>
     <schema:unitCode>KGM</schema:unitCode>
   </schema:weight>

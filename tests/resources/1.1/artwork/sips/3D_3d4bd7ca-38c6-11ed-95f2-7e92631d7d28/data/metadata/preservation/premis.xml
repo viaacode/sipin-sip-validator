@@ -26,18 +26,18 @@
             <premis:relatedObjectIdentifier>
                 <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
                 <premis:relatedObjectIdentifierValue>uuid-e3aff200-237b-11ed-8d32-7e92631d7d28</premis:relatedObjectIdentifierValue>
-            </premis:relatedObjectIdentifier>            
+            </premis:relatedObjectIdentifier>
             <premis:relatedObjectIdentifier>
                 <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
                 <premis:relatedObjectIdentifierValue>uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27</premis:relatedObjectIdentifierValue>
             </premis:relatedObjectIdentifier>
             <premis:relatedObjectIdentifier>
                 <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
-                <premis:relatedObjectIdentifierValue>uuid-671f4eb6-21ff-11ed-9e92-7e92631d7d27</premis:relatedObjectIdentifierValue>
+                <premis:relatedObjectIdentifierValue>uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4</premis:relatedObjectIdentifierValue>
             </premis:relatedObjectIdentifier>
             <premis:relatedObjectIdentifier>
                 <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
-                <premis:relatedObjectIdentifierValue>uuid-5c430d70-21ff-11ed-baeb-7e92631d7d27</premis:relatedObjectIdentifierValue>
+                <premis:relatedObjectIdentifierValue>uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a</premis:relatedObjectIdentifierValue>
             </premis:relatedObjectIdentifier>
         </premis:relationship>
 
@@ -79,17 +79,12 @@
         </premis:linkingObjectIdentifier>
         <premis:linkingObjectIdentifier>
             <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
-            <premis:linkingObjectIdentifierValue>uuid-671f4eb6-21ff-11ed-9e92-7e92631d7d27</premis:linkingObjectIdentifierValue>
+            <premis:linkingObjectIdentifierValue>uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4</premis:linkingObjectIdentifierValue>
             <premis:linkingObjectRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/out">outcome</premis:linkingObjectRole>
         </premis:linkingObjectIdentifier>
         <premis:linkingObjectIdentifier>
             <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
-            <premis:linkingObjectIdentifierValue>uuid-5c430d70-21ff-11ed-baeb-7e92631d7d27</premis:linkingObjectIdentifierValue>
-            <premis:linkingObjectRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/out">outcome</premis:linkingObjectRole>
-        </premis:linkingObjectIdentifier>
-        <premis:linkingObjectIdentifier>
-            <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
-            <premis:linkingObjectIdentifierValue>uuid-0b6c68e2-3a7d-11ed-97b8-7e92631d7d28</premis:linkingObjectIdentifierValue>
+            <premis:linkingObjectIdentifierValue>uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a</premis:linkingObjectIdentifierValue>
             <premis:linkingObjectRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/out">outcome</premis:linkingObjectRole>
         </premis:linkingObjectIdentifier>
     </premis:event>

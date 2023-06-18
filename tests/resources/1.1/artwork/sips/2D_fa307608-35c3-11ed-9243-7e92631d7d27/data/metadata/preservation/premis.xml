@@ -78,7 +78,7 @@
         </premis:linkingObjectIdentifier>
         <premis:linkingObjectIdentifier>
             <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
-            <premis:linkingObjectIdentifierValue>uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1</premis:linkingObjectIdentifierValue>
+            <premis:linkingObjectIdentifierValue>uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43</premis:linkingObjectIdentifierValue>
             <premis:linkingObjectRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/out">outcome</premis:linkingObjectRole>
         </premis:linkingObjectIdentifier>
         <premis:linkingObjectIdentifier>
