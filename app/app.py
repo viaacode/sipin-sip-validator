@@ -1,5 +1,4 @@
 from pathlib import Path
-import json
 
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
@@ -21,6 +20,7 @@ from app.services.pulsar import (
 )
 
 APP_NAME = "sipin-sip-validator"
+METADATA_GRAPH_FMT = "turtle"
 
 
 class EventListener:
@@ -204,7 +204,8 @@ class EventListener:
                     self.sip_validate_shacl_topic,
                     {
                         "message": "Graph is conform.",
-                        "metadata_graph": json.loads(graph.serialize(format="json-ld")),
+                        "metadata_graph_fmt": METADATA_GRAPH_FMT,
+                        "metadata_graph": graph.serialize(format=METADATA_GRAPH_FMT),
                     },
                     msg_data["destination"],
                     EventOutcome.SUCCESS,
