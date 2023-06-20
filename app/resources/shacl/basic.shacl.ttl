@@ -46,6 +46,7 @@
       [ sh:class haObj:Historical_record_number ]
       [ sh:class haObj:Inventarisnummer ]
       [ sh:class haObj:MEDIA_ID ]
+      [ sh:class haObj:Object_number ]
       [ sh:class haObj:Priref ]
       [ sh:class haObj:Word_ID ]
       [ sh:class haObj:Topstuk_ID ]
