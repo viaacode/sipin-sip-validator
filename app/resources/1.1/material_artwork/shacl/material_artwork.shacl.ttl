@@ -67,7 +67,7 @@
     a sh:PropertyShape ;
     sh:path schema:artForm ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:langString ;
+    sh:datatype rdf:langString ;
     sh:description "The type of art form."@en;
     sh:message "The art form is not a langString or occurs more than once."@en ;
     sh:uniqueLang true
@@ -125,7 +125,7 @@
     a sh:PropertyShape ;
     sh:path schema:artForm ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:langString ;
+    sh:datatype rdf:langString ;
     sh:description "The type of art form."@en;
     sh:message "The art form is not a langString or occurs more than once."@en ;
     sh:severity sh:Warning ;
