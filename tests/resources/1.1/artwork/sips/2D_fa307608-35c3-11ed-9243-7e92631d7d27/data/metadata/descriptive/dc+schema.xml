@@ -12,7 +12,7 @@
   <dcterms:description xml:lang="en">Painted around 1629 for the high altar of the Beguinage Church in Antwerp. A second copy is kept in Madrid (Prado); sketches at Leningrad (Hermitage) a smaller repetition at Hagley (Lord Littleton) a drawing in the Atger Museum in Montpellier and finally a grisaille study was in the Randon de Boisset auction in 1776. The painting was engraved by Paul Pontius and Andreas van Rymsdyck.</dcterms:description>
 
   <!-- linking id between dc and premis -->
-  <dcterms:identifier>7m03z1634f</dcterms:identifier>
+  <dcterms:identifier>uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675</dcterms:identifier>
 
   <!-- creationdate -->
   <dcterms:created xsi:type="edtf:EDTF-level1">1628/1629</dcterms:created>

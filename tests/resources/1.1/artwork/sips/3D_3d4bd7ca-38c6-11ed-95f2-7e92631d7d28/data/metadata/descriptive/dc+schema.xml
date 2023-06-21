@@ -11,7 +11,7 @@
   <dcterms:description xml:lang="en">part of the Van Herck collection of terracotta sculptures.</dcterms:description>
 
   <!-- linking id between dc and premis -->
-  <dcterms:identifier>qv3bz95m19</dcterms:identifier>
+  <dcterms:identifier>uuid-645392be-fa36-40fe-92e7-16c9fa60fe46</dcterms:identifier>
 
   <!-- creationdate -->
   <dcterms:created xsi:type="edtf:EDTF-level1">1701/1800</dcterms:created>

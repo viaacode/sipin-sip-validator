@@ -4,7 +4,12 @@
     <!-- IE about the artwork -->
     <premis:object xsi:type="premis:intellectualEntity">
         <premis:objectIdentifier>
-            <premis:objectIdentifierType>VIAA PID</premis:objectIdentifierType>
+            <premis:objectIdentifierType>UUID</premis:objectIdentifierType>
+            <premis:objectIdentifierValue>uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675</premis:objectIdentifierValue>
+        </premis:objectIdentifier>
+
+        <premis:objectIdentifier>
+            <premis:objectIdentifierType>meemoo_pid</premis:objectIdentifierType>
             <premis:objectIdentifierValue>7m03z1634f</premis:objectIdentifierValue>
         </premis:objectIdentifier>
 
