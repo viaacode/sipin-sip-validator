@@ -59,15 +59,17 @@
     sh:path schema:artMedium ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
-    sh:description "The art medium is not a string or occurs more than once."@en ;
+    sh:description "The material used to create the physical artwork."@en ;
+    sh:message "The art medium is not a langString or occurs more than once."@en ;
     sh:uniqueLang true
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:artForm ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:description "The artform is not a string or occurs more than once."@en ;
+    sh:datatype xsd:langString ;
+    sh:description "The type of art form."@en;
+    sh:message "The art form is not a langString or occurs more than once."@en ;
     sh:uniqueLang true
   ].
 
@@ -115,15 +117,17 @@
     sh:path schema:artMedium ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
-    sh:description "The art medium is not a string or occurs more than once."@en ;
+    sh:description "The material used to create the physical artwork."@en ;
+    sh:message "The art medium is not a langString or occurs more than once."@en ;
     sh:uniqueLang true ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:artForm ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:description "The artform is not a string or occurs more than once."@en ;
+    sh:datatype xsd:langString ;
+    sh:description "The type of art form."@en;
+    sh:message "The art form is not a langString or occurs more than once."@en ;
     sh:severity sh:Warning ;
     sh:uniqueLang true ;
   ] .
