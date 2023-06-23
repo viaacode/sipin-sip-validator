@@ -209,6 +209,8 @@ WHERE
         BIND(
             COALESCE(
                 IF(bound(?b_type), STRDT(?b_value, ?b_dt), 1/0),
+                IF(?p = dct:available, xsd:dateTime(?b_value), 1/0),
+                IF(?p = dct:extent, xsd:time(?b_value), 1/0),
                 IF(bound(?b_lang), STRLANG(?b_value, ?b_lang), 1/0),
                 ?b_value
             )
