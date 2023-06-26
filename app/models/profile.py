@@ -384,7 +384,6 @@ class BasicProfile10(Profile):
             raise GraphNotConformError(
                 "Graph is perceived as empty as it does not contain an intellectual entity."
             )
-        print(data_graph.serialize())
         shacl_graph = Graph()
         shacl_graph.parse(str(self.shacl_sip()), format="turtle")
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
@@ -624,7 +623,7 @@ class MaterialArtworkProfile11(Profile):
             "1.1",
             "material_artwork",
             "xsd",
-            "dc_material_artwork.xsd",
+            "descriptive_material_artwork.xsd",
         )
 
     def _validate_premis(self) -> list[XMLNotValidError]:
@@ -698,8 +697,7 @@ class MaterialArtworkProfile11(Profile):
             dcterms_package = etree.parse(dcterms_package_path)
             dc_schema_xsd.assertValid(dcterms_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            # errors.append(XMLNotValidError(str(e)))
-            pass
+            errors.append(XMLNotValidError(str(e)))
 
         # DC+SCHEMA on representation level
         for dcterms_representation_path in self.bag_path.glob(
@@ -718,8 +716,7 @@ class MaterialArtworkProfile11(Profile):
                 dcterms_representation = etree.parse(dcterms_representation_path)
                 dc_schema_xsd.assertValid(dcterms_representation)
             except (etree.DocumentInvalid, etree.ParseError) as e:
-                # errors.append(XMLNotValidError(str(e)))
-                pass
+                errors.append(XMLNotValidError(str(e)))
 
         return errors
 
