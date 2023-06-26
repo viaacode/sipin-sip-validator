@@ -43,7 +43,7 @@ WHERE
 { 
     SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc+schema.xml> {
         
-        # IRI of the intellectual entity
+        # region IRI of the intellectual entity
         [] a fx:root;
 
         ?root_list_1 [ 
@@ -51,8 +51,9 @@ WHERE
             rdf:_1 ?id
         ] .
         BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",?id)) AS ?ie)
+        # endregion
 
-        # Creator
+        # region Creator
         [] a fx:root;
 
         ?root_list_2 [
@@ -72,29 +73,22 @@ WHERE
         OPTIONAL {
             ?creator_b xml:lang ?creator_b_lang .
         }
-
-        # Workaround: SA returns prefixed values in attributes as prefixed strings, not as IRIs. STRDT will fail silently when provided a string as datatype.
-        BIND(iri(
-            REPLACE(
-                REPLACE(?creator_b_type, "xsd:", "http://www.w3.org/2001/XMLSchema#"),
-                "edtf:", "http://id.loc.gov/datatypes/edtf/"
-            )
-        ) AS ?creator_b_dt)
         
         BIND(
             COALESCE(
-                IF(bound(?creator_b_type), STRDT(?creator_b_value, ?creator_b_dt), 1/0),
+                IF(?creator_p = schema:birthDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
+                IF(?creator_p = schema:deathDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
                 IF(bound(?creator_b_lang), STRLANG(?creator_b_value, ?creator_b_lang), 1/0),
                 ?creator_b_value
             )
         AS ?creator_o)
         BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Role")))) AS ?creatorRole)
         BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Creator")))) AS ?creator)
+        # endregion
 
+        # region Quantitative values
 
-        # Quantitative values
-
-        # Height
+        # region Height
         OPTIONAL {
             [] a fx:root;
 
@@ -116,8 +110,9 @@ WHERE
                 ?root_list_3
             )
         AS ?height)
+        # endregion
 
-        # Width
+        # region Width
         OPTIONAL {
             [] a fx:root;
 
@@ -138,9 +133,10 @@ WHERE
                 ?root_list_4
             )
         AS ?width)
+        # endregion
 
 
-        # Depth
+        # region Depth
         OPTIONAL {
             [] a fx:root;
 
@@ -162,8 +158,9 @@ WHERE
                 ?root_list_5
             )
         AS ?depth)
+        # endregion
 
-        # Weight
+        # region Weight
         OPTIONAL {
             [] a fx:root;
 
@@ -185,8 +182,11 @@ WHERE
                 ?root_list_6
             )
         AS ?weight)
+        # endregion
 
-        # Rest of properties
+        # endregion
+
+        # region Rest of properties
         [] a fx:root;
 
         ?root_list_n ?b .
@@ -199,21 +199,20 @@ WHERE
             ?b xml:lang ?b_lang .
         }
 
-        # Workaround: SA returns prefixed values in attributes as prefixed strings, not as IRIs. STRDT will fail silently when provided a string as datatype.
-        BIND(iri(
-            REPLACE(
-            REPLACE(?b_type, "xsd:", "http://www.w3.org/2001/XMLSchema#"),
-            "edtf:", "http://id.loc.gov/datatypes/edtf/"
-        )) AS ?b_dt)
 
         BIND(
             COALESCE(
-                IF(bound(?b_type), STRDT(?b_value, ?b_dt), 1/0),
+                IF(?p = dct:created, STRDT(?p, edtf:EDTF), 1/0),
+                IF(?p = dct:issued, STRDT(?p, edtf:EDTF), 1/0),
+                IF(?p = dct:available, xsd:dateTime(?p), 1/0),
+                IF(?p = dct:extent, xsd:time(?p), 1/0),
                 IF(bound(?b_lang), STRLANG(?b_value, ?b_lang), 1/0),
                 ?b_value
             )
         AS ?o)
+        # endregion
 
+        FILTER (?p != dct:identifier)
         FILTER (?p != schema:creator)
         FILTER (?p != schema:height)
         FILTER (?p != schema:width)
