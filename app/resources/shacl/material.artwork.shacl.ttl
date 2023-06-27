@@ -59,6 +59,7 @@
     sh:datatype xsd:string ;
     sh:description "The art medium is not a string or occurs more than once."@en ;
     sh:maxCount 1 ;
+    sh:uniqueLang true
   ],
   [
     a sh:PropertyShape ;
@@ -66,7 +67,7 @@
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:description "The artform is not a string or occurs more than once."@en ;
-    sh:maxCount 1 ;
+    sh:uniqueLang true
   ].
 
 <#QuantitativeValueShape> a sh:NodeShape ; 
@@ -123,7 +124,8 @@
         sh:maxCount 1 ;
         sh:name "role name"@en ;
         sh:severity sh:Violation ;
-        sh:message "schema:roleName is missing or not of type string"@en ;    ] .
+        sh:message "schema:roleName is missing or not of type string"@en ;    
+    ] .
 
 
 <#PersonShape> a sh:NodeShape ;

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:schema="https://schema.org/">
+
+
+  <!-- general title for the resource -->
+  <dcterms:title xml:lang="nl">De Romeinse wolvin met Romulus en Remus</dcterms:title>
+  <dcterms:title xml:lang="en">The Roman She-Wolf with Romulus and Remus</dcterms:title>
+
+  <!-- general description for the resource -->
+  <dcterms:description xml:lang="nl">onderdeel van de Van Herck collectie terracottabeelden</dcterms:description>
+  <dcterms:description xml:lang="en">part of the Van Herck collection of terracotta sculptures.</dcterms:description>
+
+  <!-- linking id between dc and premis -->
+  <dcterms:identifier>uuid-645392be-fa36-40fe-92e7-16c9fa60fe46</dcterms:identifier>
+
+  <!-- creationdate -->
+  <dcterms:created xsi:type="edtf:EDTF-level1">1701/1800</dcterms:created>
+
+  <dcterms:subject xml:lang="nl">topstukken</dcterms:subject>
+  <dcterms:subject xml:lang="nl">collectie Van Herck</dcterms:subject>
+  <dcterms:subject xml:lang="nl">terracotta</dcterms:subject>
+  <dcterms:subject xml:lang="nl">3D</dcterms:subject>
+  <dcterms:subject xml:lang="nl">scan</dcterms:subject>
+  <dcterms:subject xml:lang="nl">beeldhouwwerk</dcterms:subject>
+
+  <dcterms:subject xml:lang="en">collection Van Herck</dcterms:subject>
+  <dcterms:subject xml:lang="en">terracotta</dcterms:subject>
+  <dcterms:subject xml:lang="en">3D</dcterms:subject>
+  <dcterms:subject xml:lang="en">scan</dcterms:subject>
+  <dcterms:subject xml:lang="en">sculpture</dcterms:subject>
+
+  <!-- rights note -->
+  <dcterms:rights xml:lang="en">public domain</dcterms:rights>
+
+  <!-- creator -->
+  <schema:creator schema:roleName="auteur">
+    <schema:name>Walter Pompe</schema:name>
+    <schema:birthDate xsi:type="edtf:EDTF-level1">1703-11-22</schema:birthDate>
+    <schema:deathDate xsi:type="edtf:EDTF-level1">1777-02-16</schema:deathDate>
+  </schema:creator>
+
+  <!-- dimensions -->
+  <schema:height>
+    <schema:value>116</schema:value>
+    <schema:unitText>mm</schema:unitText>
+    <schema:unitCode>MMT</schema:unitCode>
+  </schema:height>
+  <schema:width>
+    <schema:value>220</schema:value>
+    <schema:unitText>mm</schema:unitText>
+    <schema:unitCode>MMT</schema:unitCode>
+  </schema:width>
+  <schema:depth>
+    <schema:value>130</schema:value>
+    <schema:unitText>mm</schema:unitText>
+    <schema:unitCode>MMT</schema:unitCode>
+  </schema:depth>
+  <schema:weight>
+    <schema:value>2.3</schema:value>
+    <schema:unitText>kg</schema:unitText>
+    <schema:unitCode>KGM</schema:unitCode>
+  </schema:weight>
+  <schema:artMedium xml:lang="nl">terracotta</schema:artMedium>
+  <schema:artMedium xml:lang="en">terracotta</schema:artMedium>
+  <schema:artform xml:lang="nl">beeldhouwwerk</schema:artform>
+  <schema:artform xml:lang="en">sculpture</schema:artform>
+
+</metadata>

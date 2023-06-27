@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS"
+    xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink"
+    OBJID="representation_2" PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" xsi:schemaLocation="https://www.w3.org./1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd  http://www.loc.gov/METS/ https://www.loc.gov/standards/mets/mets.xsd https://dilcis.eu/XML/METS/CSIPExtensionMETS https://earkcsip.dilcis.eu/schema/DILCISExtensionMETS.xsd https://dilcis.eu/XML/METS/SIPExtensionMETS https://earksip.dilcis.eu/schema/DILCISExtensionSIPMETS.xsd">
+
+    <metsHdr CREATEDATE="2022-02-16T10:02:37.009+02:00" />
+
+    <dmdSec ID="uuid-4d18fdda-a20c-4410-9fce-30c6bff14f50">
+        <mdRef LOCTYPE="URL" MDTYPE="DC" xlink:type="simple"
+            xlink:href="./metadata/descriptive/dc.xml" MIMETYPE="text/xml" SIZE="729"
+            CREATED="2022-02-16T10:01:15.014+02:00" CHECKSUM="bc2be547a41f93d7c8b582eeb2d575dc"
+            CHECKSUMTYPE="MD5" />
+    </dmdSec>
+
+    <amdSec>
+        <digiprovMD ID="uuid-f7972ff5-599e-4f60-8b7e-8bbf4e035482">
+            <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:type="simple"
+                xlink:href="./metadata/preservation/premis.xml" MIMETYPE="text/xml" SIZE="4782"
+                CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="a8041a1a240fc7f6ec9c838e78819613"
+                CHECKSUMTYPE="MD5" />
+        </digiprovMD>
+    </amdSec>
+
+    <fileSec ID="uuid-170f9654-bf8d-45df-8451-48d6203b9f03">
+        <fileGrp USE="data" ID="uuid-d020d7d1-f258-40af-8788-04cf62a0032b">
+            <file ID="uuid-d1a845ba-156b-439f-aa20-6231333a8739" MIMETYPE="image/jpeg"
+                SIZE="1067" CREATED="2022-02-16T10:02:37.009+02:00"
+                CHECKSUM="63e766c9d74e7ced4f3bc742d37fb24d" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/7m03z1634f_overzichtsopname_zonderlijst_tiff.tiff" />
+            </file>
+        </fileGrp>
+    </fileSec>
+
+    <structMap ID="uuid-f81f8688-b278-4397-b59c-82593b11a2b9" TYPE="PHYSICAL" LABEL="CSIP">
+        <div ID="uuid-a5e05d29-49d9-4466-b070-19b8990b5029" LABEL="representation_2">
+            <div ID="uuid-af54ed63-8361-4d90-a30f-99d02de24857" LABEL="Metadata"
+                ADMID="uuid-f7972ff5-599e-4f60-8b7e-8bbf4e035482"
+                DMDID="uuid-4d18fdda-a20c-4410-9fce-30c6bff14f50" />
+            <div ID="uuid-c137b167-7254-4085-b965-75980976638d" LABEL="Representations">
+                <fptr FILEID="uuid-d020d7d1-f258-40af-8788-04cf62a0032b" />
+            </div>
+        </div>
+    </structMap>
+</mets> 

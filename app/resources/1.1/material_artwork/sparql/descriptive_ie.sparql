@@ -1,0 +1,223 @@
+PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/> 
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
+PREFIX haObjId: <https://data.hetarchief.be/id/object/>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX premis: <http://www.loc.gov/premis/v3#>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX schema: <https://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+CONSTRUCT
+{
+    ?ie a premisowl:IntellectualEntity ;
+        ?p ?o;
+        schema:creator ?creatorRole ;
+        schema:height ?height ;
+        schema:width ?width ;
+        schema:depth ?depth ;
+        schema:weight ?weight .
+
+    ?height a schema:QuantitativeValue ;
+        ?height_p ?height_b_value_dt .
+
+    ?width a schema:QuantitativeValue ;
+        ?width_p ?width_b_value_dt .
+
+    ?depth a schema:QuantitativeValue ;
+        ?depth_p ?depth_b_value_dt .
+
+    ?weight a schema:QuantitativeValue ;
+        ?weight_p ?weight_b_value_dt .
+
+    ?creatorRole a schema:Role;
+        schema:roleName ?creatorRoleName;
+        schema:creator ?creator .
+
+    ?creator a schema:Person;
+        ?creator_p ?creator_o .
+}
+WHERE
+{ 
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc+schema.xml> {
+        
+        # region IRI of the intellectual entity
+        [] a fx:root;
+
+        ?root_list_1 [ 
+            a dct:identifier;
+            rdf:_1 ?id
+        ] .
+        BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",?id)) AS ?ie)
+        # endregion
+
+        # region Creator
+        [] a fx:root;
+
+        ?root_list_2 [
+            a schema:creator;
+            schema:roleName ?creatorRoleName;
+            ?creator_list ?creator_b ;
+            ?creator_list_name [
+                a schema:name ;
+                rdf:_1 ?creatorName ;
+            ] ;
+        ].
+        ?creator_b a ?creator_p ;
+            rdf:_1 ?creator_b_value .
+        OPTIONAL {
+            ?creator_b xsi:type ?creator_b_type .
+        }
+        OPTIONAL {
+            ?creator_b xml:lang ?creator_b_lang .
+        }
+        
+        BIND(
+            COALESCE(
+                IF(?creator_p = schema:birthDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
+                IF(?creator_p = schema:deathDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
+                IF(bound(?creator_b_lang), STRLANG(?creator_b_value, ?creator_b_lang), 1/0),
+                ?creator_b_value
+            )
+        AS ?creator_o)
+        BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Role")))) AS ?creatorRole)
+        BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Creator")))) AS ?creator)
+        # endregion
+
+        # region Quantitative values
+
+        # region Height
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_3 [
+                a schema:height ;
+                ?height_list ?height_b ;
+            ] .
+
+            ?height_b a ?height_p ;
+                rdf:_1 ?height_b_value .
+
+            BIND(IF(?height_p = schema:value,STRDT(?height_b_value, xsd:float),?height_b_value) AS ?height_b_value_dt)
+
+        }
+        BIND(
+            IF(
+                bound(?root_list_3),
+                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Height")))),
+                ?root_list_3
+            )
+        AS ?height)
+        # endregion
+
+        # region Width
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_4 [
+                a schema:width ;
+                ?width_list ?width_b ;
+            ] .
+
+            ?width_b a ?width_p ;
+                rdf:_1 ?width_b_value .
+
+            BIND(IF(?width_p = schema:value,STRDT(?width_b_value, xsd:float),?width_b_value) AS ?width_b_value_dt)
+        }
+        BIND(
+            IF(
+                bound(?root_list_4),
+                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Width")))),
+                ?root_list_4
+            )
+        AS ?width)
+        # endregion
+
+
+        # region Depth
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_5 [
+                a schema:depth ;
+                ?depth_list ?depth_b ;
+            ] .
+
+            ?depth_b a ?depth_p ;
+                rdf:_1 ?depth_b_value .
+
+            BIND(IF(?depth_p = schema:value, STRDT(?depth_b_value, xsd:float),?depth_b_value) AS ?depth_b_value_dt)
+
+        }
+        BIND(
+            IF(
+                bound(?root_list_5),
+                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Depth")))),
+                ?root_list_5
+            )
+        AS ?depth)
+        # endregion
+
+        # region Weight
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_6 [
+                a schema:weight ;
+                ?weight_list ?weight_b ;
+            ] .
+
+            ?weight_b a ?weight_p ;
+                rdf:_1 ?weight_b_value .
+
+            BIND(IF(?weight_p = schema:value, STRDT(?weight_b_value, xsd:float),?weight_b_value) AS ?weight_b_value_dt)
+
+        }
+        BIND(
+            IF(
+                bound(?root_list_6),
+                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Weight")))),
+                ?root_list_6
+            )
+        AS ?weight)
+        # endregion
+
+        # endregion
+
+        # region Rest of properties
+        [] a fx:root;
+
+        ?root_list_n ?b .
+        ?b a ?p;
+            rdf:_1 ?b_value .
+        OPTIONAL {
+            ?b xsi:type ?b_type .
+        }
+        OPTIONAL {
+            ?b xml:lang ?b_lang .
+        }
+
+
+        BIND(
+            COALESCE(
+                IF(?p = dct:created, STRDT(?b_value, edtf:EDTF), 1/0),
+                IF(?p = dct:issued, STRDT(?b_value, edtf:EDTF), 1/0),
+                IF(?p = dct:available, xsd:dateTime(?b_value), 1/0),
+                IF(?p = dct:extent, xsd:time(?b_value), 1/0),
+                IF(bound(?b_lang), STRLANG(?b_value, ?b_lang), 1/0),
+                ?b_value
+            )
+        AS ?o)
+        # endregion
+
+        FILTER (?p != dct:identifier)
+        FILTER (?p != schema:creator)
+        FILTER (?p != schema:height)
+        FILTER (?p != schema:width)
+        FILTER (?p != schema:depth)
+        FILTER (?p != schema:weight)
+    }
+}   

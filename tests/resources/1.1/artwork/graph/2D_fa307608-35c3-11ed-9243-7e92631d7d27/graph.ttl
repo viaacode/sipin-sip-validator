@@ -1,0 +1,255 @@
+@prefix cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/> . 
+@prefix dct: <http://purl.org/dc/terms/> . 
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> . 
+@prefix haObj: <https://data.hetarchief.be/ns/object/> . 
+@prefix haObjId: <https://data.hetarchief.be/id/object/> . 
+@prefix haOrgId: <https://data.hetarchief.be/id/organization/> . 
+@prefix haSip: <https://data.hetarchief.be/ns/sip/> . 
+@prefix haSipId: <https://data.hetarchief.be/id/sip/1.1/> . 
+@prefix org: <http://www.w3.org/ns/org#> . 
+@prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> . 
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . 
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> . 
+@prefix schema: <https://schema.org/> . 
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> . 
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> . 
+ 
+haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ; 
+    dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/material-artwork", 
+        "https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" ; 
+    schema:agent [ schema:agent haOrgId:OR-5h7bt1n ; 
+            schema:roleName "ARCHIVIST" ], 
+        [ schema:agent haOrgId:OR-m30wc4t ; 
+            schema:roleName "CREATOR" ] . 
+ 
+haObjId:07f974bc0a8b58f0863e1d41b071dbf6 a cryptographicHashFunctions:md5 ; 
+    rdf:value "07f974bc0a8b58f0863e1d41b071dbf6" . 
+ 
+haObjId:0881684a92f4317811447fc7fc5f992f a cryptographicHashFunctions:md5 ; 
+    rdf:value "0881684a92f4317811447fc7fc5f992f" . 
+ 
+haObjId:0a3adc808577eb76d6a21fb294c348ec a cryptographicHashFunctions:md5 ; 
+    rdf:value "0a3adc808577eb76d6a21fb294c348ec" . 
+ 
+haObjId:100059b0cc3df5e6fd309d50f60133ca a cryptographicHashFunctions:md5 ; 
+    rdf:value "100059b0cc3df5e6fd309d50f60133ca" . 
+ 
+haObjId:17b76a46b6f9de80143aec26e9af5454 a cryptographicHashFunctions:md5 ; 
+    rdf:value "17b76a46b6f9de80143aec26e9af5454" . 
+ 
+haObjId:42c00b0070ad981461a1a4182eb5f091 a cryptographicHashFunctions:md5 ; 
+    rdf:value "42c00b0070ad981461a1a4182eb5f091" . 
+ 
+haObjId:516255bf4553dc6530be6a9a4f7c4515 a cryptographicHashFunctions:md5 ; 
+    rdf:value "516255bf4553dc6530be6a9a4f7c4515" . 
+ 
+haObjId:5d237966fab150332400a5e667ad1147 a schema:Role ; 
+    schema:creator haObjId:e84c1f1d11e7f5f7e365be92f98df0a7 ; 
+    schema:roleName "auteur" . 
+ 
+haObjId:63e766c9d74e7ced4f3bc742d37fb24d a cryptographicHashFunctions:md5 ; 
+    rdf:value "63e766c9d74e7ced4f3bc742d37fb24d" . 
+ 
+haObjId:6f556d6b193a0af3eca85a2b382273bc a cryptographicHashFunctions:md5 ; 
+    rdf:value "6f556d6b193a0af3eca85a2b382273bc" . 
+ 
+haObjId:73b7d2c4fd0f8601ed7a70b36b192f16 a cryptographicHashFunctions:md5 ; 
+    rdf:value "73b7d2c4fd0f8601ed7a70b36b192f16" . 
+ 
+haObjId:764a8e07b6366c0a36737da232ac2a8b a schema:QuantitativeValue ; 
+    schema:unitCode "MMT" ; 
+    schema:unitText "mm" ; 
+    schema:value "3030.0"^^xsd:float . 
+ 
+haObjId:83c54cf16821f25201190659dc21319c a cryptographicHashFunctions:md5 ; 
+    rdf:value "83c54cf16821f25201190659dc21319c" . 
+ 
+haObjId:87d9731417b13d59cdc69ec6e120f0c1 a schema:QuantitativeValue ; 
+    schema:unitCode "MMT" ; 
+    schema:unitText "mm" ; 
+    schema:value "2250.0"^^xsd:float . 
+ 
+haObjId:Inventarisnummer rdfs:subClassOf haObj:LocalIdentifier . 
+ 
+haObjId:InventarisnummerIB00.008 a haObjId:Inventarisnummer ; 
+    rdf:value "IB00.008" . 
+ 
+haObjId:MEEMOO-PID rdfs:subClassOf haObj:LocalIdentifier . 
+ 
+haObjId:MEEMOO-PID7m03z1634f a haObjId:MEEMOO-PID ; 
+    rdf:value "7m03z1634f" . 
+ 
+haObjId:Topstuk_ID rdfs:subClassOf haObj:LocalIdentifier . 
+ 
+haObjId:Topstuk_ID213 a haObjId:Topstuk_ID ; 
+    rdf:value "213" . 
+ 
+haObjId:e84c1f1d11e7f5f7e365be92f98df0a7 a schema:Person ; 
+    schema:birthDate "1599-03-22"^^edtf:EDTF ; 
+    schema:deathDate "1641-12-09"^^edtf:EDTF ; 
+    schema:name "Anthony van Dyck" . 
+ 
+haObjId:f414338a80686ab16604ebcc41247145 a cryptographicHashFunctions:md5 ; 
+    rdf:value "f414338a80686ab16604ebcc41247145" . 
+ 
+haObjId:f762d8b8c7093bbae0cb8f3bd250155f a cryptographicHashFunctions:md5 ; 
+    rdf:value "f762d8b8c7093bbae0cb8f3bd250155f" . 
+ 
+haObjId:uuid-1A40CBB1-C36A-4CAD-BEA0-7474BA96DD24 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:07f974bc0a8b58f0863e1d41b071dbf6 ; 
+    premisowl:originalName "7m03z1634f_deelopname6_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-5EB57F66-A4FF-4145-A90A-D52B280D9B86 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-51F2C0F1-CA06-4B59-9605-54F7C91BA53F ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:17b76a46b6f9de80143aec26e9af5454 ; 
+    premisowl:originalName "7m03z1634f_stitch_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B a premisowl:File ; 
+    relSubType:isi haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:73b7d2c4fd0f8601ed7a70b36b192f16 ; 
+    premisowl:originalName "7m03z1634f_overzichtsopname_metlijst_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-75360EDC-A6D7-47BF-86D7-476EE59AF4A0 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:42c00b0070ad981461a1a4182eb5f091 ; 
+    premisowl:originalName "7m03z1634f_deelopname3_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-8583DBE9-048C-4EB8-A690-A4A00425C232 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:6f556d6b193a0af3eca85a2b382273bc ; 
+    premisowl:originalName "7m03z1634f_deelopname1_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-8E6174A1-FD31-432E-A780-8DC15BA4B0DD a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:0a3adc808577eb76d6a21fb294c348ec ; 
+    premisowl:originalName "7m03z1634f_deelopname5_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-94F620EB-C269-45F0-A276-1C0319E5330F a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:100059b0cc3df5e6fd309d50f60133ca ; 
+    premisowl:originalName "7m03z1634f_deelopname2_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-A5C4CCEE-A034-416E-B3D2-8EBE949C2F01 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:83c54cf16821f25201190659dc21319c ; 
+    premisowl:originalName "7m03z1634f_deelopname7_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-B15A7521-92A6-42DB-BCA4-8F16ABC7FCF9 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:0881684a92f4317811447fc7fc5f992f ; 
+    premisowl:originalName "7m03z1634f_deelopname9_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-D22C8951-2A17-4856-9006-5F8613BD52C0 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:f762d8b8c7093bbae0cb8f3bd250155f ; 
+    premisowl:originalName "7m03z1634f_deelopname4_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-DE17BC26-7D72-4E9A-8636-A6F09405586E a premisowl:File ; 
+    relSubType:isi haObjId:uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:63e766c9d74e7ced4f3bc742d37fb24d ; 
+    premisowl:originalName "7m03z1634f_overzichtsopname_zonderlijst_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-F64294B9-1224-40D3-AF63-29B9E26028AC a premisowl:File ; 
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:f414338a80686ab16604ebcc41247145 ; 
+    premisowl:originalName "7m03z1634f_deelopname8_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haObjId:uuid-fa0ab8f6-35ae-11ed-8d3d-7e92631d7d27 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-ddcf9e36-35ae-11ed-b866-7e92631d7d27 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:516255bf4553dc6530be6a9a4f7c4515 ; 
+    premisowl:originalName "7m03z1634f_target_tiff.tiff" ; 
+    premisowl:size 1067 . 
+ 
+haOrgId:OR-5h7bt1n a org:Organization ; 
+    skos:prefLabel "KMSKA"@nl ; 
+    schema:identifier "OR-5h7bt1n" . 
+ 
+haOrgId:OR-m30wc4t a org:Organization ; 
+    skos:prefLabel "artinflanders"@nl ; 
+    schema:identifier "OR-m30wc4t" . 
+ 
+haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B ; 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
+    dct:license "CCBY-NC-ND-CONTENT", 
+        "CP-website" . 
+ 
+haObjId:uuid-51F2C0F1-CA06-4B59-9605-54F7C91BA53F a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-5EB57F66-A4FF-4145-A90A-D52B280D9B86 ; 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 . 
+ 
+haObjId:uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43 a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-DE17BC26-7D72-4E9A-8636-A6F09405586E ; 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
+    dct:license "CCBY-NC-ND-CONTENT", 
+        "CP-website" . 
+ 
+haObjId:uuid-ddcf9e36-35ae-11ed-b866-7e92631d7d27 a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-fa0ab8f6-35ae-11ed-8d3d-7e92631d7d27 ; 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 . 
+ 
+haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity ; 
+    relSubType:isr haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1, 
+        haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572, 
+        haObjId:uuid-51F2C0F1-CA06-4B59-9605-54F7C91BA53F, 
+        haObjId:uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43, 
+        haObjId:uuid-ddcf9e36-35ae-11ed-b866-7e92631d7d27 ; 
+    dct:created "1628/1629"^^edtf:EDTF ; 
+    dct:description "Painted around 1629 for the high altar of the Beguinage Church in Antwerp. A second copy is kept in Madrid (Prado); sketches at Leningrad (Hermitage) a smaller repetition at Hagley (Lord Littleton) a drawing in the Atger Museum in Montpellier and finally a grisaille study was in the Randon de Boisset auction in 1776. The painting was engraved by Paul Pontius and Andreas van Rymsdyck."@en, 
+        "Rond 1629 geschilderd voor het hoogaltaar van de Begijnhofkerk te Antwerpen. Een tweede exemplaar wordt bewaard te Madrid (Prado); schetsen te Leningrad (Hermitage) een kleinere herhaling te Hagley (Lord Littleton) een tekening in Atger Museum te Montpellier en een grisaille studie tenslotte bevond zich in 1776 in de veiling Randon de Boisset. Het schilderij werd gegraveerd door Paul Pontius en Andreas van Rymsdyck."@nl ; 
+    dct:subject "Christus"@nl, 
+        "religie"@nl, 
+        "topstukken"@nl ; 
+    dct:title "The lamentation over the Dead Christ"@en, 
+        "Bewening van Christus"@nl ; 
+    premisowl:identifier haObjId:InventarisnummerIB00.008, 
+        haObjId:MEEMOO-PID7m03z1634f, 
+        haObjId:Topstuk_ID213 ; 
+    schema:artMedium "oil on canvas"@en, 
+        "olieverf op doek"@nl ; 
+    schema:artform "painting"@en, 
+        "schilderij"@nl ; 
+    schema:creator haObjId:5d237966fab150332400a5e667ad1147 ; 
+    schema:height haObjId:764a8e07b6366c0a36737da232ac2a8b ; 
+    schema:width haObjId:87d9731417b13d59cdc69ec6e120f0c1 . 
+ 
+haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-1A40CBB1-C36A-4CAD-BEA0-7474BA96DD24, 
+        haObjId:uuid-75360EDC-A6D7-47BF-86D7-476EE59AF4A0, 
+        haObjId:uuid-8583DBE9-048C-4EB8-A690-A4A00425C232, 
+        haObjId:uuid-8E6174A1-FD31-432E-A780-8DC15BA4B0DD, 
+        haObjId:uuid-94F620EB-C269-45F0-A276-1C0319E5330F, 
+        haObjId:uuid-A5C4CCEE-A034-416E-B3D2-8EBE949C2F01, 
+        haObjId:uuid-B15A7521-92A6-42DB-BCA4-8F16ABC7FCF9, 
+        haObjId:uuid-D22C8951-2A17-4856-9006-5F8613BD52C0, 
+        haObjId:uuid-F64294B9-1224-40D3-AF63-29B9E26028AC ; 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 . 
+ 
+<http://the-fr.org/id/file-format/154> a dct:FileFormat . 

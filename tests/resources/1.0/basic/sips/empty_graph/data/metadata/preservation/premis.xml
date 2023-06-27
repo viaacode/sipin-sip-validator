@@ -7,11 +7,6 @@
   <premis:object xsi:type="premis:intellectualEntity">
 
     <premis:objectIdentifier>
-      <premis:objectIdentifierType>UUID</premis:objectIdentifierType>
-      <premis:objectIdentifierValue>uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4</premis:objectIdentifierValue>
-    </premis:objectIdentifier>
-
-    <premis:objectIdentifier>
       <premis:objectIdentifierType>local_id</premis:objectIdentifierType>
       <premis:objectIdentifierValue>ce980d9</premis:objectIdentifierValue>
     </premis:objectIdentifier>

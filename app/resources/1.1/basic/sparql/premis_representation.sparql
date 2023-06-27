@@ -1,0 +1,143 @@
+PREFIX premis: <http://www.loc.gov/premis/v3#>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX haObjId: <https://data.hetarchief.be/id/object/>
+PREFIX haObj: <https://data.hetarchief.be/ns/object/>
+PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX schema: <https://schema.org/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT
+  {
+    ?ie a premisowl:IntellectualEntity;
+        relSubType:isr ?rep .
+
+
+    ?md5_uri a ?f_uri;
+        rdf:value ?file_digest.
+
+    ?rep a premisowl:Representation;
+        relSubType:rep ?ie;
+        relSubType:inc ?file .
+
+     ?file a premisowl:File;
+        relSubType:isi ?rep;
+        premisowl:originalName ?file_original_name;
+        dct:format ?format_uri;
+        premisowl:size ?file_size_int;
+        premisowl:fixity ?md5_uri.
+
+    ?format_uri a dct:FileFormat.
+  }
+
+WHERE
+  {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/representations/representation_1/metadata/preservation/premis.xml> {
+        {
+            [] a premis:object;
+                xsi:type "premis:representation";
+                ?rep_1 [
+                    a premis:objectIdentifier;
+                    ?rep_2 [
+                        a premis:objectIdentifierType;
+                            rdf:_1 ?rep_type
+                    ];
+                    ?rep_3 [
+                        a premis:objectIdentifierValue;
+                            rdf:_1 ?rep_uuid
+                    ]
+                ];
+                ?rep_4 [
+                    a premis:relationship;
+                    ?rep_7 [
+                        a premis:relationshipSubType;
+                        rdf:_1 "represents"
+                    ];
+                    ?rep_5 [
+                        a premis:relatedObjectIdentifier;
+                        ?rep_6 [
+                            a premis:relatedObjectIdentifierValue;
+                            rdf:_1 ?rep_rel_ie_id
+                        ]
+                    ]
+                ]
+                BIND(iri(concat(str(haObjId:), ?rep_uuid)) AS ?rep)
+                BIND(iri(concat(str(haObjId:), ?rep_rel_ie_id)) AS  ?ie)
+                FILTER (?rep_type = "UUID")
+        }
+
+        {
+            [] a premis:object;
+                xsi:type "premis:file";
+                ?file_1 [
+                    a premis:objectIdentifier;
+                    ?file_2 [
+                        a premis:objectIdentifierType;
+                            rdf:_1 ?file_type
+                    ];
+                    ?file_3 [
+                        a premis:objectIdentifierValue;
+                            rdf:_1 ?file_uuid
+                    ]
+                ];
+                ?file_4 [
+                    a premis:relationship;
+                    ?file_5 [
+                        a premis:relatedObjectIdentifier;
+                        ?file_6 [
+                            a premis:relatedObjectIdentifierValue;
+                            rdf:_1 ?file_rel_rep_id
+                        ]
+                    ]
+                ];
+                ?file_7 [
+                    a premis:objectCharacteristics;
+                    ?file_8 [
+                        a premis:fixity;
+                        ?file_9 [
+                            a premis:messageDigestAlgorithm;
+                                xyz:valueURI ?fixity_uri;
+                                # rdf:_1 ?file_digest_algo;
+                        ];
+                        ?file_10 [
+                            a premis:messageDigest;
+                            rdf:_1 ?file_digest
+                        ]
+                    ];
+                    ?file_11 [
+                        a premis:format;
+                        ?file_12 [
+                            a premis:formatRegistry;
+                            ?file_13 [
+                                a premis:formatRegistryKey;
+                                rdf:_1 ?file_format
+                            ]
+                        ]
+                    ];
+                    ?file_14 [
+                        a premis:size;
+                        rdf:_1 ?file_size
+                ]
+                ];
+                ?file_15 [
+                    a premis:originalName;
+                    rdf:_1 ?file_original_name
+                ]
+                BIND(iri(?fixity_uri) AS ?f_uri)
+                BIND(iri(concat(str(haObjId:), ?file_digest)) AS ?md5_uri)
+                BIND(iri(concat(str(haObjId:), ?file_uuid)) AS ?file)
+                BIND(iri(concat(str(haObjId:), ?file_rel_rep_id)) AS ?rep)
+                BIND(STRDT(?file_size, xsd:integer) AS ?file_size_int)
+                BIND(iri(REPLACE(?file_format, "fmt-", "http://the-fr.org/id/file-format/")) AS ?format_uri)
+        }
+    }
+  }

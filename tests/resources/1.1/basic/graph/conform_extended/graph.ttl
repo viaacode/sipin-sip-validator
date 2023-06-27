@@ -38,9 +38,7 @@ haObjId:local_id rdfs:subClassOf haObj:LocalIdentifier .
 haObjId:local_idce980d9 a haObjId:local_id ;
     rdf:value "ce980d9" .
 
-haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity,
-        "edtf:EDTF",
-        "edtf:EDTF-level1" ;
+haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity;
     relSubType:isr haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
     dct:abstract "the abstract of the episode"@en,
         "de samenvatting van de episode"@nl ;
@@ -49,7 +47,7 @@ haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity
     dct:available "2023-02-14T18:12:36"^^xsd:dateTime ;
     dct:contributor "contributor 1",
         "contributor 2" ;
-    dct:created "2023-02-12"^^edtf:EDTF-level1 ;
+    dct:created "2023-02-12"^^edtf:EDTF ;
     dct:creator "creator 1",
         "creator 2" ;
     dct:description "the description of the episode"@en,

@@ -19,15 +19,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 CONSTRUCT
   {
     ?ie a premisowl:IntellectualEntity;
-        premisowl:identifier ?local_id;
-        relSubType:isr ?rep;
-        ?dcterm_p ?dcterm_o;
-        a ?dcterm_xsi_type .
+        relSubType:isr ?rep .
 
-    ?local_id a ?local_id_type_uri; 
-         rdf:value ?local_id_val .
-
-    ?local_id_type_uri rdfs:subClassOf haObj:LocalIdentifier .
 
     ?md5_uri a ?f_uri;
         rdf:value ?file_digest.
@@ -48,59 +41,6 @@ CONSTRUCT
 
 WHERE
   {
-    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/preservation/premis.xml> {
-        {
-            {
-                SELECT DISTINCT ?local_id_type ?local_id_val
-                WHERE {
-                    [] a premis:object;
-                    xsi:type "premis:intellectualEntity";
-                    ?lid_1 [
-                        a premis:objectIdentifier;
-                        ?lid_2 [
-                            a premis:objectIdentifierType;
-                                rdf:_1 ?local_id_type
-                        ];
-                        ?lid_3 [
-                            a premis:objectIdentifierValue;
-                                rdf:_1 ?local_id_val
-                        ]
-                    ]
-                    FILTER (?local_id_type != "UUID")
-                }
-            }
-            BIND(iri(concat(str(haObjId:), ?local_id_type)) AS ?local_id_type_uri)
-            BIND(iri(concat(str(haObjId:), concat(?local_id_type, ENCODE_FOR_URI(?local_id_val)))) AS ?local_id)
-        }
-
-        [] a premis:object;
-            xsi:type "premis:intellectualEntity";
-            ?ie_1 [
-                a premis:objectIdentifier;
-                    ?ie_2 [
-                            a premis:objectIdentifierType;
-                                rdf:_1 ?ie_type
-                        ];
-                        ?ie_3 [
-                            a premis:objectIdentifierValue;
-                                rdf:_1 ?id
-                        ]
-                    ];
-            ?ie_4 [
-                a premis:relationship;
-                ?ie_5 [
-                    a premis:relatedObjectIdentifier;
-                    ?ie_6 [
-                        a premis:relatedObjectIdentifierValue;
-                        rdf:_1 ?ie_rel_rep_id
-                    ]
-                ]
-            ]
-            FILTER (?ie_type = "UUID")
-            BIND(iri(concat(str(haObjId:), ?id)) AS ?ie
-        )
-        BIND(iri(concat(str(haObjId:), ?ie_rel_rep_id)) AS  ?rep)
-    }
     SERVICE <x-sparql-anything:location={{ bag_path }}/data/representations/representation_1/metadata/preservation/premis.xml> {
         {
             [] a premis:object;
@@ -118,6 +58,10 @@ WHERE
                 ];
                 ?rep_4 [
                     a premis:relationship;
+                    ?rep_7 [
+                        a premis:relationshipSubType;
+                        rdf:_1 "represents"
+                    ];
                     ?rep_5 [
                         a premis:relatedObjectIdentifier;
                         ?rep_6 [
@@ -127,6 +71,7 @@ WHERE
                     ]
                 ]
                 BIND(iri(concat(str(haObjId:), ?rep_uuid)) AS ?rep)
+                BIND(iri(concat(str(haObjId:), ?rep_rel_ie_id)) AS  ?ie)
                 FILTER (?rep_type = "UUID")
         }
 
@@ -194,37 +139,5 @@ WHERE
                 BIND(STRDT(?file_size, xsd:integer) AS ?file_size_int)
                 BIND(iri(REPLACE(?file_format, "fmt-", "http://the-fr.org/id/file-format/")) AS ?format_uri)
         }
-    }
-    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc_1.xml> {
-        [] a fx:root;
-            ?dc_1 [
-                a dct:identifier;
-                rdf:_1 ?id
-            ];
-            ?dc_2 ?dcterm .
-
-        ?dcterm a ?dcterm_p;
-           rdf:_1 ?dcterm_value .
-        
-        OPTIONAL {
-            ?dcterm xsi:type ?dcterm_xsi_type.
-        }
-        OPTIONAL {
-            ?dcterm xml:lang ?dcterm_xml_lang.
-        }
-
-        BIND(iri(REPLACE(?dcterm_xsi_type, "edtf:", "http://id.loc.gov/datatypes/edtf/")) AS ?edtf_dt)
-
-        BIND(
-            COALESCE(
-                IF(bound(?dcterm_xsi_type), STRDT(?dcterm_value, ?edtf_dt), 1/0),
-                IF(?dcterm_p = dct:available, xsd:dateTime(?dcterm_value), 1/0),
-                IF(?dcterm_p = dct:extent, xsd:time(?dcterm_value), 1/0),
-                IF(bound(?dcterm_xml_lang), STRLANG(?dcterm_value, ?dcterm_xml_lang), 1/0),
-                ?dcterm_value
-            )
-            AS ?dcterm_o)
-
-        FILTER (?dcterm_p != dct:identifier)
     }
   }

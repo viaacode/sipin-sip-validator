@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns="https://schema.org/"
+    xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
+    targetNamespace="https://schema.org/" 
+    elementFormDefault="qualified" 
+    attributeFormDefault="unqualified">
+    
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd">
+    </xs:import>
+    <xs:import namespace="http://id.loc.gov/datatypes/edtf/" schemaLocation="edtf.xsd">
+    </xs:import>
+
+    <xs:complexType name="QuantitativeValue">
+        <xs:all>
+            <xs:element ref="value" minOccurs="0"/>
+            <xs:element ref="unitCode" minOccurs="0"/>
+
+            <xs:element ref="unitText" minOccurs="0"/>
+
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="SimpleLiteral">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This is the default type for all of the schema literal elements.
+                It permits text content only with optional
+                xml:lang attribute.
+                Text is allowed because mixed="true", but sub-elements
+                are disallowed because minOccurs="0" and maxOccurs="0" 
+                are on the xs:any tag.
+
+                This complexType allows for restriction or extension permitting
+                child elements.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexContent mixed="true">
+            <xs:restriction base="xs:anyType">
+                <xs:sequence>
+                    <xs:any processContents="lax" minOccurs="0" maxOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute ref="xml:lang" use="optional"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="EDTFLiteral">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="edtf:EDTF" />
+            <xs:enumeration value="edtf:EDTF-level0" />
+            <xs:enumeration value="edtf:EDTF-level1" />
+            <xs:enumeration value="edtf:EDTF-level2" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Person">
+        <xs:all>
+            <xs:element name="name" type="SimpleLiteral"/>
+            <xs:element ref="birthDate" minOccurs="0" >
+            </xs:element>
+            <xs:element ref="deathDate" minOccurs="0">
+                <!-- <xs:complexType>
+                    <xs:attribute name="type" type="EDTFLiteral"/>
+                </xs:complexType> -->
+            </xs:element>
+        </xs:all>
+        <xs:attribute ref="roleName"/>
+    </xs:complexType>
+
+    <xs:attribute name="roleName" type="xs:string"/>
+
+    <xs:element name="any" />
+
+    <xs:element name="value" type="xs:decimal"/>
+    <xs:element name="unitCode" type="SimpleLiteral"/>
+    <xs:element name="unitText" type="SimpleLiteral"/>
+
+    <xs:element name="birthDate"/>
+    <xs:element name="deathDate"/>
+
+
+
+    <xs:element name="height" type="QuantitativeValue" substitutionGroup="any"/>
+    <xs:element name="width" type="QuantitativeValue" substitutionGroup="any"/>
+    <xs:element name="depth" type="QuantitativeValue" substitutionGroup="any"/>
+    <xs:element name="weight" type="QuantitativeValue" substitutionGroup="any"/>
+    <xs:element name="artMedium" type="SimpleLiteral" substitutionGroup="any"/>
+    <xs:element name="artform" type="SimpleLiteral" substitutionGroup="any"/>
+    <xs:element name="creator" type="Person" substitutionGroup="any"/>
+
+    
+    <xs:group name="elementsAndRefinementsGroup">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This group is included as a convenience for schema authors
+                who need to refer to all the schema elements and element refinements.
+            </xs:documentation>
+        </xs:annotation>
+
+    <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="any"/>
+        </xs:choice>
+    </xs:sequence>
+    </xs:group>	
+
+    <xs:complexType name="elementOrRefinementContainer">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This is included as a convenience for schema authors who need to define a root
+                or container element for all of the schema elements and element refinements.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:choice>
+            <xs:group ref="elementsAndRefinementsGroup"/>
+        </xs:choice>
+    </xs:complexType>
+
+
+</xs:schema>

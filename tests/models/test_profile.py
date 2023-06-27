@@ -8,6 +8,7 @@ from app.models.profile import (
     BasicProfile10,
     BasicProfile11,
     determine_profile,
+    MaterialArtworkProfile11,
     XMLNotValidError,
     GraphNotConformError,
 )
@@ -18,6 +19,10 @@ from app.models.profile import (
     [
         (Path("1.0", "basic", "sips", "conform"), BasicProfile10),
         (Path("1.1", "basic", "sips", "conform"), BasicProfile11),
+        (
+            Path("1.1", "artwork", "sips", "2D_fa307608-35c3-11ed-9243-7e92631d7d27"),
+            MaterialArtworkProfile11,
+        ),
     ],
 )
 def test_determine_profile(path, profile_class):
@@ -322,3 +327,78 @@ class TestBasicProfile11(TestBasicProfile10):
             "basic",
             "graph",
         )
+
+
+class TestMaterialArtworkProfile11:
+    def graph_path(self) -> Path:
+        return Path(
+            "tests",
+            "resources",
+            "1.1",
+            "artwork",
+            "graph",
+        )
+
+    @pytest.fixture
+    def profile_2D(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "artwork",
+            "sips",
+            "2D_fa307608-35c3-11ed-9243-7e92631d7d27",
+        )
+        return MaterialArtworkProfile11(path)
+
+    @pytest.fixture
+    def profile_3D(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "artwork",
+            "sips",
+            "3D_3d4bd7ca-38c6-11ed-95f2-7e92631d7d28",
+        )
+        return MaterialArtworkProfile11(path)
+
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_2D", "profile_3D"],
+    )
+    def test_validate_premis(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile._validate_premis()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_2D", "profile_3D"],
+    )
+    def test_validate_mets(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile._validate_mets()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
+        "profile_name, expected_graph_path",
+        [
+            ("profile_2D", "2D_fa307608-35c3-11ed-9243-7e92631d7d27"),
+            ("profile_3D", "3D_3d4bd7ca-38c6-11ed-95f2-7e92631d7d28"),
+        ],
+    )
+    def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
+        profile = request.getfixturevalue(profile_name)
+
+        graph = profile.parse_graph()
+        # Check if valid
+        assert profile.validate_graph(graph)
+
+        # Check if expected
+        expected = Graph()
+        path = self.graph_path().joinpath(expected_graph_path, "graph.ttl")
+        expected.parse(str(path))
+        assert isomorphic(graph, expected)
