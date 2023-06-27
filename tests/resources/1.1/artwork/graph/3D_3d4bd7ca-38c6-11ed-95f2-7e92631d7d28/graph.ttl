@@ -1,202 +1,221 @@
-@prefix cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/> .
-@prefix dct: <http://purl.org/dc/terms/> .
-@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
-@prefix haObjId: <https://data.hetarchief.be/id/object/> .
-@prefix haOrgId: <https://data.hetarchief.be/id/organization/> .
-@prefix haSip: <https://data.hetarchief.be/ns/sip/> .
-@prefix haSipId: <https://data.hetarchief.be/id/sip/1.1/> .
-@prefix org: <http://www.w3.org/ns/org#> .
-@prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
-@prefix schema: <https://schema.org/> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
-    dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/material-artwork",
-        "https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" ;
-    schema:agent [ schema:agent haOrgId:OR-5h7bt1n ;
-            schema:roleName "ARCHIVIST" ],
-        [ schema:agent haOrgId:OR-m30wc4t ;
-            schema:roleName "CREATOR" ] .
-
-<http://the-fr.org/id/file-format/115> a dct:FileFormat .
-
-<http://the-fr.org/id/file-format/865> a dct:FileFormat .
-
-haObjId:0c9bb655dfc3e6231db2a456a7569ff5 a schema:QuantitativeValue ;
-    schema:unitCode "KGM" ;
-    schema:unitText "kg" ;
-    schema:value "2.3"^^xsd:float .
-
-haObjId:141bb070feb1e573e103494e650be44a a schema:Role ;
-    schema:creator haObjId:3c3bf2b1faae293fcecda1dfb92e5ddf ;
-    schema:roleName "auteur" .
-
-haObjId:3c3bf2b1faae293fcecda1dfb92e5ddf a schema:Person ;
-    schema:birthDate "1703-11-22"^^edtf:EDTF-level1 ;
-    schema:deathDate "1777-02-16"^^edtf:EDTF-level1 ;
-    schema:name "Walter Pompe" .
-
-haObjId:517e1c99bbaeff440c9749f1f8b5b572 a schema:QuantitativeValue ;
-    schema:unitCode "MMT" ;
-    schema:unitText "mm" ;
-    schema:value "220.0"^^xsd:float .
-
-haObjId:a436d910e4483360717c446e1d14b5fc a schema:QuantitativeValue ;
-    schema:unitCode "MMT" ;
-    schema:unitText "mm" ;
-    schema:value "130.0"^^xsd:float .
-
-haObjId:cae3aed7112aac37ebbe823a36b47501 a schema:QuantitativeValue ;
-    schema:unitCode "MMT" ;
-    schema:unitText "mm" ;
-    schema:value "116.0"^^xsd:float .
-
-haObjId:uuid-02901916-a428-4311-9d5e-a46303ae09c4 a premisowl:File ;
-    relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ;
-    dct:format <http://the-fr.org/id/file-format/1210> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_REF_OBJ" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-254F143D-85A3-4DB8-BFA4-53000DEA04C7 a premisowl:File ;
-    relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ;
-    dct:format <http://the-fr.org/id/file-format/154> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_ARCH_TIFF_COLOR" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-293ae3bf-e90b-4aed-85af-95a0dc8aec34 a premisowl:File ;
-    relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ;
-    dct:format <http://the-fr.org/id/file-format/1211> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_REF_MTL" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-57dfa49d-5997-48f4-8bdf-fb0d08f87f66 a premisowl:File ;
-    relSubType:isi haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28 ;
-    dct:format <http://the-fr.org/id/file-format/865> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "PID_ARCH_STL" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B a premisowl:File ;
-    relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ;
-    dct:format <http://the-fr.org/id/file-format/1210> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_ARCH_OBJ" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-6D523688-61AD-434A-9EB7-C4EAA5C99028 a premisowl:File ;
-    relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ;
-    dct:format <http://the-fr.org/id/file-format/1211> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_VER_MTL" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-9A992F7F-0562-4F0A-8D79-FE6DF4BD7F82 a premisowl:File ;
-    relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ;
-    dct:format <http://the-fr.org/id/file-format/154> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_VER_COLOR_BMP" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-9BB5C77E-60DC-4426-BB56-33C4533A8FB9 a premisowl:File ;
-    relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ;
-    dct:format <http://the-fr.org/id/file-format/1210> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_VER_OBJ" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-ECEB4181-5052-43C2-A3AD-D44AE5FB4D16 a premisowl:File ;
-    relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ;
-    dct:format <http://the-fr.org/id/file-format/1211> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_ARCH_MTL" ;
-    premisowl:size 558891008 .
-
-haObjId:uuid-ace20074-874f-4ad3-a7a8-ad71832953f2 a premisowl:File ;
-    relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ;
-    dct:format <http://the-fr.org/id/file-format/115> ;
-    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ;
-    premisowl:originalName "qv3bz95m19_REF_BMP" ;
-    premisowl:size 558891008 .
-
-haOrgId:OR-5h7bt1n a org:Organization ;
-    skos:prefLabel "KMSKA"@nl ;
-    schema:identifier "OR-5h7bt1n" .
-
-haOrgId:OR-m30wc4t a org:Organization ;
-    skos:prefLabel "artinflanders"@nl ;
-    schema:identifier "OR-m30wc4t" .
-
-<http://the-fr.org/id/file-format/154> a dct:FileFormat .
-
-haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28 a premisowl:Representation ;
-    relSubType:inc haObjId:uuid-57dfa49d-5997-48f4-8bdf-fb0d08f87f66 ;
-    relSubType:rep haObjId:qv3bz95m19 .
-
-<http://the-fr.org/id/file-format/1210> a dct:FileFormat .
-
-<http://the-fr.org/id/file-format/1211> a dct:FileFormat .
-
-haObjId:qv3bz95m19 a premisowl:IntellectualEntity ;
-    relSubType:isr haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27,
-        haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4,
-        haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28,
-        haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ;
-    dct:created "1701/1800"^^edtf:EDTF-level1 ;
-    dct:description "part of the Van Herck collection of terracotta sculptures."@en,
-        "onderdeel van de Van Herck collectie terracottabeelden"@nl ;
-    dct:identifier "qv3bz95m19" ;
-    dct:rights "public domain"@en ;
-    dct:subject "3D"@en,
-        "collection Van Herck"@en,
-        "scan"@en,
-        "sculpture"@en,
-        "terracotta"@en,
-        "3D"@nl,
-        "beeldhouwwerk"@nl,
-        "collectie Van Herck"@nl,
-        "scan"@nl,
-        "terracotta"@nl,
-        "topstukken"@nl ;
-    dct:title "The Roman She-Wolf with Romulus and Remus"@en,
-        "De Romeinse wolvin met Romulus en Remus"@nl ;
-    schema:artMedium "terracotta"@en,
-        "terracotta"@nl ;
-    schema:artform "sculpture"@en,
-        "beeldhouwwerk"@nl ;
-    schema:creator haObjId:141bb070feb1e573e103494e650be44a ;
-    schema:depth haObjId:a436d910e4483360717c446e1d14b5fc ;
-    schema:height haObjId:cae3aed7112aac37ebbe823a36b47501 ;
-    schema:weight haObjId:0c9bb655dfc3e6231db2a456a7569ff5 ;
-    schema:width haObjId:517e1c99bbaeff440c9749f1f8b5b572 .
-
-haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 a premisowl:Representation ;
-    relSubType:inc haObjId:uuid-254F143D-85A3-4DB8-BFA4-53000DEA04C7,
-        haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B,
-        haObjId:uuid-ECEB4181-5052-43C2-A3AD-D44AE5FB4D16 ;
-    relSubType:rep haObjId:qv3bz95m19 ;
-    dct:license "CCBY-NC-ND-CONTENT",
-        "CP-website" ;
-    dct:title "ARCHIVERINGSCOPIE OBJ"@nl .
-
-haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 a premisowl:Representation ;
-    relSubType:inc haObjId:uuid-6D523688-61AD-434A-9EB7-C4EAA5C99028,
-        haObjId:uuid-9A992F7F-0562-4F0A-8D79-FE6DF4BD7F82,
-        haObjId:uuid-9BB5C77E-60DC-4426-BB56-33C4533A8FB9 ;
-    relSubType:rep haObjId:qv3bz95m19 ;
-    dct:license "CCBY-NC-ND-CONTENT",
-        "CP-website" .
-
-haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a a premisowl:Representation ;
-    relSubType:inc haObjId:uuid-02901916-a428-4311-9d5e-a46303ae09c4,
-        haObjId:uuid-293ae3bf-e90b-4aed-85af-95a0dc8aec34,
-        haObjId:uuid-ace20074-874f-4ad3-a7a8-ad71832953f2 ;
-    relSubType:rep haObjId:qv3bz95m19 .
-
-haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 a cryptographicHashFunctions:md5 ;
-    rdf:value "9b7dd51ee94d1cc666392f5fbb6d9ea2" .
+@prefix cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/> . 
+@prefix dct: <http://purl.org/dc/terms/> . 
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> . 
+@prefix haObj: <https://data.hetarchief.be/ns/object/> . 
+@prefix haObjId: <https://data.hetarchief.be/id/object/> . 
+@prefix haOrgId: <https://data.hetarchief.be/id/organization/> . 
+@prefix haSip: <https://data.hetarchief.be/ns/sip/> . 
+@prefix haSipId: <https://data.hetarchief.be/id/sip/1.1/> . 
+@prefix org: <http://www.w3.org/ns/org#> . 
+@prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> . 
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . 
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> . 
+@prefix schema: <https://schema.org/> . 
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> . 
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> . 
+ 
+haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ; 
+    dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/material-artwork", 
+        "https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" ; 
+    schema:agent [ schema:agent haOrgId:OR-5h7bt1n ; 
+            schema:roleName "ARCHIVIST" ], 
+        [ schema:agent haOrgId:OR-m30wc4t ; 
+            schema:roleName "CREATOR" ] . 
+ 
+<http://the-fr.org/id/file-format/115> a dct:FileFormat . 
+ 
+<http://the-fr.org/id/file-format/865> a dct:FileFormat . 
+ 
+haObjId:141bb070feb1e573e103494e650be44a a schema:Role ; 
+    schema:creator haObjId:3c3bf2b1faae293fcecda1dfb92e5ddf ; 
+    schema:roleName "auteur" . 
+ 
+haObjId:3c3bf2b1faae293fcecda1dfb92e5ddf a schema:Person ; 
+    schema:birthDate "1703-11-22"^^edtf:EDTF ; 
+    schema:deathDate "1777-02-16"^^edtf:EDTF ; 
+    schema:name "Walter Pompe" . 
+ 
+haObjId:8b98987bfc4a27339e4729ef0bd837de a schema:QuantitativeValue ; 
+    schema:unitCode "MMT" ; 
+    schema:unitText "mm" ; 
+    schema:value "116.0"^^xsd:float . 
+ 
+haObjId:Inventarisnummer rdfs:subClassOf haObj:LocalIdentifier . 
+ 
+haObjId:InventarisnummerIB00.008 a haObjId:Inventarisnummer ; 
+    rdf:value "IB00.008" . 
+ 
+haObjId:MEEMOO-PID rdfs:subClassOf haObj:LocalIdentifier . 
+ 
+haObjId:MEEMOO-PIDqv3bz95m19 a haObjId:MEEMOO-PID ; 
+    rdf:value "qv3bz95m19" . 
+ 
+haObjId:Topstuk_ID rdfs:subClassOf haObj:LocalIdentifier . 
+ 
+haObjId:Topstuk_ID213 a haObjId:Topstuk_ID ; 
+    rdf:value "213" . 
+ 
+haObjId:d4e28b990fcbc7c7159821db800502da a schema:QuantitativeValue ; 
+    schema:unitCode "MMT" ; 
+    schema:unitText "mm" ; 
+    schema:value "220.0"^^xsd:float . 
+ 
+haObjId:df45ea51a0bd0c76c456f844e1a8d45e a schema:QuantitativeValue ; 
+    schema:unitCode "KGM" ; 
+    schema:unitText "kg" ; 
+    schema:value "2.3"^^xsd:float . 
+ 
+haObjId:f9f78166c1351f44aba3d3cd877a96f6 a schema:QuantitativeValue ; 
+    schema:unitCode "MMT" ; 
+    schema:unitText "mm" ; 
+    schema:value "130.0"^^xsd:float . 
+ 
+haObjId:uuid-02901916-a428-4311-9d5e-a46303ae09c4 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ; 
+    dct:format <http://the-fr.org/id/file-format/1210> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_REF_OBJ" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-254F143D-85A3-4DB8-BFA4-53000DEA04C7 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_ARCH_TIFF_COLOR" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-293ae3bf-e90b-4aed-85af-95a0dc8aec34 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ; 
+    dct:format <http://the-fr.org/id/file-format/1211> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_REF_MTL" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-57dfa49d-5997-48f4-8bdf-fb0d08f87f66 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28 ; 
+    dct:format <http://the-fr.org/id/file-format/865> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "PID_ARCH_STL" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B a premisowl:File ; 
+    relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ; 
+    dct:format <http://the-fr.org/id/file-format/1210> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_ARCH_OBJ" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-6D523688-61AD-434A-9EB7-C4EAA5C99028 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ; 
+    dct:format <http://the-fr.org/id/file-format/1211> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_VER_MTL" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-9A992F7F-0562-4F0A-8D79-FE6DF4BD7F82 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ; 
+    dct:format <http://the-fr.org/id/file-format/154> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_VER_COLOR_BMP" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-9BB5C77E-60DC-4426-BB56-33C4533A8FB9 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ; 
+    dct:format <http://the-fr.org/id/file-format/1210> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_VER_OBJ" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-ECEB4181-5052-43C2-A3AD-D44AE5FB4D16 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ; 
+    dct:format <http://the-fr.org/id/file-format/1211> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_ARCH_MTL" ; 
+    premisowl:size 558891008 . 
+ 
+haObjId:uuid-ace20074-874f-4ad3-a7a8-ad71832953f2 a premisowl:File ; 
+    relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ; 
+    dct:format <http://the-fr.org/id/file-format/115> ; 
+    premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
+    premisowl:originalName "qv3bz95m19_REF_BMP" ; 
+    premisowl:size 558891008 . 
+ 
+haOrgId:OR-5h7bt1n a org:Organization ; 
+    skos:prefLabel "KMSKA"@nl ; 
+    schema:identifier "OR-5h7bt1n" . 
+ 
+haOrgId:OR-m30wc4t a org:Organization ; 
+    skos:prefLabel "artinflanders"@nl ; 
+    schema:identifier "OR-m30wc4t" . 
+ 
+<http://the-fr.org/id/file-format/154> a dct:FileFormat . 
+ 
+haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28 a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-57dfa49d-5997-48f4-8bdf-fb0d08f87f66 ; 
+    relSubType:rep haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 . 
+ 
+<http://the-fr.org/id/file-format/1210> a dct:FileFormat . 
+ 
+<http://the-fr.org/id/file-format/1211> a dct:FileFormat . 
+ 
+haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 a premisowl:IntellectualEntity ; 
+    relSubType:isr haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27, 
+        haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4, 
+        haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28, 
+        haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ; 
+    dct:created "1701/1800"^^edtf:EDTF ; 
+    dct:description "part of the Van Herck collection of terracotta sculptures."@en, 
+        "onderdeel van de Van Herck collectie terracottabeelden"@nl ; 
+    dct:rights "public domain"@en ; 
+    dct:subject "3D"@en, 
+        "collection Van Herck"@en, 
+        "scan"@en, 
+        "sculpture"@en, 
+        "terracotta"@en, 
+        "3D"@nl, 
+        "beeldhouwwerk"@nl, 
+        "collectie Van Herck"@nl, 
+        "scan"@nl, 
+        "terracotta"@nl, 
+        "topstukken"@nl ; 
+    dct:title "The Roman She-Wolf with Romulus and Remus"@en, 
+        "De Romeinse wolvin met Romulus en Remus"@nl ; 
+    premisowl:identifier haObjId:InventarisnummerIB00.008, 
+        haObjId:MEEMOO-PIDqv3bz95m19, 
+        haObjId:Topstuk_ID213 ; 
+    schema:artMedium "terracotta"@en, 
+        "terracotta"@nl ; 
+    schema:artform "sculpture"@en, 
+        "beeldhouwwerk"@nl ; 
+    schema:creator haObjId:141bb070feb1e573e103494e650be44a ; 
+    schema:depth haObjId:f9f78166c1351f44aba3d3cd877a96f6 ; 
+    schema:height haObjId:8b98987bfc4a27339e4729ef0bd837de ; 
+    schema:weight haObjId:df45ea51a0bd0c76c456f844e1a8d45e ; 
+    schema:width haObjId:d4e28b990fcbc7c7159821db800502da . 
+ 
+haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-254F143D-85A3-4DB8-BFA4-53000DEA04C7, 
+        haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B, 
+        haObjId:uuid-ECEB4181-5052-43C2-A3AD-D44AE5FB4D16 ; 
+    relSubType:rep haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 ; 
+    dct:license "CCBY-NC-ND-CONTENT", 
+        "CP-website" ; 
+    dct:title "ARCHIVERINGSCOPIE OBJ"@nl . 
+ 
+haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-6D523688-61AD-434A-9EB7-C4EAA5C99028, 
+        haObjId:uuid-9A992F7F-0562-4F0A-8D79-FE6DF4BD7F82, 
+        haObjId:uuid-9BB5C77E-60DC-4426-BB56-33C4533A8FB9 ; 
+    relSubType:rep haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 ; 
+    dct:license "CCBY-NC-ND-CONTENT", 
+        "CP-website" . 
+ 
+haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a a premisowl:Representation ; 
+    relSubType:inc haObjId:uuid-02901916-a428-4311-9d5e-a46303ae09c4, 
+        haObjId:uuid-293ae3bf-e90b-4aed-85af-95a0dc8aec34, 
+        haObjId:uuid-ace20074-874f-4ad3-a7a8-ad71832953f2 ; 
+    relSubType:rep haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 . 
+ 
+haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 a cryptographicHashFunctions:md5 ; 
+    rdf:value "9b7dd51ee94d1cc666392f5fbb6d9ea2" . 

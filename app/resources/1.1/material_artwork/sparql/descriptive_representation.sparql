@@ -43,8 +43,8 @@ WHERE
 
         BIND(
             COALESCE(
-                IF(?dc_term_p = dct:created, STRDT(?dcterm_value, edtf:EDTF), 1/0),
-                IF(?dc_term_p = dct:issued, STRDT(?dcterm_value, edtf:EDTF), 1/0),
+                IF(?dcterm_p = dct:created, STRDT(?dcterm_value, edtf:EDTF), 1/0),
+                IF(?dcterm_p = dct:issued, STRDT(?dcterm_value, edtf:EDTF), 1/0),
                 IF(?dcterm_p = dct:available, xsd:dateTime(?dcterm_value), 1/0),
                 IF(?dcterm_p = dct:extent, xsd:time(?dcterm_value), 1/0),
                 IF(bound(?dcterm_xml_lang), STRLANG(?dcterm_value, ?dcterm_xml_lang), 1/0),
