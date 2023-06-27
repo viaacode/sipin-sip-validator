@@ -30,16 +30,48 @@
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
-  sh:property <#objectIdentifierShape>,
+  sh:property
+  [
+    a sh:propertyShape ;
+    sh:path premis:identifier ;
+    sh:node <#LocalIdentifierShape> ;
+    sh:or (
+      [ sh:class haObj:LOCAL_ID ]
+      [ sh:class haObj:Acquisition_number ]
+      [ sh:class haObj:Alternative_number ]
+      [ sh:class haObj:Analoge_drager ]
+      [ sh:class haObj:Ardome ]
+      [ sh:class haObj:Basis ]
+      [ sh:class haObj:Historical_carrier ]
+      [ sh:class haObj:Historical_record_number ]
+      [ sh:class haObj:Inventarisnummer ]
+      [ sh:class haObj:MEDIA_ID ]
+      [ sh:class haObj:Object_number ]
+      [ sh:class haObj:Priref ]
+      [ sh:class haObj:Word_ID ]
+      [ sh:class haObj:Topstuk_ID ]
+      [ sh:class haObj:WorkPID ]
+      [ sh:class haObj:DataPID ]
+      [ sh:class haObj:Bestandsnaam ]
+      [ sh:class haObj:Api ]
+      [ sh:class haObj:Pdf ]
+      [ sh:class haObj:PersistenteURI_Record ]
+      [ sh:class haObj:PersistenteURI_Werk ]
+      [ sh:class haObj:PersistenteURI_VKC_Record ]
+      [ sh:class haObj:PersistenteURI_VKC_Werk ]
+    );
+  ],
   [
     a sh:PropertyShape ;
     sh:path relSubType:isr ;
     sh:nodeKind sh:IRI ;
     sh:class premis:Representation ;
+    sh:node <#RepresentationShape> ;
     sh:name "is represented by"@en ;
     sh:description "The representation of the intellectual entity."@en ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No representation or mismatch between IE's `objectIdentifier` and Representation's `objectIdentifier` and their relationships."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -48,9 +80,22 @@
     sh:name "has title"@en ;
     sh:description "The title of the intellectual entity."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:datatype rdf:langString;
+    sh:message "No `dct:title`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:title ;
+    sh:nodeKind sh:Literal ;
+    sh:name "has title"@en ;
+    sh:description "The title of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
     sh:uniqueLang true ;
     sh:datatype rdf:langString;
+    sh:message "Multiple values for `dc:title` with the same `@xml:lang` attribute."@en ;
   ],
+  #? alternative mag volgens SIP enkel meerdere keren gebruikt worden met verschillende Lang tag, klopt dit?
   [
     a sh:PropertyShape ;
     sh:path dct:alternative ;
@@ -67,6 +112,8 @@
     sh:name "has extent"@en ;
     sh:description "The extent of the intellectual entity."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `dc:extent`."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -76,16 +123,30 @@
     sh:name "is available"@en ;
     sh:description "The datetime on which the intellectual entity is available."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `dc:available`."@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dct:description ;
     sh:nodeKind sh:Literal ;
-    sh:uniqueLang true ;
     sh:datatype rdf:langString;
     sh:name "has description"@en ;
     sh:description "The description of the intellectual entity."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No `dc:description`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:description ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype rdf:langString;
+    sh:name "has description"@en ;
+    sh:description "The description of the intellectual entity."@en ;
+    sh:uniqueLang true ;
+    sh:severity sh:Violation ;
+    sh:message "multiple values for `dc:description` with the same `@xml:lang` attribute."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -95,6 +156,29 @@
     sh:datatype rdf:langString;
     sh:name "has abstract"@en ;
     sh:description "The abstract of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Multiple values for `dc:abstract` with the same `@xml:lang` attribute."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:created ;
+    sh:nodeKind sh:Literal ;
+    sh:name "has creation date"@en ;
+    sh:description "The creation date of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No `dc:created`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:created ;
+    sh:nodeKind sh:Literal ;
+    sh:name "has creation date"@en ;
+    sh:description "The creation date of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `dc:created`."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -108,8 +192,18 @@
     ) ;
     sh:name "has creation date"@en ;
     sh:description "The creation date of the intellectual entity."@en ;
-    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "`dc:created` not of datatype EDTF."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:issued ;
+    sh:nodeKind sh:Literal ;
+    sh:name "has issue date"@en ;
+    sh:description "The issue date of the intellectual entity."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `dc:issued`."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -123,7 +217,8 @@
     ) ;
     sh:name "has issue date"@en ;
     sh:description "The issue date of the intellectual entity."@en ;
-    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "`dc:issued` not of datatype EDTF."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -169,18 +264,46 @@
     a sh:PropertyShape ;
     sh:path dct:subject ;
     sh:NodeKind sh:Literal ;
+    sh:minCount 1 ;
     sh:uniqueLang false ;
     sh:datatype rdf:langString ;
     sh:name "has subject"@en ;
     sh:description "The subject or keywords of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+    sh:message "No values for `dct:subject`."@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dct:language ;
     sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
     sh:datatype xsd:string ;
     sh:name "has language"@en ;
     sh:description "The language of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+    sh:message "No values for `dct:language`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:license ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:datatype xsd:string ;
+    sh:name "has license"@en ;
+    sh:description "The license of the intellectual entity."@en ;
+    sh:severity sh:Warning ;
+    sh:message "No values for `dct:license`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:rightsHolder ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has rights holder"@en ;
+    sh:description "The rights holder of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message "No values for `dct:rightsHolder`."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -190,6 +313,19 @@
     sh:name "has rights holder"@en ;
     sh:description "The rights holder of the intellectual entity."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `dct:rightsHolder`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:rights ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype rdf:langString ;
+    sh:name "has rights"@en ;
+    sh:description "The rights of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message "No values for `dct:rights`."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -199,6 +335,8 @@
     sh:uniqueLang true ;
     sh:name "has rights"@en ;
     sh:description "The rights of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Multiple values for `dct:rights` with the same language."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -208,44 +346,78 @@
     sh:name "has type"@en ;
     sh:description "The classification of the intellectual entity."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `dct:type`."@en ;
   ] .
 
 <#RepresentationShape> a sh:NodeShape ;
   sh:targetClass premis:Representation ;
-  sh:property <#objectIdentifierShape>, 
+  sh:property
   [
     a sh:PropertyShape ;
     sh:path relSubType:rep ;
     sh:nodeKind sh:IRI ;
     sh:class premis:IntellectualEntity ;
+    sh:node <#IntellectualEntityShape> ;
     sh:name "represents"@en ;
     sh:description "The intellectual entity represented by the representation."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No IE for `relSubType:represents` or mismatch between ID's of Representation and IE."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:rep ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:IntellectualEntity ;
+    sh:node <#IntellectualEntityShape> ;
+    sh:name "represents"@en ;
+    sh:description "The intellectual entity represented by the representation."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "A representation can not represent multiple IE's."@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path relSubType:inc ;
     sh:nodeKind sh:IRI ;
     sh:class premis:File ;
+    sh:node <#FileShape> ;
     sh:name "includes"@en ;
     sh:description "The file(s) included in the representation."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No files for `relSubType:includes`."@en ;
   ] .
   
 <#FileShape> a sh:NodeShape ;
   sh:targetClass premis:File ;
-  sh:property <#objectIdentifierShape>,
+  sh:property 
   [
     a sh:PropertyShape ;
     sh:path relSubType:isi ;
     sh:nodeKind sh:IRI ;
     sh:class premis:Representation ;
+    sh:node <#RepresentationShape> ;
     sh:name "is included in"@en ;
     sh:description "The representation in which the file is included."@en ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No representation for `relSubType:isIncludedIn` or mismatch between ID's of File and Representation."@en ;
   ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:isi ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:Representation ;
+    sh:node <#RepresentationShape> ;
+    sh:name "is included in"@en ;
+    sh:description "The representation in which the file is included."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "A file can not be included in multiple representations."@en ;
+  ],
+  #? Fixity klopt nog niet
   [
     a sh:PropertyShape ;
     sh:path premis:fixity ;
@@ -255,6 +427,8 @@
     sh:description "The calculated fixity checksum of the file."@en ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No fixity checksum for `premis:fixity`."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -264,7 +438,19 @@
     sh:name "has size"@en ;
     sh:description "The size of the file in bytes."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No values for `premis:size`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:size ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:name "has size"@en ;
+    sh:description "The size of the file in bytes."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `premis:size`."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -274,7 +460,19 @@
     sh:name "has format"@en ;
     sh:description "The format of the file."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No value for `dct:format`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:format ;
+    sh:nodeKind sh:IRI ;
+    sh:class dct:FileFormat ;
+    sh:name "has format"@en ;
+    sh:description "The format of the file."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `dct:format`."@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -284,7 +482,19 @@
     sh:name "has original name"@en ;
     sh:description "The original name of the file."@en ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "No value for `premis:originalName`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:originalName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has original name"@en ;
+    sh:description "The original name of the file."@en ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "More than one value for `premis:originalName`."@en ;
   ] .
 
 <#Md5Shape> a sh:NodeShape ;
@@ -300,7 +510,7 @@
     sh:maxCount 1 ;
   ] .
 
-<#ObjectIdentifierShape> a sh:NodeShape ;
+<#LocalIdentifierShape> a sh:NodeShape ;
   sh:targetClass haObj:LocalIdentifier ;
   sh:property 
   [
@@ -313,11 +523,3 @@
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] .
-
-<#objectIdentifierShape> a sh:PropertyShape ;
-  sh:path premis:identifier ;
-  sh:nodeKind sh:IRI ;
-  sh:class haObj:LocalIdentifier ;
-  sh:name "has object identifier"@en ;
-  sh:description "The identifier of the object."@en ;
-  sh:minCount 0 .
