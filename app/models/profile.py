@@ -388,7 +388,7 @@ class BasicProfile10(Profile):
         shacl_graph.parse(str(self.shacl_sip()), format="turtle")
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
         conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True
+            data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True, allow_warnings=True
         )
 
         if not conforms:
@@ -936,7 +936,7 @@ class MaterialArtworkProfile11(Profile):
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
 
         conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True
+            data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True, allow_warnings=True
         )
 
         if not conforms:
