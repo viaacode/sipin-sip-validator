@@ -12,8 +12,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
 
-
-@base <https://data.hetarchief.be/ns/sip/shapes> .
+@base <https://data.hetarchief.be/ns/sip_material_artwork/shapes> .
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
