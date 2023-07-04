@@ -1,5 +1,5 @@
 @prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -11,21 +11,22 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix haObjId: <https://data.hetarchief.be/id/object/> . 
 
 
 
-@base <https://data.hetarchief.be/ns/sip_basic/shapes> .
+@base <https://data.hetarchief.be/ns/basic/shapes> .
 
 #? @ attributes?
 <>  a owl:Ontology ;
-    dct:author  [
+    dcterms:author  [
         schema:name   "Lennert Van de Velde" ;
         schema:email  "lennert.vandevelde@meemoo.be"
     ] ;
-    dct:title     "Data model BASIC"@en ;
-    dct:created   "2023-01-06" ;
-    dct:modified  "2021-01-06" ;
-    dct:description """Data model to describe the content of objects."""@en ;
+    dcterms:title     "Data model BASIC"@en ;
+    dcterms:created   "2023-01-06" ;
+    dcterms:modified  "2021-01-06" ;
+    dcterms:description """Data model to describe the content of objects."""@en ;
     pav:version "0.0.1" .
 
 <#IntellectualEntityShape> a sh:NodeShape ;
@@ -34,31 +35,32 @@
   [
     a sh:propertyShape ;
     sh:path premis:identifier ;
-    sh:node <#LocalIdentifierShape> ;
+    # sh:node <#LocalIdentifierShape> ;
     sh:or (
-      [ sh:class haObj:LOCAL_ID ]
-      [ sh:class haObj:Acquisition_number ]
-      [ sh:class haObj:Alternative_number ]
-      [ sh:class haObj:Analoge_drager ]
-      [ sh:class haObj:Ardome ]
-      [ sh:class haObj:Basis ]
-      [ sh:class haObj:Historical_carrier ]
-      [ sh:class haObj:Historical_record_number ]
-      [ sh:class haObj:Inventarisnummer ]
-      [ sh:class haObj:MEDIA_ID ]
-      [ sh:class haObj:Object_number ]
-      [ sh:class haObj:Priref ]
-      [ sh:class haObj:Word_ID ]
-      [ sh:class haObj:Topstuk_ID ]
-      [ sh:class haObj:WorkPID ]
-      [ sh:class haObj:DataPID ]
-      [ sh:class haObj:Bestandsnaam ]
-      [ sh:class haObj:Api ]
-      [ sh:class haObj:Pdf ]
-      [ sh:class haObj:PersistenteURI_Record ]
-      [ sh:class haObj:PersistenteURI_Werk ]
-      [ sh:class haObj:PersistenteURI_VKC_Record ]
-      [ sh:class haObj:PersistenteURI_VKC_Werk ]
+      [ sh:class haObjId:MEEMOO-LOCAL-ID ]
+      [ sh:class haObjId:Acquisition_number ]
+      [ sh:class haObjId:Alternative_number ]
+      [ sh:class haObjId:Analoge_drager ]
+      [ sh:class haObjId:Ardome ]
+      [ sh:class haObjId:Basis ]
+      [ sh:class haObjId:Historical_carrier ]
+      [ sh:class haObjId:Historical_record_number ]
+      [ sh:class haObjId:Inventarisnummer ]
+      [ sh:class haObjId:MEDIA_ID ]
+      [ sh:class haObjId:Object_number ]
+      [ sh:class haObjId:Priref ]
+      [ sh:class haObjId:Word_ID ]
+      [ sh:class haObjId:Topstuk_ID ]
+      [ sh:class haObjId:WorkPID ]
+      [ sh:class haObjId:DataPID ]
+      [ sh:class haObjId:Bestandsnaam ]
+      [ sh:class haObjId:Api ]
+      [ sh:class haObjId:Pdf ]
+      [ sh:class haObjId:PersistenteURI_Record ]
+      [ sh:class haObjId:PersistenteURI_Werk ]
+      [ sh:class haObjId:PersistenteURI_VKC_Record ]
+      [ sh:class haObjId:PersistenteURI_VKC_Werk ]
+      [ sh:class haObjId:MEEMOO-PID ]
     );
   ],
   [
@@ -66,39 +68,39 @@
     sh:path relSubType:isr ;
     sh:nodeKind sh:IRI ;
     sh:class premis:Representation ;
-    sh:node <#RepresentationShape> ;
+    # sh:node <#RepresentationShape> ;
     sh:name "is represented by"@en ;
     sh:description "The representation of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No representation or mismatch between IE's `objectIdentifier` and Representation's `objectIdentifier` and their relationships."@en ;
+    sh:message "No representation or mismatch between IE's `objectIdentifier` and Representation's `objectIdentifier` and their relationships. Please check the "@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:title ;
+    sh:path dcterms:title ;
     sh:nodeKind sh:Literal ;
     sh:name "has title"@en ;
     sh:description "The title of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     sh:datatype rdf:langString;
-    sh:message "No `dct:title`."@en ;
+    sh:message "Intellectual entity has no `dcterms:title`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:title ;
+    sh:path dcterms:title ;
     sh:nodeKind sh:Literal ;
     sh:name "has title"@en ;
     sh:description "The title of the intellectual entity."@en ;
     sh:severity sh:Violation ;
     sh:uniqueLang true ;
     sh:datatype rdf:langString;
-    sh:message "Multiple values for `dc:title` with the same `@xml:lang` attribute."@en ;
+    sh:message "Multiple values for `dcterms:title` with the same `@xml:lang` attribute."@en ;
   ],
   #? alternative mag volgens SIP enkel meerdere keren gebruikt worden met verschillende Lang tag, klopt dit?
   [
     a sh:PropertyShape ;
-    sh:path dct:alternative ;
+    sh:path dcterms:alternative ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString;
     sh:name "has alternative title"@en ;
@@ -106,83 +108,100 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:extent ;
+    sh:path dcterms:extent ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:time ;
     sh:name "has extent"@en ;
     sh:description "The extent of the intellectual entity."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dc:extent`."@en ;
+    sh:message "More than one value for `dcterms:extent`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:available ;
+    sh:path dcterms:extent ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:dateTime ;
+    sh:datatype xsd:time ;
+    sh:name "has extent"@en ;
+    sh:description "The extent of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:message "`dcterms:extent` is not of type `xsd:time`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:available ;
+    sh:nodeKind sh:Literal ;
     sh:name "is available"@en ;
     sh:description "The datetime on which the intellectual entity is available."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dc:available`."@en ;
+    sh:message "More than one value for `dcterms:available`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:description ;
+    sh:path dcterms:available ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:name "is available"@en ;
+    sh:description "The datetime on which the intellectual entity is available."@en ;
+    sh:severity sh:Violation ;
+    sh:message "`dcterms:available` is not of type `xsd:dateTime`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:description ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString;
     sh:name "has description"@en ;
     sh:description "The description of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No `dc:description`."@en ;
+    sh:message "Intellectual entity has no `dcterms:description`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:description ;
+    sh:path dcterms:description ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString;
     sh:name "has description"@en ;
     sh:description "The description of the intellectual entity."@en ;
     sh:uniqueLang true ;
     sh:severity sh:Violation ;
-    sh:message "multiple values for `dc:description` with the same `@xml:lang` attribute."@en ;
+    sh:message "Multiple values for `dcterms:description` with the same `@xml:lang` attribute."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:abstract ;
+    sh:path dcterms:abstract ;
     sh:nodeKind sh:Literal ;
     sh:uniqueLang true ;
     sh:datatype rdf:langString;
     sh:name "has abstract"@en ;
     sh:description "The abstract of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "Multiple values for `dc:abstract` with the same `@xml:lang` attribute."@en ;
+    sh:message "Multiple values for `dcterms:abstract` with the same `@xml:lang` attribute."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:created ;
+    sh:path dcterms:created ;
     sh:nodeKind sh:Literal ;
     sh:name "has creation date"@en ;
     sh:description "The creation date of the intellectual entity."@en ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No `dc:created`."@en ;
+    sh:message "Intellectual entity has no `dcterms:created`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:created ;
+    sh:path dcterms:created ;
     sh:nodeKind sh:Literal ;
     sh:name "has creation date"@en ;
     sh:description "The creation date of the intellectual entity."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dc:created`."@en ;
+    sh:message "More than one value for `dcterms:created`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:created ;
+    sh:path dcterms:created ;
     sh:nodeKind sh:Literal ;
     sh:or (
       [ sh:datatype edtf:EDTF-level0 ]
@@ -193,21 +212,20 @@
     sh:name "has creation date"@en ;
     sh:description "The creation date of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "`dc:created` not of datatype EDTF."@en ;
+    sh:message "`dcterms:created` not of datatype EDTF."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:issued ;
-    sh:nodeKind sh:Literal ;
+    sh:path dcterms:issued ;
     sh:name "has issue date"@en ;
     sh:description "The issue date of the intellectual entity."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dc:issued`."@en ;
+    sh:message "More than one value for `dcterms:issued`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:issued ;
+    sh:path dcterms:issued ;
     sh:nodeKind sh:Literal ;
     sh:or (
       [ sh:datatype edtf:EDTF-level0 ]
@@ -218,11 +236,11 @@
     sh:name "has issue date"@en ;
     sh:description "The issue date of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "`dc:issued` not of datatype EDTF."@en ;
+    sh:message "`dcterms:issued` not of datatype EDTF."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:publisher ;
+    sh:path dcterms:publisher ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has publisher"@en ;
@@ -230,7 +248,7 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:contributor ;
+    sh:path dcterms:contributor ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has contributor"@en ;
@@ -238,7 +256,7 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:creator ;
+    sh:path dcterms:creator ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has creator"@en ;
@@ -246,7 +264,7 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:spatial ;
+    sh:path dcterms:spatial ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has spatial coverage"@en ;
@@ -254,7 +272,7 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:temporal ;
+    sh:path dcterms:temporal ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has temporal coverage"@en ;
@@ -262,7 +280,7 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:subject ;
+    sh:path dcterms:subject ;
     sh:NodeKind sh:Literal ;
     sh:minCount 1 ;
     sh:uniqueLang false ;
@@ -270,84 +288,84 @@
     sh:name "has subject"@en ;
     sh:description "The subject or keywords of the intellectual entity."@en ;
     sh:severity sh:Warning ;
-    sh:message "No values for `dct:subject`."@en ;
+    sh:message "Intellectual entity has no values for `dcterms:subject`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:language ;
+    sh:path dcterms:language ;
     sh:nodeKind sh:Literal ;
     sh:minCount 1 ;
     sh:datatype xsd:string ;
     sh:name "has language"@en ;
     sh:description "The language of the intellectual entity."@en ;
     sh:severity sh:Warning ;
-    sh:message "No values for `dct:language`."@en ;
+    sh:message "Intellectual entity has no values for `dcterms:language`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:license ;
+    sh:path dcterms:license ;
     sh:nodeKind sh:Literal ;
     sh:minCount 1 ;
     sh:datatype xsd:string ;
     sh:name "has license"@en ;
     sh:description "The license of the intellectual entity."@en ;
     sh:severity sh:Warning ;
-    sh:message "No values for `dct:license`."@en ;
+    sh:message "Intellectual entity has no values for `dcterms:license`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:rightsHolder ;
+    sh:path dcterms:rightsHolder ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has rights holder"@en ;
     sh:description "The rights holder of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:message "No values for `dct:rightsHolder`."@en ;
+    sh:message "Intellectual entity has no values for `dcterms:rightsHolder`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:rightsHolder ;
+    sh:path dcterms:rightsHolder ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has rights holder"@en ;
     sh:description "The rights holder of the intellectual entity."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dct:rightsHolder`."@en ;
+    sh:message "More than one value for `dcterms:rightsHolder`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:rights ;
+    sh:path dcterms:rights ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
     sh:name "has rights"@en ;
     sh:description "The rights of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:message "No values for `dct:rights`."@en ;
+    sh:message "Intellectual entity has no values for `dcterms:rights`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:rights ;
+    sh:path dcterms:rights ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
     sh:uniqueLang true ;
     sh:name "has rights"@en ;
     sh:description "The rights of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "Multiple values for `dct:rights` with the same language."@en ;
+    sh:message "Multiple values for `dcterms:rights` with the same `@xml:lang` attribute."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:type ;
+    sh:path dcterms:type ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has type"@en ;
     sh:description "The classification of the intellectual entity."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dct:type`."@en ;
+    sh:message "More than one value for `dcterms:type`."@en ;
   ] .
 
 <#RepresentationShape> a sh:NodeShape ;
@@ -358,7 +376,7 @@
     sh:path relSubType:rep ;
     sh:nodeKind sh:IRI ;
     sh:class premis:IntellectualEntity ;
-    sh:node <#IntellectualEntityShape> ;
+    # sh:node <#IntellectualEntityShape> ;
     sh:name "represents"@en ;
     sh:description "The intellectual entity represented by the representation."@en ;
     sh:minCount 1 ;
@@ -370,7 +388,7 @@
     sh:path relSubType:rep ;
     sh:nodeKind sh:IRI ;
     sh:class premis:IntellectualEntity ;
-    sh:node <#IntellectualEntityShape> ;
+    # sh:node <#IntellectualEntityShape> ;
     sh:name "represents"@en ;
     sh:description "The intellectual entity represented by the representation."@en ;
     sh:maxCount 1 ;
@@ -382,12 +400,230 @@
     sh:path relSubType:inc ;
     sh:nodeKind sh:IRI ;
     sh:class premis:File ;
-    sh:node <#FileShape> ;
+    # sh:node <#FileShape> ;
     sh:name "includes"@en ;
     sh:description "The file(s) included in the representation."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No files for `relSubType:includes`."@en ;
+    sh:message "No file for `relSubType:includes` or mismatch between ID's of Representation and File."@en ;
+  ],
+  # Optional DCTERMS
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:title ;
+    sh:nodeKind sh:Literal ;
+    sh:name "has title"@en ;
+    sh:description "The title of the representation."@en ;
+    sh:uniqueLang true ;
+    sh:datatype rdf:langString;
+    sh:severity sh:Violation ;
+    sh:message "Multiple values for `dcterms:title` with the same `@xml:lang` attribute."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:alternative ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype rdf:langString;
+    sh:name "has alternative title"@en ;
+    sh:description "An alternative title of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:extent ;
+    sh:nodeKind sh:Literal ;
+    sh:name "has extent"@en ;
+    sh:description "The extent of the representation."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Representation has more than one value for `dcterms:extent`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:extent ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:time ;
+    sh:name "has extent"@en ;
+    sh:description "The extent of the representation."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Representation's `dcterms:extent` is not of type `xsd:time`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:available ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:name "is available"@en ;
+    sh:description "The datetime on which the representation is available."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Representation has more than one value for `dcterms:available`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:available ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:name "is available"@en ;
+    sh:description "The datetime on which the representation is available."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Representation's `dcterms:available` is not of type `xsd:dateTime`."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:description ;
+    sh:nodeKind sh:Literal ;
+    sh:uniqueLang true ;
+    sh:datatype rdf:langString;
+    sh:name "has description"@en ;
+    sh:description "The description of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Representation has multiple values for `dcterms:description` with the same `@xml:lang` attribute."@en ;
+
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:abstract ;
+    sh:nodeKind sh:Literal ;
+    sh:uniqueLang true ;
+    sh:datatype rdf:langString;
+    sh:name "has abstract"@en ;
+    sh:description "The abstract of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Representation has multiple values for `dcterms:abstract` with the same `@xml:lang` attribute."@en ;
+
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:created ;
+    sh:nodeKind sh:Literal ;
+    sh:or (
+      [ sh:datatype edtf:EDTF-level0 ]
+      [ sh:datatype edtf:EDTF-level1 ]
+      [ sh:datatype edtf:EDTF-level2 ]
+      [ sh:datatype edtf:EDTF ]
+    ) ;
+    sh:name "has creation date"@en ;
+    sh:description "The creation date of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Representation's `dcterms:created` not of datatype EDTF."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:created ;
+    sh:maxCount 1 ;
+    sh:name "has creation date"@en ;
+    sh:description "The creation date of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Representation has more than one value for `dcterms:created`"@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:issued ;
+    sh:maxCount 1 ;
+    sh:name "has issue date"@en ;
+    sh:description "The issue date of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Representation's `dcterms:issued` not of datatype EDTF."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:issued ;
+    sh:nodeKind sh:Literal ;
+    sh:or (
+      [ sh:datatype edtf:EDTF-level0 ]
+      [ sh:datatype edtf:EDTF-level1 ]
+      [ sh:datatype edtf:EDTF-level2 ]
+      [ sh:datatype edtf:EDTF ]
+    ) ;
+    sh:name "has issue date"@en ;
+    sh:description "The issue date of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message "Representation's `dcterms:issued` not of datatype EDTF."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:publisher ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has publisher"@en ;
+    sh:description "The publisher of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:contributor ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has contributor"@en ;
+    sh:description "The contributor of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:creator ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has creator"@en ;
+    sh:description "The creator of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:spatial ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has spatial coverage"@en ;
+    sh:description "The spatial coverage of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:temporal ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has temporal coverage"@en ;
+    sh:description "The temporal coverage of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:subject ;
+    sh:NodeKind sh:Literal ;
+    sh:uniqueLang false ;
+    sh:datatype rdf:langString ;
+    sh:name "has subject"@en ;
+    sh:description "The subject or keywords of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:language ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has language"@en ;
+    sh:description "The language of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rightsHolder ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has rights holder"@en ;
+    sh:description "The rights holder of the representation."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rights ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype rdf:langString ;
+    sh:uniqueLang true ;
+    sh:name "has rights"@en ;
+    sh:description "The rights of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:type ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has type"@en ;
+    sh:description "The classification of the representation."@en ;
+    sh:maxCount 1 ;
   ] .
   
 <#FileShape> a sh:NodeShape ;
@@ -398,7 +634,7 @@
     sh:path relSubType:isi ;
     sh:nodeKind sh:IRI ;
     sh:class premis:Representation ;
-    sh:node <#RepresentationShape> ;
+    # sh:node <#RepresentationShape> ;
     sh:name "is included in"@en ;
     sh:description "The representation in which the file is included."@en ;
     sh:minCount 1 ;
@@ -410,7 +646,7 @@
     sh:path relSubType:isi ;
     sh:nodeKind sh:IRI ;
     sh:class premis:Representation ;
-    sh:node <#RepresentationShape> ;
+    # sh:node <#RepresentationShape> ;
     sh:name "is included in"@en ;
     sh:description "The representation in which the file is included."@en ;
     sh:maxCount 1 ;
@@ -454,25 +690,25 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:format ;
+    sh:path dcterms:format ;
     sh:nodeKind sh:IRI ;
-    sh:class dct:FileFormat ;
+    sh:class dcterms:FileFormat ;
     sh:name "has format"@en ;
     sh:description "The format of the file."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No value for `dct:format`."@en ;
+    sh:message "No value for `dcterms:format`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dct:format ;
+    sh:path dcterms:format ;
     sh:nodeKind sh:IRI ;
-    sh:class dct:FileFormat ;
+    sh:class dcterms:FileFormat ;
     sh:name "has format"@en ;
     sh:description "The format of the file."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dct:format`."@en ;
+    sh:message "More than one value for `dcterms:format`."@en ;
   ],
   [
     a sh:PropertyShape ;
