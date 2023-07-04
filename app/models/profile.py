@@ -577,7 +577,7 @@ class MaterialArtworkProfile11(Profile):
             "app",
             "resources",
             "1.1",
-            "material_artwork",
+            "basic",
             "shacl",
             "basic.shacl.ttl",
         )
