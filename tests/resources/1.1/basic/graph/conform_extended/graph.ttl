@@ -28,17 +28,17 @@ haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
 haObjId:02e4eb2f74ac06dd9cdfab861553697e a cryptographicHashFunctions:md5 ;
     rdf:value "02e4eb2f74ac06dd9cdfab861553697e" .
 
+haObjId:MEEMOO-LOCAL-ID rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:MEEMOO-LOCAL-IDce980d9 a haObjId:MEEMOO-LOCAL-ID ;
+    rdf:value "ce980d9" .
+
 haObjId:Object_number rdfs:subClassOf haObj:LocalIdentifier .
 
 haObjId:Object_numberv_2021073114124363 a haObjId:Object_number ;
     rdf:value "v_2021073114124363" .
 
-haObjId:local_id rdfs:subClassOf haObj:LocalIdentifier .
-
-haObjId:local_idce980d9 a haObjId:local_id ;
-    rdf:value "ce980d9" .
-
-haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity;
+haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity ;
     relSubType:isr haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
     dct:abstract "the abstract of the episode"@en,
         "de samenvatting van de episode"@nl ;
@@ -75,8 +75,8 @@ haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity
     dct:title "the title of the episode"@en,
         "de titel van de episode"@nl ;
     dct:type "video" ;
-    premisowl:identifier haObjId:Object_numberv_2021073114124363,
-        haObjId:local_idce980d9 .
+    premisowl:identifier haObjId:MEEMOO-LOCAL-IDce980d9,
+        haObjId:Object_numberv_2021073114124363 .
 
 haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d a premisowl:File ;
     relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
