@@ -34,6 +34,7 @@
     sh:path premis:identifier ;
     sh:node <#LocalIdentifierShape> ;
     sh:or (
+      [ sh:class haObjId:MEEMOO-LOCAL-ID ]
       [ sh:class haObjId:LOCAL_ID ]
       [ sh:class haObjId:Acquisition_number ]
       [ sh:class haObjId:Alternative_number ]
@@ -57,6 +58,7 @@
       [ sh:class haObjId:PersistenteURI_Werk ]
       [ sh:class haObjId:PersistenteURI_VKC_Record ]
       [ sh:class haObjId:PersistenteURI_VKC_Werk ]
+      [ sh:class haObjId:MEEMOO-PID ]
     );
   ],
   [
