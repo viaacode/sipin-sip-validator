@@ -46,7 +46,7 @@ CONSTRUCT
 }
 WHERE
 { 
-    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc+schema.xml> {
+    SERVICE <x-sparql-anything:location={{ path }}> {
         
         # region IRI of the intellectual entity
         [] a fx:root;
