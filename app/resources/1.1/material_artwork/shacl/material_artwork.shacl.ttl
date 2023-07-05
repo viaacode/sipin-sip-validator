@@ -25,7 +25,6 @@
     sh:class schema:Role ;
     sh:name "creator"@en ;
     sh:description "The creator of the intellectual entity."@en ;
-    sh:minCount 1 ;
   ],
   [
     a sh:PropertyShape ;
