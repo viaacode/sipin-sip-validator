@@ -12,8 +12,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
 
-
-@base <https://data.hetarchief.be/ns/sip/shapes> .
+@base <https://data.hetarchief.be/ns/sip_material_artwork/shapes> .
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
@@ -22,16 +21,17 @@
     a sh:PropertyShape ;
     sh:path schema:creator ;
     sh:nodeKind sh:IRI ;
-    sh:node <#RoleShape> ;
+    # sh:node <#RoleShape> ;
+    sh:class schema:Role ;
     sh:name "creator"@en ;
     sh:description "The creator of the intellectual entity."@en ;
-    sh:minCount 1 ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:height ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:node <#QuantitativeValueShape> ;
+    # sh:node <#QuantitativeValueShape> ;
+    sh:class schema:QuantitativeValue ;
     sh:name "height"@en ;
     sh:description "The height of the intellectual entity."@en ;
     sh:maxCount 1 ;
@@ -40,7 +40,8 @@
     a sh:PropertyShape ;
     sh:path schema:width ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:node <#QuantitativeValueShape> ;
+    # sh:node <#QuantitativeValueShape> ;
+    sh:class schema:QuantitativeValue ;
     sh:name "width"@en ;
     sh:description "The width of the intellectual entity."@en ;
     sh:maxCount 1 ;
@@ -49,7 +50,8 @@
     a sh:PropertyShape ;
     sh:path schema:depth ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:node <#QuantitativeValueShape> ;
+    # sh:node <#QuantitativeValueShape> ;
+    sh:class schema:QuantitativeValue ;
     sh:name "depth"@en ;
     sh:description "The depth of the intellectual entity."@en ;
     sh:maxCount 1 ;
@@ -81,7 +83,8 @@
     a sh:PropertyShape ;
     sh:path schema:creator ;
     sh:nodeKind sh:IRI ;
-    sh:node <#RoleShape> ;
+    # sh:node <#RoleShape> ;
+    sh:class schema:Role ;
     sh:name "creator"@en ;
     sh:description "The creator of the intellectual entity."@en ;
   ],
@@ -89,7 +92,8 @@
     a sh:PropertyShape ;
     sh:path schema:height ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:node <#QuantitativeValueShape> ;
+    # sh:node <#QuantitativeValueShape> ;
+    sh:class schema:QuantitativeValue ;
     sh:name "height"@en ;
     sh:description "The height of the intellectual entity."@en ;
     sh:maxCount 1 ;
@@ -98,7 +102,8 @@
     a sh:PropertyShape ;
     sh:path schema:width ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:node <#QuantitativeValueShape> ;
+    # sh:node <#QuantitativeValueShape> ;
+    sh:class schema:QuantitativeValue ;
     sh:name "width"@en ;
     sh:description "The width of the intellectual entity."@en ;
     sh:maxCount 1 ;
@@ -107,7 +112,8 @@
     a sh:PropertyShape ;
     sh:path schema:depth ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    sh:node <#QuantitativeValueShape> ;
+    # sh:node <#QuantitativeValueShape> ;
+    sh:class schema:QuantitativeValue ;
     sh:name "depth"@en ;
     sh:description "The depth of the intellectual entity."@en ;
     sh:maxCount 1 ;
@@ -172,7 +178,8 @@
         a sh:PropertyShape ;
         sh:path schema:creator ;
         sh:nodeKind sh:IRI ;
-        sh:node <#PersonShape> ;
+        # sh:node <#PersonShape> ;
+        sh:class schema:Person ;
         sh:severity sh:Violation ;
         sh:message "schema:creator is not of class schema:Person"@en ;
         sh:minCount 1 ;

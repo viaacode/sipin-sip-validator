@@ -1,8 +1,6 @@
-15e09a93690bfff5616073a9b96e9242  data/basic.sparql
 f885e332a0fc9228294e4ae2abb7aae5  data/mets.xml
-ac0e875b1e8ab7c9deb5510cd004a3cd  data/sip.sparql
 52e02444e8da664c660e2179a46847ed  data/metadata/descriptive/dc_1.xml
-fda206a31ce2eb27c8713589a53bf0f7  data/metadata/preservation/premis.xml
+c23db62c2abd690a500940fe42948b5b  data/metadata/preservation/premis.xml
 a321c055122ce2c8d7b1771e0496148e  data/representations/representation_1/mets.xml
 02e4eb2f74ac06dd9cdfab861553697e  data/representations/representation_1/data/D523F963.jpg
-324f3b7ce8a4360726c42ef776180c40  data/representations/representation_1/metadata/preservation/premis.xml
+031eda3d71f10ad6506575bdc27b197c  data/representations/representation_1/metadata/preservation/premis.xml

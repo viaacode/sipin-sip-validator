@@ -12,7 +12,7 @@
     </premis:objectIdentifier>
 
     <premis:objectIdentifier>
-      <premis:objectIdentifierType>local_id</premis:objectIdentifierType>
+      <premis:objectIdentifierType>MEEMOO-LOCAL-ID</premis:objectIdentifierType>
       <premis:objectIdentifierValue>ce980d9</premis:objectIdentifierValue>
     </premis:objectIdentifier>
 
