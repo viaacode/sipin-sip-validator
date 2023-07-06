@@ -55,36 +55,38 @@ WHERE
         # endregion
 
         # region Creator
-        [] a fx:root;
+        OPTIONAL {
+            [] a fx:root;
 
-        ?root_list_2 [
-            a schema:creator;
-            schema:roleName ?creatorRoleName;
-            ?creator_list ?creator_b ;
-            ?creator_list_name [
-                a schema:name ;
-                rdf:_1 ?creatorName ;
-            ] ;
-        ].
-        ?creator_b a ?creator_p ;
-            rdf:_1 ?creator_b_value .
-        OPTIONAL {
-            ?creator_b xsi:type ?creator_b_type .
+            ?root_list_2 [
+                a schema:creator;
+                schema:roleName ?creatorRoleName;
+                ?creator_list ?creator_b ;
+                ?creator_list_name [
+                    a schema:name ;
+                    rdf:_1 ?creatorName ;
+                ] ;
+            ].
+            ?creator_b a ?creator_p ;
+                rdf:_1 ?creator_b_value .
+            OPTIONAL {
+                ?creator_b xsi:type ?creator_b_type .
+            }
+            OPTIONAL {
+                ?creator_b xml:lang ?creator_b_lang .
+            }
+            
+            BIND(
+                COALESCE(
+                    IF(?creator_p = schema:birthDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
+                    IF(?creator_p = schema:deathDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
+                    IF(bound(?creator_b_lang), STRLANG(?creator_b_value, ?creator_b_lang), 1/0),
+                    ?creator_b_value
+                )
+            AS ?creator_o)
+            BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Role")))) AS ?creatorRole)
+            BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Creator")))) AS ?creator)
         }
-        OPTIONAL {
-            ?creator_b xml:lang ?creator_b_lang .
-        }
-        
-        BIND(
-            COALESCE(
-                IF(?creator_p = schema:birthDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
-                IF(?creator_p = schema:deathDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
-                IF(bound(?creator_b_lang), STRLANG(?creator_b_value, ?creator_b_lang), 1/0),
-                ?creator_b_value
-            )
-        AS ?creator_o)
-        BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Role")))) AS ?creatorRole)
-        BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Creator")))) AS ?creator)
         # endregion
 
         # region Quantitative values
@@ -188,36 +190,38 @@ WHERE
         # endregion
 
         # region Rest of properties
-        [] a fx:root;
-
-        ?root_list_n ?b .
-        ?b a ?p;
-            rdf:_1 ?b_value .
         OPTIONAL {
-            ?b xsi:type ?b_type .
-        }
-        OPTIONAL {
-            ?b xml:lang ?b_lang .
-        }
+            [] a fx:root;
+
+            ?root_list_n ?b .
+            ?b a ?p;
+                rdf:_1 ?b_value .
+            OPTIONAL {
+                ?b xsi:type ?b_type .
+            }
+            OPTIONAL {
+                ?b xml:lang ?b_lang .
+            }
 
 
-        BIND(
-            COALESCE(
-                IF(?p = dct:created, STRDT(?b_value, edtf:EDTF), 1/0),
-                IF(?p = dct:issued, STRDT(?b_value, edtf:EDTF), 1/0),
-                IF(?p = dct:available, xsd:dateTime(?b_value), 1/0),
-                IF(?p = dct:extent, xsd:time(?b_value), 1/0),
-                IF(bound(?b_lang), STRLANG(?b_value, ?b_lang), 1/0),
-                ?b_value
-            )
-        AS ?o)
+            BIND(
+                COALESCE(
+                    IF(?p = dct:created, STRDT(?b_value, edtf:EDTF), 1/0),
+                    IF(?p = dct:issued, STRDT(?b_value, edtf:EDTF), 1/0),
+                    IF(?p = dct:available, xsd:dateTime(?b_value), 1/0),
+                    IF(?p = dct:extent, xsd:time(?b_value), 1/0),
+                    IF(bound(?b_lang), STRLANG(?b_value, ?b_lang), 1/0),
+                    ?b_value
+                )
+            AS ?o)
+
+            FILTER (?p != dct:identifier)
+            FILTER (?p != schema:creator)
+            FILTER (?p != schema:height)
+            FILTER (?p != schema:width)
+            FILTER (?p != schema:depth)
+            FILTER (?p != schema:weight)
+        }
         # endregion
-
-        FILTER (?p != dct:identifier)
-        FILTER (?p != schema:creator)
-        FILTER (?p != schema:height)
-        FILTER (?p != schema:width)
-        FILTER (?p != schema:depth)
-        FILTER (?p != schema:weight)
     }
 }   
