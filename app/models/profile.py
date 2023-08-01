@@ -854,7 +854,7 @@ class MaterialArtworkProfile11(Profile):
         )
 
         premis_representation_sparqls = []
-        for path in Path(".").glob(
+        for path in self.bag_path.glob(
             str(
                 Path(
                     "data",
