@@ -30,9 +30,7 @@ CONSTRUCT
     ?rep a premisowl:Representation;
         relSubType:rep ?ie ;
         relSubType:inc ?file ;
-        skos:hiddenLabel {{ rep_folder }} .
-        # alternative
-        # gndo:temporaryName {{ rep_folder }} .
+        skos:hiddenLabel "{{ rep_folder }}" .
 
      ?file a premisowl:File;
         relSubType:isi ?rep;

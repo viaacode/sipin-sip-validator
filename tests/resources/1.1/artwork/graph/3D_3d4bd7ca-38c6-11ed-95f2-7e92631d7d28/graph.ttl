@@ -152,6 +152,7 @@ haOrgId:OR-m30wc4t a org:Organization ;
 <http://the-fr.org/id/file-format/154> a dct:FileFormat . 
  
 haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28 a premisowl:Representation ; 
+    skos:hiddenLabel "representation_1" ; 
     relSubType:inc haObjId:uuid-57dfa49d-5997-48f4-8bdf-fb0d08f87f66 ; 
     relSubType:rep haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 . 
  
@@ -195,6 +196,7 @@ haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 a premisowl:IntellectualEntity
     schema:width haObjId:d4e28b990fcbc7c7159821db800502da . 
  
 haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 a premisowl:Representation ; 
+    skos:hiddenLabel "representation_2" ; 
     relSubType:inc haObjId:uuid-254F143D-85A3-4DB8-BFA4-53000DEA04C7, 
         haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B, 
         haObjId:uuid-ECEB4181-5052-43C2-A3AD-D44AE5FB4D16 ; 
@@ -204,6 +206,7 @@ haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 a premisowl:Representation ;
     dct:title "ARCHIVERINGSCOPIE OBJ"@nl . 
  
 haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 a premisowl:Representation ; 
+    skos:hiddenLabel "representation_3" ; 
     relSubType:inc haObjId:uuid-6D523688-61AD-434A-9EB7-C4EAA5C99028, 
         haObjId:uuid-9A992F7F-0562-4F0A-8D79-FE6DF4BD7F82, 
         haObjId:uuid-9BB5C77E-60DC-4426-BB56-33C4533A8FB9 ; 
@@ -212,6 +215,7 @@ haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 a premisowl:Representation ;
         "CP-website" . 
  
 haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a a premisowl:Representation ; 
+    skos:hiddenLabel "representation_4" ; 
     relSubType:inc haObjId:uuid-02901916-a428-4311-9d5e-a46303ae09c4, 
         haObjId:uuid-293ae3bf-e90b-4aed-85af-95a0dc8aec34, 
         haObjId:uuid-ace20074-874f-4ad3-a7a8-ad71832953f2 ; 
