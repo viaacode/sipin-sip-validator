@@ -15,6 +15,7 @@ PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
 PREFIX schema: <https://schema.org/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
 
 CONSTRUCT
   {
@@ -26,8 +27,9 @@ CONSTRUCT
         rdf:value ?file_digest.
 
     ?rep a premisowl:Representation;
-        relSubType:rep ?ie;
-        relSubType:inc ?file .
+        relSubType:rep ?ie ;
+        relSubType:inc ?file ;
+        skos:hiddenLabel {{ rep_folder }} .
 
      ?file a premisowl:File;
         relSubType:isi ?rep;

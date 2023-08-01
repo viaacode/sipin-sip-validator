@@ -854,7 +854,7 @@ class MaterialArtworkProfile11(Profile):
         )
 
         premis_representation_sparqls = []
-        for path in self.bag_path.glob(
+        for path in Path(".").glob(
             str(
                 Path(
                     "data",
@@ -873,7 +873,7 @@ class MaterialArtworkProfile11(Profile):
                 premis_representation_sparql,
                 "w",
             ) as f:
-                f.write(profile_template.render(path=path))
+                f.write(profile_template.render(path=path, rep_folder=path.parts[-4]))
             premis_representation_sparqls.append(premis_representation_sparql)
 
         # Run SPARQL-anything transformation.
