@@ -196,22 +196,26 @@ haOrgId:OR-m30wc4t a org:Organization ;
     schema:identifier "OR-m30wc4t" . 
  
 haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 a premisowl:Representation ; 
+    skos:hiddenLabel "representation_1" ;
     relSubType:inc haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B ; 
-    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
     dct:license "CCBY-NC-ND-CONTENT", 
         "CP-website" . 
  
 haObjId:uuid-51F2C0F1-CA06-4B59-9605-54F7C91BA53F a premisowl:Representation ; 
+    skos:hiddenLabel "representation_3" ; 
     relSubType:inc haObjId:uuid-5EB57F66-A4FF-4145-A90A-D52B280D9B86 ; 
     relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 . 
  
 haObjId:uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43 a premisowl:Representation ; 
+    skos:hiddenLabel "representation_2" ; 
     relSubType:inc haObjId:uuid-DE17BC26-7D72-4E9A-8636-A6F09405586E ; 
     relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
     dct:license "CCBY-NC-ND-CONTENT", 
         "CP-website" . 
  
 haObjId:uuid-ddcf9e36-35ae-11ed-b866-7e92631d7d27 a premisowl:Representation ; 
+    skos:hiddenLabel "representation_5" ; 
     relSubType:inc haObjId:uuid-fa0ab8f6-35ae-11ed-8d3d-7e92631d7d27 ; 
     relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 . 
  
@@ -241,6 +245,7 @@ haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity
     schema:width haObjId:87d9731417b13d59cdc69ec6e120f0c1 . 
  
 haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ; 
+    skos:hiddenLabel "representation_4" ; 
     relSubType:inc haObjId:uuid-1A40CBB1-C36A-4CAD-BEA0-7474BA96DD24, 
         haObjId:uuid-75360EDC-A6D7-47BF-86D7-476EE59AF4A0, 
         haObjId:uuid-8583DBE9-048C-4EB8-A690-A4A00425C232, 
