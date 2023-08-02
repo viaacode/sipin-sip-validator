@@ -16,7 +16,6 @@ PREFIX schema: <https://schema.org/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
-PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
 
 CONSTRUCT
   {
