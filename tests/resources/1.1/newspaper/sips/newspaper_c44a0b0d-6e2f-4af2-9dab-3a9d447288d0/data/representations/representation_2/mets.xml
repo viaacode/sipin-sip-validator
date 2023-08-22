@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS" xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" OBJID="representation_2" TYPE="Textual works - Print" PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" xsi:schemaLocation="https://www.w3.org./1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd  http://www.loc.gov/METS/ https://www.loc.gov/standards/mets/mets.xsd https://dilcis.eu/XML/METS/CSIPExtensionMETS https://earkcsip.dilcis.eu/schema/DILCISExtensionMETS.xsd https://dilcis.eu/XML/METS/SIPExtensionMETS https://earksip.dilcis.eu/schema/DILCISExtensionSIPMETS.xsd">
+
+    <metsHdr CREATEDATE="2022-02-16T10:02:37.009+02:00" />
+
+    <amdSec>
+        <digiprovMD ID="uuid-281dbc55-8250-4e54-a490-6cdf30880589">
+            <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:type="simple" xlink:href="./metadata/preservation/premis.xml" MIMETYPE="text/xml" SIZE="13586" CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="1237af081869400e76ce8f379578bcfe" CHECKSUMTYPE="MD5" />
+        </digiprovMD>
+    </amdSec>
+
+    <fileSec ID="uuid-5852a5bc-2f87-45c2-abb1-8b224339d391">
+        <fileGrp USE="data" ID="uuid-7b0ef544-6ddd-42c9-8d61-b1fbc98f4164">
+            <!-- dummy txt file filling in for alto xml file -->
+            <file ID="uuid-fd5fec40-a696-40d4-be7b-e0a01a2bf0e3" MIMETYPE="application/xml" SIZE="0" CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/18950101_0001.xml" />
+            </file>
+            <!-- dummy txt file filling in for alto xml file -->
+            <file ID="uuid-d63b064f-7fed-4981-983c-6c99c03fd4e5" MIMETYPE="application/xml" SIZE="0" CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/18950101_0002.xml" />
+            </file>
+            <!-- dummy txt file filling in for alto xml file -->
+            <file ID="uuid-cfd8a279-177c-48ae-9034-66b0a6f8daee" MIMETYPE="application/xml" SIZE="0" CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/18950101_0003.xml" />
+            </file>
+        </fileGrp>
+    </fileSec>
+
+    <!-- structural map for the structure of the SIP itself -->
+    <structMap ID="uuid-cf28d5ff-16d1-4af9-ae2a-67b3db8e75f0" TYPE="PHYSICAL" LABEL="CSIP">
+        <div ID="uuid-79d61ee7-dafb-4011-a9f2-c0d7d6b766b5" LABEL="representation_2">
+            <div ID="uuid-132f7d2f-0708-4962-a960-511f480045ce" LABEL="Metadata" ADMID="uuid-281dbc55-8250-4e54-a490-6cdf30880589" />
+            <!-- added divs with order attributes for page order -->
+            <div ID="uuid-12aff14b-07b4-4ca5-b053-572f6d187e58" LABEL="Representations">
+                <div ID="uuid-8617a575-a76d-4d21-9fb9-7a3a0532d3f1" TYPE="page" ORDER="1">
+                    <fptr FILEID="uuid-fd5fec40-a696-40d4-be7b-e0a01a2bf0e3" />
+                </div>
+                <div ID="uuid-cc1db76a-3da4-474d-b41c-fbc0af5df676" TYPE="page" ORDER="2">
+                    <fptr FILEID="uuid-d63b064f-7fed-4981-983c-6c99c03fd4e5" />
+                </div>
+                <div ID="uuid-ac284aeb-3bab-4ced-b5a3-426f2e5088c0" TYPE="page" ORDER="3">
+                    <fptr FILEID="uuid-cfd8a279-177c-48ae-9034-66b0a6f8daee" />
+                </div>
+            </div>
+        </div>
+    </structMap>
+
+</mets> 

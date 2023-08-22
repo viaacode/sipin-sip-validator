@@ -1,0 +1,124 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <https://schema.org/> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix mods: <http://www.loc.gov/mods/rdf/v1#> .
+@prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix edm: <http://www.europeana.eu/schemas/edm/> .
+@prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
+@prefix haSipId: <https://data.hetarchief.be/id/sip/1.1/> . 
+
+
+haSipId:uuid-e6a138e5-a0fc-41d3-a912-9491a3502f57 a bf:Work ;
+    rdfs:label "Le Chat Blanc" ;
+    bf:identifiedBy [
+        a bf:Identifier ;
+        rdf:value "uuid-e6a138e5-a0fc-41d3-a912-9491a3502f57" ;
+    ] ;
+    rdf:type haObj:NewspaperEdition ;
+    bf:summary [
+        a bf:Summary ;
+        rdf:value "Le Chat Blanc abstract etc. etc." ;
+    ] ;
+    bf:genreForm [
+        a bf:GenreForm ;
+        rdf:value "newspaper" ;
+        bf:source [
+            a bf:Source ;
+            bf:code <https://www.loc.gov/standards/valuelist/marcgt.html> ;
+        ],
+        [
+            a bf:Source ;
+            bf:code "marcgt" ;
+        ] ;
+    ],
+    [
+        a bf:GenreForm ;
+        rdf:value "amateur newspapers" ;
+        bf:source [
+            a bf:Source ;
+            bf:code <https://www.lib.washington.edu/gmm/collections/mcnews/ngl> ;
+        ],
+        [
+            a bf:Source ;
+            bf:code "ngl" ;
+        ] ;
+    ] ;
+    bf:subject [
+        a bf:Topic ;
+        rdf:value "chat blanc" ;
+    ],
+    [
+        a bf:Topic ;
+        rdf:value "cats" ;
+    ] ;
+    bf:contribution [
+        bf:agent [
+            a bf:Person ;
+            rdfs:label "Jules Verne" ;
+            schema:givenName "Jules" ;
+            schema:familyName "Verne" ;
+        ] ;
+        bf:role [
+            a bf:Role ;
+            rdfs:label "author" ;
+        ] ;
+    ] ;
+    bf:originDate "2022-08-02"^^edtf:EDTF-level1 ;
+    bf:provisionActivity [
+        a bf:Publication ;
+        bf:place [
+            a bf:Place ;
+            rdfs:label "Ghent, Belgium" ;
+        ] ;
+        bf:date "2022-08-02"^^edtf:EDTF-level1 ;
+    ] ;
+    bf:issuance "serial" ;
+    bf:extent [
+        a bf:Extent ;
+        rdf:value "3" ;
+        bf:unit [
+            a bf:Unit ;
+            rdf:value "pages" ;
+        ] ;
+    ],
+    [
+        a bf:Extent ;
+        rdf:value "59.7 x 74.9" ;
+        bf:unit [
+            a bf:Unit ;
+            rdf:value "cm" ;
+        ] ;
+    ] ;
+    bf:carrier [
+        a bf:Carrier ;
+        rdf:value "print" ;
+        bf:source [
+            a bf:Source ;
+            bf:code <https://www.loc.gov/standards/valuelist/marcform.html> ;
+        ],
+        [
+            a bf:Source ;
+            bf:code "marcform" ;
+        ] ;
+    ] ;
+    bf:hasSeries [
+        a schema:Collection ;
+        bf:identifier [
+            a haObj:AbrahamId ;
+            rdf:value "c:bnc:99999" ;
+        ],
+        [
+            a haObj:AbrahamURI ;
+            rdf:value "https://anet.be/record/opacbnc/c:bnc:99999/N" ;
+        ] ;
+    ] ;
+    bf:credits "VIAA-PUBLIEK-METADATA-LTD" .

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns="https://data.hetarchief.be/id/sip/1.0/basic" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <dcterms:title xml:lang="nl">Le Chat Blanc: 02/08/2022</dcterms:title>
+
+  <dcterms:description xml:lang="nl">Journal Indépendant: Le Chat Blanc: 02/08/2022</dcterms:description>
+
+  <!-- linking id between dc and premis -->
+  <!-- matches the identifier of the premis:object defined in the preservation/premis.xml -->
+  <dcterms:identifier>uuid-e6a138e5-a0fc-41d3-a912-9491a3502f57</dcterms:identifier>
+
+  <dcterms:created xsi:type="edtf:EDTF-level2">XXXX</dcterms:created>
+  <dcterms:issued xsi:type="edtf:EDTF-level0">2022-08-02</dcterms:issued> 
+
+  <dcterms:license>VIAA-PUBLIEK-METADATA-LTD</dcterms:license>
+
+  <dcterms:subject xml:lang="nl">chat blanc</dcterms:subject>
+  <dcterms:subject xml:lang="nl">cats</dcterms:subject>
+
+</metadata> 

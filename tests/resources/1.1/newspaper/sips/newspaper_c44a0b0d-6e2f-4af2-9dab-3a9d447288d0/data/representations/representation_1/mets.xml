@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS"
+    xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink"
+    OBJID="representation_1" TYPE="Textual works - Print"
+    PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" xsi:schemaLocation="https://www.w3.org./1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd  http://www.loc.gov/METS/ https://www.loc.gov/standards/mets/mets.xsd https://dilcis.eu/XML/METS/CSIPExtensionMETS https://earkcsip.dilcis.eu/schema/DILCISExtensionMETS.xsd https://dilcis.eu/XML/METS/SIPExtensionMETS https://earksip.dilcis.eu/schema/DILCISExtensionSIPMETS.xsd">
+
+    <metsHdr CREATEDATE="2022-02-16T10:02:37.009+02:00" />
+
+    <amdSec>
+        <digiprovMD ID="uuid-572c2067-c1de-4206-b33c-7eae7301a36d">
+            <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:type="simple"
+                xlink:href="./metadata/preservation/premis.xml" MIMETYPE="text/xml" SIZE="13544"
+                CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="69149829d5077d282f1afc3d0af67ec3"
+                CHECKSUMTYPE="MD5" />
+        </digiprovMD>
+    </amdSec>
+
+    <fileSec ID="uuid-48ce5e4c-8e09-48d8-bfbf-f1091c5c8e50">
+        <fileGrp USE="data" ID="uuid-28486d80-7110-4132-b4ad-cc5a93d0f277">
+            <!-- dummy txt file filling in for tiff file -->
+            <file ID="uuid-9850cb03-b1fd-4661-a4fb-e3dfcf25e9e5" MIMETYPE="image/tiff" SIZE="0"
+                CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/18950101_0001.tiff" />
+            </file>
+            <!-- dummy txt file filling in for tiff file -->
+            <file ID="uuid-3309e853-bf0f-4d19-ae6a-5e14911e3662" MIMETYPE="image/tiff" SIZE="0"
+                CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/18950101_0002.tiff" />
+            </file>
+            <!-- dummy txt file filling in for tiff file -->
+            <file ID="uuid-4ef96979-4abf-4af0-8156-d04fdd2ff7c3" MIMETYPE="image/tiff" SIZE="0"
+                CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/18950101_0003.tiff" />
+            </file>
+        </fileGrp>
+    </fileSec>
+
+    <!-- structural map for the structure of the SIP itself -->
+    <structMap ID="uuid-04647bb4-f524-435b-b4bf-5fe7a926b9d4" TYPE="PHYSICAL" LABEL="CSIP">
+        <div ID="uuid-74e4335c-1d24-42bc-bbd0-864bd216d99c" LABEL="representation_1">
+            <div ID="uuid-60d4a0db-769c-42a9-8ef8-c395bb555803" LABEL="Metadata"
+                ADMID="uuid-572c2067-c1de-4206-b33c-7eae7301a36d" />
+            <!-- added divs with order attributes for page order -->
+            <div ID="uuid-41bacec1-1d6c-467a-8020-7114115562a8" LABEL="Representations">
+                <div ID="uuid-47e52361-8508-4ae1-ad8c-0e1f5382065e" TYPE="page" ORDER="1">
+                    <fptr FILEID="uuid-9850cb03-b1fd-4661-a4fb-e3dfcf25e9e5" />
+                </div>
+                <div ID="uuid-47e52361-8508-4ae1-ad8c-0e1f5382065e" TYPE="page" ORDER="2">
+                    <fptr FILEID="uuid-3309e853-bf0f-4d19-ae6a-5e14911e3662" />
+                </div>
+                <div ID="uuid-eebd6f2a-f06e-4c5f-9c52-fd58e784eaff" TYPE="page" ORDER="3">
+                    <fptr FILEID="uuid-4ef96979-4abf-4af0-8156-d04fdd2ff7c3" />
+                </div>
+            </div>
+        </div>
+    </structMap>
+</mets> 
