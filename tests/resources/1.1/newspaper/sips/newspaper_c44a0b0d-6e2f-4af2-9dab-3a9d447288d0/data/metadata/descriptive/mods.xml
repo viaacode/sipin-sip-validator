@@ -41,10 +41,6 @@
     <mods:extent unit="pages">3</mods:extent>
     <mods:extent unit="cm">59.7 x 74.9</mods:extent>
   </mods:physicalDescription>
-  <mods:relatedItem type="series">
-    <mods:identifier type="abraham_id" typeURI="https://anet.be">c:bnc:99999</mods:identifier>
-    <mods:identifier type="abraham_uri" typeURI="https://anet.be">https://anet.be/record/opacbnc/c:bnc:99999/N</mods:identifier>
-  </mods:relatedItem>
   <mods:note type="license">VIAA-PUBLIEK-METADATA-LTD</mods:note>
 
 </mods:mods> 
