@@ -37,7 +37,7 @@
         a sh:PropertyShape ;
         sh:path bf:identifiedBy ;
         sh:nodeKind sh:IRI ;
-        sh:node <#ObjectIdentifierShape> ;
+        sh:node <#IdentifierShape> ;
         sh:name "Identifier"@en ;
         sh:description "MODS identifier element"@en ;
         sh:minCount 1 ;
@@ -409,8 +409,8 @@
     ] .
 
 #mods:mods/mods:identifier[not(@*)]
-<#ObjectIdentifierShape> a sh:NodeShape ;
-  sh:targetClass haObj:LocalIdentifier ;
+<#IdentifierShape> a sh:NodeShape ;
+  sh:targetClass bf:Identifier ;
   sh:property 
   [
     a sh:PropertyShape ;
