@@ -22,6 +22,7 @@
 <#WorkShape> a sh:NodeShape ;
     sh:targetClass bf:Work ;
     sh:property
+    # mods:mods/mods:titleInfo[not(@*)]/mods:title
     [
         a sh:PropertyShape ;
         sh:path rdfs:label ;
@@ -31,13 +32,11 @@
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
-    #LocalIDS?
+    # mods:mods/mods:identifier[not(@*)]
     [
         a sh:PropertyShape ;
         sh:path bf:identifiedBy ;
         sh:nodeKind sh:IRI ;
-        # sh:class haObj:LocalIdentifier ;
-        # sh:datatype xsd:string ;
         sh:node <#ObjectIdentifierShape> ;
         sh:name "Identifier"@en ;
         sh:description "MODS identifier element"@en ;
@@ -45,6 +44,7 @@
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
     ],
+    # mods:mods/mods:typeOfResource
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
@@ -54,6 +54,7 @@
         sh:description "MODS type of resource element"@en ;
         sh:minCount 1 ;
     ],
+    # mods:mods/mods:abstract
     [
         a sh:PropertyShape ;
         sh:path bf:summary ;
@@ -62,7 +63,7 @@
         sh:name "Mods abstract"@en ;
         sh:description "MODS abstract element"@en ;
     ],
-    # mods:genre
+    # mods:mods/mods:genre
     [
         a sh:PropertyShape ;
         sh:path bf:genreForm ;
@@ -71,6 +72,7 @@
         sh:name "Genre form"@en ;
         sh:description "MODS genre element"@en ;
     ],
+    # mods:mods/mods:subject/mods:topic
     [
         a sh:PropertyShape ;
         sh:path bf:subject ;
@@ -80,6 +82,7 @@
         sh:description "A term or phrase representing the primary topic(s) on which the newspaper is focused."@en ;
         sh:uniqueLang true ;
     ],
+    # mods:mods/mods:name[@type="personal"]
     [
         a sh:PropertyShape ; 
         sh:path bf:contribution ;
@@ -88,6 +91,7 @@
         sh:name "Mods name"@en ;
         sh:description "The name of a person who contributed to the newspaper."@en ;
     ],
+    # mods:mods/mods:originInfo/mods:dateCreated[@encoding="edtf"]
     [
         a sh:PropertyShape ;
         sh:path bf:originDate ;
@@ -98,24 +102,18 @@
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
+    # mods:mods/mods:originInfo
     [
         a sh:PropertyShape ;
         sh:path bf:provisionActivity ;
         sh:nodeKind sh:IRI ;
         sh:node <#PublicationShape> ;
-        sh:name "Date issued"@en ;
-        sh:description "The date of issue of the newspaper."@en ;
+        sh:name "Mods origin Info"@en ;
+        sh:description "Mods origin Info"@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
-    [
-        a sh:PropertyShape ;
-        sh:path bf:credits ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Credits"@en ;
-        sh:description "The credits of the newspaper."@en ;
-    ],
+    # mods:mods/mods:originInfo/mods:issuance
     [
         a sh:PropertyShape ;
         sh:path bf:issuance ;
@@ -123,8 +121,124 @@
         sh:datatype xsd:string ;
         sh:name "Issuance"@en ;
         sh:description "The issuance of the newspaper."@en ;
+    ], 
+    # mods:mods/mods:physicalDescription
+    # mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]
+    # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:extent ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#ExtentShape> ;
+        sh:name "Extent"@en ;
+        sh:description "MODS extent element"@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:form
+    [
+        a sh:PropertyShape ;
+        sh:path bf:carrier ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#CarrierShape> ;
+        sh:name "Carrier"@en ;
+        sh:description "MODS form element"@en ;
+    ],    
+    # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]
+    # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:hasSeries ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#AbrahamShape> ;
+        sh:name "Series"@en ;
+        sh:description "Abraham ID or Abraham URI."@en ;
+    ],
+    # mods:mods/mods:note[@type="license"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:credits ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Credits"@en ;
+        sh:description "The credits of the newspaper."@en ;
     ] .
 
+# mods:mods/mods:physicalDescription/mods:form
+<#CarrierShape> a sh:NodeShape ;
+    sh:targetClass bf:Carrier ;
+    sh:property
+    # mods:mods/mods:physicalDescription/mods:form
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Label"@en ;
+        sh:description "The label of the carrier."@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:form[@authority]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#SourceShape> ;
+        sh:name "Source"@en ;
+        sh:description "The source of the carrier."@en ;
+    ] .
+    
+<#SourceShape> a sh:NodeShape ;
+    sh:targetClass bf:Source ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:code ;
+        sh:or (
+            # mods:mods/mods:physicalDescription/mods:form[@authority]
+            [
+                sh:nodeKind sh:Literal ;
+                sh:datatype xsd:string
+            ]
+            # mods:mods/mods:physicalDescription/mods:form[@authorityURI]
+            [ sh:nodeKind sh:IRI ]
+        ) ;
+        sh:name "MODS authority attribute"@en ;
+        sh:description "The MODS authority attribute."@en ;
+    ] .
+
+# mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]
+# mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
+<#ExtentShape> a sh:NodeShape ;
+    sh:targetClass bf:Extent ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Extent"@en ;
+        sh:description "The extent of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:unit ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#UnitShape> ;
+        sh:name "Unit"@en ;
+        sh:description "The unit of the extent of the newspaper."@en ;
+    ] .
+<#UnitShape> a sh:NodeShape ;
+    sh:targetClass bf:Unit ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:in ( "pages" "cm" ) ;
+        sh:name "Unit"@en ;
+        sh:description "The unit of the extent of the newspaper."@en ;
+    ] .
+
+# mods:mods/mods:genre
 <#GenreFormShape> a sh:NodeShape ;
     sh:targetClass bf:GenreForm ;
     sh:property
@@ -137,34 +251,33 @@
         sh:hasValue "newspaper"@en ;
         sh:description "The genre form of the newspaper."@en ;
     ] .
-    
-<#AbrahamURIShape> a sh:NodeShape ;
-    sh:targetClass haObj:AbrahamURI ;
+
+# mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]
+# mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
+<#AbrahamShape> a sh:NodeShape ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdf:type ;
         sh:nodeKind sh:IRI ;
-        # sh:datatype xsd:string ;
-        sh:name "Abraham URI"@en ;
-        sh:description "The Abraham URI of the newspaper."@en ;
-    ] .
-
-<#AbrahamIdShape> a sh:NodeShape ;
-    sh:targetClass haObj:AbrahamId ;
-    sh:property
+        sh:in (haObj:AbrahamURI haObj:AbrahamId) ;
+        sh:name "Type"@en ;
+        sh:description "The type of Abraham ID or Abraham URI."@en ;
+    ],
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Abraham ID"@en ;
-        sh:description "The Abraham ID of the newspaper."@en ;
+        sh:path bf:identifier ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#LocalIdentifierShape> ;
+        sh:name "Identifier"@en ;
+        sh:description "The identifier of the Abraham ID or Abraham URI."@en ;
     ] .
 
+# mods:mods/mods:originInfo
 <#PublicationShape> a sh:NodeShape ;
     sh:targetClass bf:Publication ;
     sh:property
+    # mods:mods/mods:originInfo/mods:place
     [
         a sh:PropertyShape ;
         sh:path bf:place ;
@@ -173,6 +286,7 @@
         sh:name "Place of publication"@en ;
         sh:description "The place of publication of the newspaper."@en ;
     ],
+    # mods:mods/mods:originInfo/mods:dateIssued[@encoding="edtf"]
     [
         a sh:PropertyShape ;
         sh:path bf:date ; 
@@ -183,6 +297,8 @@
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
+
+# mods:mods/mods:name[@type="personal"]
 <#ContributionShape> a sh:NodeShape ;
     sh:targetClass bf:Contribution ;
     sh:property
@@ -194,6 +310,7 @@
         sh:name "Mods name"@en ;
         sh:description "The name of a person who contributed to the newspaper."@en ;
     ],
+    # mods:mods/mods:name[@type="personal"]/role
     [
         a sh:PropertyShape ;
         sh:path bf:role ;
@@ -206,6 +323,7 @@
 <#RoleShape> a sh:NodeShape ; 
     sh:targetClass bf:Role ;
     sh:property
+    # mods:mods/mods:name[@type="personal"]/role/roleTerm[@type="text"]
     [
         a sh:PropertyShape ;
         sh:path rdfs:label ;
@@ -216,9 +334,11 @@
         sh:maxCount 1 ;
     ] .
 
+# mods:mods/mods:name[@type="personal"]
 <#AgentShape> a sh:NodeShape ;
     sh:targetClass bf:Agent ;
     sh:property
+    # mods:mods/mods:name[@type="personal"]/namePart[@type="given"]
     [
         a sh:PropertyShape ;
         sh:path schema:givenName ;
@@ -229,6 +349,7 @@
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ],
+    # mods:mods/mods:name[@type="personal"]/namePart[@type="family"]
     [
         a sh:PropertyShape ;
         sh:path schema:familyName ;
@@ -240,6 +361,7 @@
         sh:maxCount 1 ;
     ] .
 
+#mods:mods/mods:subject/mods:topic
 <#TopicShape> a sh:NodeShape ;
     sh:targetClass bf:Topic ;
     sh:property
@@ -253,6 +375,7 @@
         sh:uniqueLang true ;
     ] .
 
+#mods:mods/mods:abstract
 <#SummaryShape> a sh:NodeShape ;
     sh:targetClass bf:Summary ;
     sh:property
@@ -266,21 +389,7 @@
         sh:uniqueLang true ;
     ] .
 
-
-<#TitleShape> a sh:NodeShape ;
-    sh:targetClass bf:Title ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path bf:mainTitle ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Main title"@en ;
-        sh:description "The main title of the newspaper."@en ;
-        sh:minCount 1 ;
-        sh:uniqueLang true ;
-    ] .
-
+#mods:mods/mods:identifier[not(@*)]
 <#ObjectIdentifierShape> a sh:NodeShape ;
   sh:targetClass haObj:LocalIdentifier ;
   sh:property 
