@@ -250,11 +250,30 @@
         sh:name "Genre form "@en ;
         sh:hasValue "newspaper"@en ;
         sh:description "The genre form of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#SourceShape> ;
+        sh:name "Source"@en ;
+        sh:description "The source of the carrier."@en ;
     ] .
 
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
 <#AbrahamShape> a sh:NodeShape ;
+    sh:targetClass schema:Collection ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifier ;
+        sh:nodeKind sh:IRI ;
+        sh:node <#AbrahamIdShape> ;
+        sh:name "Identifier"@en ;
+        sh:description "The identifier of the Abraham ID or Abraham URI."@en ;
+    ] .
+<#AbrahamIdShape> a sh:NodeShape ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -266,11 +285,11 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path bf:identifier ;
-        sh:nodeKind sh:IRI ;
-        sh:node <#LocalIdentifierShape> ;
-        sh:name "Identifier"@en ;
-        sh:description "The identifier of the Abraham ID or Abraham URI."@en ;
+        sh:path rdf:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Abraham ID"@en ;
+        sh:description "The Abraham ID of the newspaper."@en ;
     ] .
 
 # mods:mods/mods:originInfo
