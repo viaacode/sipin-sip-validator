@@ -36,7 +36,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:identifiedBy ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#IdentifierShape> ;
         sh:name "Identifier"@en ;
         sh:description "MODS identifier element"@en ;
@@ -48,7 +48,7 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:hasValue haObj:NewspaperEdition ;
         sh:name "Type"@en ;
         sh:description "MODS type of resource element"@en ;
@@ -58,7 +58,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:summary ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#SummaryShape> ;
         sh:name "Mods abstract"@en ;
         sh:description "MODS abstract element"@en ;
@@ -67,7 +67,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:genreForm ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#GenreFormShape> ;
         sh:name "Genre form"@en ;
         sh:description "MODS genre element"@en ;
@@ -76,7 +76,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:subject ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#TopicShape> ;
         sh:name "Mods subject topic"@en ;
         sh:description "A term or phrase representing the primary topic(s) on which the newspaper is focused."@en ;
@@ -86,7 +86,7 @@
     [
         a sh:PropertyShape ; 
         sh:path bf:contribution ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#ContributionShape> ;
         sh:name "Mods name"@en ;
         sh:description "The name of a person who contributed to the newspaper."@en ;
@@ -106,7 +106,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:provisionActivity ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#PublicationShape> ;
         sh:name "Mods origin Info"@en ;
         sh:description "Mods origin Info"@en ;
@@ -128,7 +128,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:extent ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#ExtentShape> ;
         sh:name "Extent"@en ;
         sh:description "MODS extent element"@en ;
@@ -137,7 +137,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:carrier ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#CarrierShape> ;
         sh:name "Carrier"@en ;
         sh:description "MODS form element"@en ;
@@ -147,7 +147,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:hasSeries ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#AbrahamShape> ;
         sh:name "Series"@en ;
         sh:description "Abraham ID or Abraham URI."@en ;
@@ -179,7 +179,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:source ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#SourceShape> ;
         sh:name "Source"@en ;
         sh:description "The source of the carrier."@en ;
@@ -220,7 +220,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:unit ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#UnitShape> ;
         sh:name "Unit"@en ;
         sh:description "The unit of the extent of the newspaper."@en ;
@@ -248,13 +248,12 @@
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Genre form "@en ;
-        sh:hasValue "newspaper"@en ;
         sh:description "The genre form of the newspaper."@en ;
     ],
     [
         a sh:PropertyShape ;
         sh:path bf:source ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#SourceShape> ;
         sh:name "Source"@en ;
         sh:description "The source of the carrier."@en ;
@@ -268,7 +267,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:identifier ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#AbrahamIdShape> ;
         sh:name "Identifier"@en ;
         sh:description "The identifier of the Abraham ID or Abraham URI."@en ;
@@ -278,7 +277,7 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:in (haObj:AbrahamURI haObj:AbrahamId) ;
         sh:name "Type"@en ;
         sh:description "The type of Abraham ID or Abraham URI."@en ;
@@ -300,7 +299,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:place ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#PlaceShape> ;
         sh:name "Place of publication"@en ;
         sh:description "The place of publication of the newspaper."@en ;
@@ -324,7 +323,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:agent ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#AgentShape> ;
         sh:name "Mods name"@en ;
         sh:description "The name of a person who contributed to the newspaper."@en ;
@@ -333,7 +332,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:role ;
-        sh:nodeKind sh:IRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#RoleShape> ;
         sh:name "Mods role"@en ;
         sh:description "The role of a person who contributed to the newspaper."@en ;
