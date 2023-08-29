@@ -14,6 +14,8 @@ PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
 PREFIX schema: <https://schema.org/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prov: <http://www.w3.org/ns/prov#> 
+
 
 
 CONSTRUCT {
@@ -30,9 +32,20 @@ CONSTRUCT {
     ?rep a premisowl:Representation;
         relSubType:rep ?ie .
 
+    ?evt a premisowl:event, ?ev_type_iri ;
+        prov:startedAtTime ?ev_dateTime ;
+        prov:endedAtTime ?ev_dateTime ;
+        premisowl:note ?ev_detail ;
+        prov:used ?additionalProperty_iri .
+    
+    ?additionalProperty_iri a prov:Entity ;
+        rdf:value ?additionalProperty_value_simple ;
+        ?additionalProperty_prop_complex ?additionalProperty_value_complex .
+    
+
 }
 WHERE {
-    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/preservation/premis.xml> {
+    SERVICE <x-sparql-anything:location=/home/lennert/sipin-sip-validator/tests/resources/1.1/artwork/sips/3D_3d4bd7ca-38c6-11ed-95f2-7e92631d7d28/data/metadata/preservation/premis.xml> {
         {
             {
                 SELECT DISTINCT ?local_id_type ?local_id_val
@@ -56,33 +69,98 @@ WHERE {
             BIND(iri(concat(str(haObjId:), ?local_id_type)) AS ?local_id_type_uri)
             BIND(iri(concat(str(haObjId:), concat(?local_id_type, ENCODE_FOR_URI(?local_id_val)))) AS ?local_id)
         }
-
-        [] a premis:object;
-            xsi:type "premis:intellectualEntity";
-            ?ie_1 [
-                a premis:objectIdentifier;
+        {
+            [] a premis:object;
+                xsi:type "premis:intellectualEntity";
+                ?ie_1 [
+                    a premis:objectIdentifier;
                     ?ie_2 [
                             a premis:objectIdentifierType;
                                 rdf:_1 ?ie_type
-                        ];
-                        ?ie_3 [
-                            a premis:objectIdentifierValue;
-                                rdf:_1 ?id
-                        ]
                     ];
-            ?ie_4 [
-                a premis:relationship;
-                ?ie_5 [
-                    a premis:relatedObjectIdentifier;
-                    ?ie_6 [
-                        a premis:relatedObjectIdentifierValue;
-                        rdf:_1 ?ie_rel_rep_id
+                    ?ie_3 [
+                        a premis:objectIdentifierValue;
+                            rdf:_1 ?id
+                    ]
+                ];
+                ?ie_4 [
+                    a premis:relationship;
+                    ?ie_5 [
+                        a premis:relatedObjectIdentifier;
+                        ?ie_6 [
+                            a premis:relatedObjectIdentifierValue;
+                            rdf:_1 ?ie_rel_rep_id
+                        ]
                     ]
                 ]
-            ]
             FILTER (?ie_type = "UUID")
-            BIND(iri(concat(str(haObjId:), ?id)) AS ?ie
-        )
-        BIND(iri(concat(str(haObjId:), ?ie_rel_rep_id)) AS  ?rep)
+            BIND(iri(concat(str(haObjId:), ?id)) AS ?ie)
+            BIND(iri(concat(str(haObjId:), ?ie_rel_rep_id)) AS  ?rep)
+        }
+        {
+            OPTIONAL {
+                ?_ev a premis:event ;
+                    ?ev_1 [
+                        a premis:eventIdentifier;
+                        ?ev_2 [
+                            a premis:eventIdentifierType;
+                            rdf:_1 ?ev_id_type
+                        ];
+                        ?ev_3 [
+                            a premis:eventIdentifierValue;
+                            rdf:_1 ?ev_id
+                        ]
+                    ];
+                    ?ev_4 [
+                        a premis:eventType ;
+                        rdf:_1 ?ev_type
+                    ];
+                    ?ev_5 [
+                        a premis:eventDateTime ;
+                        rdf:_1 ?ev_dateTime
+                    ] .
+            }
+             OPTIONAL {
+                    ?_ev ?ev_6 ?ev_det_info .
+                    ?ev_det_info a premis:eventDetailInformation ;
+                        ?ev_7 [
+                            a premis:eventDetail ;
+                            rdf:_1 ?ev_detail
+                        ] .
+                    OPTIONAL {
+                        ?ev_det_info ?ev_8 [
+                                a premis:eventDetailExtension ;
+                                ?ev_9 ?ev_addProp
+                            ] .
+                        ?ev_addProp a schema:additionalProperty ;
+                            ?ev_10 [
+                                a schema:name ;
+                                rdf:_1 ?additionalProperty_type
+                            ] .
+                        OPTIONAL {
+                            ?ev_addProp ?ev_11 [
+                                a schema:value ;
+                                rdf:_1 ?additionalProperty_value_simple
+                            ]
+                        }
+                        OPTIONAL {
+                            ?ev_addProp ?ev_12 [
+                                a schema:valueReference ;
+                                ?ev_13 [
+                                    a ?additionalProperty_prop_complex ;
+                                    rdf:_1 ?additionalProperty_value_complex
+                                ];
+                            ]
+                        }
+                    }
+                    
+                    
+
+                }
+            BIND(iri(concat(str(haObjId:), ?ev_id)) AS ?evt)
+            BIND(iri(concat(str(haObj:), ?ev_type)) AS ?ev_type_iri)
+            BIND(iri(concat(str(haObjId:), ?ev_id, "-", ?additionalProperty_type)) AS ?additionalProperty_iri)
+
+        }
     }
 }

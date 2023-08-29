@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<premis:premis version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schema="http://schema.org/" xmlns:premis="http://www.loc.gov/premis/v3" xsi:schemaLocation="http://www.loc.gov/premis/v3 https://www.loc.gov/standards/premis/premis.xsd">
+<premis:premis version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schema="https://schema.org/" xmlns:premis="http://www.loc.gov/premis/v3" xsi:schemaLocation="http://www.loc.gov/premis/v3 https://www.loc.gov/standards/premis/premis.xsd">
 
     <!-- IE about the artwork -->
     <premis:object xsi:type="premis:intellectualEntity">
@@ -53,7 +53,7 @@
     <premis:event>
         <premis:eventIdentifier>
             <premis:eventIdentifierType>UUID</premis:eventIdentifierType>
-            <premis:eventIdentifierValue>uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27</premis:eventIdentifierValue>
+            <premis:eventIdentifierValue>uuid-fbe3de22-f2af-4bb4-806e-a50ff2e70ecf</premis:eventIdentifierValue>
         </premis:eventIdentifier>
         <premis:eventType>digitization</premis:eventType>
         <premis:eventDateTime>2022-08-29T00:00:00Z</premis:eventDateTime>
@@ -63,11 +63,11 @@
             <premis:eventDetailExtension>
                 <schema:additionalProperty>
                    <schema:name>light-metering</schema:name>
-                   <schema:value></schema:value>
+                   <schema:value>2000lux</schema:value>
                 </schema:additionalProperty>
                 <schema:additionalProperty>
                    <schema:name>scan-setup</schema:name>
-                   <schema:value></schema:value>
+                   <schema:value>scanner on desk</schema:value>
                 </schema:additionalProperty>
                 <schema:additionalProperty>
                    <schema:name>height-calibration-object</schema:name>
@@ -122,6 +122,18 @@
         </premis:linkingObjectIdentifier>
     </premis:event>
 
+    <premis:event>
+        <premis:eventIdentifier>
+            <premis:eventIdentifierType>UUID</premis:eventIdentifierType>
+            <premis:eventIdentifierValue>uuid-640692b1-0ce4-41d9-a071-7a2b07435277</premis:eventIdentifierValue>
+        </premis:eventIdentifier>
+        <premis:eventType>QUALITY_CONTROL</premis:eventType>
+        <premis:eventDateTime>2022-08-20T00:00:00Z</premis:eventDateTime>
+        <premis:eventDetailInformation>
+            <premis:eventDetail>qc note</premis:eventDetail>
+        </premis:eventDetailInformation>
+    </premis:event>
+    
     <premis:agent>
         <premis:agentIdentifier>
             <premis:agentIdentifierType>MEEMOO-OR-ID</premis:agentIdentifierType>
