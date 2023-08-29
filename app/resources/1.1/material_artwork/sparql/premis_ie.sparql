@@ -38,7 +38,7 @@ CONSTRUCT {
         premisowl:note ?ev_detail ;
         prov:used ?additionalProperty_iri .
     
-    ?additionalProperty_iri a prov:Entity ;
+    ?additionalProperty_iri a prov:Entity, ?additionalProperty_type_iri ;
         rdf:value ?additionalProperty_value_simple ;
         ?additionalProperty_prop_complex ?additionalProperty_value_complex .
     
@@ -160,6 +160,7 @@ WHERE {
             BIND(iri(concat(str(haObjId:), ?ev_id)) AS ?evt)
             BIND(iri(concat(str(haObj:), ?ev_type)) AS ?ev_type_iri)
             BIND(iri(concat(str(haObjId:), ?ev_id, "-", ?additionalProperty_type)) AS ?additionalProperty_iri)
+            BIND(iri(concat(str(haObj:), ?additionalProperty_type)) AS ?additionalProperty_type_iri)
 
         }
     }
