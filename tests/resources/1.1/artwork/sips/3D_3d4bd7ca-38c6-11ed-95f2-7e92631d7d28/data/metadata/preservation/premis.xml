@@ -57,9 +57,27 @@
         </premis:eventIdentifier>
         <premis:eventType>digitization</premis:eventType>
         <premis:eventDateTime>2022-08-29T00:00:00Z</premis:eventDateTime>
-
+        
         <premis:eventDetailInformation>
             <premis:eventDetail>GIVE</premis:eventDetail>
+            <premis:eventDetailExtension>
+                <schema:additionalProperty>
+                   <schema:name>light-metering</schema:name>
+                   <schema:value></schema:value>
+                </schema:additionalProperty>
+                <schema:additionalProperty>
+                   <schema:name>scan-setup</schema:name>
+                   <schema:value></schema:value>
+                </schema:additionalProperty>
+                <schema:additionalProperty>
+                   <schema:name>height-calibration-object</schema:name>
+                   <schema:valueReference>
+                     <schema:value>30</schema:value>
+                     <schema:unitText>mm</schema:unitText>
+                     <schema:unitCode>MMT</schema:unitCode>
+                    </schema:valueReference>
+                </schema:additionalProperty>
+              </premis:eventDetailExtension>
         </premis:eventDetailInformation>
 
         <premis:eventOutcomeInformation>
@@ -70,6 +88,16 @@
             <premis:linkingAgentIdentifierType>MEEMOO-OR-ID</premis:linkingAgentIdentifierType>
             <premis:linkingAgentIdentifierValue>OR-x05xc4w</premis:linkingAgentIdentifierValue>
             <premis:linkingAgentRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/imp">implementer</premis:linkingAgentRole>
+        </premis:linkingAgentIdentifier>
+        <premis:linkingAgentIdentifier>
+            <premis:linkingAgentIdentifierType>UUID</premis:linkingAgentIdentifierType>
+            <premis:linkingAgentIdentifierValue>uuid-1cc1fe7a-da78-4c53-847a-0fd141ce2d3b</premis:linkingAgentIdentifierValue>
+            <premis:linkingAgentRole valueURI="https://schema.org/instrument">instrument</premis:linkingAgentRole>
+        </premis:linkingAgentIdentifier>
+        <premis:linkingAgentIdentifier>
+            <premis:linkingAgentIdentifierType>UUID</premis:linkingAgentIdentifierType>
+            <premis:linkingAgentIdentifierValue>uuid-d6c5f78f-e850-435f-b0b2-e9b6dbf7a2b1</premis:linkingAgentIdentifierValue>
+            <premis:linkingAgentRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/exe">executing program</premis:linkingAgentRole>
         </premis:linkingAgentIdentifier>
         
         <premis:linkingObjectIdentifier>
@@ -101,6 +129,28 @@
         </premis:agentIdentifier>
         <premis:agentName>De Logi &amp; Hoorne - Erfgo3D</premis:agentName>
         <premis:agentType>organization</premis:agentType>
+    </premis:agent>
+
+    <premis:agent>
+        <premis:agentIdentifier>
+            <premis:agentIdentifierType>UUID</premis:agentIdentifierType>
+            <premis:agentIdentifierValue>uuid-1cc1fe7a-da78-4c53-847a-0fd141ce2d3b</premis:agentIdentifierValue>
+        </premis:agentIdentifier>
+        <premis:agentName>scanner A</premis:agentName>
+        <premis:agentType>hardware</premis:agentType>
+        <premis:agentExtension>
+            <schema:model>???</schema:model>
+            <schema:additionalType>???</schema:additionalType>
+        </premis:agentExtension>
+    </premis:agent>
+
+    <premis:agent>
+        <premis:agentIdentifier>
+            <premis:agentIdentifierType>UUID</premis:agentIdentifierType>
+            <premis:agentIdentifierValue>uuid-d6c5f78f-e850-435f-b0b2-e9b6dbf7a2b1</premis:agentIdentifierValue>
+        </premis:agentIdentifier>
+        <premis:agentName>...</premis:agentName>
+        <premis:agentType>software</premis:agentType>
     </premis:agent>
 
 </premis:premis>
