@@ -55,6 +55,25 @@
     sh:name "depth"@en ;
     sh:description "The depth of the intellectual entity."@en ;
     sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:weigth ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    # sh:node <#QuantitativeValueShape> ;
+    sh:class schema:CreativeWorkSeries ;
+    sh:name "weigth"@en ;
+    sh:description "The weigth of the intellectual entity."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:isPartOf ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    # sh:node <#QuantitativeValueShape> ;
+    sh:class schema:QuantitativeValue ;
+    sh:name "is Part Of"@en ;
+    sh:description "The collection this intellectual entity is part of."@en ;
   ] ,
   [
     a sh:PropertyShape ;
@@ -73,7 +92,29 @@
     sh:description "The type of artform."@en;
     sh:message "The artform is not a langString or occurs more than once."@en ;
     sh:uniqueLang true
-  ].
+  ] .
+
+<#CreativeWorkSeriesShape> a sh:NodeShape ;
+  sh:targetClass schema:CreativeWorkSeries ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype rdf:langString ;
+    sh:description "The name of the series."@en ;
+    sh:message "The name is not a langString or occurs more than once."@en ;
+    sh:uniqueLang true
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:identifier ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The identifier of the series."@en ;
+    sh:message "The identifier is not a langString or occurs more than once."@en ;
+    sh:minCount 1 ;
+  ] .
 
 <#RepresentationShape> a sh:NodeShape ;
   sh:targetClass premis:Representation ;
