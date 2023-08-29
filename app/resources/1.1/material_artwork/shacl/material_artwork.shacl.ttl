@@ -61,7 +61,7 @@
     sh:path schema:weigth ;
     sh:nodeKind sh:BlankNodeOrIRI ;
     # sh:node <#QuantitativeValueShape> ;
-    sh:class schema:CreativeWorkSeries ;
+    sh:class schema:Collection ;
     sh:name "weigth"@en ;
     sh:description "The weigth of the intellectual entity."@en ;
     sh:maxCount 1 ;
@@ -94,8 +94,8 @@
     sh:uniqueLang true
   ] .
 
-<#CreativeWorkSeriesShape> a sh:NodeShape ;
-  sh:targetClass schema:CreativeWorkSeries ;
+<#CollectionShape> a sh:NodeShape ;
+  sh:targetClass schema:Collection ;
   sh:property
   [
     a sh:PropertyShape ;
