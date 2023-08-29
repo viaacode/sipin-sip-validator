@@ -29,6 +29,11 @@
   <dcterms:subject xml:lang="en">scan</dcterms:subject>
   <dcterms:subject xml:lang="en">sculpture</dcterms:subject>
 
+  <dcterms:isPartOf xsi:type="schema:Collection">
+    <dcterms:title>Van Herck Terracottabeelden</dcterms:title>
+    <dcterms:identifier>uuid-855bdf50-8c81-43a2-8218-b3245502abff</dcterms:identifier>
+  </dcterms:isPartOf>
+  
   <!-- rights note -->
   <dcterms:rights xml:lang="en">public domain</dcterms:rights>
 
