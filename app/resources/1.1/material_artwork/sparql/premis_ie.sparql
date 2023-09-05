@@ -142,11 +142,12 @@ WHERE {
                 OPTIONAL {
                     ?_ev ?ev_5 [
                         a premis:eventDateTime ;
-                        rdf:_1 ?ev_dateTime
+                        rdf:_1 ?_ev_dateTime
                     ] .
                 }
             }
             BIND(iri(concat(str(haObjId:), ?ev_id)) AS ?evt)
+            BIND(STRDT(?_ev_dateTime, xsd:dateTime) AS ?ev_dateTime)
             
             # BIND(iri(concat(str(haObj:), COALESCE(
             #     IF(?_ev_type = "QUALITY_CONTROL", "quality_control", 1/0),
