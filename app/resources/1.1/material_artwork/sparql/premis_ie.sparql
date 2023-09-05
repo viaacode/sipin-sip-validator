@@ -83,7 +83,7 @@ WHERE {
                 }
             }
             BIND(iri(concat(str(haObjId:), ?local_id_type)) AS ?local_id_type_uri)
-            BIND(iri(concat(str(haObjId:), concat(?local_id_type, ENCODE_FOR_URI(?local_id_val)))) AS ?local_id)
+            BIND(iri(concat(str(haObjId:), MD5(concat(?local_id_type, ?local_id_val)))) AS ?local_id)
         }
         {
             ?_ie a premis:object;
@@ -190,7 +190,7 @@ WHERE {
                     }
                 }
             }
-            BIND(iri(concat(str(haObjId:), ?ev_id, "-", ?additionalProperty_type)) AS ?additionalProperty_iri)
+            BIND(iri(concat(str(haObjId:), MD5(CONCAT(?ev_id, ?additionalProperty_type)))) AS ?additionalProperty_iri)
             BIND(iri(concat(str(haObj:), ?additionalProperty_type)) AS ?additionalProperty_type_iri)
             OPTIONAL {
                 ?_ev ?ev_14 ?_ev_linking_agent .
