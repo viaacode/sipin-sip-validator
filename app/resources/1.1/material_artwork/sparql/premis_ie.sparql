@@ -149,7 +149,6 @@ WHERE {
             #     ?_ev_type
             # ))) AS ?ev_type_iri)
             BIND(iri(concat(str(haObj:), lcase(?_ev_type))) AS ?ev_type_iri)
-            BIND(iri(concat(str(haObjId:), ?ev_id, "-", ?additionalProperty_type)) AS ?additionalProperty_iri)
             OPTIONAL {
                 ?_ev ?ev_6 ?ev_det_info .
                 ?ev_det_info a premis:eventDetailInformation .
@@ -186,6 +185,7 @@ WHERE {
                     }
                 }
             }
+            BIND(iri(concat(str(haObjId:), ?ev_id, "-", ?additionalProperty_type)) AS ?additionalProperty_iri)
             BIND(iri(concat(str(haObj:), ?additionalProperty_type)) AS ?additionalProperty_type_iri)
             OPTIONAL {
                 ?_ev ?ev_14 ?_ev_linking_agent .
