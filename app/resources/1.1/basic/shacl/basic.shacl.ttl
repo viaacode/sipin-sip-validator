@@ -12,6 +12,10 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
 @prefix haObjId: <https://data.hetarchief.be/id/object/> . 
+@prefix eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/> .
+@prefix eventRelAgRole: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 
 @base <https://data.hetarchief.be/ns/sip_basic/shapes> .
 
@@ -755,5 +759,154 @@
     sh:name "has object identifier value"@en ;
     sh:description "The value of the object identifier."@en ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#EventShape> a sh:NodeShape ;
+  sh:targetClass premis:Event ;
+  sh:property 
+  [
+    a sh:PropertyShape ;
+    sh:path prov:startedAtTime ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:name "has start time"@en ;
+    sh:description "The start time of the event."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:endedAtTime ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:name "has end time"@en ;
+    sh:description "The end time of the event."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:propertyShape ;
+    sh:path premis:note ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has note"@en ;
+    sh:description "A note about the event."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Warning ;
+  ],
+  [
+    a sh:propertyShape ;
+    sh:path premis:outcome ;
+    sh:nodeKind sh:IRI ;
+    sh:in (eventOutcome:suc eventOutcome:fai eventOutcome:war) ;
+    sh:name "has outcome"@en ;
+    sh:description "The outcome of the event."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:propertyShape ;
+    sh:path eventRelAgRole:exe ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:SoftwareAgent ;
+    sh:name "has executing agent"@en ;
+    sh:description "The agent that executed the event."@en ;
+  ],
+  [
+    a sh:propertyShape ;
+    sh:path eventRelAgRole:imp ;
+    sh:nodeKind sh:IRI ;
+    sh:class org:Organization ;
+    sh:name "has implementing agent"@en ;
+    sh:description "The organization that implemented the event."@en ;
+  ],
+  [
+    a sh:propertyShape ;
+    sh:path schema:instrument ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:HardwareAgent ;
+    sh:name "has instrument"@en ;
+    sh:description "The hardware agent that performed the event."@en ;
+  ] ;
+  sh:or (
+    [
+      a sh:propertyShape ;
+      sh:path eventRelAgRole:exe ;
+      sh:minCount 1 ;
+    ]
+    [
+      a sh:propertyShape ;
+      sh:path eventRelAgRole:imp ;
+      sh:minCount 1 ;
+    ]
+    [
+      a sh:propertyShape ;
+      sh:path schema:instrument ;
+      sh:minCount 1 ;
+    ]
+  ) .
+
+<#HardwareAgentShape> a sh:NodeShape ;
+  sh:targetClass premis:HardwareAgent ;
+  sh:property 
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has name"@en ;
+    sh:description "The name of the hardware agent."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:model ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has model"@en ;
+    sh:description "The model of the hardware agent."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:version ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has version"@en ;
+    sh:description "The version of the hardware agent."@en ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:additionalType ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has additionalType"@en ;
+    sh:description "Additional type of the hardware agent, e.g. scantype."@en ;
+    sh:maxCount 1 ;
+  ] .
+
+<#SoftwareAgentShape> a sh:NodeShape ;
+  sh:targetClass premis:SoftwareAgent ;
+  sh:property 
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has name"@en ;
+    sh:description "The name of the software agent."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:version ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has version"@en ;
+    sh:description "The version of the software agent."@en ;
     sh:maxCount 1 ;
   ] .
