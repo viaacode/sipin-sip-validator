@@ -15,8 +15,8 @@ PREFIX schema: <https://schema.org/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX prov: <http://www.w3.org/ns/prov#> 
-
-
+PREFIX eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/>
+PREFIX org: <http://www.w3.org/ns/org#> 
 
 CONSTRUCT {
     ?ie a premisowl:IntellectualEntity;
@@ -37,11 +37,16 @@ CONSTRUCT {
         prov:endedAtTime ?ev_dateTime ;
         premisowl:note ?ev_detail ;
         prov:used ?additionalProperty_iri ;
+        premisowl:outcome ?ev_outcome_iri ;
         ?ev_agent_role ?ev_linking_agent .
     
     ?additionalProperty_iri a prov:Entity, ?additionalProperty_type_iri ;
         rdf:value ?additionalProperty_value_simple ;
         ?additionalProperty_prop_complex ?additionalProperty_value_complex .
+    
+    ?agent_organization a org:Organization ;
+        schema:name ?agent_organization_name ;
+        ?p_agent_organization ?o_agent_organization .
 
     ?agent a premisowl:Agent ;
         schema:name ?agent_name .
@@ -207,6 +212,25 @@ WHERE {
             }
             BIND(iri(?_ev_agent_role) AS ?ev_agent_role)
             BIND(iri(concat(str(haObjId:), ?ev_agent_id)) AS ?ev_linking_agent)
+            OPTIONAL {
+                ?_ev ?ev_18 ?_ev_outcome_info .
+                ?_ev_outcome_info a premis:eventOutcomeInformation .
+                OPTIONAL {
+                    ?_ev_outcome_info ?ev_19 [
+                        a premis:eventOutcome ;
+                        rdf:_1 ?_ev_outcome
+                    ] .
+                }
+            }
+            BIND(
+                COALESCE(
+                    IF(?_ev_outcome = "success", "suc", 1/0),
+                    IF(?_ev_outcome = "fail", "fai", 1/0),
+                    IF(?_ev_outcome = "warning", "war", 1/0),
+                    ?_ev_outcome
+                ) AS ?ev_outcome
+            )
+            BIND(iri(concat(str(eventOutcome:), ?ev_outcome)) AS ?ev_outcome_iri)
         }
         {
             OPTIONAL {
@@ -238,6 +262,7 @@ WHERE {
                 }
                 FILTER (?agent_type != "hardware")
                 FILTER (?agent_type != "software")
+                FILTER (?agent_type != "organization")
             }
             BIND(iri(concat(str(haObjId:), ?agent_id)) AS ?agent)
             OPTIONAL {
@@ -303,6 +328,42 @@ WHERE {
                 }
             }
             BIND(iri(concat(str(haObjId:), ?_agent_software_id)) AS ?agent_software)
+            OPTIONAL {
+                ?_agent_organization a premis:agent ;
+                    ?_agent_organization_5 [
+                        a premis:agentType ;
+                        rdf:_1 "organization"
+                    ] .
+                OPTIONAL {
+                    ?_agent_organization ?_agent_organization_1 [
+                        a premis:agentIdentifier ;
+                        ?_agent_organization_2 [
+                            a premis:agentIdentifierType ;
+                            rdf:_1 ?_agent_organization_id_type
+                        ];
+                        ?_agent_organization_3 [
+                            a premis:agentIdentifierValue ;
+                            rdf:_1 ?_agent_organization_id
+                        ]
+                    ];
+                }
+                OPTIONAL {
+                    ?_agent_organization ?_agent_organization_4 [
+                        a premis:agentName ;
+                        rdf:_1 ?agent_organization_name
+                    ];
+                }
+                OPTIONAL {
+                    ?_agent_organization ?_agent_organization_6 [
+                        a premis:agentExtension ;
+                        ?_agent_organization_7 [
+                            a ?p_agent_organization ;
+                            rdf:_1 ?o_agent_organization
+                        ];
+                    ];
+                }
+            }
+            BIND(iri(concat(str(haObjId:), ?_agent_organization_id)) AS ?agent_organization)
         }
     }
 }
