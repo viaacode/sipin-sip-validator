@@ -15,7 +15,7 @@ CONSTRUCT
 {
     ?collection a schema:Collection ;
         schema:hasPart ?ie ;
-        ?collection_p ?collection_o .
+        dct:title ?collection_name .
 
     ?ie a premisowl:IntellectualEntity ;
         ?p ?o;
@@ -24,7 +24,7 @@ CONSTRUCT
         schema:width ?width ;
         schema:depth ?depth ;
         schema:weight ?weight ;
-        schema:isPartOf ?collection .
+        dct:isPartOf ?collection .
 
     ?height a schema:QuantitativeValue ;
         ?height_p ?height_b_value_dt .
@@ -194,6 +194,26 @@ WHERE
 
         # endregion
 
+        # region collection
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_7 [
+                a dct:isPartOf ;
+                ?coll_1 [
+                    a dct:title ;
+                    rdf:_1 ?collection_name ;
+                ] ;
+                ?coll_2 [
+                    a dct:identifier ;
+                    rdf:_1 ?collection_id ;
+                ] 
+            ] .
+        }
+        BIND(IRI(CONCAT(str(haObjId:), ?collection_id)) AS ?collection)
+
+        # endregion
+
         # region Rest of properties
         OPTIONAL {
             [] a fx:root;
@@ -226,6 +246,8 @@ WHERE
             FILTER (?p != schema:width)
             FILTER (?p != schema:depth)
             FILTER (?p != schema:weight)
+            FILTER (?p != dct:isPartOf)
+
         }
         # endregion
     }
