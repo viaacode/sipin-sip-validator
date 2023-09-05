@@ -36,11 +36,22 @@ CONSTRUCT {
         prov:startedAtTime ?ev_dateTime ;
         prov:endedAtTime ?ev_dateTime ;
         premisowl:note ?ev_detail ;
-        prov:used ?additionalProperty_iri .
+        prov:used ?additionalProperty_iri ;
+        ?ev_agent_role ?ev_linking_agent .
     
     ?additionalProperty_iri a prov:Entity, ?additionalProperty_type_iri ;
         rdf:value ?additionalProperty_value_simple ;
         ?additionalProperty_prop_complex ?additionalProperty_value_complex .
+
+    ?agent a premisowl:Agent ;
+        schema:name ?agent_name .
+
+    ?agent_hardware a premisowl:HardwareAgent ;
+        schema:name ?agent_hardware_name ;
+        ?p_agent_hardware ?o_agent_hardware .
+
+    ?agent_software a premisowl:SoftwareAgent ;
+        schema:name ?agent_software_name .
     
 
 }
@@ -70,20 +81,23 @@ WHERE {
             BIND(iri(concat(str(haObjId:), concat(?local_id_type, ENCODE_FOR_URI(?local_id_val)))) AS ?local_id)
         }
         {
-            [] a premis:object;
-                xsi:type "premis:intellectualEntity";
-                ?ie_1 [
+            ?_ie a premis:object;
+                xsi:type "premis:intellectualEntity" .
+            OPTIONAL {
+                ?_ie ?ie_1 [
                     a premis:objectIdentifier;
                     ?ie_2 [
                             a premis:objectIdentifierType;
-                                rdf:_1 ?ie_type
+                                rdf:_1 ?ie_id_type
                     ];
                     ?ie_3 [
                         a premis:objectIdentifierValue;
                             rdf:_1 ?id
                     ]
                 ];
-                ?ie_4 [
+            }
+            OPTIONAL {
+                ?_ie ?ie_4 [
                     a premis:relationship;
                     ?ie_5 [
                         a premis:relatedObjectIdentifier;
@@ -93,14 +107,16 @@ WHERE {
                         ]
                     ]
                 ]
-            FILTER (?ie_type = "UUID")
+            }
+            FILTER (?ie_id_type = "UUID")
             BIND(iri(concat(str(haObjId:), ?id)) AS ?ie)
             BIND(iri(concat(str(haObjId:), ?ie_rel_rep_id)) AS  ?rep)
         }
         {
             OPTIONAL {
-                ?_ev a premis:event ;
-                    ?ev_1 [
+                ?_ev a premis:event .
+                OPTIONAL {
+                    ?_ev ?ev_1 [
                         a premis:eventIdentifier;
                         ?ev_2 [
                             a premis:eventIdentifierType;
@@ -111,57 +127,182 @@ WHERE {
                             rdf:_1 ?ev_id
                         ]
                     ];
-                    ?ev_4 [
+                }
+                OPTIONAL {
+                    ?_ev ?ev_4 [
                         a premis:eventType ;
-                        rdf:_1 ?ev_type
+                        rdf:_1 ?_ev_type
                     ];
-                    ?ev_5 [
+                }
+                OPTIONAL {
+                    ?_ev ?ev_5 [
                         a premis:eventDateTime ;
                         rdf:_1 ?ev_dateTime
                     ] .
+                }
             }
-             OPTIONAL {
-                    ?_ev ?ev_6 ?ev_det_info .
-                    ?ev_det_info a premis:eventDetailInformation ;
-                        ?ev_7 [
-                            a premis:eventDetail ;
-                            rdf:_1 ?ev_detail
+            BIND(iri(concat(str(haObjId:), ?ev_id)) AS ?evt)
+            
+            # BIND(iri(concat(str(haObj:), COALESCE(
+            #     IF(?_ev_type = "QUALITY_CONTROL", "quality_control", 1/0),
+            #     IF(?_ev_type = "DIGITIZATION", "digitization", 1/0),
+            #     ?_ev_type
+            # ))) AS ?ev_type_iri)
+            BIND(iri(concat(str(haObj:), lcase(?_ev_type))) AS ?ev_type_iri)
+            BIND(iri(concat(str(haObjId:), ?ev_id, "-", ?additionalProperty_type)) AS ?additionalProperty_iri)
+            OPTIONAL {
+                ?_ev ?ev_6 ?ev_det_info .
+                ?ev_det_info a premis:eventDetailInformation .
+                OPTIONAL {
+                    ?ev_det_info ?ev_7 [
+                        a premis:eventDetail ;
+                        rdf:_1 ?ev_detail
+                    ] .
+                }
+                OPTIONAL {
+                    ?ev_det_info ?ev_8 [
+                            a premis:eventDetailExtension ;
+                            ?ev_9 ?ev_addProp
+                        ] .
+                    ?ev_addProp a schema:additionalProperty ;
+                        ?ev_10 [
+                            a schema:name ;
+                            rdf:_1 ?additionalProperty_type
                         ] .
                     OPTIONAL {
-                        ?ev_det_info ?ev_8 [
-                                a premis:eventDetailExtension ;
-                                ?ev_9 ?ev_addProp
-                            ] .
-                        ?ev_addProp a schema:additionalProperty ;
-                            ?ev_10 [
-                                a schema:name ;
-                                rdf:_1 ?additionalProperty_type
-                            ] .
-                        OPTIONAL {
-                            ?ev_addProp ?ev_11 [
-                                a schema:value ;
-                                rdf:_1 ?additionalProperty_value_simple
-                            ]
-                        }
-                        OPTIONAL {
-                            ?ev_addProp ?ev_12 [
-                                a schema:valueReference ;
-                                ?ev_13 [
-                                    a ?additionalProperty_prop_complex ;
-                                    rdf:_1 ?additionalProperty_value_complex
-                                ];
-                            ]
-                        }
+                        ?ev_addProp ?ev_11 [
+                            a schema:value ;
+                            rdf:_1 ?additionalProperty_value_simple
+                        ]
                     }
-                    
-                    
-
+                    OPTIONAL {
+                        ?ev_addProp ?ev_12 [
+                            a schema:valueReference ;
+                            ?ev_13 [
+                                a ?additionalProperty_prop_complex ;
+                                rdf:_1 ?additionalProperty_value_complex
+                            ];
+                        ]
+                    }
                 }
-            BIND(iri(concat(str(haObjId:), ?ev_id)) AS ?evt)
-            BIND(iri(concat(str(haObj:), ?ev_type)) AS ?ev_type_iri)
-            BIND(iri(concat(str(haObjId:), ?ev_id, "-", ?additionalProperty_type)) AS ?additionalProperty_iri)
+            }
             BIND(iri(concat(str(haObj:), ?additionalProperty_type)) AS ?additionalProperty_type_iri)
-
+            OPTIONAL {
+                ?_ev ?ev_14 ?_ev_linking_agent .
+                ?_ev_linking_agent a premis:linkingAgentIdentifier ;
+                    ?ev_15 [
+                        a premis:linkingAgentIdentifierType ;
+                        rdf:_1 ?ev_agent_id_type
+                    ];
+                    ?ev_16 [
+                        a premis:linkingAgentIdentifierValue ;
+                        rdf:_1 ?ev_agent_id
+                    ] .
+                OPTIONAL {
+                    ?_ev_linking_agent ?ev_17 [
+                        a premis:linkingAgentRole ;
+                        xyz:valueURI ?_ev_agent_role
+                    ]
+                }
+            }
+            BIND(iri(?_ev_agent_role) AS ?ev_agent_role)
+            BIND(iri(concat(str(haObjId:), ?ev_agent_id)) AS ?ev_linking_agent)
+        }
+        {
+            OPTIONAL {
+                ?_agent a premis:agent .
+                OPTIONAL {
+                    ?_agent ?agent_1 [
+                        a premis:agentIdentifier ;
+                        ?agent_2 [
+                            a premis:agentIdentifierType ;
+                            rdf:_1 ?agent_id_type
+                        ];
+                        ?agent_3 [
+                            a premis:agentIdentifierValue ;
+                            rdf:_1 ?agent_id
+                        ]
+                    ];
+                }
+                OPTIONAL {
+                    ?_agent ?agent_4 [
+                        a premis:agentName ;
+                        rdf:_1 ?agent_name
+                    ];
+                }
+                OPTIONAL {
+                    ?_agent ?agent_5 [
+                        a premis:agentType ;
+                        rdf:_1 ?agent_type
+                    ];
+                }
+                FILTER (?agent_type != "hardware")
+                FILTER (?agent_type != "software")
+            }
+            BIND(iri(concat(str(haObjId:), ?agent_id)) AS ?agent)
+            OPTIONAL {
+                ?_agent_hardware a premis:agent ;
+                    ?_agent_hardware_5 [
+                        a premis:agentType ;
+                        rdf:_1 "hardware"
+                    ] .
+                OPTIONAL {
+                    ?_agent_hardware ?_agent_hardware_1 [
+                        a premis:agentIdentifier ;
+                        ?_agent_hardware_2 [
+                            a premis:agentIdentifierType ;
+                            rdf:_1 ?_agent_hardware_id_type
+                        ];
+                        ?_agent_hardware_3 [
+                            a premis:agentIdentifierValue ;
+                            rdf:_1 ?_agent_hardware_id
+                        ]
+                    ];
+                }
+                OPTIONAL {
+                    ?_agent_hardware ?_agent_hardware_4 [
+                        a premis:agentName ;
+                        rdf:_1 ?agent_hardware_name
+                    ];
+                }
+                OPTIONAL {
+                    ?_agent_hardware ?_agent_hardware_6 [
+                        a premis:agentExtension ;
+                        ?_agent_hardware_7 [
+                            a ?p_agent_hardware ;
+                            rdf:_1 ?o_agent_hardware
+                        ];
+                    ];
+                }
+            }
+            BIND(iri(concat(str(haObjId:), ?_agent_hardware_id)) AS ?agent_hardware)
+            OPTIONAL {
+                ?_agent_software a premis:agent ;
+                    ?_agent_software_5 [
+                        a premis:agentType ;
+                        rdf:_1 "software"
+                    ] .
+                OPTIONAL {
+                    ?_agent_software ?_agent_software_1 [
+                        a premis:agentIdentifier ;
+                        ?_agent_software_2 [
+                            a premis:agentIdentifierType ;
+                            rdf:_1 ?_agent_software_id_type
+                        ];
+                        ?_agent_software_3 [
+                            a premis:agentIdentifierValue ;
+                            rdf:_1 ?_agent_software_id
+                        ]
+                    ];
+                }
+                OPTIONAL {
+                    ?_agent_software ?_agent_software_4 [
+                        a premis:agentName ;
+                        rdf:_1 ?agent_software_name
+                    ];
+                }
+            }
+            BIND(iri(concat(str(haObjId:), ?_agent_software_id)) AS ?agent_software)
         }
     }
 }
