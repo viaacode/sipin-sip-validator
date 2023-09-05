@@ -32,7 +32,7 @@ CONSTRUCT {
     ?rep a premisowl:Representation;
         relSubType:rep ?ie .
 
-    ?evt a premisowl:event, ?ev_type_iri ;
+    ?evt a premisowl:Event, ?ev_type_iri ;
         prov:startedAtTime ?ev_dateTime ;
         prov:endedAtTime ?ev_dateTime ;
         premisowl:note ?ev_detail ;
