@@ -112,7 +112,7 @@
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:description "The identifier of the series."@en ;
-    sh:message "The identifier is not a langString or occurs more than once."@en ;
+    sh:message "The identifier is not a string or is absent."@en ;
     sh:minCount 1 ;
   ] .
 
