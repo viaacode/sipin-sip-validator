@@ -102,7 +102,7 @@
     sh:path schema:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
-    sh:description "The name of the series."@en ;
+    sh:description "The name of the collection."@en ;
     sh:message "The name is not a langString or occurs more than once."@en ;
     sh:uniqueLang true
   ],
