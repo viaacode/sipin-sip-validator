@@ -36,14 +36,15 @@ CONSTRUCT {
         prov:startedAtTime ?ev_dateTime ;
         prov:endedAtTime ?ev_dateTime ;
         premisowl:note ?ev_detail ;
-        prov:used ?additionalProperty_iri ;
+        haObj:light-metering ?ligth_metering_value ;
+        haObj:height-calibration-object ?additionalProperty_iri ;
+        haObj:scan-setup ?scan_setup_value ;
         premisowl:outcome ?ev_outcome_iri ;
         ?ev_agent_role ?ev_linking_agent .
     
-    ?additionalProperty_iri a prov:Entity, ?additionalProperty_type_iri ;
-        rdf:value ?additionalProperty_value_simple ;
-        ?additionalProperty_prop_complex ?additionalProperty_value_complex .
-    
+    ?additionalProperty_iri a schema:QuantativeValue;
+        ?height_calibration_object_prop_complex ?height_calibration_object_value_complex .
+
     ?agent_organization a org:Organization ;
         schema:name ?agent_organization_name ;
         ?p_agent_organization ?o_agent_organization .
@@ -169,43 +170,61 @@ WHERE {
                             a premis:eventDetailExtension ;
                             ?ev_9 ?ev_addProp
                         ] .
-                    ?ev_addProp a schema:additionalProperty ;
-                        ?ev_10 [
-                            a schema:name ;
-                            rdf:_1 ?additionalProperty_type
-                        ] .
+                    ?ev_addProp a schema:additionalProperty .
                     OPTIONAL {
-                        ?ev_addProp ?ev_11 [
+                        ?ev_addProp ?ev_10 [
+                            a schema:name ;
+                            rdf:_1 "light-metering"
+                        ] ; 
+                        ?ev_11 [
                             a schema:value ;
-                            rdf:_1 ?additionalProperty_value_simple
-                        ]
+                            rdf:_1 ?ligth_metering_value
+                        ] .
                     }
                     OPTIONAL {
                         ?ev_addProp ?ev_12 [
+                            a schema:name ;
+                            rdf:_1 "scan-setup"
+                        ] ; 
+                        ?ev_13 [
+                            a schema:value ;
+                            rdf:_1 ?scan_setup_value
+                        ] .
+                    }
+                    OPTIONAL {
+                        ?ev_addProp ?ev_14 [
+                            a schema:name ;
+                            rdf:_1 "height-calibration-object"
+                        ] ; 
+                        ?ev_15 [
                             a schema:valueReference ;
-                            ?ev_13 [
-                                a ?additionalProperty_prop_complex ;
-                                rdf:_1 ?additionalProperty_value_complex
+                            ?ev_16 [
+                                a ?height_calibration_object_prop_complex ;
+                                rdf:_1 ?height_calibration_object_value_complex
                             ];
-                        ]
+                        ] .
                     }
                 }
             }
-            BIND(iri(concat(str(haObjId:), MD5(CONCAT(?ev_id, ?additionalProperty_type)))) AS ?additionalProperty_iri)
-            BIND(iri(concat(str(haObj:), ?additionalProperty_type)) AS ?additionalProperty_type_iri)
+            BIND(IF(
+                    BOUND(?height_calibration_object_value_complex) || BOUND(?num_of_tri),
+                    iri(concat(str(haObjId:), MD5(CONCAT(?ev_id, "height-calibration-object")))),
+                    ?nothing
+                ) 
+            AS ?additionalProperty_iri)
             OPTIONAL {
-                ?_ev ?ev_14 ?_ev_linking_agent .
+                ?_ev ?ev_17 ?_ev_linking_agent .
                 ?_ev_linking_agent a premis:linkingAgentIdentifier ;
-                    ?ev_15 [
+                    ?ev_18 [
                         a premis:linkingAgentIdentifierType ;
                         rdf:_1 ?ev_agent_id_type
                     ];
-                    ?ev_16 [
+                    ?ev_19 [
                         a premis:linkingAgentIdentifierValue ;
                         rdf:_1 ?ev_agent_id
                     ] .
                 OPTIONAL {
-                    ?_ev_linking_agent ?ev_17 [
+                    ?_ev_linking_agent ?ev_20 [
                         a premis:linkingAgentRole ;
                         xyz:valueURI ?_ev_agent_role
                     ]
@@ -214,10 +233,10 @@ WHERE {
             BIND(iri(?_ev_agent_role) AS ?ev_agent_role)
             BIND(iri(concat(str(haObjId:), ?ev_agent_id)) AS ?ev_linking_agent)
             OPTIONAL {
-                ?_ev ?ev_18 ?_ev_outcome_info .
+                ?_ev ?ev_21 ?_ev_outcome_info .
                 ?_ev_outcome_info a premis:eventOutcomeInformation .
                 OPTIONAL {
-                    ?_ev_outcome_info ?ev_19 [
+                    ?_ev_outcome_info ?ev_22 [
                         a premis:eventOutcome ;
                         rdf:_1 ?_ev_outcome
                     ] .

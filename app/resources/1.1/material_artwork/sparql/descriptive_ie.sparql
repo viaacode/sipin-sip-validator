@@ -13,7 +13,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 CONSTRUCT
 {
-    ?collection a schema:Collection ;
+    ?collection a ?collection_type ;
         schema:hasPart ?ie ;
         dct:title ?collection_name .
 
@@ -197,9 +197,9 @@ WHERE
         # region collection
         OPTIONAL {
             [] a fx:root;
-
             ?root_list_7 [
                 a dct:isPartOf ;
+                xsi:type ?coll_type ;
                 ?coll_1 [
                     a dct:title ;
                     rdf:_1 ?collection_name ;
@@ -211,6 +211,7 @@ WHERE
             ] .
         }
         BIND(IRI(CONCAT(str(haObjId:), ?collection_id)) AS ?collection)
+        BIND(IRI(REPLACE(?coll_type, "schema:", "https://schema.org/")) AS ?collection_type)
 
         # endregion
 
