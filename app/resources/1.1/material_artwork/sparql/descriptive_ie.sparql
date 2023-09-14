@@ -15,7 +15,8 @@ CONSTRUCT
 {
     ?collection a ?collection_type ;
         schema:hasPart ?ie ;
-        dct:title ?collection_name .
+        dct:title ?collection_name ;
+        schema:identifier ?collection_id .
 
     ?ie a premisowl:IntellectualEntity ;
         ?p ?o;
