@@ -63,16 +63,16 @@
             <premis:eventDetailExtension>
                 <schema:additionalProperty>
                    <schema:name>light-metering</schema:name>
-                   <schema:value>2000lux</schema:value>
+                   <schema:value>F 0,57, iso 125, T 250</schema:value>
                 </schema:additionalProperty>
                 <schema:additionalProperty>
                    <schema:name>scan-setup</schema:name>
-                   <schema:value>scanner on desk</schema:value>
+                   <schema:value>vaste opstelling, persoon met scanner beweegt rond beeld</schema:value>
                 </schema:additionalProperty>
                 <schema:additionalProperty>
                    <schema:name>height-calibration-object</schema:name>
                    <schema:valueReference>
-                     <schema:value>30</schema:value>
+                     <schema:value>100</schema:value>
                      <schema:unitText>mm</schema:unitText>
                      <schema:unitCode>MMT</schema:unitCode>
                     </schema:valueReference>
@@ -151,8 +151,8 @@
         <premis:agentName>scanner A</premis:agentName>
         <premis:agentType>hardware</premis:agentType>
         <premis:agentExtension>
-            <schema:model>???</schema:model>
-            <schema:additionalType>???</schema:additionalType>
+            <schema:model>model X</schema:model>
+            <schema:additionalType>structured light scanner wit</schema:additionalType>
         </premis:agentExtension>
     </premis:agent>
 
@@ -161,7 +161,7 @@
             <premis:agentIdentifierType>UUID</premis:agentIdentifierType>
             <premis:agentIdentifierValue>uuid-d6c5f78f-e850-435f-b0b2-e9b6dbf7a2b1</premis:agentIdentifierValue>
         </premis:agentIdentifier>
-        <premis:agentName>...</premis:agentName>
+        <premis:agentName>Flexscan3D, Artec studio 17, Adobe Photoshop CC 2019</premis:agentName>
         <premis:agentType>software</premis:agentType>
     </premis:agent>
 
