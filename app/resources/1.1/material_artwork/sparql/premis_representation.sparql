@@ -150,9 +150,6 @@ WHERE
                         rdf:_1 ?file_size
                     ]
                 }
-
-                
-
             }
             BIND(iri(concat(str(haObjId:), ?file_digest)) AS ?md5_uri)
             BIND(STRDT(?file_size, xsd:integer) AS ?file_size_int)
@@ -190,7 +187,12 @@ WHERE
                 }
                 
             }
-            BIND(iri(concat(str(haObjId:), ?file_uuid, "-geo")) AS ?file_geo)
+            BIND(IF(
+                    BOUND(?num_of_vert) || BOUND(?num_of_tri),
+                    iri(concat(str(haObjId:), ?file_uuid, "-geo")),
+                    ?nothing
+                ) 
+            AS ?file_geo)
         }
     }
   }
