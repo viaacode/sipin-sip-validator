@@ -17,6 +17,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX prov: <http://www.w3.org/ns/prov#> 
 PREFIX eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/>
 PREFIX org: <http://www.w3.org/ns/org#> 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 CONSTRUCT {
     ?ie a premisowl:IntellectualEntity;
@@ -46,7 +47,8 @@ CONSTRUCT {
         ?height_calibration_object_prop_complex ?height_calibration_object_value_complex .
 
     ?agent_organization a org:Organization ;
-        schema:name ?agent_organization_name ;
+        schema:identifier ?agent_organization_id ;
+        skos:prefLabel ?agent_organization_label ;
         ?p_agent_organization ?o_agent_organization .
 
     ?agent a premisowl:Agent ;
@@ -150,11 +152,6 @@ WHERE {
             BIND(iri(concat(str(haObjId:), ?ev_id)) AS ?evt)
             BIND(STRDT(?_ev_dateTime, xsd:dateTime) AS ?ev_dateTime)
             
-            # BIND(iri(concat(str(haObj:), COALESCE(
-            #     IF(?_ev_type = "QUALITY_CONTROL", "quality_control", 1/0),
-            #     IF(?_ev_type = "DIGITIZATION", "digitization", 1/0),
-            #     ?_ev_type
-            # ))) AS ?ev_type_iri)
             BIND(iri(concat(str(haObj:), lcase(?_ev_type))) AS ?ev_type_iri)
             OPTIONAL {
                 ?_ev ?ev_6 ?ev_det_info .
@@ -363,7 +360,7 @@ WHERE {
                         ];
                         ?_agent_organization_3 [
                             a premis:agentIdentifierValue ;
-                            rdf:_1 ?_agent_organization_id
+                            rdf:_1 ?agent_organization_id
                         ]
                     ];
                 }
@@ -383,7 +380,8 @@ WHERE {
                     ];
                 }
             }
-            BIND(iri(concat(str(haObjId:), ?_agent_organization_id)) AS ?agent_organization)
+            BIND(iri(concat(str(haObjId:), ?agent_organization_id)) AS ?agent_organization)
+            BIND(STRLANG(?agent_organization_name, "nl") AS ?agent_organization_label)
         }
     }
 }
