@@ -11,6 +11,8 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix omg: <http://www.w3id.org/omg#> .
+@prefix gom: <https://www.w3id.org/gom#> .
 
 @base <https://data.hetarchief.be/ns/sip_material_artwork/shapes> .
 
@@ -177,6 +179,42 @@
     sh:message "The artform is not a langString or occurs more than once."@en ;
     sh:severity sh:Warning ;
     sh:uniqueLang true ;
+  ] .
+
+<#FileShape> a sh:NodeShape ;
+  sh:targetClass premis:File ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path omg:hasGeometry ;
+    sh:nodeKind sh:IRI ;
+    sh:class omg:Geometry ;
+    sh:name "has geometry"@en ;
+    sh:description "The geometry of the file."@en ;
+  ] .
+
+<#GeometryShape> a sh:NodeShape ;
+  sh:targetClass omg:Geometry ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path gom:hasVertices ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has vertices"@en ;
+    sh:description "The number of vertices of the geometry."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path gom:hasFaces ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has faces"@en ;
+    sh:description "The number of faces (e.g. triangles) of the geometry."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
   ] .
 
 <#QuantitativeValueShape> a sh:NodeShape ; 
