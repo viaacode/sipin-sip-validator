@@ -35,7 +35,7 @@
   sh:targetClass premis:IntellectualEntity ;
   sh:property
   [
-    a sh:propertyShape ;
+    a sh:PropertyShape ;
     sh:path premis:identifier ;
     # sh:node <#LocalIdentifierShape> ;
     sh:or (
@@ -786,7 +786,7 @@
     sh:maxCount 1 ;
   ],
   [
-    a sh:propertyShape ;
+    a sh:PropertyShape ;
     sh:path premis:note ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
@@ -797,7 +797,7 @@
     sh:severity sh:Warning ;
   ],
   [
-    a sh:propertyShape ;
+    a sh:PropertyShape ;
     sh:path premis:outcome ;
     sh:nodeKind sh:IRI ;
     sh:in (eventOutcome:suc eventOutcome:fai eventOutcome:war) ;
@@ -806,7 +806,7 @@
     sh:maxCount 1 ;
   ],
   [
-    a sh:propertyShape ;
+    a sh:PropertyShape ;
     sh:path eventRelAgRole:exe ;
     sh:nodeKind sh:IRI ;
     sh:class premis:SoftwareAgent ;
@@ -814,7 +814,7 @@
     sh:description "The agent that executed the event."@en ;
   ],
   [
-    a sh:propertyShape ;
+    a sh:PropertyShape ;
     sh:path eventRelAgRole:imp ;
     sh:nodeKind sh:IRI ;
     sh:class org:Organization ;
@@ -822,7 +822,7 @@
     sh:description "The organization that implemented the event."@en ;
   ],
   [
-    a sh:propertyShape ;
+    a sh:PropertyShape ;
     sh:path schema:instrument ;
     sh:nodeKind sh:IRI ;
     sh:class premis:HardwareAgent ;
@@ -831,17 +831,17 @@
   ] ;
   sh:or (
     [
-      a sh:propertyShape ;
+      a sh:PropertyShape ;
       sh:path eventRelAgRole:exe ;
       sh:minCount 1 ;
     ]
     [
-      a sh:propertyShape ;
+      a sh:PropertyShape ;
       sh:path eventRelAgRole:imp ;
       sh:minCount 1 ;
     ]
     [
-      a sh:propertyShape ;
+      a sh:PropertyShape ;
       sh:path schema:instrument ;
       sh:minCount 1 ;
     ]
