@@ -15,7 +15,7 @@ CONSTRUCT
 {
     ?collection a ?collection_type ;
         schema:hasPart ?ie ;
-        dct:title ?collection_name ;
+        schema:name ?collection_name ;
         schema:identifier ?collection_id .
 
     ?ie a premisowl:IntellectualEntity ;
@@ -198,20 +198,30 @@ WHERE
         # region collection
         OPTIONAL {
             [] a fx:root;
-            ?root_list_7 [
-                a dct:isPartOf ;
-                xsi:type ?coll_type ;
-                ?coll_1 [
-                    a dct:title ;
+            ?root_list_7 ?_collection .
+            ?_collection a schema:isPartOf ;
+                xsi:type ?coll_type .
+            OPTIONAL {
+                ?_collection ?coll_1 [
+                    a schema:name ;
                     rdf:_1 ?collection_name ;
                 ] ;
-                ?coll_2 [
-                    a dct:identifier ;
+            }
+            Optional {
+                ?_collection ?coll_2 [
+                    a schema:identifier ;
                     rdf:_1 ?collection_id ;
                 ] 
-            ] .
+            }
         }
-        BIND(IRI(CONCAT(str(haObjId:), ?collection_id)) AS ?collection)
+
+        BIND(
+            COALESCE(
+                IF(bound(?collection_id), IRI(CONCAT(str(haObjId:), ?collection_id)), 1/0),
+                IRI(CONCAT(str(haObjId:), MD5(?collection_name)))
+            )
+            AS ?collection
+        )
         BIND(IRI(REPLACE(?coll_type, "schema:", "https://schema.org/")) AS ?collection_type)
 
         # endregion
@@ -248,7 +258,7 @@ WHERE
             FILTER (?p != schema:width)
             FILTER (?p != schema:depth)
             FILTER (?p != schema:weight)
-            FILTER (?p != dct:isPartOf)
+            FILTER (?p != schema:isPartOf)
 
         }
         # endregion

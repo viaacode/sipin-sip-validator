@@ -90,7 +90,6 @@
 
     <xs:element name="isPartOf" substitutionGroup="any"/>
 
-    
     <xs:group name="elementsAndRefinementsGroup">
         <xs:annotation>
             <xs:documentation xml:lang="en">

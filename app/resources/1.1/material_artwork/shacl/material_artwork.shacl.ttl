@@ -94,6 +94,20 @@
     sh:description "The type of artform."@en;
     sh:message "The artform is not a langString or occurs more than once."@en ;
     sh:uniqueLang true
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:isPartOf ;
+    sh:nodeKind sh:IRI ;
+    sh:or (
+      [ sh:class schema:Episode ]
+      [ sh:class schema:ArchiveComponent ]
+      [ sh:class schema:CreativeWorkSeries ]
+      [ sh:class schema:BroadcastEvent ]
+      [ sh:class schema:CreativeWorkSeason ]
+    ) ;
+    sh:message """`dcterms:isPartOf` not of type `schema:Episode`, `schema:ArchiveComponent`, `schema:CreativeWorkSeries`, `schema:BroadcastEvent` or `schema:CreativeWorkSeason`.
+      """@en ;
   ] .
 
 <#CollectionShape> a sh:NodeShape ;
