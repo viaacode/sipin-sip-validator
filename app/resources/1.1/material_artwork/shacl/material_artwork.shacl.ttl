@@ -60,7 +60,7 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path schema:weigth ;
+    sh:path schema:weight ;
     sh:nodeKind sh:BlankNodeOrIRI ;
     # sh:node <#QuantitativeValueShape> ;
     sh:class schema:Collection ;
