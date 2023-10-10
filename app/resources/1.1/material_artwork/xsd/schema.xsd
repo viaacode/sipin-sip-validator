@@ -80,8 +80,6 @@
     <xs:element name="birthDate"/>
     <xs:element name="deathDate"/>
 
-
-
     <xs:element name="height" type="QuantitativeValue" substitutionGroup="any"/>
     <xs:element name="width" type="QuantitativeValue" substitutionGroup="any"/>
     <xs:element name="depth" type="QuantitativeValue" substitutionGroup="any"/>
@@ -89,6 +87,8 @@
     <xs:element name="artMedium" type="SimpleLiteral" substitutionGroup="any"/>
     <xs:element name="artform" type="SimpleLiteral" substitutionGroup="any"/>
     <xs:element name="creator" type="Person" substitutionGroup="any"/>
+
+    <xs:element name="isPartOf" substitutionGroup="any"/>
 
     
     <xs:group name="elementsAndRefinementsGroup">
