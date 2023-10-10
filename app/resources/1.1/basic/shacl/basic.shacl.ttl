@@ -662,6 +662,14 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:license ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has license"@en ;
+    sh:description "The license of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:type ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
