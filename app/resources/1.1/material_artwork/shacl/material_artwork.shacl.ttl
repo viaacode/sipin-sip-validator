@@ -68,15 +68,15 @@
     sh:description "The weigth of the intellectual entity."@en ;
     sh:maxCount 1 ;
   ],
-  [
-    a sh:PropertyShape ;
-    sh:path schema:isPartOf ;
-    sh:nodeKind sh:BlankNodeOrIRI ;
-    # sh:node <#QuantitativeValueShape> ;
-    sh:class schema:QuantitativeValue ;
-    sh:name "is Part Of"@en ;
-    sh:description "The collection this intellectual entity is part of."@en ;
-  ] ,
+  # [
+  #   a sh:PropertyShape ;
+  #   sh:path schema:isPartOf ;
+  #   sh:nodeKind sh:BlankNodeOrIRI ;
+  #   # sh:node <#QuantitativeValueShape> ;
+  #   sh:class schema:QuantitativeValue ;
+  #   sh:name "is Part Of"@en ;
+  #   sh:description "The collection this intellectual entity is part of."@en ;
+  # ] ,
   [
     a sh:PropertyShape ;
     sh:path schema:artMedium ;
@@ -117,9 +117,9 @@
     a sh:PropertyShape ;
     sh:path schema:name ;
     sh:nodeKind sh:Literal ;
-    sh:datatype rdf:langString ;
+    sh:datatype xsd:string ;
     sh:description "The name of the collection."@en ;
-    sh:message "The name is not a langString or occurs more than once."@en ;
+    sh:message "The name is not a string or occurs more than once."@en ;
     sh:uniqueLang true
   ],
   [
