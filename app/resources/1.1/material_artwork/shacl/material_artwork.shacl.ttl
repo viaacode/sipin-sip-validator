@@ -14,7 +14,7 @@
 @prefix omg: <http://www.w3id.org/omg#> .
 @prefix gom: <https://www.w3id.org/gom#> .
 
-@base <https://data.hetarchief.be/ns/sip_material_artwork/shapes> .
+@base <https://data.hetarchief.be/ns/sip/shapes> .
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;

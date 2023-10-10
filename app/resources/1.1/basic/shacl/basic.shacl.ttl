@@ -17,7 +17,7 @@
 @prefix org: <http://www.w3.org/ns/org#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 
-@base <https://data.hetarchief.be/ns/sip_basic/shapes> .
+@base <https://data.hetarchief.be/ns/sip/shapes> .
 
 #? @ attributes?
 <>  a owl:Ontology ;
@@ -33,11 +33,11 @@
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path premis:identifier ;
-    # sh:node <#LocalIdentifierShape> ;
     sh:or (
       [ sh:class haObjId:MEEMOO-LOCAL-ID ]
       [ sh:class haObjId:Acquisition_number ]
@@ -64,6 +64,8 @@
       [ sh:class haObjId:PersistenteURI_VKC_Werk ]
       [ sh:class haObjId:MEEMOO-PID ]
     );
+    sh:message """Class of premis:identifier is not part of allowed list.
+      Please check `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierType`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -75,18 +77,18 @@
     sh:description "The representation of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No representation or mismatch between IE's `objectIdentifier` and Representation's `objectIdentifier` and their relationships. Please check the "@en ;
+    sh:message """No representation or mismatch between IE's `objectIdentifier` and Representation's `objectIdentifier` and their relationships.
+      Please check the identifiers in `premis:premis/premis:object/premis:relationship/premis:relatedObjectIdentifier`."""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:title ;
-    sh:nodeKind sh:Literal ;
     sh:name "has title"@en ;
     sh:description "The title of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:datatype rdf:langString;
-    sh:message "Intellectual entity has no `dcterms:title`."@en ;
+    sh:message """Intellectual entity has no `dcterms:title`.
+      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -95,11 +97,20 @@
     sh:name "has title"@en ;
     sh:description "The title of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:uniqueLang true ;
     sh:datatype rdf:langString;
-    sh:message "Multiple values for `dcterms:title` with the same `@xml:lang` attribute."@en ;
+    sh:message """`dcterms:title` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
   ],
-  #? alternative mag volgens SIP enkel meerdere keren gebruikt worden met verschillende Lang tag, klopt dit?
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:title ;
+    sh:name "has title"@en ;
+    sh:description "The title of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:uniqueLang true ;
+    sh:message """Multiple values for `dcterms:title` with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+  ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:alternative ;
@@ -107,6 +118,9 @@
     sh:datatype rdf:langString;
     sh:name "has alternative title"@en ;
     sh:description "An alternative title of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:alternative` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -116,17 +130,20 @@
     sh:description "The extent of the intellectual entity."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dcterms:extent`."@en ;
+    sh:message """More than one value for `dcterms:extent`.
+      Please check `metadata/dcterms:extent`."""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:extent ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:time ;
+    sh:datatype xsd:duration ;
     sh:name "has extent"@en ;
     sh:description "The extent of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "`dcterms:extent` is not of type `xsd:time`."@en ;
+    sh:message """`dcterms:extent` is not of type `xsd:duration` or is not in the right format.
+      Please check `metadata/dcterms:extent`.
+      The format of xsd:duration is PnYnMnDTnHnMnS, where P is a literal value that starts the expression, nY is the number of years followed by a literal Y, nM is the number of months followed by a literal M, nD is the number of days followed by a literal D, T is a literal value that separates the date and time, nH is the number of hours followed by a literal H, nM is the number of minutes followed by a literal M, and nS is the number of seconds followed by a literal S."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -136,7 +153,8 @@
     sh:description "The datetime on which the intellectual entity is available."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dcterms:available`."@en ;
+    sh:message """More than one value for `dcterms:available`.
+      Please check `metadata/dcterms:available`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -146,18 +164,19 @@
     sh:name "is available"@en ;
     sh:description "The datetime on which the intellectual entity is available."@en ;
     sh:severity sh:Violation ;
-    sh:message "`dcterms:available` is not of type `xsd:dateTime`."@en ;
+    sh:message """`dcterms:available` is not of type `xsd:dateTime` or is not in the right format.
+      Please check `metadata/dcterms:available`.
+      The type xsd:dateTime represents a specific date and time in the format CCYY-MM-DDThh:mm:ss.sss, which is a concatenation of the date and time forms, separated by a literal letter "T"."""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:description ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype rdf:langString;
     sh:name "has description"@en ;
     sh:description "The description of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "Intellectual entity has no `dcterms:description`."@en ;
+    sh:message """Intellectual entity has no `dcterms:description`.
+      Please check `metadata/dcterms:description`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -166,20 +185,40 @@
     sh:datatype rdf:langString;
     sh:name "has description"@en ;
     sh:description "The description of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:description` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:description[@xml:lang=*]`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:description ;
+    sh:name "has description"@en ;
+    sh:description "The description of the intellectual entity."@en ;
     sh:uniqueLang true ;
     sh:severity sh:Violation ;
-    sh:message "Multiple values for `dcterms:description` with the same `@xml:lang` attribute."@en ;
+    sh:message """Multiple values for `dcterms:description` with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:description[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:abstract ;
     sh:nodeKind sh:Literal ;
-    sh:uniqueLang true ;
     sh:datatype rdf:langString;
     sh:name "has abstract"@en ;
     sh:description "The abstract of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "Multiple values for `dcterms:abstract` with the same `@xml:lang` attribute."@en ;
+    sh:message """`dcterms:abstract` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:abstract[@xml:lang=*]`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:abstract ;
+    sh:uniqueLang true ;
+    sh:name "has abstract"@en ;
+    sh:description "The abstract of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:message """Multiple values for `dcterms:abstract` with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:abstract[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -189,7 +228,8 @@
     sh:description "The creation date of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "Intellectual entity has no `dcterms:created`."@en ;
+    sh:message """Intellectual entity has no `dcterms:created`.
+      Please check `metadata/dcterms:created`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -199,7 +239,8 @@
     sh:description "The creation date of the intellectual entity."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dcterms:created`."@en ;
+    sh:message """More than one value for `dcterms:created`.
+      Please check `metadata/dcterms:created`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -372,7 +413,8 @@
 
 <#RepresentationShape> a sh:NodeShape ;
   sh:targetClass premis:Representation ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path relSubType:rep ;
@@ -630,7 +672,8 @@
   
 <#FileShape> a sh:NodeShape ;
   sh:targetClass premis:File ;
-  sh:property 
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path relSubType:isi ;
@@ -737,7 +780,9 @@
 
 <#Md5Shape> a sh:NodeShape ;
   sh:targetClass <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5> ;
-  sh:property [
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
+  [
     a sh:PropertyShape ;
     sh:path rdf:value ;
     sh:nodeKind sh:Literal ;
@@ -750,7 +795,8 @@
 
 <#LocalIdentifierShape> a sh:NodeShape ;
   sh:targetClass haObj:LocalIdentifier ;
-  sh:property 
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path rdf:value ;
@@ -764,7 +810,8 @@
 
 <#EventShape> a sh:NodeShape ;
   sh:targetClass premis:Event ;
-  sh:property 
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path prov:startedAtTime ;
@@ -817,7 +864,7 @@
     a sh:PropertyShape ;
     sh:path eventRelAgRole:imp ;
     sh:nodeKind sh:IRI ;
-    sh:class org:Organization ;
+    # sh:class org:Organization ;
     sh:name "has implementing agent"@en ;
     sh:description "The organization that implemented the event."@en ;
   ],
@@ -828,28 +875,30 @@
     sh:class premis:HardwareAgent ;
     sh:name "has instrument"@en ;
     sh:description "The hardware agent that performed the event."@en ;
-  ] ;
-  sh:or (
-    [
-      a sh:PropertyShape ;
-      sh:path eventRelAgRole:exe ;
-      sh:minCount 1 ;
-    ]
-    [
-      a sh:PropertyShape ;
-      sh:path eventRelAgRole:imp ;
-      sh:minCount 1 ;
-    ]
-    [
-      a sh:PropertyShape ;
-      sh:path schema:instrument ;
-      sh:minCount 1 ;
-    ]
-  ) .
+  # ] ;
+  # sh:or (
+  #   [
+  #     a sh:PropertyShape ;
+  #     sh:path eventRelAgRole:exe ;
+  #     sh:minCount 1 ;
+  #   ]
+  #   [
+  #     a sh:PropertyShape ;
+  #     sh:path eventRelAgRole:imp ;
+  #     sh:minCount 1 ;
+  #   ]
+  #   [
+  #     a sh:PropertyShape ;
+  #     sh:path schema:instrument ;
+  #     sh:minCount 1 ;
+  #   ]
+  # ) .
+  ] .
 
 <#HardwareAgentShape> a sh:NodeShape ;
   sh:targetClass premis:HardwareAgent ;
-  sh:property 
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:name ;
@@ -890,7 +939,8 @@
 
 <#SoftwareAgentShape> a sh:NodeShape ;
   sh:targetClass premis:SoftwareAgent ;
-  sh:property 
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:name ;
@@ -910,3 +960,8 @@
     sh:description "The version of the software agent."@en ;
     sh:maxCount 1 ;
   ] .
+
+<#propertyTypeShape> a sh:PropertyShape ;
+  sh:path rdf:type ;
+  sh:minCount 1 .
+
