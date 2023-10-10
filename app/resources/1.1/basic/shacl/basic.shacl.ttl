@@ -415,6 +415,11 @@
   sh:targetClass premis:Representation ;
   sh:closed true ;
   sh:property <#propertyTypeShape>,
+  # TEMP FIX!!
+  [
+    a sh:PropertyShape ;
+    sh:path skos:hiddenLabel ;
+  ],
   [
     a sh:PropertyShape ;
     sh:path relSubType:rep ;
