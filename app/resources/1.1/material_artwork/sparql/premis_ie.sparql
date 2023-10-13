@@ -44,7 +44,7 @@ CONSTRUCT {
         ?ev_agent_role ?ev_linking_agent .
     
     ?additionalProperty_iri a schema:QuantitativeValue;
-        ?height_calibration_object_prop_complex ?height_calibration_object_value_complex .
+        ?height_calibration_object_prop_complex ?height_calibration_object_value .
 
     ?agent_organization a org:Organization ;
         schema:identifier ?agent_organization_id ;
@@ -200,11 +200,12 @@ WHERE {
                                 rdf:_1 ?height_calibration_object_value_complex
                             ];
                         ] .
+                        BIND(STRDT(?height_calibration_object_value_complex, xsd:float) AS ?height_calibration_object_value)
                     }
                 }
             }
             BIND(IF(
-                    BOUND(?height_calibration_object_value_complex) || BOUND(?num_of_tri),
+                    BOUND(?height_calibration_object_value_complex),
                     iri(concat(str(haObjId:), MD5(CONCAT(?ev_id, "height-calibration-object")))),
                     ?nothing
                 ) 
