@@ -25,7 +25,7 @@ CONSTRUCT
         schema:width ?width ;
         schema:depth ?depth ;
         schema:weight ?weight ;
-        dct:isPartOf ?collection .
+        schema:isPartOf ?collection .
 
     ?height a schema:QuantitativeValue ;
         ?height_p ?height_b_value_dt .

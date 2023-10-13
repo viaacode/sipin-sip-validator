@@ -63,9 +63,9 @@
     sh:path schema:weight ;
     sh:nodeKind sh:BlankNodeOrIRI ;
     # sh:node <#QuantitativeValueShape> ;
-    sh:class schema:Collection ;
-    sh:name "weigth"@en ;
-    sh:description "The weigth of the intellectual entity."@en ;
+    sh:class schema:QuantitativeValue ;
+    sh:name "weight"@en ;
+    sh:description "The weight of the intellectual entity."@en ;
     sh:maxCount 1 ;
   ],
   # [
@@ -331,3 +331,28 @@
         sh:description "The death date of a person associated with the artwork."@en ;
         sh:maxCount 1 ;
     ] .
+
+<#EventShape> a sh:NodeShape ;
+  sh:targetClass haObj:digitization ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path haObj:height-calibration-object ;
+    sh:nodeKind sh:Literal ;
+    sh:name "height calibration object"@en ;
+    sh:description "The height of the calibration object used for the digitisation"@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path haObj:scan-setup ;
+    sh:nodeKind sh:Literal ;
+    sh:name "scan setup"@en ;
+    sh:description "The scan setup used for the scan."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path haObj:light-metering ;
+    sh:nodeKind sh:Literal ;
+    sh:name "light metering"@en ;
+    sh:description "The light metering used for the scan."@en ;
+  ] .
