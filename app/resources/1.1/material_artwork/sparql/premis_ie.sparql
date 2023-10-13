@@ -43,7 +43,7 @@ CONSTRUCT {
         premisowl:outcome ?ev_outcome_iri ;
         ?ev_agent_role ?ev_linking_agent .
     
-    ?additionalProperty_iri a schema:QuantativeValue;
+    ?additionalProperty_iri a schema:QuantitativeValue;
         ?height_calibration_object_prop_complex ?height_calibration_object_value_complex .
 
     ?agent_organization a org:Organization ;
