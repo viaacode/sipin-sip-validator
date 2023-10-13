@@ -253,6 +253,7 @@ haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity
         "olieverf op doek"@nl ; 
     schema:artform "painting"@en, 
         "schilderij"@nl ; 
+    dct:extent "P5Y"^^xsd:duration ;
     schema:creator haObjId:5d237966fab150332400a5e667ad1147 ; 
     schema:height haObjId:764a8e07b6366c0a36737da232ac2a8b ; 
     schema:width haObjId:87d9731417b13d59cdc69ec6e120f0c1 . 

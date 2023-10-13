@@ -265,7 +265,8 @@ haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 a premisowl:IntellectualEntity
     schema:artMedium "terracotta"@en, 
         "terracotta"@nl ; 
     schema:artform "sculpture"@en, 
-        "beeldhouwwerk"@nl ; 
+        "beeldhouwwerk"@nl ;
+    dct:extent "P5Y"^^xsd:duration ;
     schema:creator haObjId:141bb070feb1e573e103494e650be44a ; 
     schema:depth haObjId:f9f78166c1351f44aba3d3cd877a96f6 ; 
     schema:height haObjId:8b98987bfc4a27339e4729ef0bd837de ; 
