@@ -200,7 +200,7 @@ WHERE {
                                 rdf:_1 ?height_calibration_object_value_complex
                             ];
                         ] .
-                        BIND(STRDT(?height_calibration_object_value_complex, xsd:float) AS ?height_calibration_object_value)
+                        BIND(IF(?height_calibration_object_prop_complex = schema:value, STRDT(?height_calibration_object_value_complex, xsd:float), ?height_calibration_object_value_complex) AS ?height_calibration_object_value)
                     }
                 }
             }
