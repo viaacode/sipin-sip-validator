@@ -1,19 +1,29 @@
 @prefix cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/> . 
 @prefix dct: <http://purl.org/dc/terms/> . 
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> . 
+@prefix eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/> . 
 @prefix haObj: <https://data.hetarchief.be/ns/object/> . 
 @prefix haObjId: <https://data.hetarchief.be/id/object/> . 
 @prefix haOrgId: <https://data.hetarchief.be/id/organization/> . 
 @prefix haSip: <https://data.hetarchief.be/ns/sip/> . 
 @prefix haSipId: <https://data.hetarchief.be/id/sip/1.1/> . 
+@prefix ns1: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> . 
 @prefix org: <http://www.w3.org/ns/org#> . 
 @prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> . 
+@prefix prov: <http://www.w3.org/ns/prov#> . 
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . 
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
 @prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> . 
 @prefix schema: <https://schema.org/> . 
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> . 
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . 
+ 
+haObjId:uuid-AA32FAEC-A8CF-4B6A-9F3E-E2216A396B21 a premisowl:Event, 
+        haObj:digitization ; 
+    ns1:imp haObjId:OR-xg9fb0b ; 
+    premisowl:outcome eventOutcome:suc ; 
+    prov:endedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime ; 
+    prov:startedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime . 
  
 haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ; 
     dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/material-artwork", 
@@ -37,6 +47,12 @@ haObjId:100059b0cc3df5e6fd309d50f60133ca a cryptographicHashFunctions:md5 ;
  
 haObjId:17b76a46b6f9de80143aec26e9af5454 a cryptographicHashFunctions:md5 ; 
     rdf:value "17b76a46b6f9de80143aec26e9af5454" . 
+ 
+haObjId:22bf7b4a8b187e9759f1ae8cc77d6212 a haObjId:Inventarisnummer ; 
+    rdf:value "IB00.008" . 
+ 
+haObjId:38ef86c1d50fcbced68bc805754e7eb4 a haObjId:MEEMOO-PID ; 
+    rdf:value "7m03z1634f" . 
  
 haObjId:42c00b0070ad981461a1a4182eb5f091 a cryptographicHashFunctions:md5 ; 
     rdf:value "42c00b0070ad981461a1a4182eb5f091" . 
@@ -72,17 +88,14 @@ haObjId:87d9731417b13d59cdc69ec6e120f0c1 a schema:QuantitativeValue ;
  
 haObjId:Inventarisnummer rdfs:subClassOf haObj:LocalIdentifier . 
  
-haObjId:InventarisnummerIB00.008 a haObjId:Inventarisnummer ; 
-    rdf:value "IB00.008" . 
- 
 haObjId:MEEMOO-PID rdfs:subClassOf haObj:LocalIdentifier . 
  
-haObjId:MEEMOO-PID7m03z1634f a haObjId:MEEMOO-PID ; 
-    rdf:value "7m03z1634f" . 
+haObjId:OR-xg9fb0b a premisowl:Agent ; 
+    schema:name "Cedric Verhelst" . 
  
 haObjId:Topstuk_ID rdfs:subClassOf haObj:LocalIdentifier . 
  
-haObjId:Topstuk_ID213 a haObjId:Topstuk_ID ; 
+haObjId:c98130d2a55d2239171fb49d66f2371c a haObjId:Topstuk_ID ; 
     rdf:value "213" . 
  
 haObjId:e84c1f1d11e7f5f7e365be92f98df0a7 a schema:Person ; 
@@ -196,28 +209,28 @@ haOrgId:OR-m30wc4t a org:Organization ;
     schema:identifier "OR-m30wc4t" . 
  
 haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 a premisowl:Representation ; 
-    skos:hiddenLabel "representation_1" ;
     relSubType:inc haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B ; 
-    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
     dct:license "CCBY-NC-ND-CONTENT", 
-        "CP-website" . 
+        "CP-website" ; 
+    skos:hiddenLabel "representation_1" . 
  
 haObjId:uuid-51F2C0F1-CA06-4B59-9605-54F7C91BA53F a premisowl:Representation ; 
-    skos:hiddenLabel "representation_3" ; 
     relSubType:inc haObjId:uuid-5EB57F66-A4FF-4145-A90A-D52B280D9B86 ; 
-    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 . 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
+    skos:hiddenLabel "representation_3" . 
  
 haObjId:uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43 a premisowl:Representation ; 
-    skos:hiddenLabel "representation_2" ; 
     relSubType:inc haObjId:uuid-DE17BC26-7D72-4E9A-8636-A6F09405586E ; 
     relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
     dct:license "CCBY-NC-ND-CONTENT", 
-        "CP-website" . 
+        "CP-website" ; 
+    skos:hiddenLabel "representation_2" . 
  
 haObjId:uuid-ddcf9e36-35ae-11ed-b866-7e92631d7d27 a premisowl:Representation ; 
-    skos:hiddenLabel "representation_5" ; 
     relSubType:inc haObjId:uuid-fa0ab8f6-35ae-11ed-8d3d-7e92631d7d27 ; 
-    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 . 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
+    skos:hiddenLabel "representation_5" . 
  
 haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity ; 
     relSubType:isr haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1, 
@@ -233,9 +246,9 @@ haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity
         "topstukken"@nl ; 
     dct:title "The lamentation over the Dead Christ"@en, 
         "Bewening van Christus"@nl ; 
-    premisowl:identifier haObjId:InventarisnummerIB00.008, 
-        haObjId:MEEMOO-PID7m03z1634f, 
-        haObjId:Topstuk_ID213 ; 
+    premisowl:identifier haObjId:22bf7b4a8b187e9759f1ae8cc77d6212, 
+        haObjId:38ef86c1d50fcbced68bc805754e7eb4, 
+        haObjId:c98130d2a55d2239171fb49d66f2371c ; 
     schema:artMedium "oil on canvas"@en, 
         "olieverf op doek"@nl ; 
     schema:artform "painting"@en, 
@@ -245,7 +258,6 @@ haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity
     schema:width haObjId:87d9731417b13d59cdc69ec6e120f0c1 . 
  
 haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ; 
-    skos:hiddenLabel "representation_4" ; 
     relSubType:inc haObjId:uuid-1A40CBB1-C36A-4CAD-BEA0-7474BA96DD24, 
         haObjId:uuid-75360EDC-A6D7-47BF-86D7-476EE59AF4A0, 
         haObjId:uuid-8583DBE9-048C-4EB8-A690-A4A00425C232, 
@@ -255,6 +267,7 @@ haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ;
         haObjId:uuid-B15A7521-92A6-42DB-BCA4-8F16ABC7FCF9, 
         haObjId:uuid-D22C8951-2A17-4856-9006-5F8613BD52C0, 
         haObjId:uuid-F64294B9-1224-40D3-AF63-29B9E26028AC ; 
-    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 . 
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ; 
+    skos:hiddenLabel "representation_4" . 
  
 <http://the-fr.org/id/file-format/154> a dct:FileFormat . 

@@ -53,7 +53,7 @@
     <premis:event>
         <premis:eventIdentifier>
             <premis:eventIdentifierType>UUID</premis:eventIdentifierType>
-            <premis:eventIdentifierValue>uuid-fbe3de22-f2af-4bb4-806e-a50ff2e70ecf</premis:eventIdentifierValue>
+            <premis:eventIdentifierValue>uuid-07DBD6F2-182C-4C58-BCFC-FDCDFC9048F4</premis:eventIdentifierValue>
         </premis:eventIdentifier>
         <premis:eventType>DIGITIZATION</premis:eventType>
         <premis:eventDateTime>2022-08-29T00:00:00Z</premis:eventDateTime>

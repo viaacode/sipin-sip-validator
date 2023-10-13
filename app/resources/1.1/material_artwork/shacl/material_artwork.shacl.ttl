@@ -127,6 +127,7 @@
     sh:path schema:identifier ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
+    sh:severity sh:Warning ;
     sh:description "The identifier of the collection."@en ;
     sh:message "The identifier is not a string or is absent."@en ;
     sh:minCount 1 ;

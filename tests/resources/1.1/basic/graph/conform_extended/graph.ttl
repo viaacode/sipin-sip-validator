@@ -52,7 +52,7 @@ haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity
         "creator 2" ;
     dct:description "the description of the episode"@en,
         "de beschrijving van de episode"@nl ;
-    dct:extent "01:59:34"^^xsd:time ;
+    dct:extent "P5Y"^^xsd:duration ;
     dct:issued "2023-02-14"^^edtf:EDTF ;
     dct:language "en" ;
     dct:license "VIAA-ONDERWIJS",

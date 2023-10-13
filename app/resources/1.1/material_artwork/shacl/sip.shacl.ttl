@@ -45,7 +45,7 @@
   ],
   [
     sh:path schema:agent;
-    sh:minCount 1; 
+    sh:minCount 0; 
     sh:maxCount 1;
     sh:or (
         [sh:node <#OrganizationShape>]
@@ -63,14 +63,20 @@ sh:targetClass org:Organization;
   ].
 
 <#PersonShape> a sh:NodeShape;
-sh:targetClass schema:Person:Organization;
-  sh:property <#identifierShape>,
+sh:targetClass schema:Person;
+  sh:property
   [
     sh:path schema:name;
     sh:minCount 1;
     sh:maxCount 1;
     sh:datatype xsd:string
-  ].
+  ],
+  [
+    sh:path schema:identifier;
+    sh:minCount 0;
+    sh:maxCount 1;
+    sh:datatype xsd:string
+  ] .
   
 <#identifierShape> a sh:PropertyShape;
     sh:path schema:identifier;
