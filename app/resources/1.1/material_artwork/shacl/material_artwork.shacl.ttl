@@ -105,8 +105,9 @@
       [ sh:class schema:CreativeWorkSeries ]
       [ sh:class schema:BroadcastEvent ]
       [ sh:class schema:CreativeWorkSeason ]
+      [ sh:class schema:Collection ]
     ) ;
-    sh:message """`dcterms:isPartOf` not of type `schema:Episode`, `schema:ArchiveComponent`, `schema:CreativeWorkSeries`, `schema:BroadcastEvent` or `schema:CreativeWorkSeason`.
+    sh:message """`dcterms:isPartOf` not of type `schema:Episode`, `schema:ArchiveComponent`, `schema:CreativeWorkSeries`, `schema:BroadcastEvent`, `schema:Collection` or `schema:CreativeWorkSeason`.
       """@en ;
   ] .
 
@@ -338,7 +339,8 @@
   [
     a sh:PropertyShape ;
     sh:path haObj:height-calibration-object ;
-    sh:nodeKind sh:Literal ;
+    sh:nodeKind sh:IRI ;
+    sh:class schema:QuantitativeValue ;
     sh:name "height calibration object"@en ;
     sh:description "The height of the calibration object used for the digitisation"@en ;
   ],
