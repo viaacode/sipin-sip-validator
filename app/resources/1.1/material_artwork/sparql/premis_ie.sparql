@@ -18,6 +18,8 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/>
 PREFIX org: <http://www.w3.org/ns/org#> 
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX evtRelAgent: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/>
+PREFIX evtRelObject: <http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/>
 
 CONSTRUCT {
     ?ie a premisowl:IntellectualEntity;
@@ -41,7 +43,8 @@ CONSTRUCT {
         haObj:height-calibration-object ?additionalProperty_iri ;
         haObj:scan-setup ?scan_setup_value ;
         premisowl:outcome ?ev_outcome_iri ;
-        ?ev_agent_role ?ev_linking_agent .
+        ?ev_agent_role ?ev_linking_agent ;
+        ?ev_linking_object_role ?ev_linking_object .
     
     ?additionalProperty_iri a schema:QuantitativeValue;
         ?height_calibration_object_prop_complex ?height_calibration_object_value .
@@ -240,6 +243,22 @@ WHERE {
                     ] .
                 }
             }
+            OPTIONAL {
+                ?_ev ?ev_23 ?_ev_linking_object .
+                ?_ev_linking_object a premis:linkingObjectIdentifier .
+                OPTIONAL {
+                    ?_ev_linking_object ?ev_24 [
+                        a premis:linkingObjectRole ;
+                        xyz:valueURI ?_ev_linking_object_role
+                    ];
+                    ?ev_25 [
+                        a premis:linkingObjectIdentifierValue ;
+                        rdf:_1 ?ev_linking_object_id
+                    ]
+                }
+            }
+            BIND(iri(?_ev_linking_object_role) AS ?ev_linking_object_role)
+            BIND(iri(concat(str(haObjId:), ?ev_linking_object_id)) AS ?ev_linking_object)
             BIND(
                 COALESCE(
                     IF(?_ev_outcome = "success", "suc", 1/0),

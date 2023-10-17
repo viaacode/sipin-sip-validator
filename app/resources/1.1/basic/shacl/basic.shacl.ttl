@@ -14,6 +14,7 @@
 @prefix haObjId: <https://data.hetarchief.be/id/object/> . 
 @prefix eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/> .
 @prefix eventRelAgRole: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> .
+@prefix eventRelObjRole: <http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/> .
 @prefix org: <http://www.w3.org/ns/org#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 
@@ -888,25 +889,14 @@
     sh:class premis:HardwareAgent ;
     sh:name "has instrument"@en ;
     sh:description "The hardware agent that performed the event."@en ;
-  # ] ;
-  # sh:or (
-  #   [
-  #     a sh:PropertyShape ;
-  #     sh:path eventRelAgRole:exe ;
-  #     sh:minCount 1 ;
-  #   ]
-  #   [
-  #     a sh:PropertyShape ;
-  #     sh:path eventRelAgRole:imp ;
-  #     sh:minCount 1 ;
-  #   ]
-  #   [
-  #     a sh:PropertyShape ;
-  #     sh:path schema:instrument ;
-  #     sh:minCount 1 ;
-  #   ]
-  # ) .
-  ] .
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelObjRole:out ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has output"@en ;
+    sh:description "The output of the event."@en ;
+  ]
 
 <#HardwareAgentShape> a sh:NodeShape ;
   sh:targetClass premis:HardwareAgent ;

@@ -334,7 +334,7 @@
     ] .
 
 <#EventShape> a sh:NodeShape ;
-  sh:targetClass haObj:digitization ;
+  sh:targetClass premis:Event ;
   sh:property
   [
     a sh:PropertyShape ;
