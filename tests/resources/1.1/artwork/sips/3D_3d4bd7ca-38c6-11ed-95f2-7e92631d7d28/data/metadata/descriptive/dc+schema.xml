@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:schema="https://schema.org/">
 
-
   <!-- general title for the resource -->
   <dcterms:title xml:lang="nl">De Romeinse wolvin met Romulus en Remus</dcterms:title>
   <dcterms:title xml:lang="en">The Roman She-Wolf with Romulus and Remus</dcterms:title>
@@ -12,6 +11,9 @@
 
   <!-- linking id between dc and premis -->
   <dcterms:identifier>uuid-645392be-fa36-40fe-92e7-16c9fa60fe46</dcterms:identifier>
+
+  <!-- extent -->
+  <dcterms:extent>P5Y</dcterms:extent>
 
   <!-- creationdate -->
   <dcterms:created xsi:type="edtf:EDTF-level1">1701/1800</dcterms:created>
