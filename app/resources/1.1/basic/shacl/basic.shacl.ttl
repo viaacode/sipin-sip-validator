@@ -896,7 +896,7 @@
     sh:nodeKind sh:IRI ;
     sh:name "has output"@en ;
     sh:description "The output of the event."@en ;
-  ]
+  ] .
 
 <#HardwareAgentShape> a sh:NodeShape ;
   sh:targetClass premis:HardwareAgent ;
