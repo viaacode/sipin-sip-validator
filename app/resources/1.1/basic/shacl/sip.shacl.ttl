@@ -11,24 +11,37 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
-@prefix haSip: <https://data.hetarchief.be/id/sip/1.1/> .
+@prefix haSip: <https://data.hetarchief.be/ns/sip/> .
 @prefix org: <http://www.w3.org/ns/org#> .
 
 @base <https://data.hetarchief.be/ns/sip/shapes> .
 
 <#SIPShape> a sh:NodeShape ;
   sh:targetClass haSip:SIP ;
+  sh:nodeKind sh:IRI ; 
+  sh:message """No OBJID specified in mets root element
+    Please check `mets/@OBJID`"""@en ;
   sh:property [
     a sh:PropertyShape ;
     sh:path dct:conformsTo ;
     sh:nodeKind sh:IRI ;
-    sh:class haObj:LocalIdentifier ;
     sh:name "conforms to profile"@en ;
     sh:description "The profile that this SIP conforms to."@en ;
     sh:minCount 2;
     sh:maxCount 2
-  ],[
-      a sh:PropertyShape ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:format ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "format"@en ;
+    sh:description "The format of the SIP."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path schema:agent ;
     sh:node <#RoleShape>;
     sh:name "has creator"@en ;
