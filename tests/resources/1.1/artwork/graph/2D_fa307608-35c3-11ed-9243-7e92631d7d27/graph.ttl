@@ -33,6 +33,37 @@ haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
         [ schema:agent haOrgId:OR-m30wc4t ; 
             schema:roleName "CREATOR" ] . 
  
+haObjId:0132fb50cb37f922f0810f1740306382 a schema:BroadcastEvent ;
+    schema:hasPart haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
+    schema:name "programma" .
+
+haObjId:07d49c462cb393d27845ff9474653277 a schema:ArchiveComponent ;
+    schema:hasPart haObjId:b061de6bcc54e348f42f964e871d2e19,
+        haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
+    schema:name "archief" .
+
+haObjId:b061de6bcc54e348f42f964e871d2e19 a schema:ArchiveComponent ;
+    schema:name "deelarchief" .
+
+haObjId:cf072bf7d63502f7ed7c60381c7ceb66 a schema:CreativeWorkSeason ;
+    schema:hasPart haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
+    schema:name "seizoen" ;
+    schema:seasonNumber 1 .
+
+haObjId:e3dc137c0cf24247484190d5da054939 a schema:CreativeWorkSeries ;
+    schema:name "deelserie" .
+
+haObjId:ec3781968a859f5a11da097c5a602ac8 a schema:Episode ;
+    schema:hasPart haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
+    schema:name "episode" .
+
+haObjId:f263d9a8b7cb4a9e573c18e5b9e15091 a schema:CreativeWorkSeries ;
+    schema:hasPart haObjId:e3dc137c0cf24247484190d5da054939,
+        haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
+    schema:identifier "serie identifier" ;
+    schema:name "serie" ;
+    schema:position 1 .
+
 haObjId:07f974bc0a8b58f0863e1d41b071dbf6 a cryptographicHashFunctions:md5 ; 
     rdf:value "07f974bc0a8b58f0863e1d41b071dbf6" . 
  
@@ -239,8 +270,16 @@ haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity
         haObjId:uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43, 
         haObjId:uuid-ddcf9e36-35ae-11ed-b866-7e92631d7d27 ; 
     dct:created "1628/1629"^^edtf:EDTF ; 
-    dct:description "Painted around 1629 for the high altar of the Beguinage Church in Antwerp. A second copy is kept in Madrid (Prado); sketches at Leningrad (Hermitage) a smaller repetition at Hagley (Lord Littleton) a drawing in the Atger Museum in Montpellier and finally a grisaille study was in the Randon de Boisset auction in 1776. The painting was engraved by Paul Pontius and Andreas van Rymsdyck."@en, 
-        "Rond 1629 geschilderd voor het hoogaltaar van de Begijnhofkerk te Antwerpen. Een tweede exemplaar wordt bewaard te Madrid (Prado); schetsen te Leningrad (Hermitage) een kleinere herhaling te Hagley (Lord Littleton) een tekening in Atger Museum te Montpellier en een grisaille studie tenslotte bevond zich in 1776 in de veiling Randon de Boisset. Het schilderij werd gegraveerd door Paul Pontius en Andreas van Rymsdyck."@nl ; 
+    dct:description """Painted around 1629 for the high altar of the Beguinage Church
+    in Antwerp. A second copy is kept in Madrid (Prado); sketches at Leningrad (Hermitage) a smaller
+    repetition at Hagley (Lord Littleton) a drawing in the Atger Museum in Montpellier and finally a
+    grisaille study was in the Randon de Boisset auction in 1776. The painting was engraved by Paul
+    Pontius and Andreas van Rymsdyck."""@en,
+        """Rond 1629 geschilderd voor het hoogaltaar van de Begijnhofkerk
+    te Antwerpen. Een tweede exemplaar wordt bewaard te Madrid (Prado); schetsen te Leningrad
+    (Hermitage) een kleinere herhaling te Hagley (Lord Littleton) een tekening in Atger Museum te
+    Montpellier en een grisaille studie tenslotte bevond zich in 1776 in de veiling Randon de
+    Boisset. Het schilderij werd gegraveerd door Paul Pontius en Andreas van Rymsdyck."""@nl ;
     dct:subject "Christus"@nl, 
         "religie"@nl, 
         "topstukken"@nl ; 
@@ -254,6 +293,11 @@ haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity
     schema:artform "painting"@en, 
         "schilderij"@nl ; 
     dct:extent "P5Y"^^xsd:duration ;
+    schema:isPartOf haObjId:0132fb50cb37f922f0810f1740306382,
+        haObjId:07d49c462cb393d27845ff9474653277,
+        haObjId:cf072bf7d63502f7ed7c60381c7ceb66,
+        haObjId:ec3781968a859f5a11da097c5a602ac8,
+        haObjId:f263d9a8b7cb4a9e573c18e5b9e15091 ;
     schema:creator haObjId:5d237966fab150332400a5e667ad1147 ; 
     schema:height haObjId:764a8e07b6366c0a36737da232ac2a8b ; 
     schema:width haObjId:87d9731417b13d59cdc69ec6e120f0c1 . 
