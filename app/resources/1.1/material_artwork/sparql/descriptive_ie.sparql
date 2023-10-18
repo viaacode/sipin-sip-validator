@@ -13,10 +13,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 CONSTRUCT
 {
-    ?collection a ?collection_type ;
+    ?is_part_of a ?is_part_of_type_iri ;
         schema:hasPart ?ie ;
-        schema:name ?collection_name ;
-        schema:identifier ?collection_id .
+        schema:name ?is_part_of_name ;
+        schema:identifier ?is_part_of_id ;
+        schema:position ?is_part_of_series_number ;
+        schema:seasonNumber ?is_part_of_season_number ;
+        schema:hasPart ?has_part_iri .
+
+    ?has_part_iri a ?has_party_type_iri;
+        schema:name ?has_part_name .
 
     ?ie a premisowl:IntellectualEntity ;
         ?p ?o;
@@ -25,7 +31,7 @@ CONSTRUCT
         schema:width ?width ;
         schema:depth ?depth ;
         schema:weight ?weight ;
-        schema:isPartOf ?collection .
+        schema:isPartOf ?is_part_of .
 
     ?height a schema:QuantitativeValue ;
         ?height_p ?height_b_value_dt .
@@ -195,34 +201,70 @@ WHERE
 
         # endregion
 
-        # region collection
+        # region isPartOf
         OPTIONAL {
             [] a fx:root;
-            ?root_list_7 ?_collection .
-            ?_collection a schema:isPartOf ;
-                xsi:type ?coll_type .
+            ?root_list_7 ?_is_part_of .
+            ?_is_part_of a schema:isPartOf ;
+                xsi:type ?is_part_of_type .
             OPTIONAL {
-                ?_collection ?coll_1 [
+                ?_is_part_of ?is_part_of_1 [
                     a schema:name ;
-                    rdf:_1 ?collection_name ;
+                    rdf:_1 ?is_part_of_name ;
                 ] ;
             }
             Optional {
-                ?_collection ?coll_2 [
+                ?_is_part_of ?is_part_of_2 [
                     a schema:identifier ;
-                    rdf:_1 ?collection_id ;
+                    rdf:_1 ?is_part_of_id ;
                 ] 
+            }
+            Optional {
+                ?_is_part_of ?is_part_of_3 [
+                    a schema:seasonNumber ;
+                    rdf:_1 ?_is_part_of_season_number ;
+                ] 
+            }
+            Optional {
+                ?_is_part_of ?is_part_of_4 [
+                    a schema:position ;
+                    rdf:_1 ?_is_part_of_series_number ;
+                ] 
+            }
+            Optional {
+                ?_is_part_of ?is_part_of_5 [
+                    a schema:hasPart ;
+                    xsi:type ?has_part_type ;
+                    ?_has_part [
+                        a schema:name ;
+                        rdf:_1 ?has_part_name ;
+                    ]
+                ]
             }
         }
 
         BIND(
             COALESCE(
-                IF(bound(?collection_id), IRI(CONCAT(str(haObjId:), ?collection_id)), 1/0),
-                IRI(CONCAT(str(haObjId:), MD5(?collection_name)))
+                IF(bound(?is_part_of_id), IRI(CONCAT(str(haObjId:), ?is_part_of_id)), 1/0),
+                IRI(CONCAT(str(haObjId:), MD5(?is_part_of_name)))
             )
-            AS ?collection
+            AS ?is_part_of
         )
-        BIND(IRI(REPLACE(?coll_type, "schema:", "https://schema.org/")) AS ?collection_type)
+        BIND(IRI(REPLACE(?is_part_of_type, "schema:", "https://schema.org/")) AS ?is_part_of_type_iri)
+
+        BIND(
+            IF(BOUND(?has_part_name), IRI(CONCAT(str(haObjId:), MD5(?has_part_name))), ?undefined_1)
+            AS ?has_part_iri
+        )
+        BIND(IRI(REPLACE(?has_part_type, "schema:", "https://schema.org/")) AS ?has_party_type_iri)
+        BIND(
+            IF(BOUND(?_is_part_of_season_number), STRDT(?_is_part_of_season_number, xsd:integer), ?undefined_2 )
+            AS ?is_part_of_season_number
+        )
+        BIND(
+            IF(BOUND(?_is_part_of_series_number), STRDT(?_is_part_of_series_number, xsd:integer), ?undefined_3 )
+            AS ?is_part_of_series_number
+        )
 
         # endregion
 

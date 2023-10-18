@@ -33,6 +33,37 @@ haObjId:uuid-07DBD6F2-182C-4C58-BCFC-FDCDFC9048F4 a premisowl:Event,
     haObj:scan-setup "vaste opstelling, persoon met scanner beweegt rond beeld" ; 
     schema:instrument haObjId:uuid-1cc1fe7a-da78-4c53-847a-0fd141ce2d3b . 
  
+haObjId:0132fb50cb37f922f0810f1740306382 a schema:BroadcastEvent ;
+    schema:hasPart haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 ;
+    schema:name "programma" .
+
+haObjId:07d49c462cb393d27845ff9474653277 a schema:ArchiveComponent ;
+    schema:hasPart haObjId:b061de6bcc54e348f42f964e871d2e19,
+        haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 ;
+    schema:name "archief" .
+
+haObjId:b061de6bcc54e348f42f964e871d2e19 a schema:ArchiveComponent ;
+    schema:name "deelarchief" .
+
+haObjId:cf072bf7d63502f7ed7c60381c7ceb66 a schema:CreativeWorkSeason ;
+    schema:hasPart haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 ;
+    schema:name "seizoen" ;
+    schema:seasonNumber 1 .
+
+haObjId:e3dc137c0cf24247484190d5da054939 a schema:CreativeWorkSeries ;
+    schema:name "deelserie" .
+
+haObjId:ec3781968a859f5a11da097c5a602ac8 a schema:Episode ;
+    schema:hasPart haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 ;
+    schema:name "episode" .
+
+haObjId:f263d9a8b7cb4a9e573c18e5b9e15091 a schema:CreativeWorkSeries ;
+    schema:hasPart haObjId:e3dc137c0cf24247484190d5da054939,
+        haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 ;
+    schema:identifier "serie identifier" ;
+    schema:name "serie" ;
+    schema:position 1 .
+
 haObjId:uuid-640692b1-0ce4-41d9-a071-7a2b07435277 a premisowl:Event, 
         haObj:quality_control ; 
     premisowl:note "qc note" ; 
@@ -270,8 +301,13 @@ haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 a premisowl:IntellectualEntity
     schema:creator haObjId:141bb070feb1e573e103494e650be44a ; 
     schema:depth haObjId:f9f78166c1351f44aba3d3cd877a96f6 ; 
     schema:height haObjId:8b98987bfc4a27339e4729ef0bd837de ; 
-    schema:isPartOf haObjId:uuid-855bdf50-8c81-43a2-8218-b3245502abff ; 
-    schema:weight haObjId:df45ea51a0bd0c76c456f844e1a8d45e ; 
+    schema:isPartOf haObjId:0132fb50cb37f922f0810f1740306382,
+        haObjId:07d49c462cb393d27845ff9474653277,
+        haObjId:cf072bf7d63502f7ed7c60381c7ceb66,
+        haObjId:ec3781968a859f5a11da097c5a602ac8,
+        haObjId:f263d9a8b7cb4a9e573c18e5b9e15091,
+        haObjId:uuid-855bdf50-8c81-43a2-8218-b3245502abff ;
+    schema:weight haObjId:df45ea51a0bd0c76c456f844e1a8d45e ;
     schema:width haObjId:d4e28b990fcbc7c7159821db800502da . 
  
 haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 a cryptographicHashFunctions:md5 ; 

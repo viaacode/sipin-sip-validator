@@ -107,7 +107,7 @@
       [ sh:class schema:CreativeWorkSeason ]
       [ sh:class schema:Collection ]
     ) ;
-    sh:message """`dcterms:isPartOf` not of type `schema:Episode`, `schema:ArchiveComponent`, `schema:CreativeWorkSeries`, `schema:BroadcastEvent`, `schema:Collection` or `schema:CreativeWorkSeason`.
+    sh:message """`schema:isPartOf` not of type `schema:Episode`, `schema:ArchiveComponent`, `schema:CreativeWorkSeries`, `schema:BroadcastEvent`, `schema:Collection` or `schema:CreativeWorkSeason`.
       """@en ;
   ] .
 
@@ -121,7 +121,8 @@
     sh:datatype xsd:string ;
     sh:description "The name of the collection."@en ;
     sh:message "The name is not a string or occurs more than once."@en ;
-    sh:uniqueLang true
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
   ],
   [
     a sh:PropertyShape ;
@@ -130,8 +131,139 @@
     sh:datatype xsd:string ;
     sh:severity sh:Warning ;
     sh:description "The identifier of the collection."@en ;
-    sh:message "The identifier is not a string or is absent."@en ;
+    sh:message "The identifier is not a string, is absent or ooccurs more than once."@en ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#ArchiveComponentShape> a sh:NodeShape ;
+  sh:targetClass schema:ArchiveComponent ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The name of the archive component."@en ;
+    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
+    sh:nodeKind sh:IRI ;
+    sh:or (
+      [ sh:class premis:IntellectualEntity ]
+      [ sh:class schema:ArchiveComponent ]
+    ) ;
+    sh:minCount 0 ;
+    sh:message """`schema:hasPart` not of type `premis:IntellectualEntity` or `schema:ArchiveComponent`."""@en ;
+  ] .
+
+<#CreativeWorkSeriesShape> a sh:NodeShape ;
+  sh:targetClass schema:CreativeWorkSeries ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The name of the series."@en ;
+    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:position ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:description "The series number."@en ;
+    sh:message "The series number is not an integer or occurs more than once"@en ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
+    sh:nodeKind sh:IRI ;
+    sh:or (
+      [ sh:class premis:IntellectualEntity ]
+      [ sh:class schema:CreativeWorkSeries ]
+    ) ;
+    sh:minCount 0 ;
+    sh:message """`schema:hasPart` not of type `premis:IntellectualEntity` or `schema:CreativeWorkSeries`."""@en ;
+  ] .
+
+<#BroadcastEventShape> a sh:NodeShape ;
+  sh:targetClass schema:BroadcastEvent ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The name of the broadcast event."@en ;
+    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:IntellectualEntity ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message """`schema:hasPart` not of type `premis:IntellectualEntity`."""@en ;
+  ] .
+
+<#CreativeWorkSeasonShape> a sh:NodeShape ;
+  sh:targetClass schema:CreativeWorkSeason ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The name of the season."@en ;
+    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:seasonNumber ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:description "The season number."@en ;
+    sh:message "The season number is not an integer or occurs more than once"@en ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#EpisodeShape> a sh:NodeShape ;
+  sh:targetClass schema:Episode ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:description "The name of the episode"@en ;
+    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:IntellectualEntity ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message """`schema:hasPart` not of type `premis:IntellectualEntity`."""@en ;
   ] .
 
 <#RepresentationShape> a sh:NodeShape ;
