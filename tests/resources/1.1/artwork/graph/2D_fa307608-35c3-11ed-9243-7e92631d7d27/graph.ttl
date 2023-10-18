@@ -7,7 +7,8 @@
 @prefix haOrgId: <https://data.hetarchief.be/id/organization/> . 
 @prefix haSip: <https://data.hetarchief.be/ns/sip/> . 
 @prefix haSipId: <https://data.hetarchief.be/id/sip/1.1/> . 
-@prefix ns1: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> . 
+@prefix evtRelAgent: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> .
+@prefix evtRelObject: <http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/> .
 @prefix org: <http://www.w3.org/ns/org#> . 
 @prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> . 
 @prefix prov: <http://www.w3.org/ns/prov#> . 
@@ -20,7 +21,12 @@
  
 haObjId:uuid-AA32FAEC-A8CF-4B6A-9F3E-E2216A396B21 a premisowl:Event, 
         haObj:digitization ; 
-    ns1:imp haObjId:OR-xg9fb0b ; 
+    evtRelAgent:imp haObjId:OR-xg9fb0b ;
+    evtRelObject:out haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1,
+        haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572,
+        haObjId:uuid-51F2C0F1-CA06-4B59-9605-54F7C91BA53F,
+        haObjId:uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43,
+        haObjId:uuid-ddcf9e36-35ae-11ed-b866-7e92631d7d27 ;
     premisowl:outcome eventOutcome:suc ; 
     prov:endedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime ; 
     prov:startedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime . 
