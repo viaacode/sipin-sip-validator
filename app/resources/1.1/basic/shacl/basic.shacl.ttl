@@ -896,6 +896,13 @@
     sh:nodeKind sh:IRI ;
     sh:name "has output"@en ;
     sh:description "The output of the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelObjRole:sou ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has source"@en ;
+    sh:description "The source of the event."@en ;
   ] .
 
 <#HardwareAgentShape> a sh:NodeShape ;
