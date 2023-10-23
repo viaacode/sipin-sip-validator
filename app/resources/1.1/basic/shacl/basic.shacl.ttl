@@ -35,6 +35,11 @@
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
   sh:closed true ;
+  sh:nodeKind sh:IRI ;
+  sh:message """No premis:objectIdentifier specified with UUID premis:objectIdentifierType.
+    Please check `premis:premis/premis:object/premis:objectIdentifier`
+    OR No dcterms:identifier specified.
+    Please check `metadata/dcterms:identifier`"""@en ;
   sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;

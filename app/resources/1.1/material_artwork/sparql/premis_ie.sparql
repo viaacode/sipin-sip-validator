@@ -68,7 +68,7 @@ CONSTRUCT {
 }
 WHERE {
     SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/preservation/premis.xml> {
-        {
+        OPTIONAL {
             {
                 SELECT DISTINCT ?local_id_type ?local_id_val
                 WHERE {
@@ -99,7 +99,7 @@ WHERE {
                     a premis:objectIdentifier;
                     ?ie_2 [
                             a premis:objectIdentifierType;
-                                rdf:_1 ?ie_id_type
+                                rdf:_1 "UUID"
                     ];
                     ?ie_3 [
                         a premis:objectIdentifierValue;
@@ -119,8 +119,14 @@ WHERE {
                     ]
                 ]
             }
-            FILTER (?ie_id_type = "UUID")
-            BIND(iri(concat(str(haObjId:), ?id)) AS ?ie)
+            BIND(
+                IF(
+                    BOUND(?id),
+                    iri(concat(str(haObjId:), ?id)),
+                    "IE premis objectIdentifier not found"
+                ) 
+                AS ?ie
+            )
             BIND(iri(concat(str(haObjId:), ?ie_rel_rep_id)) AS  ?rep)
         }
         {
