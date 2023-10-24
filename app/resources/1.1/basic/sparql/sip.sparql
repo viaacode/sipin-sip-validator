@@ -31,7 +31,8 @@ CONSTRUCT {
             a schema:Role ;
             schema:roleName ?role;
             schema:agent ?agent
-        ] .
+        ] ;
+        schema:isPartOf ?batch .
 
     ?agent  a ?atype;
         skos:prefLabel ?alabel;
