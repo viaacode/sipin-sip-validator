@@ -26,49 +26,89 @@ CONSTRUCT {
     ?sip a haSip:SIP;
     dct:conformsTo ?mets_profile;
     dct:conformsTo ?sip_profile;
+    dct:format ?type;
     schema:agent [
+        a schema:Role ;
         schema:roleName ?role;
         schema:agent ?agent
     ].
 
     ?agent  a ?atype;
-            skos:prefLabel ?alabel;
-            schema:name ?aname;
-            schema:identifier ?agent_id
+        skos:prefLabel ?alabel;
+        schema:name ?aname;
+        schema:identifier ?agent_id
 }
 WHERE {
     SERVICE <x-sparql-anything:location={{ bag_path }}/data/mets.xml> {
-        [
-            a mets:mets;
-            xyz:OBJID ?sip_id;
-            xyz:PROFILE ?mets_profile;
-            csip:CONTENTINFORMATIONTYPE ?sip_profile;
-            ?1 [
-                a mets:metsHdr;
-                #csip:OAISPACKAGETYPE ?type;
-                ?2 [
-                    a mets:agent;
-                    xyz:ROLE ?role;
-                    xyz:TYPE ?agent_type;
-                    ?3 [
-                        a mets:name;
-                        rdf:_1 ?agent_name
-                    ];
-                    ?4 [
-                        a mets:note;
-                        csip:NOTETYPE "IDENTIFICATIONCODE";
-                        rdf:_1 ?agent_id
-                    ]
-                ]
-            ]
-        ] 
-
-        BIND(iri(concat(str(haSipId:), ?sip_id)) AS ?sip)
+        {
+            ?mets a mets:mets .
+            OPTIONAL {
+                ?mets xyz:OBJID ?sip_id .
+            }
+            OPTIONAL {
+                ?mets xyz:PROFILE ?_mets_profile .
+                BIND(iri(?_mets_profile) AS ?mets_profile)
+            }
+            OPTIONAL {
+                ?mets xyz:TYPE ?type .
+            }
+            OPTIONAL {
+                ?mets csip:CONTENTINFORMATIONTYPE ?_sip_profile .
+                BIND(iri(?_sip_profile) AS ?sip_profile)
+            }
+            OPTIONAL {
+                ?mets ?1 ?_mets_hdr .
+                ?_mets_hdr a mets:metsHdr .
+                OPTIONAL {
+                    ?_mets_hdr ?2 ?_agent .
+                    ?_agent a mets:agent .
+                    OPTIONAL {
+                        ?_agent ?3 ?_name .
+                        ?_name a mets:name ;
+                            rdf:_1 ?agent_name .
+                    }
+                    OPTIONAL {
+                        ?_agent ?4 ?_note .
+                        ?_note a mets:note ;
+                            csip:NOTETYPE "IDENTIFICATIONCODE" ;
+                            rdf:_1 ?agent_id .
+                    }
+                    OPTIONAL {
+                        ?_agent xyz:ROLE ?role .
+                    }
+                    OPTIONAL {
+                        ?_agent xyz:TYPE ?agent_type .
+                        
+                    }
+                }
+            }
+            BIND(
+                IF(
+                    BOUND(?sip_id),
+                    iri(concat(str(haSipId:), ?sip_id)),
+                    BNODE()
+                )
+            AS ?sip)
+        }
+        
         BIND(
-            IF(?agent_type = "ORGANIZATION", org:Organization,
-                IF(?agent_type = "INDIVIDUAL", schema:Person, ?null)
-            ) AS ?atype)
-        BIND(IF(?agent_type = "ORGANIZATION", STRLANG(?agent_name, "nl"), ?null2) AS ?alabel)
+            IF(
+                ?agent_type = "ORGANIZATION",
+                org:Organization,
+                IF(
+                    ?agent_type = "INDIVIDUAL",
+                    schema:Person,
+                    ?null
+                )
+            ) 
+        AS ?atype)
+        BIND(
+            IF(
+                ?agent_type = "ORGANIZATION",
+                STRLANG(?agent_name, "nl"),
+                ?null2
+            ) 
+        AS ?alabel)
         BIND(IF(?agent_type = "INDIVIDUAL", STRDT(?agent_name, xsd:string), ?null3) AS ?aname)
         BIND(iri(concat(str(haOrgId:), ?agent_id)) AS  ?agent)
     }
