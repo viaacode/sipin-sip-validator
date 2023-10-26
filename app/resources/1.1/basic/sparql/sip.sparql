@@ -36,7 +36,9 @@ CONSTRUCT {
     ?agent  a ?atype;
         skos:prefLabel ?alabel;
         schema:name ?aname;
-        schema:identifier ?agent_id
+        schema:identifier ?agent_id;
+        schema:version ?agent_software_version
+
 }
 WHERE {
     SERVICE <x-sparql-anything:location={{ bag_path }}/data/mets.xml> {
@@ -74,11 +76,20 @@ WHERE {
                             rdf:_1 ?agent_id .
                     }
                     OPTIONAL {
+                        ?_agent ?5 ?_note .
+                        ?_note a mets:note ;
+                            csip:NOTETYPE "SOFTWARE VERSION" ;
+                            rdf:_1 ?agent_software_version .
+                    }
+                    OPTIONAL {
                         ?_agent xyz:ROLE ?role .
                     }
                     OPTIONAL {
                         ?_agent xyz:TYPE ?agent_type .
                         
+                    }
+                    OPTIONAL {
+                        ?_agent xyz:OTHERTYPE ?agent_other_type .
                     }
                 }
             }
@@ -93,23 +104,51 @@ WHERE {
         
         BIND(
             IF(
-                ?agent_type = "ORGANIZATION",
+                BOUND(?agent_type) && ?agent_type = "ORGANIZATION",
                 org:Organization,
                 IF(
-                    ?agent_type = "INDIVIDUAL",
+                    BOUND(?agent_type) && ?agent_type = "INDIVIDUAL",
                     schema:Person,
-                    ?null
+                    IF(
+                        BOUND(?agent_type) && ?agent_type = "OTHER",
+                        IF(
+                            BOUND(?agent_other_type) && ?agent_other_type = "SOFTWARE",
+                            premis:SoftwareAgent,
+                            "Unkown Agent OtherType"
+                        ),
+                        "Unkown Agent Type"
+                    )
                 )
-            ) 
+            )
         AS ?atype)
         BIND(
             IF(
-                ?agent_type = "ORGANIZATION",
+                BOUND(?agent_type) && ?agent_type = "ORGANIZATION",
                 STRLANG(?agent_name, "nl"),
                 ?null2
             ) 
         AS ?alabel)
-        BIND(IF(?agent_type = "INDIVIDUAL", STRDT(?agent_name, xsd:string), ?null3) AS ?aname)
-        BIND(iri(concat(str(haOrgId:), ?agent_id)) AS  ?agent)
+        BIND(
+            IF(
+                !BOUND(?agent_type) || ?agent_type != "ORGANIZATION", 
+                STRDT(?agent_name, xsd:string), 
+                ?null3
+            ) 
+        AS ?aname)
+        BIND(
+            IF(
+                BOUND(?agent_id),
+                iri(concat(str(haOrgId:), ?agent_id)),
+                IF(
+                    BOUND(?agent_name) && BOUND(?agent_software_version),
+                    iri(concat(str(haOrgId:), MD5(CONCAT(?agent_name, ?agent_software_version)))),
+                    IF(
+                        BOUND(?agent_name),
+                        iri(concat(str(haOrgId:), MD5(?agent_name))),
+                        "No name (or if software, software version) found"
+                    )
+                )
+            )
+        AS ?agent)
     }
 }
