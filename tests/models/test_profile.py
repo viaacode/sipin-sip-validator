@@ -363,6 +363,18 @@ class TestMaterialArtworkProfile11:
         )
         return MaterialArtworkProfile11(path)
 
+    @pytest.fixture
+    def minimal(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "artwork",
+            "sips",
+            "minimal",
+        )
+        return MaterialArtworkProfile11(path)
+
     @pytest.mark.parametrize(
         "profile_name",
         ["profile_2D", "profile_3D"],
@@ -388,6 +400,7 @@ class TestMaterialArtworkProfile11:
         [
             ("profile_2D", "2D_fa307608-35c3-11ed-9243-7e92631d7d27"),
             ("profile_3D", "3D_3d4bd7ca-38c6-11ed-95f2-7e92631d7d28"),
+            ("minimal", "minimal"),
         ],
     )
     def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
