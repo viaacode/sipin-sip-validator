@@ -113,7 +113,7 @@ WHERE {
                         BOUND(?agent_type) && ?agent_type = "OTHER",
                         IF(
                             BOUND(?agent_other_type) && ?agent_other_type = "SOFTWARE",
-                            premis:SoftwareAgent,
+                            premisowl:SoftwareAgent,
                             "Unkown Agent OtherType"
                         ),
                         "Unkown Agent Type"
