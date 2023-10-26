@@ -87,7 +87,7 @@ sh:targetClass org:Organization;
     sh:path schema:identifier;
     sh:minCount 1;
     sh:maxCount 1;
-    sh:datatype xsd:string.
+    sh:datatype xsd:string;
     sh:message """No agent identifier provided
       Please check `mets/metsHdr/agent[@TYPE='ORGANIZATION']/note`"""@en ;
   ],[
@@ -131,7 +131,7 @@ sh:targetClass schema:Person;
     sh:path schema:version;
     sh:minCount 1;
     sh:maxCount 1;
-    sh:datatype xsd:string
+    sh:datatype xsd:string;
     sh:message """No agent version provided
       Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/note`"""@en ;
   ] .
