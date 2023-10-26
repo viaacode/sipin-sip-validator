@@ -43,14 +43,13 @@
   [
     a sh:PropertyShape ;
     sh:path schema:agent ;
-    sh:node <#RoleShape>;
+    sh:node <#AgentRoleShape>;
     sh:name "has creator"@en ;
     sh:description "The creator of the SIP."@en ;
     sh:minCount 1
   ].
 
-<#RoleShape> a sh:NodeShape;
-sh:targetClass schema:Role;
+<#AgentRoleShape> a sh:NodeShape;
   sh:property [
     sh:path schema:roleName;
     sh:minCount 1;
