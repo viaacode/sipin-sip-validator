@@ -274,7 +274,7 @@
     a sh:PropertyShape ;
     sh:path schema:creator ;
     sh:nodeKind sh:IRI ;
-    # sh:node <#RoleShape> ;
+    sh:node <#RoleShape> ;
     sh:class schema:Role ;
     sh:name "creator"@en ;
     sh:description "The creator of the intellectual entity."@en ;

@@ -115,8 +115,7 @@ sh:targetClass schema:Person;
     sh:datatype xsd:string
   ] .
 
-<#SoftwareAgentShape> a sh:NodeShape;
-  sh:targetClass premis:SoftwareAgent;
+<#MetsSoftwareAgentShape> a sh:NodeShape;
   sh:nodeKind sh:IRI;
   sh:message """No agent name or version provided
     Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/name` or mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/note"""@en ;
