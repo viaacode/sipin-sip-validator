@@ -26,13 +26,19 @@ haObjId:uuid-AA32FAEC-A8CF-4B6A-9F3E-E2216A396B21 a premisowl:Event,
     prov:endedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime ;
     prov:startedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime .
 
-haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
-    dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/material-artwork",
-        "https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" ;
-    schema:agent [ schema:agent haOrgId:OR-m30wc4t ;
-            schema:roleName "CREATOR" ],
-        [ schema:agent haOrgId:OR-5h7bt1n ;
-            schema:roleName "ARCHIVIST" ] .
+    haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
+        dct:conformsTo haSipId:material-artwork,
+            <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+        dct:format "Physical object" ;
+        schema:agent [ a schema:Role ;
+                schema:agent haOrgId:3139ac42aa0f553ac530101ffb02cc28 ;
+                schema:roleName "CREATOR" ],
+            [ a schema:Role ;
+                schema:agent haOrgId:OR-5h7bt1n ;
+                schema:roleName "ARCHIVIST" ],
+            [ a schema:Role ;
+                schema:agent haOrgId:OR-m30wc4t ;
+                schema:roleName "CREATOR" ] .
 
 <http://the-fr.org/id/file-format/154> a dct:FileFormat .
 
@@ -66,6 +72,10 @@ haOrgId:OR-5h7bt1n a org:Organization ;
 haOrgId:OR-m30wc4t a org:Organization ;
     skos:prefLabel "artinflanders"@nl ;
     schema:identifier "OR-m30wc4t" .
+
+haOrgId:3139ac42aa0f553ac530101ffb02cc28 a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1.0" .
 
 haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 a premisowl:Representation ;
     relSubType:inc haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B ;
