@@ -71,7 +71,11 @@ haObjId:f263d9a8b7cb4a9e573c18e5b9e15091 a schema:CreativeWorkSeries ;
 
 haObjId:uuid-640692b1-0ce4-41d9-a071-7a2b07435277 a premisowl:Event, 
         haObj:quality_control ; 
-    premisowl:note "qc note" ; 
+    premisowl:note "qc note" ;
+    evtRelObject:sou haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27,
+        haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4,
+        haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28,
+        haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ;
     prov:endedAtTime "2022-08-20T00:00:00+00:00"^^xsd:dateTime ; 
     prov:startedAtTime "2022-08-20T00:00:00+00:00"^^xsd:dateTime . 
  
