@@ -79,13 +79,19 @@ haObjId:uuid-640692b1-0ce4-41d9-a071-7a2b07435277 a premisowl:Event,
     prov:endedAtTime "2022-08-20T00:00:00+00:00"^^xsd:dateTime ; 
     prov:startedAtTime "2022-08-20T00:00:00+00:00"^^xsd:dateTime . 
  
-haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ; 
-    dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/material-artwork", 
-        "https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" ; 
-    schema:agent [ schema:agent haOrgId:OR-5h7bt1n ; 
-            schema:roleName "ARCHIVIST" ], 
-        [ schema:agent haOrgId:OR-m30wc4t ; 
-            schema:roleName "CREATOR" ] . 
+    haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
+        dct:conformsTo haSipId:material-artwork,
+            <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+        dct:format "Physical Object" ;
+        schema:agent [ a schema:Role ;
+                schema:agent haOrgId:OR-5h7bt1n ;
+                schema:roleName "ARCHIVIST" ],
+            [ a schema:Role ;
+                schema:agent haOrgId:OR-m30wc4t ;
+                schema:roleName "CREATOR" ],
+            [ a schema:Role ;
+                schema:agent haOrgId:3139ac42aa0f553ac530101ffb02cc28 ;
+                schema:roleName "CREATOR" ] .
  
 <http://the-fr.org/id/file-format/115> a dct:FileFormat . 
  
@@ -232,6 +238,10 @@ haObjId:uuid-ace20074-874f-4ad3-a7a8-ad71832953f2 a premisowl:File ;
 haObjId:uuid-d6c5f78f-e850-435f-b0b2-e9b6dbf7a2b1 a premisowl:SoftwareAgent ; 
     schema:name "Flexscan3D, Artec studio 17, Adobe Photoshop CC 2019" . 
  
+haOrgId:3139ac42aa0f553ac530101ffb02cc28 a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1.0" .
+
 haOrgId:OR-5h7bt1n a org:Organization ; 
     skos:prefLabel "KMSKA"@nl ; 
     schema:identifier "OR-5h7bt1n" . 

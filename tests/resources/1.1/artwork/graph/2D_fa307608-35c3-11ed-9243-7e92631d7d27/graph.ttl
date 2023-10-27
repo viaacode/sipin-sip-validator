@@ -31,13 +31,19 @@ haObjId:uuid-AA32FAEC-A8CF-4B6A-9F3E-E2216A396B21 a premisowl:Event,
     prov:endedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime ; 
     prov:startedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime . 
  
-haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ; 
-    dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/material-artwork", 
-        "https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" ; 
-    schema:agent [ schema:agent haOrgId:OR-5h7bt1n ; 
-            schema:roleName "ARCHIVIST" ], 
-        [ schema:agent haOrgId:OR-m30wc4t ; 
-            schema:roleName "CREATOR" ] . 
+haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
+    dct:conformsTo haSipId:material-artwork,
+        <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+    dct:format "Physical object" ;
+    schema:agent [ a schema:Role ;
+            schema:agent haOrgId:3139ac42aa0f553ac530101ffb02cc28 ;
+            schema:roleName "CREATOR" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:OR-5h7bt1n ;
+            schema:roleName "ARCHIVIST" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
+            schema:roleName "CREATOR" ] .
  
 haObjId:0132fb50cb37f922f0810f1740306382 a schema:BroadcastEvent ;
     schema:hasPart haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
@@ -236,7 +242,11 @@ haObjId:uuid-fa0ab8f6-35ae-11ed-8d3d-7e92631d7d27 a premisowl:File ;
     premisowl:fixity haObjId:516255bf4553dc6530be6a9a4f7c4515 ; 
     premisowl:originalName "7m03z1634f_target_tiff.tiff" ; 
     premisowl:size 1067 . 
- 
+
+haOrgId:3139ac42aa0f553ac530101ffb02cc28 a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1.0" .
+
 haOrgId:OR-5h7bt1n a org:Organization ; 
     skos:prefLabel "KMSKA"@nl ; 
     schema:identifier "OR-5h7bt1n" . 

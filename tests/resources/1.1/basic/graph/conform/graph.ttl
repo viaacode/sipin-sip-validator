@@ -16,12 +16,18 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
-    dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/basic",
-        "https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" ;
-    schema:agent [ schema:agent haOrgId:OR-m30wc4t ;
+    dct:conformsTo haSipId:basic,
+        <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+    dct:format "Photographs – Digital" ;
+    schema:agent [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
+            schema:roleName "ARCHIVIST" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:570f779526a5acda5c2935ad1a346b2d ;
             schema:roleName "CREATOR" ],
-        [ schema:agent haOrgId:OR-m30wc4t ;
-            schema:roleName "ARCHIVIST" ] .
+        [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
+            schema:roleName "CREATOR" ] .
 
 <http://the-fr.org/id/file-format/1507> a dct:FileFormat .
 
@@ -52,6 +58,10 @@ haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d a premisowl:File ;
     premisowl:fixity haObjId:02e4eb2f74ac06dd9cdfab861553697e ;
     premisowl:originalName "D523F963.jpg" ;
     premisowl:size 520 .
+
+haOrgId:570f779526a5acda5c2935ad1a346b2d a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1" .
 
 haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ;
     relSubType:inc haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d ;

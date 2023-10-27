@@ -11,32 +11,45 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
-@prefix haSip: <https://data.hetarchief.be/id/sip/1.0/> .
+@prefix haSip: <https://data.hetarchief.be/ns/sip/> .
 @prefix org: <http://www.w3.org/ns/org#> .
 
 @base <https://data.hetarchief.be/ns/sip/shapes> .
 
 <#SIPShape> a sh:NodeShape ;
   sh:targetClass haSip:SIP ;
+  sh:nodeKind sh:IRI ; 
+  sh:message """No OBJID specified in mets root element
+    Please check `mets/@OBJID`"""@en ;
   sh:property [
     a sh:PropertyShape ;
     sh:path dct:conformsTo ;
     sh:nodeKind sh:IRI ;
-    sh:class haObj:LocalIdentifier ;
     sh:name "conforms to profile"@en ;
     sh:description "The profile that this SIP conforms to."@en ;
     sh:minCount 2;
     sh:maxCount 2
-  ],[
-      a sh:PropertyShape ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dct:format ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "format"@en ;
+    sh:description "The format of the SIP."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path schema:agent ;
-    sh:node <#RoleShape>;
+    sh:node <#AgentRoleShape>;
     sh:name "has creator"@en ;
     sh:description "The creator of the SIP."@en ;
     sh:minCount 1
   ].
 
-<#RoleShape> a sh:NodeShape;
+<#AgentRoleShape> a sh:NodeShape;
   sh:property [
     sh:path schema:roleName;
     sh:minCount 1;
@@ -45,17 +58,38 @@
   ],
   [
     sh:path schema:agent;
-    sh:minCount 0; 
+    sh:minCount 1; 
     sh:maxCount 1;
     sh:or (
         [sh:node <#OrganizationShape>]
         [sh:node <#PersonShape>]
-    )
-  ].
+        [sh:node <#SoftwareAgentShape>]
+    );
+  ],
+  [
+    sh:path schema:agent;
+    sh:or (
+      [sh:class org:Organization]
+      [sh:class schema:Person]
+      [sh:class premis:SoftwareAgent]
+    );
+    sh:message """No (valid) TYPE or (valid) OTHERTYPE specified in agent.
+    Please check `mets/metsHdr/agent/@TYPE` or `mets/metsHdr/agent/@OTHERTYPE`"""@en ;
+  ] .
 
 <#OrganizationShape> a sh:NodeShape;
 sh:targetClass org:Organization;
-  sh:property <#identifierShape>,[
+  sh:nodeKind sh:IRI;
+  sh:message """No agent name provided
+    Please check `mets/metsHdr/agent[@TYPE='ORGANIZATION']/name`"""@en ;
+  sh:property [
+    sh:path schema:identifier;
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+    sh:message """No agent identifier provided
+      Please check `mets/metsHdr/agent[@TYPE='ORGANIZATION']/note`"""@en ;
+  ],[
     sh:path skos:prefLabel;
     sh:minCount 1;
     sh:maxCount 1;
@@ -64,6 +98,9 @@ sh:targetClass org:Organization;
 
 <#PersonShape> a sh:NodeShape;
 sh:targetClass schema:Person;
+  sh:nodeKind sh:IRI;
+  sh:message """No agent name provided
+    Please check `mets/metsHdr/agent[@TYPE='INDIVIDUAL']/name`"""@en ;
   sh:property
   [
     sh:path schema:name;
@@ -76,6 +113,25 @@ sh:targetClass schema:Person;
     sh:minCount 0;
     sh:maxCount 1;
     sh:datatype xsd:string
+  ] .
+
+<#MetsSoftwareAgentShape> a sh:NodeShape;
+  sh:nodeKind sh:IRI;
+  sh:message """No agent name or version provided
+    Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/name` or mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/note"""@en ;
+  sh:property [
+    sh:path schema:name;
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:datatype xsd:string
+  ],
+  [
+    sh:path schema:version;
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+    sh:message """No agent version provided
+      Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/note`"""@en ;
   ] .
   
 <#identifierShape> a sh:PropertyShape;
