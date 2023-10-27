@@ -71,7 +71,18 @@
 
     <xs:complexType name="CollectionType">
     </xs:complexType>
-    
+
+    <xs:complexType name="Collection">
+        <xs:complexContent>
+            <xs:extension base="CollectionType">
+                <xs:all>
+                    <xs:element name="name" type="SimpleLiteral" />
+                    <xs:element name="identifier" type="SimpleLiteral" minOccurs="0" />
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
     <xs:complexType name="CreativeWorkSeries">
         <xs:complexContent>
             <xs:extension base="CollectionType">
