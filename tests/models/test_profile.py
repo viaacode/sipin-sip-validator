@@ -284,6 +284,18 @@ class TestBasicProfile11(TestBasicProfile10):
         return BasicProfile11(path)
 
     @pytest.fixture
+    def profile_conform_batch_id(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "conform_batch_id",
+        )
+        return BasicProfile11(path)
+
+    @pytest.fixture
     def profile_invalid_xml(self):
         path = Path(
             "tests",
@@ -327,6 +339,26 @@ class TestBasicProfile11(TestBasicProfile10):
             "basic",
             "graph",
         )
+
+    @pytest.mark.parametrize(
+        "profile_name, expected_graph_path",
+        [
+            ("profile_conform", "conform"),
+            ("profile_conform_extended", "conform_extended"),
+            ("profile_conform_batch_id", "conform_batch_id"),
+        ],
+    )
+    def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
+        profile = request.getfixturevalue(profile_name)
+        graph = profile.parse_graph()
+        # Check if valid
+        assert profile.validate_graph(graph)
+
+        # Check if expected
+        expected = Graph()
+        path = self.graph_path().joinpath(expected_graph_path, "graph.ttl")
+        expected.parse(str(path))
+        assert isomorphic(graph, expected)
 
 
 class TestMaterialArtworkProfile11:
