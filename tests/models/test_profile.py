@@ -396,6 +396,26 @@ class TestMaterialArtworkProfile11:
         assert not errors
 
     @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_2D", "profile_3D", "minimal"],
+    )
+    def test_validate_descriptive(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile._validate_descriptive()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_2D", "profile_3D", "minimal"],
+    )
+    def test_validate_metadata(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile.validate_metadata()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
         "profile_name, expected_graph_path",
         [
             ("profile_2D", "2D_fa307608-35c3-11ed-9243-7e92631d7d27"),
