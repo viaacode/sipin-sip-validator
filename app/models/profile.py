@@ -203,14 +203,14 @@ class BasicProfile10(Profile):
             premis_package = etree.parse(premis_package_path)
             premis_xsd.assertValid(premis_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e)))
+            errors.append(XMLNotValidError(str(e.error_log)))
 
         # PREMIS on representation level
         try:
             premis_representation = etree.parse(premis_representation_path)
             premis_xsd.assertValid(premis_representation)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e)))
+            errors.append(XMLNotValidError(str(e.error_log)))
 
         return errors
 
@@ -236,7 +236,7 @@ class BasicProfile10(Profile):
             dcterms_package = etree.parse(dcterms_package_path)
             dcterms_xsd.assertValid(dcterms_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            error = XMLNotValidError(str(e))
+            error = XMLNotValidError(str(e.error_log))
             return error
 
         return None
@@ -263,14 +263,14 @@ class BasicProfile10(Profile):
             mets_package = etree.parse(mets_package_path)
             mets_xsd.assertValid(mets_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e)))
+            errors.append(XMLNotValidError(str(e.error_log)))
 
         # METS on representation level
         try:
             mets_representation = etree.parse(mets_representation_path)
             mets_xsd.assertValid(mets_representation)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e)))
+            errors.append(XMLNotValidError(str(e.error_log)))
 
         return errors
 
@@ -388,7 +388,10 @@ class BasicProfile10(Profile):
         shacl_graph.parse(str(self.shacl_sip()), format="turtle")
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
         conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True, allow_warnings=True
+            data_graph=data_graph,
+            shacl_graph=shacl_graph,
+            meta_shacl=True,
+            allow_warnings=True,
         )
 
         if not conforms:
@@ -648,7 +651,7 @@ class MaterialArtworkProfile11(Profile):
             premis_package = etree.parse(premis_package_path)
             premis_xsd.assertValid(premis_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e)))
+            errors.append(XMLNotValidError(str(e.error_log)))
 
         # PREMIS on representation level
         for premis_representation_path in self.bag_path.glob(
@@ -667,7 +670,7 @@ class MaterialArtworkProfile11(Profile):
                 premis_representation = etree.parse(premis_representation_path)
                 premis_xsd.assertValid(premis_representation)
             except (etree.DocumentInvalid, etree.ParseError) as e:
-                errors.append(XMLNotValidError(str(e)))
+                errors.append(XMLNotValidError(str(e.error_log)))
 
         return errors
 
@@ -697,7 +700,7 @@ class MaterialArtworkProfile11(Profile):
             dcterms_package = etree.parse(dcterms_package_path)
             dc_schema_xsd.assertValid(dcterms_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e)))
+            errors.append(XMLNotValidError(str(e.error_log)))
 
         # DC+SCHEMA on representation level
         for dcterms_representation_path in self.bag_path.glob(
@@ -716,7 +719,7 @@ class MaterialArtworkProfile11(Profile):
                 dcterms_representation = etree.parse(dcterms_representation_path)
                 dc_schema_xsd.assertValid(dcterms_representation)
             except (etree.DocumentInvalid, etree.ParseError) as e:
-                errors.append(XMLNotValidError(str(e)))
+                errors.append(XMLNotValidError(str(e.error_log)))
 
         return errors
 
@@ -743,7 +746,7 @@ class MaterialArtworkProfile11(Profile):
             mets_package = etree.parse(mets_package_path)
             mets_xsd.assertValid(mets_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e)))
+            errors.append(XMLNotValidError(str(e.error_log)))
 
         # METS on representation level
         for mets_representation_path in self.bag_path.glob(
@@ -753,7 +756,7 @@ class MaterialArtworkProfile11(Profile):
                 mets_representation = etree.parse(mets_representation_path)
                 mets_xsd.assertValid(mets_representation)
             except (etree.DocumentInvalid, etree.ParseError) as e:
-                errors.append(XMLNotValidError(str(e)))
+                errors.append(XMLNotValidError(str(e.error_log)))
 
         return errors
 
@@ -936,7 +939,10 @@ class MaterialArtworkProfile11(Profile):
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
 
         conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph, shacl_graph=shacl_graph, meta_shacl=True, allow_warnings=True
+            data_graph=data_graph,
+            shacl_graph=shacl_graph,
+            meta_shacl=True,
+            allow_warnings=True,
         )
 
         if not conforms:
