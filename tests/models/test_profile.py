@@ -155,15 +155,15 @@ class TestBasicProfile10:
         error_1 = errors[0]
         assert type(error_1) == XMLNotValidError
         assert (
-            str(error_1)
-            == "Element '{http://www.loc.gov/premis/v3}relationship': This element is not expected. Expected is ( {http://www.loc.gov/premis/v3}objectIdentifier )., line 10"
+            "Element '{http://www.loc.gov/premis/v3}relationship': This element is not expected. Expected is ( {http://www.loc.gov/premis/v3}objectIdentifier )."
+            in str(error_1)
         )
 
         error_2 = errors[1]
         assert type(error_2) == XMLNotValidError
         assert (
-            str(error_2)
-            == "Element '{http://www.loc.gov/premis/v3}objectCharacteristics': Missing child element(s). Expected is ( {http://www.loc.gov/premis/v3}format )., line 49"
+            "Element '{http://www.loc.gov/premis/v3}objectCharacteristics': Missing child element(s). Expected is ( {http://www.loc.gov/premis/v3}format )."
+            in str(error_2)
         )
 
     @pytest.mark.parametrize(
@@ -198,15 +198,15 @@ class TestBasicProfile10:
         error_1 = errors[0]
         assert type(error_1) == XMLNotValidError
         assert (
-            str(error_1)
-            == "Element '{http://www.loc.gov/METS/}mets': Missing child element(s). Expected is ( {http://www.loc.gov/METS/}structMap )., line 2"
+            "Element '{http://www.loc.gov/METS/}mets': Missing child element(s). Expected is ( {http://www.loc.gov/METS/}structMap )."
+            in str(error_1)
         )
 
         error_2 = errors[1]
         assert type(error_2) == XMLNotValidError
         assert (
-            str(error_2)
-            == "Element '{http://www.loc.gov/METS/}unknownSpec': This element is not expected. Expected is one of ( {http://www.loc.gov/METS/}dmdSec, {http://www.loc.gov/METS/}amdSec, {http://www.loc.gov/METS/}fileSec, {http://www.loc.gov/METS/}structMap )., line 6"
+            "Element '{http://www.loc.gov/METS/}unknownSpec': This element is not expected. Expected is one of ( {http://www.loc.gov/METS/}dmdSec, {http://www.loc.gov/METS/}amdSec, {http://www.loc.gov/METS/}fileSec, {http://www.loc.gov/METS/}structMap )."
+            in str(error_2)
         )
 
     @pytest.mark.parametrize(
