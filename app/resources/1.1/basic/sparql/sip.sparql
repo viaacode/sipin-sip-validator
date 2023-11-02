@@ -24,21 +24,25 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 CONSTRUCT {
     ?sip a haSip:SIP;
-    dct:conformsTo ?mets_profile;
-    dct:conformsTo ?sip_profile;
-    dct:format ?type;
-    schema:agent [
-        a schema:Role ;
-        schema:roleName ?role;
-        schema:agent ?agent
-    ].
+        dct:conformsTo ?mets_profile;
+        dct:conformsTo ?sip_profile;
+        dct:format ?type;
+        schema:agent [
+            a schema:Role ;
+            schema:roleName ?role;
+            schema:agent ?agent
+        ] ;
+        schema:isPartOf ?batch .
 
     ?agent  a ?atype;
         skos:prefLabel ?alabel;
         schema:name ?aname;
         schema:identifier ?agent_id;
-        schema:version ?agent_software_version
+        schema:version ?agent_software_version .
 
+    ?batch a haSip:Batch;
+        schema:identifier ?bagIdValue;
+        schema:hasPart ?sip .
 }
 WHERE {
     SERVICE <x-sparql-anything:location={{ bag_path }}/data/mets.xml> {
@@ -150,5 +154,16 @@ WHERE {
                 )
             )
         AS ?agent)
+    }
+    SERVICE <x-sparql-anything:location={{ bag_path }}/bag-info.txt> {
+        OPTIONAL { 
+            fx:properties
+                  fx:txt.split  "\\n" .
+            [] fx:anySlot    ?o .
+            BIND(STRBEFORE(?o, ": ") AS ?_bagLabel)
+            BIND(STRAFTER(?o, ": ") AS ?bagIdValue)
+            FILTER(?_bagLabel = "Meemoo-Batch-Identifier")
+            BIND(iri(concat(str(haSipId:), ?bagIdValue)) AS ?batch)
+        }
     }
 }

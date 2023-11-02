@@ -47,6 +47,13 @@
     sh:name "has creator"@en ;
     sh:description "The creator of the SIP."@en ;
     sh:minCount 1
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:isPartOf ;
+    sh:nodeKind sh:IRI ;
+    sh:node <#BatchShape> ;
+    sh:class haSip:Batch ;
   ].
 
 <#AgentRoleShape> a sh:NodeShape;
@@ -133,7 +140,16 @@ sh:targetClass schema:Person;
     sh:message """No agent version provided
       Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/note`"""@en ;
   ] .
-  
+
+<#BatchShape> a sh:NodeShape;
+sh:targetClass haSip:Batch;
+  sh:property <#identifierShape>,[
+    sh:path schema:hasPart;
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:class haSip:SIP
+  ] .
+
 <#identifierShape> a sh:PropertyShape;
     sh:path schema:identifier;
     sh:minCount 1;
