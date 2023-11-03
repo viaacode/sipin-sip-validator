@@ -89,8 +89,6 @@
   [
     a sh:PropertyShape ;
     sh:path dcterms:title ;
-    sh:name "has title"@en ;
-    sh:description "The title of the intellectual entity."@en ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     sh:message """Intellectual entity has no `dcterms:title`.
@@ -110,11 +108,25 @@
   [
     a sh:PropertyShape ;
     sh:path dcterms:title ;
-    sh:name "has title"@en ;
-    sh:description "The title of the intellectual entity."@en ;
     sh:severity sh:Violation ;
     sh:uniqueLang true ;
     sh:message """Multiple values for `dcterms:title` with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:title ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:title` exceeds 256 characters.
+      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:title ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:title` is less than 3 characters.
       Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
   ],
   [
@@ -126,6 +138,22 @@
     sh:description "An alternative title of the intellectual entity."@en ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:alternative` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:alternative ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:alternative` exceeds 256 characters.
+      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:alternative ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:alternative` is less than 3 characters.
       Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
   ],
   [
@@ -207,6 +235,22 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:description ;
+    sh:maxLength 1024 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:description` exceeds 1024 characters.
+      Please check `metadata/dcterms:description[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:description ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:description` is less than 3 characters.
+      Please check `metadata/dcterms:description[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:abstract ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString;
@@ -225,6 +269,22 @@
     sh:severity sh:Violation ;
     sh:message """Multiple values for `dcterms:abstract` with the same `@xml:lang` attribute.
       Please check `metadata/dcterms:abstract[@xml:lang=*]`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:abstract ;
+    sh:maxLength 1024 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:abstract` exceeds 1024 characters.
+      Please check `metadata/dcterms:abstract[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:abstract ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:abstract` is less than 3 characters.
+      Please check `metadata/dcterms:abstract[@xml:lang=*]`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -298,11 +358,43 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:publisher ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:publisher` exceeds 256 characters.
+      Please check `metadata/dcterms:publisher`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:publisher ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:publisher` is less than 3 characters.
+      Please check `metadata/dcterms:publisher`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:contributor ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has contributor"@en ;
     sh:description "The contributor of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:contributor ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:contributor` exceeds 256 characters.
+      Please check `metadata/dcterms:contributor`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:contributor ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:contributor` is less than 3 characters.
+      Please check `metadata/dcterms:contributor`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -314,6 +406,22 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:creator ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:creator` exceeds 256 characters.
+      Please check `metadata/dcterms:creator`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:creator ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:creator` is less than 3 characters.
+      Please check `metadata/dcterms:creator`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:spatial ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
@@ -322,11 +430,43 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:spatial ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:spatial` exceeds 256 characters.
+      Please check `metadata/dcterms:spatial`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:spatial ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:spatial` is less than 3 characters.
+      Please check `metadata/dcterms:spatial`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:temporal ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has temporal coverage"@en ;
     sh:description "The temporal coverage of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:temporal ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:temporal` exceeds 256 characters.
+      Please check `metadata/dcterms:temporal`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:temporal ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:temporal` is less than 3 characters.
+      Please check `metadata/dcterms:temporal`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -350,6 +490,22 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:subject ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:subject` exceeds 256 characters.
+      Please check `metadata/dcterms:subject`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:subject ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:subject` is less than 3 characters.
+      Please check `metadata/dcterms:subject`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:language ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
@@ -366,6 +522,22 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:language ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:language` exceeds 256 characters.
+      Please check `metadata/dcterms:language`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:language ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:language` is less than 3 characters.
+      Please check `metadata/dcterms:language`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:license ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
@@ -379,6 +551,22 @@
     sh:severity sh:Warning ;
     sh:message """Intellectual entity has no values for `dcterms:license`.
       Please check `metadata/dcterms:license`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:license ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:license` exceeds 256 characters.
+      Please check `metadata/dcterms:license`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:license ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:license` is less than 3 characters.
+      Please check `metadata/dcterms:license`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -403,6 +591,22 @@
     sh:severity sh:Violation ;
     sh:message """More than one value for `dcterms:rightsHolder`.
       Please check `metadata/dcterms:rightsHolder`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rightsHolder ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:rightsHolder` exceeds 256 characters.
+      Please check `metadata/dcterms:rightsHolder`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rightsHolder ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:rightsHolder` is less than 3 characters.
+      Please check `metadata/dcterms:rightsHolder`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -435,6 +639,22 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:rights ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:rights` exceeds 256 characters.
+      Please check `metadata/dcterms:rights[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rights ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:rights` is less than 3 characters.
+      Please check `metadata/dcterms:rights[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:type ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
@@ -448,6 +668,22 @@
     sh:severity sh:Violation ;
     sh:message """More than one value for `dcterms:type`.
       Please check `metadata/dcterms:type`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:type ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:type` exceeds 256 characters.
+      Please check `metadata/dcterms:type`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:type ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:type` is less than 3 characters.
+      Please check `metadata/dcterms:type`."""@en ;
   ] .
 
 <#RepresentationShape> a sh:NodeShape ;
@@ -532,6 +768,22 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:title ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:title` exceeds 256 characters.
+      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:title ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:title` is less than 3 characters.
+      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:alternative ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString;
@@ -540,6 +792,22 @@
     sh:severity sh:Violation ;
     sh:message """`dcterms:alternative` is not a string or has no `@xml:lang` attribute.
       Please check `metadata/dcterms:alternative`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:alternative ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:alternative` exceeds 256 characters.
+      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:alternative ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:alternative` is less than 3 characters.
+      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -600,6 +868,22 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:description ;
+    sh:maxLength 1024 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:description` exceeds 1024 characters.
+      Please check `metadata/dcterms:description[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:description ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:description` is less than 3 characters.
+      Please check `metadata/dcterms:description[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:abstract ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString;
@@ -616,6 +900,22 @@
     sh:severity sh:Violation ;
     sh:message """`dcterms:abstract` has multiple values with the same `@xml:lang` attribute.
       Please check `metadata/dcterms:abstract`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:abstract ;
+    sh:maxLength 1024 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:abstract` exceeds 1024 characters.
+      Please check `metadata/dcterms:abstract[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:abstract ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:abstract` is less than 3 characters.
+      Please check `metadata/dcterms:abstract[@xml:lang=*]`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -675,11 +975,43 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:publisher ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:publisher` exceeds 256 characters.
+      Please check `metadata/dcterms:publisher`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:publisher ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:publisher` is less than 3 characters.
+      Please check `metadata/dcterms:publisher`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:contributor ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has contributor"@en ;
     sh:description "The contributor of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:contributor ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:contributor` exceeds 256 characters.
+      Please check `metadata/dcterms:contributor`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:contributor ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:contributor` is less than 3 characters.
+      Please check `metadata/dcterms:contributor`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -691,6 +1023,22 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:creator ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:creator` exceeds 256 characters.
+      Please check `metadata/dcterms:creator`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:creator ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:creator` is less than 3 characters.
+      Please check `metadata/dcterms:creator`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:spatial ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
@@ -699,11 +1047,43 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:spatial ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:spatial` exceeds 256 characters.
+      Please check `metadata/dcterms:spatial`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:spatial ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:spatial` is less than 3 characters.
+      Please check `metadata/dcterms:spatial`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:temporal ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has temporal coverage"@en ;
     sh:description "The temporal coverage of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:temporal ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:temporal` exceeds 256 characters.
+      Please check `metadata/dcterms:temporal`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:temporal ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:temporal` is less than 3 characters.
+      Please check `metadata/dcterms:temporal`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -719,11 +1099,43 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:subject ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:subject` exceeds 256 characters.
+      Please check `metadata/dcterms:subject`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:subject ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:subject` is less than 3 characters.
+      Please check `metadata/dcterms:subject`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:language ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has language"@en ;
     sh:description "The language of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:language ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:language` exceeds 256 characters.
+      Please check `metadata/dcterms:language`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:language ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:language` is less than 3 characters.
+      Please check `metadata/dcterms:language`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -740,6 +1152,22 @@
     sh:severity sh:Violation ;
     sh:message """Representation has more than one value for `dcterms:rightsHolder`.
       Please check `metadata/dcterms:rightsHolder`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rightsHolder ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:rightsHolder` exceeds 256 characters.
+      Please check `metadata/dcterms:rightsHolder`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rightsHolder ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:rightsHolder` is less than 3 characters.
+      Please check `metadata/dcterms:rightsHolder`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -762,11 +1190,43 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path dcterms:rights ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:rights` exceeds 256 characters.
+      Please check `metadata/dcterms:rights[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rights ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:rights` is less than 3 characters.
+      Please check `metadata/dcterms:rights[@xml:lang=*]`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path dcterms:license ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has license"@en ;
     sh:description "The license of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:license ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:license` exceeds 256 characters.
+      Please check `metadata/dcterms:license`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:license ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:license` is less than 3 characters.
+      Please check `metadata/dcterms:license`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -783,6 +1243,22 @@
     sh:severity sh:Violation ;
     sh:message """Representation has more than one value for `dcterms:type`.
       Please check `metadata/dcterms:type`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:type ;
+    sh:maxLength 256 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:type` exceeds 256 characters.
+      Please check `metadata/dcterms:type`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:type ;
+    sh:minLength 3 ;
+    sh:severity sh:Warning ;
+    sh:message """`dcterms:type` is less than 3 characters.
+      Please check `metadata/dcterms:type`."""@en ;
   ] .
   
 <#FileShape> a sh:NodeShape ;
