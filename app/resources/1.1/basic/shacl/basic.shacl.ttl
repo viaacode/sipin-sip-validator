@@ -529,7 +529,7 @@
     sh:severity sh:Violation ;
     sh:message """`dcterms:title` has multiple values with the same `@xml:lang` attribute.
       Please check `metadata/dcterms:title`"""@en ;
-  ]
+  ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:alternative ;
@@ -578,7 +578,7 @@
     sh:severity sh:Violation ;
     sh:message """Representation has more than one value for `dcterms:available`.
       Please check `metadata/dcterms:available`"""@en ;
-  ]
+  ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:description ;
@@ -753,7 +753,7 @@
       Please check `metadata/dcterms:rights`"""@en ;
   ],
   [
-    sh:PropertyShape ;
+    a sh:PropertyShape ;
     sh:path dcterms:rights ;
     sh:uniqueLang true ;
     sh:severity sh:Violation ;
@@ -872,7 +872,7 @@
     sh:severity sh:Warning ;
     sh:message """File has no value for `dcterms:format`.
       Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:format`"""@en ;
-  ]
+  ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:format ;
