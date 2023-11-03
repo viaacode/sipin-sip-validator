@@ -261,7 +261,8 @@
     sh:name "has creation date"@en ;
     sh:description "The creation date of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "`dcterms:created` not of datatype EDTF."@en ;
+    sh:message """`dcterms:created` not of datatype EDTF.
+      Please check `metadata/dcterms:created`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -270,7 +271,8 @@
     sh:description "The issue date of the intellectual entity."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dcterms:issued`."@en ;
+    sh:message """More than one value for `dcterms:issued`.
+      Please check `metadata/dcterms:issued`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -282,10 +284,9 @@
       [ sh:datatype edtf:EDTF-level2 ]
       [ sh:datatype edtf:EDTF ]
     ) ;
-    sh:name "has issue date"@en ;
-    sh:description "The issue date of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "`dcterms:issued` not of datatype EDTF."@en ;
+    sh:message """`dcterms:issued` not of datatype EDTF.
+      Please check `metadata/dcterms:issued`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -331,46 +332,53 @@
     a sh:PropertyShape ;
     sh:path dcterms:subject ;
     sh:NodeKind sh:Literal ;
-    sh:minCount 1 ;
     sh:uniqueLang false ;
     sh:datatype rdf:langString ;
     sh:name "has subject"@en ;
     sh:description "The subject or keywords of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:subject` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:subject[@xml:lang=*]`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:subject ;
+    sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:message "Intellectual entity has no values for `dcterms:subject`."@en ;
+    sh:message """Intellectual entity has no values for `dcterms:subject`.
+      Please check `metadata/dcterms:subject[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:language ;
     sh:nodeKind sh:Literal ;
-    sh:minCount 1 ;
     sh:datatype xsd:string ;
     sh:name "has language"@en ;
     sh:description "The language of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:language ;
+    sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:message "Intellectual entity has no values for `dcterms:language`."@en ;
+    sh:message """Intellectual entity has no values for `dcterms:language`.
+      Please check `metadata/dcterms:language`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:license ;
     sh:nodeKind sh:Literal ;
-    sh:minCount 1 ;
     sh:datatype xsd:string ;
     sh:name "has license"@en ;
     sh:description "The license of the intellectual entity."@en ;
-    sh:severity sh:Warning ;
-    sh:message "Intellectual entity has no values for `dcterms:license`."@en ;
   ],
   [
     a sh:PropertyShape ;
-    sh:path dcterms:rightsHolder ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has rights holder"@en ;
-    sh:description "The rights holder of the intellectual entity."@en ;
+    sh:path dcterms:license ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:message "Intellectual entity has no values for `dcterms:rightsHolder`."@en ;
+    sh:message """Intellectual entity has no values for `dcterms:license`.
+      Please check `metadata/dcterms:license`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -379,9 +387,22 @@
     sh:datatype xsd:string ;
     sh:name "has rights holder"@en ;
     sh:description "The rights holder of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rightsHolder ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message """Intellectual entity has no values for `dcterms:rightsHolder`.
+      Please check `metadata/dcterms:rightsHolder`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rightsHolder ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dcterms:rightsHolder`."@en ;
+    sh:message """More than one value for `dcterms:rightsHolder`.
+      Please check `metadata/dcterms:rightsHolder`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -390,9 +411,17 @@
     sh:datatype rdf:langString ;
     sh:name "has rights"@en ;
     sh:description "The rights of the intellectual entity."@en ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:rights` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:rights`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rights ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:message "Intellectual entity has no values for `dcterms:rights`."@en ;
+    sh:message """Intellectual entity has no values for `dcterms:rights`.
+      Please check `metadata/dcterms:rights`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -400,10 +429,9 @@
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
     sh:uniqueLang true ;
-    sh:name "has rights"@en ;
-    sh:description "The rights of the intellectual entity."@en ;
     sh:severity sh:Violation ;
-    sh:message "Multiple values for `dcterms:rights` with the same `@xml:lang` attribute."@en ;
+    sh:message """`dcterms:rights` has multiple values with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:rights`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -412,55 +440,75 @@
     sh:datatype xsd:string ;
     sh:name "has type"@en ;
     sh:description "The classification of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:type ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dcterms:type`."@en ;
+    sh:message """More than one value for `dcterms:type`.
+      Please check `metadata/dcterms:type`"""@en ;
   ] .
 
 <#RepresentationShape> a sh:NodeShape ;
   sh:targetClass premis:Representation ;
   sh:closed true ;
   sh:property <#propertyTypeShape>,
-  # TEMP FIX!!
+  # !! TEMP FIX!!
   [
     a sh:PropertyShape ;
     sh:path skos:hiddenLabel ;
   ],
+  # !! END !!
   [
     a sh:PropertyShape ;
     sh:path relSubType:rep ;
     sh:nodeKind sh:IRI ;
     sh:class premis:IntellectualEntity ;
-    # sh:node <#IntellectualEntityShape> ;
     sh:name "represents"@en ;
     sh:description "The intellectual entity represented by the representation."@en ;
-    sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No IE for `relSubType:represents` or mismatch between ID's of Representation and IE."@en ;
+    sh:message """The Representation's value for `represents` relationshipSubType is not an IE .
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=represents)`
+      OR check for mismatch between IE id's in the different files.
+        (`premis:premis/premis:object/premis:objectIdentifier` in root `premis.xml`file)"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path relSubType:rep ;
-    sh:nodeKind sh:IRI ;
-    sh:class premis:IntellectualEntity ;
-    # sh:node <#IntellectualEntityShape> ;
-    sh:name "represents"@en ;
-    sh:description "The intellectual entity represented by the representation."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Representation has no value IE for `represents` relationshipSubType.
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=represents)`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:rep ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "A representation can not represent multiple IE's."@en ;
+    sh:message """Representation has multiple values for `represents` relationshipSubType.
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=represents)`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path relSubType:inc ;
     sh:nodeKind sh:IRI ;
     sh:class premis:File ;
-    # sh:node <#FileShape> ;
     sh:name "includes"@en ;
     sh:description "The file(s) included in the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message """The Representation's value for `includes` relationshipSubType is not a File .
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=includes)`
+      OR check for mismatch between File id's.
+        (`premis:premis/premis:object[@xsi:type=premis:File]/premis:objectIdentifier`.)"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:inc ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No file for `relSubType:includes` or mismatch between ID's of Representation and File."@en ;
+    sh:message """Representation has no value File for `includes` relationshipSubType.
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=includes)`"""@en ;
   ],
   # Optional DCTERMS
   [
@@ -469,11 +517,19 @@
     sh:nodeKind sh:Literal ;
     sh:name "has title"@en ;
     sh:description "The title of the representation."@en ;
-    sh:uniqueLang true ;
     sh:datatype rdf:langString;
     sh:severity sh:Violation ;
-    sh:message "Multiple values for `dcterms:title` with the same `@xml:lang` attribute."@en ;
+    sh:message """`dcterms:title` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:title`"""@en ;
   ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:title ;
+    sh:uniqueLang true ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:title` has multiple values with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:title`"""@en ;
+  ]
   [
     a sh:PropertyShape ;
     sh:path dcterms:alternative ;
@@ -481,38 +537,28 @@
     sh:datatype rdf:langString;
     sh:name "has alternative title"@en ;
     sh:description "An alternative title of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:alternative` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:alternative`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:extent ;
     sh:nodeKind sh:Literal ;
+    sh:datatype xsd:duration ;
     sh:name "has extent"@en ;
     sh:description "The extent of the representation."@en ;
-    sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "Representation has more than one value for `dcterms:extent`."@en ;
+    sh:message """Representation's `dcterms:extent` is not a valid `xsd:duration`.
+      Please check `metadata/dcterms:extent`. The syntax is `PnYnMnDTnHnMnS`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:extent ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:time ;
-    sh:name "has extent"@en ;
-    sh:description "The extent of the representation."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "Representation's `dcterms:extent` is not of type `xsd:time`."@en ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path dcterms:available ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:dateTime ;
-    sh:name "is available"@en ;
-    sh:description "The datetime on which the representation is available."@en ;
-    sh:maxCount 1 ;
-    sh:severity sh:Violation ;
-    sh:message "Representation has more than one value for `dcterms:available`."@en ;
+    sh:message """Representation has more than one value for `dcterms:extent`.
+      Please check `metadata/dcterms:extent`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -522,31 +568,54 @@
     sh:name "is available"@en ;
     sh:description "The datetime on which the representation is available."@en ;
     sh:severity sh:Violation ;
-    sh:message "Representation's `dcterms:available` is not of type `xsd:dateTime`."@en ;
+    sh:message """Representation's `dcterms:available` is not of type `xsd:dateTime`.
+      Please check `metadata/dcterms:available`. The syntax is `YYYY-MM-DDThh:mm:ss(zzzzzz)`"""@en ;
   ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:available ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Representation has more than one value for `dcterms:available`.
+      Please check `metadata/dcterms:available`"""@en ;
+  ]
   [
     a sh:PropertyShape ;
     sh:path dcterms:description ;
     sh:nodeKind sh:Literal ;
-    sh:uniqueLang true ;
     sh:datatype rdf:langString;
     sh:name "has description"@en ;
     sh:description "The description of the representation."@en ;
     sh:severity sh:Violation ;
-    sh:message "Representation has multiple values for `dcterms:description` with the same `@xml:lang` attribute."@en ;
-
+    sh:message """`dcterms:description` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:description`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:description ;
+    sh:uniqueLang true ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:description` has multiple values with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:description`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:abstract ;
     sh:nodeKind sh:Literal ;
-    sh:uniqueLang true ;
     sh:datatype rdf:langString;
     sh:name "has abstract"@en ;
     sh:description "The abstract of the representation."@en ;
     sh:severity sh:Violation ;
-    sh:message "Representation has multiple values for `dcterms:abstract` with the same `@xml:lang` attribute."@en ;
-
+    sh:message """`dcterms:abstract` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:abstract`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:abstract ;
+    sh:uniqueLang true ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:abstract` has multiple values with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:abstract`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -561,25 +630,16 @@
     sh:name "has creation date"@en ;
     sh:description "The creation date of the representation."@en ;
     sh:severity sh:Violation ;
-    sh:message "Representation's `dcterms:created` not of datatype EDTF."@en ;
+    sh:message """Representation's `dcterms:created` not of datatype EDTF.
+      Please check `metadata/dcterms:created`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:created ;
     sh:maxCount 1 ;
-    sh:name "has creation date"@en ;
-    sh:description "The creation date of the representation."@en ;
     sh:severity sh:Violation ;
-    sh:message "Representation has more than one value for `dcterms:created`"@en ;
-  ],
-  [
-    a sh:PropertyShape ;
-    sh:path dcterms:issued ;
-    sh:maxCount 1 ;
-    sh:name "has issue date"@en ;
-    sh:description "The issue date of the representation."@en ;
-    sh:severity sh:Violation ;
-    sh:message "Representation's `dcterms:issued` not of datatype EDTF."@en ;
+    sh:message """Representation has more than one value for `dcterms:created`.
+      Please check `metadata/dcterms:created`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -594,7 +654,16 @@
     sh:name "has issue date"@en ;
     sh:description "The issue date of the representation."@en ;
     sh:severity sh:Violation ;
-    sh:message "Representation's `dcterms:issued` not of datatype EDTF."@en ;
+    sh:message """Representation's `dcterms:issued` not of datatype EDTF.
+      Please check `metadata/dcterms:issued`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:issued ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Representation has more than one value for `dcterms:issued`.
+      Please check `metadata/dcterms:issued`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -644,6 +713,9 @@
     sh:datatype rdf:langString ;
     sh:name "has subject"@en ;
     sh:description "The subject or keywords of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:subject` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:subject`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -660,16 +732,33 @@
     sh:datatype xsd:string ;
     sh:name "has rights holder"@en ;
     sh:description "The rights holder of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:rightsHolder ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Representation has more than one value for `dcterms:rightsHolder`.
+      Please check `metadata/dcterms:rightsHolder`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:rights ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
-    sh:uniqueLang true ;
     sh:name "has rights"@en ;
     sh:description "The rights of the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:rights` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/dcterms:rights`"""@en ;
+  ],
+  [
+    sh:PropertyShape ;
+    sh:path dcterms:rights ;
+    sh:uniqueLang true ;
+    sh:severity sh:Violation ;
+    sh:message """`dcterms:rights` has more than one value with the same `@xml:lang` attribute.
+      Please check `metadata/dcterms:rights`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -686,7 +775,14 @@
     sh:datatype xsd:string ;
     sh:name "has type"@en ;
     sh:description "The classification of the representation."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:type ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Representation has more than one value for `dcterms:type`.
+      Please check `metadata/dcterms:type`"""@en ;
   ] .
   
 <#FileShape> a sh:NodeShape ;
@@ -698,26 +794,21 @@
     sh:path relSubType:isi ;
     sh:nodeKind sh:IRI ;
     sh:class premis:Representation ;
-    # sh:node <#RepresentationShape> ;
     sh:name "is included in"@en ;
     sh:description "The representation in which the file is included."@en ;
-    sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No representation for `relSubType:isIncludedIn` or mismatch between ID's of File and Representation."@en ;
+    sh:message """The File's value for `is included in` relationshipSubType is not a Representation.
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is included in")`
+      OR check for mismatch between the Representation id's `premis:premis/premis:object[@xsi:type=premis:Representation]/premis:objectIdentifier`."""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path relSubType:isi ;
-    sh:nodeKind sh:IRI ;
-    sh:class premis:Representation ;
-    # sh:node <#RepresentationShape> ;
-    sh:name "is included in"@en ;
-    sh:description "The representation in which the file is included."@en ;
-    sh:maxCount 1 ;
+    sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "A file can not be included in multiple representations."@en ;
+    sh:message """File has no value for `is included in` relationshipSubType.
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is included in")`"""@en ;
   ],
-  #? Fixity klopt nog niet
   [
     a sh:PropertyShape ;
     sh:path premis:fixity ;
@@ -725,10 +816,22 @@
     sh:class <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5> ;
     sh:name "has fixity"@en ;
     sh:description "The calculated fixity checksum of the file."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:fixity ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has no value for `fixity`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:fixity`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:fixity ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No fixity checksum for `premis:fixity`."@en ;
+    sh:message """File has more than one value for `fixity`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:fixity`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -737,20 +840,22 @@
     sh:datatype xsd:integer ;
     sh:name "has size"@en ;
     sh:description "The size of the file in bytes."@en ;
-    sh:minCount 1 ;
-    sh:severity sh:Violation ;
-    sh:message "No values for `premis:size`."@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path premis:size ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:integer ;
-    sh:name "has size"@en ;
-    sh:description "The size of the file in bytes."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has no value for `size`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:size`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:size ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `premis:size`."@en ;
+    sh:message """File has more than one value for `size`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:size`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -759,20 +864,22 @@
     sh:class dcterms:FileFormat ;
     sh:name "has format"@en ;
     sh:description "The format of the file."@en ;
-    sh:minCount 1 ;
-    sh:severity sh:Violation ;
-    sh:message "No value for `dcterms:format`."@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path dcterms:format ;
-    sh:nodeKind sh:IRI ;
-    sh:class dcterms:FileFormat ;
-    sh:name "has format"@en ;
-    sh:description "The format of the file."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message """File has no value for `dcterms:format`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:format`"""@en ;
+  ]
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:format ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `dcterms:format`."@en ;
+    sh:message """File has more than one value for `dcterms:format`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:format`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -781,20 +888,22 @@
     sh:datatype xsd:string ;
     sh:name "has original name"@en ;
     sh:description "The original name of the file."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:originalName ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "No value for `premis:originalName`."@en ;
+    sh:message """File has no value for `premis:originalName`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:originalName`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path premis:originalName ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has original name"@en ;
-    sh:description "The original name of the file."@en ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
-    sh:message "More than one value for `premis:originalName`."@en ;
+    sh:message """File has more than one value for `premis:originalName`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:originalName`"""@en ;
   ] .
 
 <#Md5Shape> a sh:NodeShape ;
@@ -808,8 +917,22 @@
     sh:datatype xsd:string ;
     sh:name "has message digest"@en ;
     sh:description "The calculated message digest."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Message digest has no value for `rdf:value`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:fixity/premis:messageDigestAlgorithm`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Message digest has more than one value for `rdf:value`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:fixity/premis:messageDigestAlgorithm`"""@en ;
   ] .
 
 <#LocalIdentifierShape> a sh:NodeShape ;
@@ -823,8 +946,22 @@
     sh:datatype xsd:string ;
     sh:name "has object identifier value"@en ;
     sh:description "The value of the object identifier."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Object identifier has no value for `premis:objectIdentifierValue`.
+      Please check `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierValue`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Object identifier has more than one value for `premis:objectIdentifierValue`.
+      Please check `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierValue`"""@en ;
   ] .
 
 <#EventShape> a sh:NodeShape ;
@@ -838,8 +975,25 @@
     sh:datatype xsd:dateTime ;
     sh:name "has start time"@en ;
     sh:description "The start time of the event."@en ;
+    sh:severity sh:Violation ;
+    sh:message """eventDateTime is not of type xsd:dateTime, or is not a valid dateTime.
+      Please check `premis:premis/premis:eventDateTime`. The right format is YYYY-MM-DDThh:mm:ssTZD"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:startedAtTime ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has no value for `prov:startedAtTime`.
+      Please check `premis:premis/premis:eventDateTime`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:startedAtTime ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has more than one value for `prov:startedAtTime`.
+      Please check `premis:premis/premis:eventDateTime`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -848,8 +1002,25 @@
     sh:datatype xsd:dateTime ;
     sh:name "has end time"@en ;
     sh:description "The end time of the event."@en ;
+    sh:severity sh:Violation ;
+    sh:message """eventDateTime is not of type xsd:dateTime, or is not a valid dateTime.
+      Please check `premis:premis/premis:eventDateTime`. The right format is YYYY-MM-DDThh:mm:ssTZD"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:endedAtTime ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has no value for `prov:endedAtTime`.
+      Please check `premis:premis/premis:eventDateTime`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:endedAtTime ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has more than one value for `prov:endedAtTime`.
+      Please check `premis:premis/premis:eventDateTime`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -858,9 +1029,22 @@
     sh:datatype xsd:string ;
     sh:name "has note"@en ;
     sh:description "A note about the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:note ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
     sh:severity sh:Warning ;
+    sh:message """Event has no value for `premis:note`.
+      Please check `premis:premis/premis:event/premis:eventDetailInformation/premis:eventDetail`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:note ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has more than one value for `premis:note`.
+      Please check `premis:premis/premis:event/premis:eventDetailInformation/premis:eventDetail`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -869,7 +1053,9 @@
     sh:in (eventOutcome:suc eventOutcome:fai eventOutcome:war) ;
     sh:name "has outcome"@en ;
     sh:description "The outcome of the event."@en ;
-    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event value should be one of `fail`, `success` or `warning`.
+      Please check `premis:premis/premis:eventOutcomeInformation/premis:eventOutcome`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -883,7 +1069,6 @@
     a sh:PropertyShape ;
     sh:path eventRelAgRole:imp ;
     sh:nodeKind sh:IRI ;
-    # sh:class org:Organization ;
     sh:name "has implementing agent"@en ;
     sh:description "The organization that implemented the event."@en ;
   ],
@@ -921,8 +1106,22 @@
     sh:datatype xsd:string ;
     sh:name "has name"@en ;
     sh:description "The name of the hardware agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has no value for `schema:name`.
+      Please check `premis:premis/premis:agent/premis:agentName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has more than one value for `schema:name`.
+      Please check `premis:premis/premis:agent/premis:agentName`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -931,7 +1130,14 @@
     sh:datatype xsd:string ;
     sh:name "has model"@en ;
     sh:description "The model of the hardware agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:model ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has more than one value for `schema:model`.
+      Please check `premis:premis/premis:agent[premis:agentType='hardware']/premis:agentExtension/schema:model`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -940,7 +1146,14 @@
     sh:datatype xsd:string ;
     sh:name "has version"@en ;
     sh:description "The version of the hardware agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:version ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has more than one value for `schema:version`.
+      Please check `premis:premis/premis:agent[premis:agentType='hardware']/premis:agentExtension/schema:version`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -949,7 +1162,14 @@
     sh:datatype xsd:string ;
     sh:name "has additionalType"@en ;
     sh:description "Additional type of the hardware agent, e.g. scantype."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:additionalType ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has more than one value for `schema:additionalType`.
+      Please check `premis:premis/premis:agent[premis:agentType='hardware']/premis:agentExtension/schema:additionalType`"""@en ;
   ] .
 
 <#SoftwareAgentShape> a sh:NodeShape ;
@@ -963,8 +1183,22 @@
     sh:datatype xsd:string ;
     sh:name "has name"@en ;
     sh:description "The name of the software agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Software agent has no value for `schema:name`.
+      Please check `premis:premis/premis:agent/premis:agentName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Software agent has more than one value for `schema:name`.
+      Please check `premis:premis/premis:agent/premis:agentName`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -973,7 +1207,14 @@
     sh:datatype xsd:string ;
     sh:name "has version"@en ;
     sh:description "The version of the software agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:version ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Software agent has more than one value for `schema:version`.
+      Please check `premis:premis/premis:agent[premis:agentType='software']/premis:agentExtension/schema:version`"""@en ;
   ] .
 
 <#propertyTypeShape> a sh:PropertyShape ;
