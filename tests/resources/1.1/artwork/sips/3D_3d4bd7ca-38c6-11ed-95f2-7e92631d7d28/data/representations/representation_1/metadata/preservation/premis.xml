@@ -62,7 +62,7 @@
       </premis:format>
     </premis:objectCharacteristics>
 
-    <premis:originalName>PID_ARCH_STL</premis:originalName>
+    <premis:originalName>PID_ARCH_STL.stl</premis:originalName>
 
     <!-- relationship between file and its representation -->
     <premis:relationship>
