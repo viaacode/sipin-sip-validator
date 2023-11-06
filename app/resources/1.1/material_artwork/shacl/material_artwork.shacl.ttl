@@ -258,7 +258,7 @@
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     sh:message """schema:identifier occurs more than once.
-      Please check `metadata/schema:isPartOf[@schema:Collection]/schema:identifier`"""@en ;
+      Please check `metadata/schema:isPartOf[@schema:CreativeWorkSeries]/schema:identifier`"""@en ;
   ],
   [
     a sh:PropertyShape ;
