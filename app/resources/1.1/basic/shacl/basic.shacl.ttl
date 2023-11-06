@@ -92,7 +92,7 @@
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     sh:message """Intellectual entity has no `dcterms:title`.
-      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:title`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -119,7 +119,7 @@
     sh:maxLength 256 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:title` exceeds 256 characters.
-      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:title`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -127,7 +127,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:title` is less than 3 characters.
-      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:title`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -146,7 +146,7 @@
     sh:maxLength 256 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:alternative` exceeds 256 characters.
-      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:alternative`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -154,7 +154,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:alternative` is less than 3 characters.
-      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:alternative`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -239,7 +239,7 @@
     sh:maxLength 1024 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:description` exceeds 1024 characters.
-      Please check `metadata/dcterms:description[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:description`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -247,7 +247,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:description` is less than 3 characters.
-      Please check `metadata/dcterms:description[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:description`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -276,7 +276,7 @@
     sh:maxLength 1024 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:abstract` exceeds 1024 characters.
-      Please check `metadata/dcterms:abstract[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:abstract`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -284,7 +284,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:abstract` is less than 3 characters.
-      Please check `metadata/dcterms:abstract[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:abstract`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -617,7 +617,7 @@
     sh:description "The rights of the intellectual entity."@en ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:rights` is not a string or has no `@xml:lang` attribute.
-      Please check `metadata/dcterms:rights`"""@en ;
+      Please check `metadata/dcterms:rights[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -635,7 +635,7 @@
     sh:uniqueLang true ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:rights` has multiple values with the same `@xml:lang` attribute.
-      Please check `metadata/dcterms:rights`"""@en ;
+      Please check `metadata/dcterms:rights[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -756,7 +756,7 @@
     sh:datatype rdf:langString;
     sh:severity sh:Violation ;
     sh:message """`dcterms:title` is not a string or has no `@xml:lang` attribute.
-      Please check `metadata/dcterms:title`"""@en ;
+      Please check `metadata/dcterms:title[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -764,7 +764,7 @@
     sh:uniqueLang true ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:title` has multiple values with the same `@xml:lang` attribute.
-      Please check `metadata/dcterms:title`"""@en ;
+      Please check `metadata/dcterms:title[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -772,7 +772,7 @@
     sh:maxLength 256 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:title` exceeds 256 characters.
-      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:title`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -780,7 +780,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:title` is less than 3 characters.
-      Please check `metadata/dcterms:title[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:title`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -791,7 +791,7 @@
     sh:description "An alternative title of the representation."@en ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:alternative` is not a string or has no `@xml:lang` attribute.
-      Please check `metadata/dcterms:alternative`"""@en ;
+      Please check `metadata/dcterms:alternative[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -799,7 +799,7 @@
     sh:maxLength 256 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:alternative` exceeds 256 characters.
-      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:alternativ`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -807,7 +807,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:alternative` is less than 3 characters.
-      Please check `metadata/dcterms:alternative[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:alternative`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -856,7 +856,7 @@
     sh:description "The description of the representation."@en ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:description` is not a string or has no `@xml:lang` attribute.
-      Please check `metadata/dcterms:description`"""@en ;
+      Please check `metadata/dcterms:description[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -864,7 +864,7 @@
     sh:uniqueLang true ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:description` has multiple values with the same `@xml:lang` attribute.
-      Please check `metadata/dcterms:description`"""@en ;
+      Please check `metadata/dcterms:description[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -872,7 +872,7 @@
     sh:maxLength 1024 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:description` exceeds 1024 characters.
-      Please check `metadata/dcterms:description[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:description`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -880,7 +880,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:description` is less than 3 characters.
-      Please check `metadata/dcterms:description[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:description`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -891,7 +891,7 @@
     sh:description "The abstract of the representation."@en ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:abstract` is not a string or has no `@xml:lang` attribute.
-      Please check `metadata/dcterms:abstract`"""@en ;
+      Please check `metadata/dcterms:abstract[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -899,7 +899,7 @@
     sh:uniqueLang true ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:abstract` has multiple values with the same `@xml:lang` attribute.
-      Please check `metadata/dcterms:abstract`"""@en ;
+      Please check `metadata/dcterms:abstract[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -907,7 +907,7 @@
     sh:maxLength 1024 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:abstract` exceeds 1024 characters.
-      Please check `metadata/dcterms:abstract[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:abstract`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -915,7 +915,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:abstract` is less than 3 characters.
-      Please check `metadata/dcterms:abstract[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:abstract`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -1095,7 +1095,7 @@
     sh:description "The subject or keywords of the representation."@en ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:subject` is not a string or has no `@xml:lang` attribute.
-      Please check `metadata/dcterms:subject`"""@en ;
+      Please check `metadata/dcterms:subject[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -1178,7 +1178,7 @@
     sh:description "The rights of the representation."@en ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:rights` is not a string or has no `@xml:lang` attribute.
-      Please check `metadata/dcterms:rights`"""@en ;
+      Please check `metadata/dcterms:rights[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -1186,7 +1186,7 @@
     sh:uniqueLang true ;
     sh:severity sh:Violation ;
     sh:message """`dcterms:rights` has more than one value with the same `@xml:lang` attribute.
-      Please check `metadata/dcterms:rights`"""@en ;
+      Please check `metadata/dcterms:rights[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -1194,7 +1194,7 @@
     sh:maxLength 256 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:rights` exceeds 256 characters.
-      Please check `metadata/dcterms:rights[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:rights`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -1202,7 +1202,7 @@
     sh:minLength 3 ;
     sh:severity sh:Warning ;
     sh:message """`dcterms:rights` is less than 3 characters.
-      Please check `metadata/dcterms:rights[@xml:lang=*]`."""@en ;
+      Please check `metadata/dcterms:rights`."""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -1379,6 +1379,14 @@
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     sh:message """File has more than one value for `premis:originalName`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:originalName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:originalName ;
+    sh:pattern "^[a-zA-Z0-9]{1}[a-zA-Z0-9._-]{0,128}\.{1}[a-zA-Z0-9]{1,12}$" ;
+    sh:severity sh:Violation ;
+    sh:message """File has a non valid value for `premis:originalName`.
       Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:originalName`"""@en ;
   ] .
 

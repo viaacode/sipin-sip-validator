@@ -88,12 +88,18 @@
     sh:path schema:artMedium ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:artMedium` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/schema:artMedium[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:artform ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:artform` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/schema:artform[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -109,7 +115,7 @@
     ) ;
     sh:severity sh:Violation ;
     sh:message """`schema:isPartOf` not of type `schema:Episode`, `schema:ArchiveComponent`, `schema:CreativeWorkSeries`, `schema:BroadcastEvent`, `schema:Collection` or `schema:CreativeWorkSeason`.
-      """@en ;
+      Please check `metadata/schema:isPartOf[@xsi:type=*]`"""@en ;
   ] .
 
 <#CollectionShape> a sh:NodeShape ;
@@ -470,12 +476,18 @@
     sh:path schema:artMedium ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:artMedium` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/schema:artMedium[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:artform ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:artform` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/schema:artform[@xml:lang=*]`"""@en ;
   ] .
 
 <#FileShape> a sh:NodeShape ;
