@@ -618,7 +618,7 @@
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     sh:message """Value occurs more than once.
-      Please check `metadata/(schema:height|schema:width|schema:depth)/schema:value`"""@en ;
+      Please check `metadata/(schema:height|schema:width|schema:depth|schema:weight)/schema:value`"""@en ;
   ] .
 
 <#RoleShape> a sh:NodeShape ;
