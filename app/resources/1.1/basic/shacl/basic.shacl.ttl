@@ -1384,7 +1384,7 @@
   [
     a sh:PropertyShape ;
     sh:path premis:originalName ;
-    sh:pattern "^[a-zA-Z0-9]{1}[a-zA-Z0-9._-]{0,128}\.{1}[a-zA-Z0-9]{1,12}$" ;
+    sh:pattern "^[a-zA-Z0-9]{1}[a-zA-Z0-9._-]{0,128}\\.{1}[a-zA-Z0-9]{1,12}$" ;
     sh:severity sh:Violation ;
     sh:message """File has a non valid value for `premis:originalName`.
       Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:originalName`"""@en ;
