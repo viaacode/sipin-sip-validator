@@ -36,6 +36,15 @@
       <premis:objectIdentifierValue>uuid-57dfa49d-5997-48f4-8bdf-fb0d08f87f66</premis:objectIdentifierValue>
     </premis:objectIdentifier>
 
+    <premis:significantProperties>
+      <premis:significantPropertiesType>number-of-vertices</premis:significantPropertiesType>
+      <premis:significantPropertiesValue>13548987</premis:significantPropertiesValue>
+    </premis:significantProperties>
+    <premis:significantProperties>
+      <premis:significantPropertiesType>number-of-triangles</premis:significantPropertiesType>
+      <premis:significantPropertiesValue>16354987</premis:significantPropertiesValue>
+    </premis:significantProperties>
+
     <premis:objectCharacteristics>
       <premis:fixity>
         <premis:messageDigestAlgorithm authority="cryptographicHashFunctions" authorityURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions" valueURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5">
@@ -53,7 +62,7 @@
       </premis:format>
     </premis:objectCharacteristics>
 
-    <premis:originalName>PID_ARCH_STL</premis:originalName>
+    <premis:originalName>PID_ARCH_STL.stl</premis:originalName>
 
     <!-- relationship between file and its representation -->
     <premis:relationship>

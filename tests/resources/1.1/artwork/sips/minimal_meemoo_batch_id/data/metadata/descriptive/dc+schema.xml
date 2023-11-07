@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork"
+  xmlns:dcterms="http://purl.org/dc/terms/" xmlns:schema="https://schema.org/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:edtf="http://id.loc.gov/datatypes/edtf/">
+
+  <!-- general title for the resource -->
+  <dcterms:title xml:lang="nl">Bewening van Christus</dcterms:title>
+
+  <!-- general description for the resource -->
+  <dcterms:description xml:lang="nl">Rond 1629 geschilderd voor het hoogaltaar van de Begijnhofkerk
+    te Antwerpen. Een tweede exemplaar wordt bewaard te Madrid (Prado); schetsen te Leningrad
+    (Hermitage) een kleinere herhaling te Hagley (Lord Littleton) een tekening in Atger Museum te
+    Montpellier en een grisaille studie tenslotte bevond zich in 1776 in de veiling Randon de
+    Boisset. Het schilderij werd gegraveerd door Paul Pontius en Andreas van Rymsdyck.</dcterms:description>
+
+  <!-- linking id between dc and premis -->
+  <dcterms:identifier>uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675</dcterms:identifier>
+
+  <!-- creationdate -->
+  <dcterms:created xsi:type="edtf:EDTF-level1">1628/1629</dcterms:created>
+</metadata>

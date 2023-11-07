@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<premis:premis version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schema="http://schema.org/" xmlns:premis="http://www.loc.gov/premis/v3" xsi:schemaLocation="http://www.loc.gov/premis/v3 https://www.loc.gov/standards/premis/premis.xsd">
+<premis:premis version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schema="https://schema.org/" xmlns:premis="http://www.loc.gov/premis/v3" xsi:schemaLocation="http://www.loc.gov/premis/v3 https://www.loc.gov/standards/premis/premis.xsd">
 
     <!-- IE about the artwork -->
     <premis:object xsi:type="premis:intellectualEntity">
@@ -53,13 +53,31 @@
     <premis:event>
         <premis:eventIdentifier>
             <premis:eventIdentifierType>UUID</premis:eventIdentifierType>
-            <premis:eventIdentifierValue>uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27</premis:eventIdentifierValue>
+            <premis:eventIdentifierValue>uuid-07DBD6F2-182C-4C58-BCFC-FDCDFC9048F4</premis:eventIdentifierValue>
         </premis:eventIdentifier>
-        <premis:eventType>digitization</premis:eventType>
+        <premis:eventType>DIGITIZATION</premis:eventType>
         <premis:eventDateTime>2022-08-29T00:00:00Z</premis:eventDateTime>
-
+        
         <premis:eventDetailInformation>
             <premis:eventDetail>GIVE</premis:eventDetail>
+            <premis:eventDetailExtension>
+                <schema:additionalProperty>
+                   <schema:name>light-metering</schema:name>
+                   <schema:value>F 0,57, iso 125, T 250</schema:value>
+                </schema:additionalProperty>
+                <schema:additionalProperty>
+                   <schema:name>scan-setup</schema:name>
+                   <schema:value>vaste opstelling, persoon met scanner beweegt rond beeld</schema:value>
+                </schema:additionalProperty>
+                <schema:additionalProperty>
+                   <schema:name>height-calibration-object</schema:name>
+                   <schema:valueReference>
+                     <schema:value>100</schema:value>
+                     <schema:unitText>mm</schema:unitText>
+                     <schema:unitCode>MMT</schema:unitCode>
+                    </schema:valueReference>
+                </schema:additionalProperty>
+              </premis:eventDetailExtension>
         </premis:eventDetailInformation>
 
         <premis:eventOutcomeInformation>
@@ -70,6 +88,16 @@
             <premis:linkingAgentIdentifierType>MEEMOO-OR-ID</premis:linkingAgentIdentifierType>
             <premis:linkingAgentIdentifierValue>OR-x05xc4w</premis:linkingAgentIdentifierValue>
             <premis:linkingAgentRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/imp">implementer</premis:linkingAgentRole>
+        </premis:linkingAgentIdentifier>
+        <premis:linkingAgentIdentifier>
+            <premis:linkingAgentIdentifierType>UUID</premis:linkingAgentIdentifierType>
+            <premis:linkingAgentIdentifierValue>uuid-1cc1fe7a-da78-4c53-847a-0fd141ce2d3b</premis:linkingAgentIdentifierValue>
+            <premis:linkingAgentRole valueURI="https://schema.org/instrument">instrument</premis:linkingAgentRole>
+        </premis:linkingAgentIdentifier>
+        <premis:linkingAgentIdentifier>
+            <premis:linkingAgentIdentifierType>UUID</premis:linkingAgentIdentifierType>
+            <premis:linkingAgentIdentifierValue>uuid-d6c5f78f-e850-435f-b0b2-e9b6dbf7a2b1</premis:linkingAgentIdentifierValue>
+            <premis:linkingAgentRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/exe">executing program</premis:linkingAgentRole>
         </premis:linkingAgentIdentifier>
         
         <premis:linkingObjectIdentifier>
@@ -94,6 +122,38 @@
         </premis:linkingObjectIdentifier>
     </premis:event>
 
+    <premis:event>
+        <premis:eventIdentifier>
+            <premis:eventIdentifierType>UUID</premis:eventIdentifierType>
+            <premis:eventIdentifierValue>uuid-640692b1-0ce4-41d9-a071-7a2b07435277</premis:eventIdentifierValue>
+        </premis:eventIdentifier>
+        <premis:eventType>QUALITY_CONTROL</premis:eventType>
+        <premis:eventDateTime>2022-08-20T00:00:00Z</premis:eventDateTime>
+        <premis:eventDetailInformation>
+            <premis:eventDetail>qc note</premis:eventDetail>
+        </premis:eventDetailInformation>
+        <premis:linkingObjectIdentifier>
+            <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
+            <premis:linkingObjectIdentifierValue>uuid-e3aff200-237b-11ed-8d32-7e92631d7d28</premis:linkingObjectIdentifierValue>
+            <premis:linkingObjectRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/sou">source</premis:linkingObjectRole>
+        </premis:linkingObjectIdentifier>
+        <premis:linkingObjectIdentifier>
+            <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
+            <premis:linkingObjectIdentifierValue>uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27</premis:linkingObjectIdentifierValue>
+            <premis:linkingObjectRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/sou">source</premis:linkingObjectRole>
+        </premis:linkingObjectIdentifier>
+        <premis:linkingObjectIdentifier>
+            <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
+            <premis:linkingObjectIdentifierValue>uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4</premis:linkingObjectIdentifierValue>
+            <premis:linkingObjectRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/sou">source</premis:linkingObjectRole>
+        </premis:linkingObjectIdentifier>
+        <premis:linkingObjectIdentifier>
+            <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
+            <premis:linkingObjectIdentifierValue>uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a</premis:linkingObjectIdentifierValue>
+            <premis:linkingObjectRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/sou">source</premis:linkingObjectRole>
+        </premis:linkingObjectIdentifier>
+    </premis:event>
+    
     <premis:agent>
         <premis:agentIdentifier>
             <premis:agentIdentifierType>MEEMOO-OR-ID</premis:agentIdentifierType>
@@ -101,6 +161,28 @@
         </premis:agentIdentifier>
         <premis:agentName>De Logi &amp; Hoorne - Erfgo3D</premis:agentName>
         <premis:agentType>organization</premis:agentType>
+    </premis:agent>
+
+    <premis:agent>
+        <premis:agentIdentifier>
+            <premis:agentIdentifierType>UUID</premis:agentIdentifierType>
+            <premis:agentIdentifierValue>uuid-1cc1fe7a-da78-4c53-847a-0fd141ce2d3b</premis:agentIdentifierValue>
+        </premis:agentIdentifier>
+        <premis:agentName>scanner A</premis:agentName>
+        <premis:agentType>hardware</premis:agentType>
+        <premis:agentExtension>
+            <schema:model>model X</schema:model>
+            <schema:additionalType>structured light scanner wit</schema:additionalType>
+        </premis:agentExtension>
+    </premis:agent>
+
+    <premis:agent>
+        <premis:agentIdentifier>
+            <premis:agentIdentifierType>UUID</premis:agentIdentifierType>
+            <premis:agentIdentifierValue>uuid-d6c5f78f-e850-435f-b0b2-e9b6dbf7a2b1</premis:agentIdentifierValue>
+        </premis:agentIdentifier>
+        <premis:agentName>Flexscan3D, Artec studio 17, Adobe Photoshop CC 2019</premis:agentName>
+        <premis:agentType>software</premis:agentType>
     </premis:agent>
 
 </premis:premis>

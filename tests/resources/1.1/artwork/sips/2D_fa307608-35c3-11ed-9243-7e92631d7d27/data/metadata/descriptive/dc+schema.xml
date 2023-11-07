@@ -1,18 +1,64 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:schema="https://schema.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:edtf="http://id.loc.gov/datatypes/edtf/">
-
-
+<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork"
+  xmlns:dcterms="http://purl.org/dc/terms/" xmlns:schema="https://schema.org/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:edtf="http://id.loc.gov/datatypes/edtf/">
 
   <!-- general title for the resource -->
   <dcterms:title xml:lang="nl">Bewening van Christus</dcterms:title>
   <dcterms:title xml:lang="en">The lamentation over the Dead Christ</dcterms:title>
 
   <!-- general description for the resource -->
-  <dcterms:description xml:lang="nl">Rond 1629 geschilderd voor het hoogaltaar van de Begijnhofkerk te Antwerpen. Een tweede exemplaar wordt bewaard te Madrid (Prado); schetsen te Leningrad (Hermitage) een kleinere herhaling te Hagley (Lord Littleton) een tekening in Atger Museum te Montpellier en een grisaille studie tenslotte bevond zich in 1776 in de veiling Randon de Boisset. Het schilderij werd gegraveerd door Paul Pontius en Andreas van Rymsdyck.</dcterms:description>
-  <dcterms:description xml:lang="en">Painted around 1629 for the high altar of the Beguinage Church in Antwerp. A second copy is kept in Madrid (Prado); sketches at Leningrad (Hermitage) a smaller repetition at Hagley (Lord Littleton) a drawing in the Atger Museum in Montpellier and finally a grisaille study was in the Randon de Boisset auction in 1776. The painting was engraved by Paul Pontius and Andreas van Rymsdyck.</dcterms:description>
+  <dcterms:description xml:lang="nl">Rond 1629 geschilderd voor het hoogaltaar van de Begijnhofkerk
+    te Antwerpen. Een tweede exemplaar wordt bewaard te Madrid (Prado); schetsen te Leningrad
+    (Hermitage) een kleinere herhaling te Hagley (Lord Littleton) een tekening in Atger Museum te
+    Montpellier en een grisaille studie tenslotte bevond zich in 1776 in de veiling Randon de
+    Boisset. Het schilderij werd gegraveerd door Paul Pontius en Andreas van Rymsdyck.</dcterms:description>
+  <dcterms:description xml:lang="en">Painted around 1629 for the high altar of the Beguinage Church
+    in Antwerp. A second copy is kept in Madrid (Prado); sketches at Leningrad (Hermitage) a smaller
+    repetition at Hagley (Lord Littleton) a drawing in the Atger Museum in Montpellier and finally a
+    grisaille study was in the Randon de Boisset auction in 1776. The painting was engraved by Paul
+    Pontius and Andreas van Rymsdyck.</dcterms:description>
 
   <!-- linking id between dc and premis -->
   <dcterms:identifier>uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675</dcterms:identifier>
+
+  <!-- extent -->
+  <dcterms:extent>P5Y</dcterms:extent>
+
+  <!-- Secondary titles -->
+  <!-- Series -->
+  <schema:isPartOf xsi:type="schema:CreativeWorkSeries">
+    <schema:name>serie</schema:name>
+    <schema:identifier>serie identifier</schema:identifier>
+    <schema:position>1</schema:position>
+    <!-- Partial series -->
+    <schema:hasPart xsi:type="schema:CreativeWorkSeries">
+      <schema:name>deelserie</schema:name>
+    </schema:hasPart>
+  </schema:isPartOf>
+  <!-- Episode -->
+  <schema:isPartOf xsi:type="schema:Episode">
+    <schema:name>episode</schema:name>
+  </schema:isPartOf>
+  <!-- Archive -->
+  <schema:isPartOf xsi:type="schema:ArchiveComponent">
+    <schema:name>archief</schema:name>
+    <!-- Partial archive -->
+    <schema:hasPart xsi:type="schema:ArchiveComponent">
+      <schema:name>deelarchief</schema:name>
+    </schema:hasPart>
+  </schema:isPartOf>
+  <!-- Broadcast event -->
+  <schema:isPartOf xsi:type="schema:BroadcastEvent">
+    <schema:name>programma</schema:name>
+    <schema:description>programme</schema:description>
+  </schema:isPartOf>
+  <!-- Season -->
+  <schema:isPartOf xsi:type="schema:CreativeWorkSeason">
+    <schema:name>seizoen</schema:name>
+    <schema:seasonNumber>1</schema:seasonNumber>
+  </schema:isPartOf>
 
   <!-- creationdate -->
   <dcterms:created xsi:type="edtf:EDTF-level1">1628/1629</dcterms:created>

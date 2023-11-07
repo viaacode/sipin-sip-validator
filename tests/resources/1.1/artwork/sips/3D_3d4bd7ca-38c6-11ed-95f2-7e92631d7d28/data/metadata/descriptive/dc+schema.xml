@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:schema="https://schema.org/">
-
+<metadata xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork"
+  xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xs="http://www.w3.org/2001/XMLSchema/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:schema="https://schema.org/">
 
   <!-- general title for the resource -->
   <dcterms:title xml:lang="nl">De Romeinse wolvin met Romulus en Remus</dcterms:title>
@@ -12,6 +14,43 @@
 
   <!-- linking id between dc and premis -->
   <dcterms:identifier>uuid-645392be-fa36-40fe-92e7-16c9fa60fe46</dcterms:identifier>
+
+  <!-- extent -->
+  <dcterms:extent>P5Y</dcterms:extent>
+
+  <!-- Secondary titles -->
+  <!-- Series -->
+  <schema:isPartOf xsi:type="schema:CreativeWorkSeries">
+    <schema:name>serie</schema:name>
+    <schema:identifier>serie identifier</schema:identifier>
+    <schema:position>1</schema:position>
+    <!-- Partial series -->
+    <schema:hasPart xsi:type="schema:CreativeWorkSeries">
+      <schema:name>deelserie</schema:name>
+    </schema:hasPart>
+  </schema:isPartOf>
+  <!-- Episode -->
+  <schema:isPartOf xsi:type="schema:Episode">
+    <schema:name>episode</schema:name>
+  </schema:isPartOf>
+  <!-- Archive -->
+  <schema:isPartOf xsi:type="schema:ArchiveComponent">
+    <schema:name>archief</schema:name>
+    <!-- Partial archive -->
+    <schema:hasPart xsi:type="schema:ArchiveComponent">
+      <schema:name>deelarchief</schema:name>
+    </schema:hasPart>
+  </schema:isPartOf>
+  <!-- Broadcast event -->
+  <schema:isPartOf xsi:type="schema:BroadcastEvent">
+    <schema:name>programma</schema:name>
+    <schema:description>programme</schema:description>
+  </schema:isPartOf>
+  <!-- Season -->
+  <schema:isPartOf xsi:type="schema:CreativeWorkSeason">
+    <schema:name>seizoen</schema:name>
+    <schema:seasonNumber>1</schema:seasonNumber>
+  </schema:isPartOf>
 
   <!-- creationdate -->
   <dcterms:created xsi:type="edtf:EDTF-level1">1701/1800</dcterms:created>
@@ -28,6 +67,11 @@
   <dcterms:subject xml:lang="en">3D</dcterms:subject>
   <dcterms:subject xml:lang="en">scan</dcterms:subject>
   <dcterms:subject xml:lang="en">sculpture</dcterms:subject>
+
+  <schema:isPartOf xsi:type="schema:Collection">
+    <schema:name>Van Herck Terracottabeelden</schema:name>
+    <schema:identifier>uuid-855bdf50-8c81-43a2-8218-b3245502abff</schema:identifier>
+  </schema:isPartOf>
 
   <!-- rights note -->
   <dcterms:rights xml:lang="en">public domain</dcterms:rights>

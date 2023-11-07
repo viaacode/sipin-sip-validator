@@ -108,7 +108,7 @@
     a sh:PropertyShape ;
     sh:path dct:extent ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:time ;
+    sh:datatype xsd:duration ;
     sh:name "has extent"@en ;
     sh:description "The extent of the intellectual entity."@en ;
     sh:maxCount 1 ;

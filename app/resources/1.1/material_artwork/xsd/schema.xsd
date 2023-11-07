@@ -69,6 +69,84 @@
         <xs:attribute ref="roleName"/>
     </xs:complexType>
 
+    <xs:complexType name="CollectionType">
+    </xs:complexType>
+
+    <xs:complexType name="Collection">
+        <xs:complexContent>
+            <xs:extension base="CollectionType">
+                <xs:all>
+                    <xs:element name="name" type="SimpleLiteral" />
+                    <xs:element name="identifier" type="SimpleLiteral" minOccurs="0" />
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CreativeWorkSeries">
+        <xs:complexContent>
+            <xs:extension base="CollectionType">
+                <xs:all>
+                    <xs:element name="name" type="SimpleLiteral"/>
+                    <xs:element name="identifier" type="SimpleLiteral" minOccurs="0"/>
+                    <xs:element name="position" type="SimpleLiteral" minOccurs="0"/>
+                    <xs:element name="hasPart" type="CreativeWorkSeries" minOccurs="0"/>
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Episode">
+        <xs:complexContent>
+            <xs:extension base="CollectionType">
+                <xs:all>
+                    <xs:element name="name" type="SimpleLiteral"/>
+                    <xs:element name="identifier" type="SimpleLiteral" minOccurs="0"/>
+                    <xs:element name="position" type="SimpleLiteral" minOccurs="0"/>
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ArchiveComponent">
+        <xs:complexContent>
+            <xs:extension base="CollectionType">
+                <xs:all>
+                    <xs:element name="name" type="SimpleLiteral"/>
+                    <xs:element name="identifier" type="SimpleLiteral" minOccurs="0"/>
+                    <xs:element name="position" type="SimpleLiteral" minOccurs="0"/>
+                    <xs:element name="hasPart" type="ArchiveComponent" minOccurs="0"/>
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BroadcastEvent">
+        <xs:complexContent>
+            <xs:extension base="CollectionType">
+                <xs:all>
+                    <xs:element name="name" type="SimpleLiteral"/>
+                    <xs:element name="description" type="SimpleLiteral"/>
+                    <xs:element name="identifier" type="SimpleLiteral" minOccurs="0"/>
+                    <xs:element name="position" type="SimpleLiteral" minOccurs="0"/>
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CreativeWorkSeason">
+        <xs:complexContent>
+            <xs:extension base="CollectionType">
+                <xs:all>
+                    <xs:element name="name" type="SimpleLiteral"/>
+                    <xs:element name="identifier" type="SimpleLiteral" minOccurs="0"/>
+                    <xs:element name="seasonNumber" type="SimpleLiteral" minOccurs="0"/>
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+
     <xs:attribute name="roleName" type="xs:string"/>
 
     <xs:element name="any" />
@@ -80,8 +158,6 @@
     <xs:element name="birthDate"/>
     <xs:element name="deathDate"/>
 
-
-
     <xs:element name="height" type="QuantitativeValue" substitutionGroup="any"/>
     <xs:element name="width" type="QuantitativeValue" substitutionGroup="any"/>
     <xs:element name="depth" type="QuantitativeValue" substitutionGroup="any"/>
@@ -90,7 +166,9 @@
     <xs:element name="artform" type="SimpleLiteral" substitutionGroup="any"/>
     <xs:element name="creator" type="Person" substitutionGroup="any"/>
 
-    
+    <xs:element name="isPartOf" type="CollectionType" substitutionGroup="any"/>
+
+
     <xs:group name="elementsAndRefinementsGroup">
         <xs:annotation>
             <xs:documentation xml:lang="en">
@@ -99,11 +177,11 @@
             </xs:documentation>
         </xs:annotation>
 
-    <xs:sequence>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element ref="any"/>
-        </xs:choice>
-    </xs:sequence>
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="any"/>
+            </xs:choice>
+        </xs:sequence>
     </xs:group>	
 
     <xs:complexType name="elementOrRefinementContainer">

@@ -16,12 +16,18 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
-    dct:conformsTo "https://data.hetarchief.be/id/sip/1.1/basic",
-        "https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" ;
-    schema:agent [ schema:agent haOrgId:OR-m30wc4t ;
+    dct:conformsTo haSipId:basic,
+        <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+    dct:format "Photographs – Digital" ;
+    schema:agent [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
             schema:roleName "CREATOR" ],
-        [ schema:agent haOrgId:OR-m30wc4t ;
-            schema:roleName "ARCHIVIST" ] .
+        [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
+            schema:roleName "ARCHIVIST" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:570f779526a5acda5c2935ad1a346b2d ;
+            schema:roleName "CREATOR" ] .
 
 <http://the-fr.org/id/file-format/1507> a dct:FileFormat .
 
@@ -30,13 +36,13 @@ haObjId:02e4eb2f74ac06dd9cdfab861553697e a cryptographicHashFunctions:md5 ;
 
 haObjId:MEEMOO-LOCAL-ID rdfs:subClassOf haObj:LocalIdentifier .
 
-haObjId:MEEMOO-LOCAL-IDce980d9 a haObjId:MEEMOO-LOCAL-ID ;
-    rdf:value "ce980d9" .
+haObjId:595ad5df1da1bac70b6dfb274d658c81 a haObjId:MEEMOO-LOCAL-ID ; 
+    rdf:value "ce980d9" . 
 
 haObjId:Object_number rdfs:subClassOf haObj:LocalIdentifier .
 
-haObjId:Object_numberv_2021073114124363 a haObjId:Object_number ;
-    rdf:value "v_2021073114124363" .
+haObjId:f27f26e20db6bf26672b9467aba2ea57 a haObjId:Object_number ; 
+    rdf:value "v_2021073114124363" . 
 
 haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity ;
     relSubType:isr haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
@@ -52,7 +58,7 @@ haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity
         "creator 2" ;
     dct:description "the description of the episode"@en,
         "de beschrijving van de episode"@nl ;
-    dct:extent "01:59:34"^^xsd:time ;
+    dct:extent "P5Y"^^xsd:duration ;
     dct:issued "2023-02-14"^^edtf:EDTF ;
     dct:language "en" ;
     dct:license "VIAA-ONDERWIJS",
@@ -75,8 +81,8 @@ haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity
     dct:title "the title of the episode"@en,
         "de titel van de episode"@nl ;
     dct:type "video" ;
-    premisowl:identifier haObjId:MEEMOO-LOCAL-IDce980d9,
-        haObjId:Object_numberv_2021073114124363 .
+    premisowl:identifier haObjId:595ad5df1da1bac70b6dfb274d658c81, 
+        haObjId:f27f26e20db6bf26672b9467aba2ea57 . 
 
 haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d a premisowl:File ;
     relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
@@ -84,6 +90,10 @@ haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d a premisowl:File ;
     premisowl:fixity haObjId:02e4eb2f74ac06dd9cdfab861553697e ;
     premisowl:originalName "D523F963.jpg" ;
     premisowl:size 520 .
+
+haOrgId:570f779526a5acda5c2935ad1a346b2d a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1" .
 
 haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ;
     relSubType:inc haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d ;

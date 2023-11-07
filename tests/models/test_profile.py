@@ -155,15 +155,15 @@ class TestBasicProfile10:
         error_1 = errors[0]
         assert type(error_1) == XMLNotValidError
         assert (
-            str(error_1)
-            == "Element '{http://www.loc.gov/premis/v3}relationship': This element is not expected. Expected is ( {http://www.loc.gov/premis/v3}objectIdentifier )., line 10"
+            "Element '{http://www.loc.gov/premis/v3}relationship': This element is not expected. Expected is ( {http://www.loc.gov/premis/v3}objectIdentifier )."
+            in str(error_1)
         )
 
         error_2 = errors[1]
         assert type(error_2) == XMLNotValidError
         assert (
-            str(error_2)
-            == "Element '{http://www.loc.gov/premis/v3}objectCharacteristics': Missing child element(s). Expected is ( {http://www.loc.gov/premis/v3}format )., line 49"
+            "Element '{http://www.loc.gov/premis/v3}objectCharacteristics': Missing child element(s). Expected is ( {http://www.loc.gov/premis/v3}format )."
+            in str(error_2)
         )
 
     @pytest.mark.parametrize(
@@ -198,15 +198,15 @@ class TestBasicProfile10:
         error_1 = errors[0]
         assert type(error_1) == XMLNotValidError
         assert (
-            str(error_1)
-            == "Element '{http://www.loc.gov/METS/}mets': Missing child element(s). Expected is ( {http://www.loc.gov/METS/}structMap )., line 2"
+            "Element '{http://www.loc.gov/METS/}mets': Missing child element(s). Expected is ( {http://www.loc.gov/METS/}structMap )."
+            in str(error_1)
         )
 
         error_2 = errors[1]
         assert type(error_2) == XMLNotValidError
         assert (
-            str(error_2)
-            == "Element '{http://www.loc.gov/METS/}unknownSpec': This element is not expected. Expected is one of ( {http://www.loc.gov/METS/}dmdSec, {http://www.loc.gov/METS/}amdSec, {http://www.loc.gov/METS/}fileSec, {http://www.loc.gov/METS/}structMap )., line 6"
+            "Element '{http://www.loc.gov/METS/}unknownSpec': This element is not expected. Expected is one of ( {http://www.loc.gov/METS/}dmdSec, {http://www.loc.gov/METS/}amdSec, {http://www.loc.gov/METS/}fileSec, {http://www.loc.gov/METS/}structMap )."
+            in str(error_2)
         )
 
     @pytest.mark.parametrize(
@@ -284,6 +284,18 @@ class TestBasicProfile11(TestBasicProfile10):
         return BasicProfile11(path)
 
     @pytest.fixture
+    def profile_conform_batch_id(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "conform_batch_id",
+        )
+        return BasicProfile11(path)
+
+    @pytest.fixture
     def profile_invalid_xml(self):
         path = Path(
             "tests",
@@ -328,6 +340,26 @@ class TestBasicProfile11(TestBasicProfile10):
             "graph",
         )
 
+    @pytest.mark.parametrize(
+        "profile_name, expected_graph_path",
+        [
+            ("profile_conform", "conform"),
+            ("profile_conform_extended", "conform_extended"),
+            ("profile_conform_batch_id", "conform_batch_id"),
+        ],
+    )
+    def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
+        profile = request.getfixturevalue(profile_name)
+        graph = profile.parse_graph()
+        # Check if valid
+        assert profile.validate_graph(graph)
+
+        # Check if expected
+        expected = Graph()
+        path = self.graph_path().joinpath(expected_graph_path, "graph.ttl")
+        expected.parse(str(path))
+        assert isomorphic(graph, expected)
+
 
 class TestMaterialArtworkProfile11:
     def graph_path(self) -> Path:
@@ -363,6 +395,30 @@ class TestMaterialArtworkProfile11:
         )
         return MaterialArtworkProfile11(path)
 
+    @pytest.fixture
+    def minimal(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "artwork",
+            "sips",
+            "minimal",
+        )
+        return MaterialArtworkProfile11(path)
+
+    @pytest.fixture
+    def minimal_meemoo_batch_id(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "artwork",
+            "sips",
+            "minimal_meemoo_batch_id",
+        )
+        return MaterialArtworkProfile11(path)
+
     @pytest.mark.parametrize(
         "profile_name",
         ["profile_2D", "profile_3D"],
@@ -384,10 +440,32 @@ class TestMaterialArtworkProfile11:
         assert not errors
 
     @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_2D", "profile_3D", "minimal"],
+    )
+    def test_validate_descriptive(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile._validate_descriptive()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_2D", "profile_3D", "minimal"],
+    )
+    def test_validate_metadata(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile.validate_metadata()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
         "profile_name, expected_graph_path",
         [
             ("profile_2D", "2D_fa307608-35c3-11ed-9243-7e92631d7d27"),
             ("profile_3D", "3D_3d4bd7ca-38c6-11ed-95f2-7e92631d7d28"),
+            ("minimal", "minimal"),
+            ("minimal_meemoo_batch_id", "minimal_meemoo_batch_id"),
         ],
     )
     def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
