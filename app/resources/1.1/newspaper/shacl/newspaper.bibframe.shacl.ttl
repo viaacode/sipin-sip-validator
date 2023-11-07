@@ -45,7 +45,7 @@
         sh:severity sh:Violation ;
         sh:message """mods:title element occurs more than once.
             Please check `mods:mods/mods:titleInfo[not(@*)]/mods:title`"""@en ;
-    ]
+    ],
     # mods:mods/mods:identifier[not(@*)]
     [
         a sh:PropertyShape ;
@@ -82,7 +82,7 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:in (haObj:NewspaperEdition, bf:Work) ;
+        sh:in (haObj:NewspaperEdition bf:Work) ;
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource must be newspaper edition.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
@@ -453,7 +453,7 @@
         sh:severity sh:Violation ;
         sh:message """mods:place occurs more than once.
             Please check `mods:mods/mods:originInfo/mods:place`."""@en ;
-    ]
+    ],
     # mods:mods/mods:originInfo/mods:dateIssued[@encoding="edtf"]
     [
         a sh:PropertyShape ;
