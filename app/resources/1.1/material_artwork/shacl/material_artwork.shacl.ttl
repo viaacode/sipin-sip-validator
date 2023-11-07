@@ -1,5 +1,5 @@
 @prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -18,82 +18,88 @@
 
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:creator ;
     sh:nodeKind sh:IRI ;
     sh:node <#RoleShape> ;
     sh:class schema:Role ;
-    sh:name "creator"@en ;
-    sh:description "The creator of the intellectual entity."@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:height ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    # sh:node <#QuantitativeValueShape> ;
     sh:class schema:QuantitativeValue ;
-    sh:name "height"@en ;
-    sh:description "The height of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:height ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Heigth occurs more than once.
+      Please check `metadata/schema:height`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:width ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    # sh:node <#QuantitativeValueShape> ;
     sh:class schema:QuantitativeValue ;
-    sh:name "width"@en ;
-    sh:description "The width of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:width ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Width occurs more than once.
+      Please check `metadata/schema:width`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:depth ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    # sh:node <#QuantitativeValueShape> ;
     sh:class schema:QuantitativeValue ;
-    sh:name "depth"@en ;
-    sh:description "The depth of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:depth ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Depth occurs more than once.
+      Please check `metadata/schema:depth`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:weight ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    # sh:node <#QuantitativeValueShape> ;
     sh:class schema:QuantitativeValue ;
-    sh:name "weight"@en ;
-    sh:description "The weight of the intellectual entity."@en ;
-    sh:maxCount 1 ;
   ],
-  # [
-  #   a sh:PropertyShape ;
-  #   sh:path schema:isPartOf ;
-  #   sh:nodeKind sh:BlankNodeOrIRI ;
-  #   # sh:node <#QuantitativeValueShape> ;
-  #   sh:class schema:QuantitativeValue ;
-  #   sh:name "is Part Of"@en ;
-  #   sh:description "The collection this intellectual entity is part of."@en ;
-  # ] ,
+  [
+    a sh:PropertyShape ;
+    sh:path schema:weight ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Weight occurs more than once.
+      Please check `metadata/schema:weight`"""@en ;
+  ],
   [
     a sh:PropertyShape ;
     sh:path schema:artMedium ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
-    sh:description "The material used to create the physical artwork."@en ;
-    sh:message "The art medium is not a langString or occurs more than once."@en ;
-    sh:uniqueLang true
+    sh:severity sh:Violation ;
+    sh:message """`schema:artMedium` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/schema:artMedium[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:artform ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
-    sh:description "The type of artform."@en;
-    sh:message "The artform is not a langString or occurs more than once."@en ;
-    sh:uniqueLang true
+    sh:severity sh:Violation ;
+    sh:message """`schema:artform` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/schema:artform[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -107,47 +113,84 @@
       [ sh:class schema:CreativeWorkSeason ]
       [ sh:class schema:Collection ]
     ) ;
+    sh:severity sh:Violation ;
     sh:message """`schema:isPartOf` not of type `schema:Episode`, `schema:ArchiveComponent`, `schema:CreativeWorkSeries`, `schema:BroadcastEvent`, `schema:Collection` or `schema:CreativeWorkSeason`.
-      """@en ;
+      Please check `metadata/schema:isPartOf[@xsi:type=*]`"""@en ;
   ] .
 
 <#CollectionShape> a sh:NodeShape ;
   sh:targetClass schema:Collection ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:description "The name of the collection."@en ;
-    sh:message "The name is not a string or occurs more than once."@en ;
-    sh:minCount 0 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name is missing.
+      Please check `metadata/schema:isPartOf[@schema:Collection]/schema:name`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name occurs more than once.
+      Please check `metadata/schema:isPartOf[@schema:Collection]/schema:name`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:identifier ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:severity sh:Warning ;
-    sh:description "The identifier of the collection."@en ;
-    sh:message "The identifier is not a string, is absent or ooccurs more than once."@en ;
-    sh:minCount 1 ;
+    sh:minCount 0 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:identifier ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:identifier occurs more than once.
+      Please check `metadata/schema:isPartOf[@schema:Collection]/schema:identifier`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 0 ;
   ] .
 
 <#ArchiveComponentShape> a sh:NodeShape ;
   sh:targetClass schema:ArchiveComponent ;
-  sh:property
+  sh:closed true ; 
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:description "The name of the archive component."@en ;
-    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name is missing.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:ArchiveComponent]/schema:name`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name occurs more than once.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:ArchiveComponent]/schema:name`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -163,98 +206,205 @@
 
 <#CreativeWorkSeriesShape> a sh:NodeShape ;
   sh:targetClass schema:CreativeWorkSeries ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:description "The name of the series."@en ;
-    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name is missing.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:CreativeWorkSeries]/schema:name`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name occurs more than once.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:CreativeWorkSeries]/schema:name`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:position ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer ;
-    sh:description "The series number."@en ;
-    sh:message "The series number is not an integer or occurs more than once"@en ;
     sh:minCount 0 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:position ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:position occurs more than once.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:CreativeWorkSeries]/schema:position`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:identifier ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:identifier ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:identifier occurs more than once.
+      Please check `metadata/schema:isPartOf[@schema:CreativeWorkSeries]/schema:identifier`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:hasPart ;
     sh:nodeKind sh:IRI ;
+    sh:minCount 0 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
     sh:or (
       [ sh:class premis:IntellectualEntity ]
       [ sh:class schema:CreativeWorkSeries ]
     ) ;
-    sh:minCount 0 ;
-    sh:message """`schema:hasPart` not of type `premis:IntellectualEntity` or `schema:CreativeWorkSeries`."""@en ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:hasPart` not of type `premis:IntellectualEntity` or `schema:CreativeWorkSeries`.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:CreativeWorkSeries]/schema:hasPart`"""@en ;
   ] .
 
 <#BroadcastEventShape> a sh:NodeShape ;
   sh:targetClass schema:BroadcastEvent ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:description "The name of the broadcast event."@en ;
-    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name is missing.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:BroadcastEvent]/schema:name`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name occurs more than once.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:BroadcastEvent]/schema:name`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:hasPart ;
     sh:nodeKind sh:IRI ;
     sh:class premis:IntellectualEntity ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:hasPart` is missing.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:BroadcastEvent]/schema:hasPart`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
     sh:maxCount 1 ;
-    sh:message """`schema:hasPart` not of type `premis:IntellectualEntity`."""@en ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:hasPart` occurs more than once.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:BroadcastEvent]/schema:hasPart`"""@en ;
   ] .
 
 <#CreativeWorkSeasonShape> a sh:NodeShape ;
   sh:targetClass schema:CreativeWorkSeason ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:description "The name of the season."@en ;
-    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name is missing.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:CreativeWorkSeason]/schema:name`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name occurs more than once.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:CreativeWorkSeason]/schema:name`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:seasonNumber ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer ;
-    sh:description "The season number."@en ;
-    sh:message "The season number is not an integer or occurs more than once"@en ;
     sh:minCount 0 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:seasonNumber ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:seasonNumber occurs more than once.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:CreativeWorkSeason]/schema:seasonNumber`"""@en ;
+  ],
+ [
+    a sh:PropertyShape ;
+    sh:path schema:hasPart ;
+    sh:or (
+      [ sh:class premis:IntellectualEntity ]
+      [ sh:class schema:CreativeWorkSeason ]
+    ) ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:hasPart` not of type `premis:IntellectualEntity` or `schema:CreativeWorkSeason`.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:CreativeWorkSeason]/schema:hasPart`"""@en ;
   ] .
 
 <#EpisodeShape> a sh:NodeShape ;
   sh:targetClass schema:Episode ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path schema:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:description "The name of the episode"@en ;
-    sh:message "The name is not a string, does not occur or occurs more than once."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name is missing.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:Episode]/schema:name`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:name occurs more than once.
+      Please check `metadata/schema:isPartOf[@xsi:type=schema:Episode]/schema:name`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -268,7 +418,8 @@
 
 <#RepresentationShape> a sh:NodeShape ;
   sh:targetClass premis:Representation ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   # Optional schema.org
   [
     a sh:PropertyShape ;
@@ -276,216 +427,330 @@
     sh:nodeKind sh:IRI ;
     sh:node <#RoleShape> ;
     sh:class schema:Role ;
-    sh:name "creator"@en ;
-    sh:description "The creator of the intellectual entity."@en ;
+    sh:minCount 0 ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:height ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    # sh:node <#QuantitativeValueShape> ;
     sh:class schema:QuantitativeValue ;
-    sh:name "height"@en ;
-    sh:description "The height of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:height ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:height of Representation occurs more than once.
+      Please check `metadata/schema:height`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:width ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    # sh:node <#QuantitativeValueShape> ;
     sh:class schema:QuantitativeValue ;
-    sh:name "width"@en ;
-    sh:description "The width of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:width ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """schema:width of Representation occurs more than once.
+      Please check `metadata/schema:width`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:depth ;
     sh:nodeKind sh:BlankNodeOrIRI ;
-    # sh:node <#QuantitativeValueShape> ;
     sh:class schema:QuantitativeValue ;
-    sh:name "depth"@en ;
-    sh:description "The depth of the intellectual entity."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:depth ;
     sh:maxCount 1 ;
-  ] ,
+    sh:severity sh:Violation ;
+    sh:message """schema:depth of Representation occurs more than once.
+      Please check `metadata/schema:depth`"""@en ;
+  ],
   [
     a sh:PropertyShape ;
     sh:path schema:artMedium ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
-    sh:description "The material used to create the physical artwork."@en ;
-    sh:message "The art medium is not a langString or occurs more than once."@en ;
-    sh:uniqueLang true ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:artMedium` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/schema:artMedium[@xml:lang=*]`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path schema:artform ;
     sh:nodeKind sh:Literal ;
     sh:datatype rdf:langString ;
-    sh:description "The type of artform."@en;
-    sh:message "The artform is not a langString or occurs more than once."@en ;
-    sh:severity sh:Warning ;
-    sh:uniqueLang true ;
+    sh:severity sh:Violation ;
+    sh:message """`schema:artform` is not a string or has no `@xml:lang` attribute.
+      Please check `metadata/schema:artform[@xml:lang=*]`"""@en ;
   ] .
 
 <#FileShape> a sh:NodeShape ;
   sh:targetClass premis:File ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path omg:hasGeometry ;
     sh:nodeKind sh:IRI ;
     sh:class omg:Geometry ;
-    sh:name "has geometry"@en ;
-    sh:description "The geometry of the file."@en ;
   ] .
 
 <#GeometryShape> a sh:NodeShape ;
   sh:targetClass omg:Geometry ;
-  sh:property
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path gom:hasVertices ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:name "has vertices"@en ;
-    sh:description "The number of vertices of the geometry."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path gom:hasVertices ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """`number of vertices` is missing.
+      Please check `/premis:premis/premis:object[@xsi:type='premis:file']/premis:significantProperties[./premis:significantPropertiesType/text()="number_of_vertices"]/premis:significantPropertiesValue/text()`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path gom:hasVertices ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """`number of vertices` occurs more than once.
+      Please check `/premis:premis/premis:object[@xsi:type='premis:file']/premis:significantProperties[./premis:significantPropertiesType/text()="number_of_vertices"]/premis:significantPropertiesValue/text()`"""@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path gom:hasFaces ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:name "has faces"@en ;
-    sh:description "The number of faces (e.g. triangles) of the geometry."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path gom:hasFaces ;
     sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """`number of faces` is missing.
+      Please check `/premis:premis/premis:object[@xsi:type='premis:file']/premis:significantProperties[./premis:significantPropertiesType/text()="number_of_triangles"]/premis:significantPropertiesValue/text()`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path gom:hasFaces ;
     sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """`number of faces` occurs more than once.
+      Please check `/premis:premis/premis:object[@xsi:type='premis:file']/premis:significantProperties[./premis:significantPropertiesType/text()="number_of_triangles"]/premis:significantPropertiesValue/text()`"""@en ;
   ] .
 
 <#QuantitativeValueShape> a sh:NodeShape ; 
-    sh:targetClass schema:QuantitativeValue ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path schema:unitCode ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "unit code"@en ;
-        sh:description "The unit of measurement given using the UN/CEFACT Common Code (3 characters)."@en ;
-        sh:maxCount 1 ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path schema:unitText ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "unit text"@en ;
-        sh:description "A string or text indicating the unit of measurement. Useful if you cannot provide a standard unit code for unitCode."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path schema:value ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:float ;
-        sh:name "value"@en ;
-        sh:description "The value of the quantitative value or property value node."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] .
+  sh:targetClass schema:QuantitativeValue ;
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
+  [
+      a sh:PropertyShape ;
+      sh:path schema:unitCode ;
+      sh:nodeKind sh:Literal ;
+      sh:datatype xsd:string ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:unitCode ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message """Unit code is missing.
+      Please check `metadata/(schema:height|schema:width|schema:depth)/schema:unitCode`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:unitCode ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Unit code occurs more than once.
+      Please check `metadata/(schema:height|schema:width|schema:depth)/schema:unitCode`"""@en ;
+  ],
+  [
+      a sh:PropertyShape ;
+      sh:path schema:unitText ;
+      sh:nodeKind sh:Literal ;
+      sh:datatype xsd:string ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:unitText ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Unit text is missing.
+      Please check `metadata/(schema:height|schema:width|schema:depth)/schema:unitText`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:unitText ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Unit text occurs more than once.
+      Please check `metadata/(schema:height|schema:width|schema:depth)/schema:unitText`"""@en ;
+  ],
+  [
+      a sh:PropertyShape ;
+      sh:path schema:value ;
+      sh:nodeKind sh:Literal ;
+      sh:datatype xsd:float ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:value ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Value is missing.
+      Please check `metadata/(schema:height|schema:width|schema:depth|schema:weight)/schema:value`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:value ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Value occurs more than once.
+      Please check `metadata/(schema:height|schema:width|schema:depth|schema:weight)/schema:value`"""@en ;
+  ] .
 
 <#RoleShape> a sh:NodeShape ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path schema:creator ;
-        sh:nodeKind sh:IRI ;
-        # sh:node <#PersonShape> ;
-        sh:class schema:Person ;
-        sh:severity sh:Violation ;
-        sh:message "schema:creator is not of class schema:Person"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path schema:roleName ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ; 
-        sh:name "role name"@en ;
-        sh:severity sh:Violation ;
-        sh:message "schema:roleName is missing or not of type string"@en ;    
-    ] .
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
+  [
+      a sh:PropertyShape ;
+      sh:path schema:creator ;
+      sh:nodeKind sh:IRI ;
+      sh:class schema:Person ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:creator ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Role creator is missing.
+      Please check `metadata/schema:creator`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:creator ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Role creator occurs more than once.
+      Please check `metadata/schema:creator`"""@en ;
+  ],
+  [
+      a sh:PropertyShape ;
+      sh:path schema:roleName ;
+      sh:nodeKind sh:Literal ;
+      sh:datatype xsd:string ; 
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:roleName ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message """Role creator is missing.
+      Please check `metadata/schema:creator/@roleName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:roleName ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Role creator occurs more than once.
+      Please check `metadata/schema:creator/@roleName`"""@en ;
+  ] .
 
 
 <#PersonShape> a sh:NodeShape ;
-    sh:targetClass schema:Person ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path schema:name ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "name"@en ;
-        sh:description "The  name of a person associated with the artwork."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path schema:birthDate ;
-        sh:nodeKind sh:Literal ;
-        sh:or (
-            [ sh:datatype edtf:EDTF-level0 ]
-            [ sh:datatype edtf:EDTF-level1 ]
-            [ sh:datatype edtf:EDTF-level2 ]
-            [ sh:datatype edtf:EDTF ]
-        ) ;
-        sh:name "Birth date"@en ;
-        sh:description "The birth date of a person associated with the artwork."@en ;
-        sh:maxCount 1 ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path schema:deathDate ;
-        sh:nodeKind sh:Literal ;
-        sh:or (
-            [ sh:datatype edtf:EDTF-level0 ]
-            [ sh:datatype edtf:EDTF-level1 ]
-            [ sh:datatype edtf:EDTF-level2 ]
-            [ sh:datatype edtf:EDTF ]
-        ) ;
-        sh:name "Death date"@en ;
-        sh:description "The death date of a person associated with the artwork."@en ;
-        sh:maxCount 1 ;
-    ] .
+  sh:targetClass schema:Person ;
+  sh:closed true ;
+  sh:property <#propertyTypeShape>,
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Person name is missing.
+      Please check `metadata/schema:creator/schema:name`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Person name occurs more than once.
+      Please check `metadata/schema:creator/schema:name`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:birthDate ;
+    sh:nodeKind sh:Literal ;
+    sh:or (
+        [ sh:datatype edtf:EDTF-level0 ]
+        [ sh:datatype edtf:EDTF-level1 ]
+        [ sh:datatype edtf:EDTF-level2 ]
+        [ sh:datatype edtf:EDTF ]
+    ) ;
+    sh:minCount 0 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:birthDate ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Person birth date occurs more than once.
+      Please check `metadata/schema:creator/schema:birthDate`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:deathDate ;
+    sh:nodeKind sh:Literal ;
+    sh:or (
+        [ sh:datatype edtf:EDTF-level0 ]
+        [ sh:datatype edtf:EDTF-level1 ]
+        [ sh:datatype edtf:EDTF-level2 ]
+        [ sh:datatype edtf:EDTF ]
+    ) ;
+    sh:minCount 0 ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:deathDate ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Person death date occurs more than once.
+      Please check `metadata/schema:creator/schema:deathDate`"""@en ;
+  ] .
 
 <#EventShape> a sh:NodeShape ;
   sh:targetClass premis:Event ;
-  sh:property
+  sh:property <#propertyTypeShape>,
   [
     a sh:PropertyShape ;
     sh:path haObj:height-calibration-object ;
     sh:nodeKind sh:IRI ;
     sh:class schema:QuantitativeValue ;
-    sh:name "height calibration object"@en ;
-    sh:description "The height of the calibration object used for the digitisation"@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path haObj:scan-setup ;
     sh:nodeKind sh:Literal ;
-    sh:name "scan setup"@en ;
-    sh:description "The scan setup used for the scan."@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path haObj:light-metering ;
     sh:nodeKind sh:Literal ;
-    sh:name "light metering"@en ;
-    sh:description "The light metering used for the scan."@en ;
   ] .
+
+<#propertyTypeShape> a sh:PropertyShape ;
+  sh:path rdf:type ;
+  sh:minCount 1 .

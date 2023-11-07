@@ -154,7 +154,7 @@ haObjId:uuid-02901916-a428-4311-9d5e-a46303ae09c4 a premisowl:File ;
     relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ; 
     dct:format <http://the-fr.org/id/file-format/1210> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_REF_OBJ" ; 
+    premisowl:originalName "qv3bz95m19_REF_OBJ.obj" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-1cc1fe7a-da78-4c53-847a-0fd141ce2d3b a premisowl:HardwareAgent ; 
@@ -166,21 +166,21 @@ haObjId:uuid-254F143D-85A3-4DB8-BFA4-53000DEA04C7 a premisowl:File ;
     relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ; 
     dct:format <http://the-fr.org/id/file-format/154> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_ARCH_TIFF_COLOR" ; 
+    premisowl:originalName "qv3bz95m19_ARCH_TIFF_COLOR.tiff" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-293ae3bf-e90b-4aed-85af-95a0dc8aec34 a premisowl:File ; 
     relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ; 
     dct:format <http://the-fr.org/id/file-format/1211> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_REF_MTL" ; 
+    premisowl:originalName "qv3bz95m19_REF_MTL.mtl" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-57dfa49d-5997-48f4-8bdf-fb0d08f87f66 a premisowl:File ; 
     relSubType:isi haObjId:uuid-e3aff200-237b-11ed-8d32-7e92631d7d28 ; 
     dct:format <http://the-fr.org/id/file-format/865> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "PID_ARCH_STL" ; 
+    premisowl:originalName "PID_ARCH_STL.stl" ; 
     premisowl:size 558891008 ; 
     omg:hasGeometry haObjId:uuid-57dfa49d-5997-48f4-8bdf-fb0d08f87f66-geo . 
  
@@ -192,14 +192,14 @@ haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B a premisowl:File ;
     relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ; 
     dct:format <http://the-fr.org/id/file-format/1210> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_ARCH_OBJ" ; 
+    premisowl:originalName "qv3bz95m19_ARCH_OBJ.obj" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-6D523688-61AD-434A-9EB7-C4EAA5C99028 a premisowl:File ; 
     relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ; 
     dct:format <http://the-fr.org/id/file-format/1211> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_VER_MTL" ; 
+    premisowl:originalName "qv3bz95m19_VER_MTL.mtl" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-855bdf50-8c81-43a2-8218-b3245502abff a schema:Collection ; 
@@ -211,28 +211,28 @@ haObjId:uuid-9A992F7F-0562-4F0A-8D79-FE6DF4BD7F82 a premisowl:File ;
     relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ; 
     dct:format <http://the-fr.org/id/file-format/154> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_VER_COLOR_BMP" ; 
+    premisowl:originalName "qv3bz95m19_VER_COLOR_BMP.bmp" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-9BB5C77E-60DC-4426-BB56-33C4533A8FB9 a premisowl:File ; 
     relSubType:isi haObjId:uuid-aa10c188-039b-4c9f-831c-c1f6079f92a4 ; 
     dct:format <http://the-fr.org/id/file-format/1210> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_VER_OBJ" ; 
+    premisowl:originalName "qv3bz95m19_VER_OBJ.obj" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-ECEB4181-5052-43C2-A3AD-D44AE5FB4D16 a premisowl:File ; 
     relSubType:isi haObjId:uuid-7f16cfda-21ff-11ed-a277-7e92631d7d27 ; 
     dct:format <http://the-fr.org/id/file-format/1211> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_ARCH_MTL" ; 
+    premisowl:originalName "qv3bz95m19_ARCH_MTL.mtl" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-ace20074-874f-4ad3-a7a8-ad71832953f2 a premisowl:File ; 
     relSubType:isi haObjId:uuid-f1a073c0-ebdd-40f6-b449-c2032e83e58a ; 
     dct:format <http://the-fr.org/id/file-format/115> ; 
     premisowl:fixity haObjId:9b7dd51ee94d1cc666392f5fbb6d9ea2 ; 
-    premisowl:originalName "qv3bz95m19_REF_BMP" ; 
+    premisowl:originalName "qv3bz95m19_REF_BMP.bmp" ; 
     premisowl:size 558891008 . 
  
 haObjId:uuid-d6c5f78f-e850-435f-b0b2-e9b6dbf7a2b1 a premisowl:SoftwareAgent ; 

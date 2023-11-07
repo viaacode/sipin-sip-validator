@@ -61,7 +61,7 @@
       </premis:format>
     </premis:objectCharacteristics>
 
-    <premis:originalName>qv3bz95m19_VER_OBJ</premis:originalName>
+    <premis:originalName>qv3bz95m19_VER_OBJ.obj</premis:originalName>
 
     <!-- relationship between file and its representation -->
     <premis:relationship>
@@ -100,7 +100,7 @@
       </premis:format>
     </premis:objectCharacteristics>
 
-    <premis:originalName>qv3bz95m19_VER_MTL</premis:originalName>
+    <premis:originalName>qv3bz95m19_VER_MTL.mtl</premis:originalName>
 
     <!-- relationship between file and its representation -->
     <premis:relationship>
@@ -139,7 +139,7 @@
       </premis:format>
     </premis:objectCharacteristics>
 
-    <premis:originalName>qv3bz95m19_VER_COLOR_BMP</premis:originalName>
+    <premis:originalName>qv3bz95m19_VER_COLOR_BMP.bmp</premis:originalName>
 
     <!-- relationship between file and its representation -->
     <premis:relationship>
