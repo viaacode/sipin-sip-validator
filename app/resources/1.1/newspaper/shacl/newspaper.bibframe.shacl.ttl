@@ -590,8 +590,22 @@
         sh:datatype xsd:string ;
         sh:name "Mods name part"@en ;
         sh:description "The given name part of a person who contributed to the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:givenName ;
         sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:namePart[@type="given"] is required.
+            Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="given"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:givenName ;
         sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:namePart[@type="given"] occurs more than once.
+            Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="given"]`."""@en ;
     ],
     # mods:mods/mods:name[@type="personal"]/namePart[@type="family"]
     [
@@ -601,8 +615,22 @@
         sh:datatype xsd:string ;
         sh:name "Mods family name part"@en ;
         sh:description "The family name part of a person who contributed to the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:familyName ;
         sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:namePart[@type="family"] is required.
+            Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="family"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:familyName ;
         sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:namePart[@type="family"] occurs more than once.
+            Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="family"]`."""@en ;
     ] .
 
 #mods:mods/mods:subject/mods:topic
@@ -645,7 +673,6 @@
         sh:datatype xsd:string ;
         sh:name "Mods abstract"@en ;
         sh:description "The abstract of the newspaper."@en ;
-        sh:uniqueLang true ;
     ] .
 
 #mods:mods/mods:identifier[not(@*)]
