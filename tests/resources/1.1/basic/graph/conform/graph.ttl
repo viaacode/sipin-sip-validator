@@ -36,21 +36,24 @@ haObjId:02e4eb2f74ac06dd9cdfab861553697e a cryptographicHashFunctions:md5 ;
 
 haObjId:Object_number rdfs:subClassOf haObj:LocalIdentifier .
 
-haObjId:Object_numberv_2021073114124363 a haObjId:Object_number ;
-    rdf:value "v_2021073114124363" .
+haObjId:f27f26e20db6bf26672b9467aba2ea57 a haObjId:Object_number ; 
+    rdf:value "v_2021073114124363" . 
 
 haObjId:MEEMOO-LOCAL-ID rdfs:subClassOf haObj:LocalIdentifier .
 
-haObjId:MEEMOO-LOCAL-IDce980d9 a haObjId:MEEMOO-LOCAL-ID ;
-    rdf:value "ce980d9" .
+haObjId:595ad5df1da1bac70b6dfb274d658c81 a haObjId:MEEMOO-LOCAL-ID ; 
+    rdf:value "ce980d9" . 
+
+haObjId:f27f26e20db6bf26672b9467aba2ea57 a haObjId:Object_number ; 
+    rdf:value "v_2021073114124363" . 
 
 haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity;
     relSubType:isr haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
     dct:created "2020"^^edtf:EDTF ;
     dct:description "Descriptie"@nl ;
     dct:title "Titel"@nl ;
-    premisowl:identifier haObjId:Object_numberv_2021073114124363,
-        haObjId:MEEMOO-LOCAL-IDce980d9 .
+    premisowl:identifier haObjId:595ad5df1da1bac70b6dfb274d658c81, 
+        haObjId:f27f26e20db6bf26672b9467aba2ea57 . 
 
 haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d a premisowl:File ;
     relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
