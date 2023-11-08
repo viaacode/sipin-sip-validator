@@ -1740,11 +1740,13 @@
   ],
   [
     a sh:PropertyShape ;
-    sh:path [ sh:inversePath eventRelAgRole:exe ] ;
+    sh:path [sh:alternativePath ([ sh:inversePath eventRelAgRole:exe ] [ sh:inversePath schema:agent])];
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     sh:message """Software agent is not used as an executor in any event.
-      Please check `premis:premis/premis:event[premis:eventType='digitization']/premis:linkingAgentIdentifier`"""@en ;
+      Please check `premis:premis/premis:event[premis:eventType='digitization']/premis:linkingAgentIdentifier`
+      OR Software agent is not used as Agent for SIP creation.
+      Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']`"""@en ;
   ] .
 
 <#propertyTypeShape> a sh:PropertyShape ;
