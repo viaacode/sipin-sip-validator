@@ -32,6 +32,16 @@
     dcterms:description """Data model to describe the content of objects."""@en ;
     pav:version "0.0.1" .
 
+<#IntellectualEntityCountShape>
+  a sh:NodeShape ;
+  sh:targetNode premis:IntellectualEntity ;
+  sh:property [
+    sh:path [ sh:inversePath rdf:type ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """No Intellectual Entity found."""@en ;
+  ] .
+
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
   sh:closed true ;
@@ -684,6 +694,16 @@
     sh:severity sh:Warning ;
     sh:message """`dcterms:type` is less than 3 characters.
       Please check `metadata/dcterms:type`."""@en ;
+  ] .
+
+<#RepresentationCountShape>
+  a sh:NodeShape ;
+  sh:targetNode premis:Representation ;
+  sh:property [
+    sh:path [ sh:inversePath rdf:type ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """No Intellectual Entity found."""@en ;
   ] .
 
 <#RepresentationShape> a sh:NodeShape ;
