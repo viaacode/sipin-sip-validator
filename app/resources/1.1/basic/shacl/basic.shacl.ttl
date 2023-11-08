@@ -1558,11 +1558,33 @@
   ],
   [
     a sh:PropertyShape ;
+    sh:path eventRelAgRole:val ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has validating agent"@en ;
+    sh:description "The agent that validated the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelAgRole:aut ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has authorizing agent"@en ;
+    sh:description "The agent that authorized the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
     sh:path schema:instrument ;
     sh:nodeKind sh:IRI ;
     sh:class premis:HardwareAgent ;
     sh:name "has instrument"@en ;
     sh:description "The hardware agent that performed the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path [ sh:alternativePath (eventRelAgRole:exe eventRelAgRole:imp schema:instrument eventRelAgRole:val eventRelAgRole:aut) ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has no value for `premis:hasEventRelatedAgent`.
+      Please check `premis:premis/premis:hasEventRelatedAgent`"""@en ;
   ],
   [
     a sh:PropertyShape ;
@@ -1577,6 +1599,14 @@
     sh:nodeKind sh:IRI ;
     sh:name "has source"@en ;
     sh:description "The source of the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path [ sh:alternativePath (eventRelObjRole:out eventRelObjRole:sou) ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has no value for `outcome` or `source` linking object.
+      Please check `premis:premis/premis:event/premis:linkingObjectIdentifier`"""@en ;
   ] .
 
 <#HardwareAgentShape> a sh:NodeShape ;
@@ -1654,6 +1684,14 @@
     sh:severity sh:Violation ;
     sh:message """Hardware agent has more than one value for `schema:additionalType`.
       Please check `premis:premis/premis:agent[premis:agentType='hardware']/premis:agentExtension/schema:additionalType`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path [ sh:inversePath schema:instrument ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent is not used as an instrument in any event.
+      Please check `premis:premis/premis:event[premis:eventType='digitization']/premis:linkingAgentIdentifier`"""@en ;
   ] .
 
 <#SoftwareAgentShape> a sh:NodeShape ;
@@ -1699,6 +1737,14 @@
     sh:severity sh:Violation ;
     sh:message """Software agent has more than one value for `schema:version`.
       Please check `premis:premis/premis:agent[premis:agentType='software']/premis:agentExtension/schema:version`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path [ sh:inversePath eventRelAgRole:exe ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Software agent is not used as an executor in any event.
+      Please check `premis:premis/premis:event[premis:eventType='digitization']/premis:linkingAgentIdentifier`"""@en ;
   ] .
 
 <#propertyTypeShape> a sh:PropertyShape ;
