@@ -703,7 +703,7 @@
     sh:path [ sh:inversePath rdf:type ] ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
-    sh:message """No Intellectual Entity found."""@en ;
+    sh:message """No Representation found."""@en ;
   ] .
 
 <#RepresentationShape> a sh:NodeShape ;
