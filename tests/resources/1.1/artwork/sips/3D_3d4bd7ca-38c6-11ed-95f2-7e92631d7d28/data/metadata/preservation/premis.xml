@@ -132,6 +132,11 @@
         <premis:eventDetailInformation>
             <premis:eventDetail>qc note</premis:eventDetail>
         </premis:eventDetailInformation>
+        <premis:linkingAgentIdentifier>
+            <premis:linkingAgentIdentifierType>MEEMOO-OR-ID</premis:linkingAgentIdentifierType>
+            <premis:linkingAgentIdentifierValue>OR-x05xc4w</premis:linkingAgentIdentifierValue>
+            <premis:linkingAgentRole valueURI="http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/imp">implementer</premis:linkingAgentRole>
+        </premis:linkingAgentIdentifier>
         <premis:linkingObjectIdentifier>
             <premis:linkingObjectIdentifierType>UUID</premis:linkingObjectIdentifierType>
             <premis:linkingObjectIdentifierValue>uuid-e3aff200-237b-11ed-8d32-7e92631d7d28</premis:linkingObjectIdentifierValue>
