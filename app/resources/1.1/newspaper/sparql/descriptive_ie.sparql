@@ -1,0 +1,60 @@
+PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/> 
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
+PREFIX haObjId: <https://data.hetarchief.be/id/object/>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX premis: <http://www.loc.gov/premis/v3#>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX schema: <https://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX mods: <http://www.loc.gov/mods/v3#>
+
+CONSTRUCT
+{
+    ?ie a premisowl:IntellectualEntity;
+        dct:title ?title ;
+        dct:created ?date_created;
+        dct:issued ?date_issued;
+        dct:license ?license .
+}
+WHERE
+{ 
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/mods.xml> {
+        [] a fx:root ;
+        ?mods_1 [
+            a mods:titleInfo ;
+            ?mods_title_info [
+                a mods:title ;
+                    rdf:_1 ?title ;
+            ];
+        ];
+        ?mods_2 [
+            a mods:identifier ;
+                rdf:_1 ?identifier ;
+            ] ;
+        ?mods_3 [
+            a mods:originInfo ;
+            ?mods_origin_1 [
+                a mods:dateIssued;
+                rdf:_1 ?date_issued ;
+            ];
+            ?mods_origin_2 [
+                a mods:dateCreated;
+                rdf:_1 ?date_created ;
+            ]
+                
+        ];
+        ?mods_4 [
+            a mods:note ;
+            rdf:_1 ?license
+        ]
+         .
+
+        BIND(iri(concat(str(haObjId:), ?identifier)) AS ?ie)
+        BIND(STRDT(?date_issued, edtf:EDTF) as ?issued)
+        BIND(STRDT(?date_created, edtf:EDTF) as ?created)
+
+    }
+}
