@@ -14,6 +14,7 @@
 @prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
 @prefix edm: <http://www.europeana.eu/schemas/edm/> .
 @prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
+@prefix haNePa: <https://data.hetarchief.be/ns/newspaper/> .
 
 
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
@@ -45,6 +46,13 @@
         sh:severity sh:Violation ;
         sh:message """mods:title element occurs more than once.
             Please check `mods:mods/mods:titleInfo[not(@*)]/mods:title`"""@en ;
+    ],
+    # mods:mods/mods:titleInfo[with(@*)]/mods:title
+    [
+        a sh:PropertyShape ;
+        sh:path bf:title ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:class bf:VariantTitle ;
     ],
     # mods:mods/mods:identifier[not(@*)]
     [
@@ -82,7 +90,7 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:in (haObj:NewspaperEdition bf:Work) ;
+        sh:in (haNePa:NewspaperIssue bf:Work) ;
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource must be newspaper edition.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
@@ -293,6 +301,59 @@
         sh:name "Credits"@en ;
         sh:description "The credits of the newspaper."@en ;
     ] .
+
+<#VariantTitleShape> a sh:NodeShape ;
+    sh:targetClass bf:VariantTitle ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:variantType ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Variant Type"@en ;
+        sh:description "The variant type of the title."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:variantType ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] element is required.
+            Please check `mods:mods/mods:titleInfo/mods:title[@type=*]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:variantType ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] element occurs more than once.
+            Please check `mods:mods/mods:titleInfo/mods:title[@type=*]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Title"@en ;
+        sh:description "The title of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:titleInfo/mods:title element is required.
+            Please check `mods:mods/mods:titleInfo/mods:title`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:titleInfo/mods:title element occurs more than once.
+            Please check `mods:mods/mods:titleInfo/mods:title`"""@en ;
+    ] .
+
 
 # mods:mods/mods:physicalDescription/mods:form
 <#CarrierShape> a sh:NodeShape ;
@@ -639,7 +700,7 @@
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdfs:label ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Mods subject topic"@en ;
@@ -647,7 +708,7 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdfs:label ;
         sh:minCount 1 ;
         sh:severity sh:Violation ;
         sh:message """mods:topic has no value.
@@ -655,7 +716,7 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdfs:label ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
         sh:message """mods:topic has more than one value.
@@ -681,7 +742,7 @@
   sh:property 
   [
     a sh:PropertyShape ;
-    sh:path rdf:value ;
+    sh:path rdfs:label ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has object identifier value"@en ;

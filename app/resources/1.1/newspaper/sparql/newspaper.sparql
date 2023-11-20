@@ -1,0 +1,322 @@
+PREFIX premis: <http://www.loc.gov/premis/rdf/v3/> 
+PREFIX dct: <http://purl.org/dc/terms/> 
+PREFIX sh: <http://www.w3.org/ns/shacl#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX schema: <https://schema.org/> 
+PREFIX pav: <http://purl.org/pav/>
+PREFIX haObj: <https://data.hetarchief.be/ns/object/> 
+PREFIX haObjId: <https://data.hetarchief.be/id/object/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/> 
+PREFIX mods: <http://www.loc.gov/mods/rdf/v1#> 
+PREFIX madsrdf: <http://www.loc.gov/mads/rdf/v1#> 
+PREFIX edm: <http://www.europeana.eu/schemas/edm/> 
+PREFIX bf: <http://id.loc.gov/ontologies/bibframe/> 
+PREFIX mods: <http://www.loc.gov/mods/v3#> 
+PREFIX fx: <http://sparql.xyz/facade-x/ns/> 
+PREFIX xyz: <http://sparql.xyz/facade-x/data/> 
+PREFIX haNePa: <https://data.hetarchief.be/ns/newspaper/>
+PREFIX haNePaId: <https://data.hetarchief.be/id/newspaper/>
+PREFIX haSip: <https://data.hetarchief.be/ns/sip/> 
+
+
+CONSTRUCT {
+    # ?modsElement a mods:mods, ?extraType .
+    # ?modsElement xyz:version ?modsVersion .
+    # ?root a fx:root .
+    # ?root ?root_list_1 ?_identifier_element .
+    # ?_identifier_element a mods:identifier ;
+    #     rdf:id ?identifier .
+    # ?_identifier_element ?_identifier_attribute ?_identifier_attr_value .
+    # ?root ?root_list_2 ?_titleInfo_element .
+    # ?_titleInfo_element a mods:titleInfo ;
+    #     rdf:alt ?altTitle ;
+    #     rdf:main ?mainTitle ;
+    #     xyz:type ?title_info_type .
+    # ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
+    ?work a bf:Work, ?extraType ;
+        bf:identifiedBy ?identifier_iri ;
+        rdfs:label ?mainTitle ;
+        bf:title ?altTitle_iri ;
+        bf:genreForm ?genre_iri ;
+        bf:summary ?abstract_iri ;
+        bf:subject ?topic_iri ;
+        bf:contribution ?contribution_iri ;
+        bf:originDate ?dateCreated .
+    
+    ?identifier_iri a bf:Identifier ;
+        rdfs:label ?identifier .
+
+    ?altTitle_iri a bf:VariantTitle ;
+        rdfs:label ?altTitle ;
+        bf:variantType ?title_info_type .
+
+    ?genre_iri a bf:GenreForm ;
+        rdfs:label ?genre .
+
+    ?abstract_iri a bf:Summary ;
+        rdfs:label ?abstract .
+
+    ?topic_iri a bf:Topic ;
+        rdfs:label ?topic .
+
+    ?contribution_iri a bf:Contribution ;
+        bf:agent ?agent_iri ;
+        bf:role ?role_iri .
+
+    ?agent_iri a ?agent_type ;
+        ?namePart_prop ?namePart .
+
+    ?role_iri a bf:Role ;
+        ?roleTerm_prop ?roleTerm .
+}
+WHERE {
+    SERVICE <x-sparql-anything:location=./mods.xml> {
+        OPTIONAL {
+            ?modsElement a mods:mods .
+            OPTIONAL {
+                ?modsElement xyz:version ?modsVersion .
+            }
+        }
+        ?root a fx:root .
+        # mods:mods/mods:identifier[not(@*)]
+        OPTIONAL {
+            ?root ?root_list_1 ?_identifier_element .
+            ?_identifier_element a mods:identifier ;
+                rdf:_1 ?identifier .
+            ?_identifier_element ?_identifier_attribute ?_identifier_attr_value .
+        }
+        BIND(
+            IF(
+                BOUND(?_identifier_element),
+                iri(CONCAT(str(haObjId:), ?identifier)),
+                "No mods:identifier found"
+            )
+        as ?work)
+        BIND(
+            IF(
+                BOUND(?_identifier_element),
+                iri(CONCAT(str(haObjId:), MD5(?identifier))),
+                ?_null_3
+            )
+        as ?identifier_iri)
+        # mods:mods/mods:titleInfo/mods:title
+        OPTIONAL {
+            ?root ?root_list_2 ?_titleInfo_element .
+            ?_titleInfo_element a mods:titleInfo .
+            OPTIONAL {
+                ?_titleInfo_element rdf:_1 ?_title_element .
+                OPTIONAL {
+                    ?_title_element rdf:_1 ?title .
+                }
+            }
+            OPTIONAL {
+                ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
+                ?_titleInfo_element xyz:type ?title_info_type .
+                FILTER(?_titleInfo_attributeX != rdf:_1 && ?_titleInfo_attributeX != rdf:type)
+            }
+            BIND(IF(
+                EXISTS { 
+                    ?_titleInfo_element ?_titleInfo_attribute ?_titleInfo_attr_value .
+                    FILTER(?_titleInfo_attribute != rdf:_1 && ?_titleInfo_attribute != rdf:type)
+                    }, ?title, ?_null_1
+                )
+            AS ?altTitle)
+            BIND(
+            IF(
+                BOUND(?altTitle),
+                iri(CONCAT(str(haObjId:), MD5(?altTitle))),
+                ?_null_4
+            )
+            as ?altTitle_iri)
+            BIND(IF(
+                NOT EXISTS { 
+                    ?_titleInfo_element ?_titleInfo_attribute ?_titleInfo_attr_value .
+                    FILTER(?_titleInfo_attribute != rdf:_1 && ?_titleInfo_attribute != rdf:type)
+                    }, ?title, ?_null_2
+                )
+            AS ?mainTitle)
+        }
+        # mods:mods/mods:typeOfResource
+        OPTIONAL {
+            ?root ?root_list_3 ?_typeOfResource_element .
+            ?_typeOfResource_element a mods:typeOfResource ;
+                rdf:_1 ?typeOfResource .
+            ?_typeOfResource_element ?_typeOfResource_attribute ?_typeOfResource_attr_value .
+            BIND(
+                IF(?typeOfResource = "newspaper edition", haNePa:NewspaperIssue, CONCAT("Wrong mods:typeOfResource: ", ?typeOfResource)) 
+            as ?extraType)
+        }
+        # mods:mods/mods:abstract
+        OPTIONAL {
+            ?root ?root_list_4 ?_abstract_element .
+            ?_abstract_element a mods:abstract ;
+                rdf:_1 ?abstract .
+            ?_abstract_element ?_abstract_attribute ?_abstract_attr_value .
+        }
+        BIND(
+            IF(
+                BOUND(?_abstract_element),
+                iri(CONCAT(str(haObjId:), MD5(?abstract))),
+                ?_null_5
+            )
+        as ?abstract_iri)
+        # mods:mods/mods:genre
+        OPTIONAL {
+            ?root ?root_list_5 ?_genre_element .
+            ?_genre_element a mods:genre ;
+                rdf:_1 ?genre .
+            ?_genre_element ?_genre_attribute ?_genre_attr_value .
+        }
+        BIND(
+            IF(
+                BOUND(?_genre_element),
+                iri(CONCAT(str(haObjId:), MD5(?genre))),
+                ?_null_6
+            )
+        as ?genre_iri)
+        # mods:mods/mods:subject/mods:topic
+        OPTIONAL {
+            ?root ?root_list_6 ?_subject_element .
+            ?_subject_element a mods:subject .
+            OPTIONAL {
+                ?_subject_element rdf:_1 ?_topic_element .
+                OPTIONAL {
+                    ?_topic_element rdf:_1 ?topic .
+                }
+            }
+            OPTIONAL {
+                ?_subject_element ?_subject_attribute ?_subject_attr_value .
+                FILTER(?_subject_attribute != rdf:_1 && ?_subject_attribute != rdf:type)
+            }
+        }
+        BIND(
+            IF(
+                BOUND(?_topic_element),
+                iri(CONCAT(str(haObjId:), MD5(?topic))),
+                ?_null_7
+            )
+        as ?topic_iri)
+        # mods:mods/mods:name[@type="personal"]
+        OPTIONAL {
+            ?root ?root_list_7 ?_name_element .
+            ?_name_element a mods:name ;
+            BIND(
+                strUUID()
+            as ?_name_uuid)
+            OPTIONAL {
+                ?_name_element xyz:type ?_name_type .
+            }
+            BIND(
+                IF(?_name_type = "personal", bf:Person, ?_null_8)
+            as ?agent_type)
+            OPTIONAL {
+                ?_name_element ?_name_element_namePart_prop ?_namePart_element .
+                ?_namePart_element a mods:namePart .
+                OPTIONAL {
+                    ?_namePart_element rdf:_1 ?namePart .
+                }
+                OPTIONAL {
+                    ?_namePart_element xyz:type ?_namePart_type .
+                }
+            }
+            BIND(
+                COALESCE(
+                    IF(?_namePart_type = "family", schema:familyName, 1/0),
+                    IF(?_namePart_type = "given", schema:givenName, 1/0),
+                    IF(!BOUND(?_namePart_type), ?_null_9, 1/0),
+                    iri(CONCAT(str(haSip:), ?_namePart_type))
+                )
+            AS ?namePart_prop)
+            OPTIONAL {
+                ?_name_element ?_name_element_role_prop ?_role_element .
+                ?_role_element a mods:role .
+                OPTIONAL {
+                    ?_role_element ?_role_element_roleTerm_prop ?_roleTerm_element .
+                    ?_roleTerm_element a mods:roleTerm .
+                    OPTIONAL {
+                        ?_roleTerm_element rdf:_1 ?roleTerm .
+                    }
+                    OPTIONAL {
+                        ?_roleTerm_element xyz:type ?_roleTerm_type .
+                    }
+                }
+            }
+            BIND(
+                COALESCE(
+                    IF(?_roleTerm_type = "text", rdfs:label, 1/0),
+                    IF(!BOUND(?_roleTerm_type), ?_null_10, 1/0),
+                    iri(CONCAT(str(haSip:), ?_roleTerm_type))
+                )
+            AS ?roleTerm_prop)
+            BIND(
+                IF(
+                    BOUND(?_name_element),
+                    iri(CONCAT(str(haObjId:), MD5(?_name_uuid))),
+                    "none"
+                )
+            as ?contribution_iri)
+            BIND(
+                IF(
+                    BOUND(?_namePart_element),
+                    iri(CONCAT(str(haObjId:), MD5(CONCAT(?_name_uuid, "_agent")))),
+                    "none"
+                )
+            as ?agent_iri)
+            BIND(
+                IF(
+                    BOUND(?_role_element),
+                    iri(CONCAT(str(haObjId:), MD5(CONCAT(?_name_uuid, "_role")))),
+                    "none"
+                )
+            as ?role_iri)
+        }
+        # mods:mods/mods:originInfo
+        OPTIONAL{
+            ?_originInfo_element a mods:originInfo .
+            BIND(
+                strUUID()
+            as ?_originInfo_uuid)
+            # mods:mods/mods:originInfo/mods:dateCreated
+            OPTIONAL {
+                ?_originInfo_element ?_originInfo_element_dateCreated_prop ?_dateCreated_element .
+                ?_dateCreated_element a mods:dateCreated .
+                OPTIONAL {
+                    ?_dateCreated_element rdf:_1 ?_dateCreated .
+                }
+                OPTIONAL {
+                    ?_dateCreated_element xyz:encoding ?_dateCreated_encoding .
+                }
+                BIND(
+                    IF(
+                        BOUND(?_dateCreated_encoding) && ?_dateCreated_encoding = "edtf",
+                        STRDT(?_dateCreated, edtf:EDTF),
+                        ?_dateCreated
+                    )
+                AS ?dateCreated)
+            }
+            # mods:mods/mods:originInfo/mods:dateIssued
+            OPTIONAL {
+                ?_originInfo_element ?_originInfo_element_dateIssued_prop ?_dateIssued_element .
+                ?_dateIssued_element a mods:dateIssued .
+                OPTIONAL {
+                    ?_dateIssued_element rdf:_1 ?_dateIssued .
+                }
+                OPTIONAL {
+                    ?_dateIssued_element xyz:encoding ?_dateIssued_encoding .
+                }
+                BIND(
+                    IF(
+                        BOUND(?_dateIssued_encoding) && ?_dateIssued_encoding = "edtf",
+                        STRDT(?_dateIssued, edtf:EDTF),
+                        ?_dateIssued
+                    )
+                AS ?dateIssued)
+            }
+        }
+
+    }
+}
