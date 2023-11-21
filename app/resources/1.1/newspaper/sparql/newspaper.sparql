@@ -24,19 +24,6 @@ PREFIX haSip: <https://data.hetarchief.be/ns/sip/>
 
 
 CONSTRUCT {
-    # ?modsElement a mods:mods, ?extraType .
-    # ?modsElement xyz:version ?modsVersion .
-    # ?root a fx:root .
-    # ?root ?root_list_1 ?_identifier_element .
-    # ?_identifier_element a mods:identifier ;
-    #     rdf:id ?identifier .
-    # ?_identifier_element ?_identifier_attribute ?_identifier_attr_value .
-    # ?root ?root_list_2 ?_titleInfo_element .
-    # ?_titleInfo_element a mods:titleInfo ;
-    #     rdf:alt ?altTitle ;
-    #     rdf:main ?mainTitle ;
-    #     xyz:type ?title_info_type .
-    # ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
     ?work a bf:Work, ?extraType ;
         bf:identifiedBy ?identifier_iri ;
         rdfs:label ?mainTitle ;
@@ -48,20 +35,28 @@ CONSTRUCT {
         bf:originDate ?dateCreated .
     
     ?identifier_iri a bf:Identifier ;
-        rdfs:label ?identifier .
+        rdfs:label ?identifier ;
+        ?_identifier_attribute ?_identifier_attr_value .
 
     ?altTitle_iri a bf:VariantTitle ;
         rdfs:label ?altTitle ;
-        bf:variantType ?title_info_type .
+        bf:variantType ?title_info_type ;
+        ?_titleInfo_attribute ?_titleInfo_attr_value .
 
     ?genre_iri a bf:GenreForm ;
-        rdfs:label ?genre .
+        rdfs:label ?genre ;
+        bf:source ?genre_source_iri ;
+        ?_genre_attribute ?_genre_attr_value .
+
+    ?genre_source_iri a bf:Source ;
+        rdfs:label ?genre_source .
 
     ?abstract_iri a bf:Summary ;
         rdfs:label ?abstract .
 
     ?topic_iri a bf:Topic ;
-        rdfs:label ?topic .
+        rdfs:label ?topic ;
+        ?_subject_attribute ?_subject_attr_value .
 
     ?contribution_iri a bf:Contribution ;
         bf:agent ?agent_iri ;
@@ -87,7 +82,10 @@ WHERE {
             ?root ?root_list_1 ?_identifier_element .
             ?_identifier_element a mods:identifier ;
                 rdf:_1 ?identifier .
-            ?_identifier_element ?_identifier_attribute ?_identifier_attr_value .
+            OPTIONAL {
+                ?_identifier_element ?_identifier_attribute ?_identifier_attr_value .
+                FILTER(?_identifier_attribute != rdf:_1 && ?_identifier_attribute != rdf:type)
+            }
         }
         BIND(
             IF(
@@ -114,14 +112,16 @@ WHERE {
                 }
             }
             OPTIONAL {
-                ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
                 ?_titleInfo_element xyz:type ?title_info_type .
-                FILTER(?_titleInfo_attributeX != rdf:_1 && ?_titleInfo_attributeX != rdf:type)
+            }
+            OPTIONAL {
+                ?_titleInfo_element ?_titleInfo_attribute ?_titleInfo_attr_value .
+                FILTER(?_titleInfo_attribute != rdf:_1 && ?_titleInfo_attribute != rdf:type && ?_titleInfo_attribute != xyz:type)
             }
             BIND(IF(
                 EXISTS { 
-                    ?_titleInfo_element ?_titleInfo_attribute ?_titleInfo_attr_value .
-                    FILTER(?_titleInfo_attribute != rdf:_1 && ?_titleInfo_attribute != rdf:type)
+                    ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
+                    FILTER(?_titleInfo_attributeX != rdf:_1 && ?_titleInfo_attributeX != rdf:type)
                     }, ?title, ?_null_1
                 )
             AS ?altTitle)
@@ -134,8 +134,8 @@ WHERE {
             as ?altTitle_iri)
             BIND(IF(
                 NOT EXISTS { 
-                    ?_titleInfo_element ?_titleInfo_attribute ?_titleInfo_attr_value .
-                    FILTER(?_titleInfo_attribute != rdf:_1 && ?_titleInfo_attribute != rdf:type)
+                    ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
+                    FILTER(?_titleInfo_attributeX != rdf:_1 && ?_titleInfo_attributeX != rdf:type)
                     }, ?title, ?_null_2
                 )
             AS ?mainTitle)
@@ -156,6 +156,7 @@ WHERE {
             ?_abstract_element a mods:abstract ;
                 rdf:_1 ?abstract .
             ?_abstract_element ?_abstract_attribute ?_abstract_attr_value .
+            FILTER(?_abstract_attribute != rdf:_1 && ?_abstract_attribute != rdf:type)
         }
         BIND(
             IF(
@@ -169,7 +170,16 @@ WHERE {
             ?root ?root_list_5 ?_genre_element .
             ?_genre_element a mods:genre ;
                 rdf:_1 ?genre .
-            ?_genre_element ?_genre_attribute ?_genre_attr_value .
+            OPTIONAL {
+                ?_genre_element xyz:authority ?genre_source .
+            }
+            OPTIONAL {
+                ?_genre_element xyz:authorityURI ?_genre_source_uri .
+            }
+            OPTIONAL {
+                ?_genre_element ?_genre_attribute ?_genre_attr_value .
+                FILTER(?_genre_attribute != rdf:_1 && ?_genre_attribute != rdf:type && ?_genre_attribute != xyz:authority && ?_genre_attribute != xyz:authorityURI)
+            }
         }
         BIND(
             IF(
@@ -178,19 +188,35 @@ WHERE {
                 ?_null_6
             )
         as ?genre_iri)
+        BIND(
+            IF(
+                BOUND(?_genre_element),
+                IF(
+                    BOUND(?_genre_source_uri),
+                    iri(?_genre_source_uri),
+                    IF(
+                        BOUND(?genre_source),
+                        iri(CONCAT(str(haObjId:), MD5(?genre_source))),
+                        "No mods:genre/@authority or @authorityURI found."
+                    )
+                ),
+                ?_null_11
+            )
+        as ?genre_source_iri)
         # mods:mods/mods:subject/mods:topic
         OPTIONAL {
             ?root ?root_list_6 ?_subject_element .
             ?_subject_element a mods:subject .
             OPTIONAL {
-                ?_subject_element rdf:_1 ?_topic_element .
+                ?_subject_element ?_subject_element_topic_prop ?_topic_element .
+                FILTER(STRSTARTS(str(?_subject_element_topic_prop), str(rdf:_)))
                 OPTIONAL {
                     ?_topic_element rdf:_1 ?topic .
                 }
             }
             OPTIONAL {
                 ?_subject_element ?_subject_attribute ?_subject_attr_value .
-                FILTER(?_subject_attribute != rdf:_1 && ?_subject_attribute != rdf:type)
+                FILTER(!STRSTARTS(str(?_subject_element_topic_prop), str(rdf:_)) && ?_subject_attribute != rdf:type)
             }
         }
         BIND(
