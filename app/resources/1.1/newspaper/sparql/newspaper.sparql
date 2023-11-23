@@ -36,10 +36,11 @@ CONSTRUCT {
         bf:provisionActivity ?publication_iri ;
         bf:issuance ?issuance ;
         bf:extent ?extent_iri ;
-        bf:carrier ?carrier_iri .
+        bf:carrier ?carrier_iri ;
+        bf:hasSeries ?abraham_iri .
     
     ?identifier_iri a bf:Identifier ;
-        rdfs:label ?identifier ;
+        rdf:value ?identifier ;
         ?_identifier_attribute ?_identifier_attr_value .
 
     ?mainTitle_iri a bf:Title ;
@@ -101,13 +102,23 @@ CONSTRUCT {
     ?carrier_iri a bf:Carrier ;
         rdfs:label ?form ;
         bf:source ?carrier_source_iri ;
-        ?_carrier_attribute ?_carrier_attr_value .
+        ?_form_attribute ?_form_attr_value .
 
     ?carrier_source_iri a bf:Source ;
         rdfs:label ?carrier_source .
+
+    ?relatedItem_iri a bf:Series ;
+        schema:identifier ?abraham_iri .
+
+    ?abraham_iri a bf:Identifier ;
+        rdf:value ?abraham_id ;
+        bf:source ?abraham_source_iri .
+
+    ?abraham_source_iri a ?relatedItem_type_iri ;
+        rdfs:label ?abraham_source_label .
 }
 WHERE {
-    SERVICE <x-sparql-anything:location=/home/lennert/sipin-sip-validator/mods.xml> {
+    SERVICE <x-sparql-anything:location=./mods.xml> {
         OPTIONAL {
             ?modsElement a mods:mods .
             OPTIONAL {
@@ -523,7 +534,6 @@ WHERE {
                         }
                     }
                     OPTIONAL {
-                        # TODO add to resource
                         ?_form_element ?_form_attribute ?_form_attr_value .
                         FILTER(!?_form_attribute != rdf:_1 && ?_form_attribute != rdf:type)
                     }
@@ -551,6 +561,103 @@ WHERE {
                     )
                 as ?carrier_source_iri)
             }
+            # mods:mods/mods:relatedItem
+            OPTIONAL {
+                ?_relatedItem_element a mods:relatedItem .
+                BIND(
+                    strUUID()
+                as ?_relatedItem_uuid)
+                # mods:mods/mods:relatedItem[@type]
+                OPTIONAL {
+                    ?_relatedItem_element xyz:type ?relatedItem_type .
+                }
+                # mods:mods/mods:relatedItem/mods:identifier
+                ?_relatedItem_element ?_relatedItem_element_identifier_prop ?_relatedItem_identifier_element .
+                ?_relatedItem_identifier_element a mods:identifier .
+                OPTIONAL {
+                    OPTIONAL {
+                        ?_relatedItem_identifier_element rdf:_1 ?relatedItem_identifier .
+                        OPTIONAL {
+                            ?_relatedItem_identifier_element xyz:type ?_relatedItem_identifier_type .
+                        }
+                        OPTIONAL {
+                            ?_relatedItem_identifier_element xyz:typeURI ?_relatedItem_identifier_source .
+                        }
+                    }
+                    OPTIONAL {
+                        # TODO add to resource
+                        ?_relatedItem_identifier_element ?_relatedItem_identifier_attribute ?_relatedItem_identifier_attr_value .
+                        FILTER(!?_relatedItem_identifier_attribute != rdf:_1 && ?_relatedItem_identifier_attribute != rdf:type)
+                    }
+                }
+
+            }
+            BIND(
+                IF(
+                    BOUND(?_relatedItem_element),
+                    iri(CONCAT(str(haObjId:), MD5(concat(?_relatedItem_uuid, "_relatedItem")))),
+                    ?_null_19
+                )
+            as ?relatedItem_iri)
+            BIND(
+                IF(
+                    BOUND(?_relatedItem_element),
+                    IF(
+                        ?relatedItem_type = "series",
+                        bf:Series,
+                        ?_null_25
+                    ),
+                    ?_null_26
+                )
+            as ?relatedItem_type_iri)
+            BIND(
+                IF(
+                    BOUND(?_relatedItem_identifier_element),
+                    IF(
+                        ?_relatedItem_identifier_type = "abraham_uri",
+                        iri(?relatedItem_identifier),
+                        IF(
+                            ?_relatedItem_identifier_type = "abraham_id",
+                            iri(concat("https://anet.be/record/opacbnc/", ?relatedItem_identifier, "/N")),
+                            "No relatedItem identifier type"
+                        )
+                    ),
+                    ?_null_20
+                )
+            as ?abraham_iri)
+            BIND(
+                IF(
+                    BOUND(?_relatedItem_identifier_element),
+                    IF(
+                        ?_relatedItem_identifier_type = "abraham_id",
+                        ?relatedItem_identifier,
+                        ?_null_23
+                    ),
+                    ?_null_24
+                )
+            as ?abraham_id)
+            BIND(
+                IF(
+                    BOUND(?_relatedItem_identifier_element),
+                    IF(
+                        BOUND(?_relatedItem_identifier_source),
+                        iri(?_relatedItem_identifier_source),
+                        IF(
+                            ?_relatedItem_identifier_type = "abraham_uri" || ?_relatedItem_identifier_type = "abraham_id",
+                            iri("https://anet.be"),
+                            "No relatedItem identifier source"
+                        )
+                    ),
+                    ?_null_22
+                )
+            as ?abraham_source_iri)
+            BIND(
+                IF(
+                    str(?abraham_source_iri) = "https://anet.be",
+                    "Abraham. Catalogus van Belgische kranten",
+                    ?_null_21
+                )
+            as ?abraham_source_label)
         }
     }
 }
