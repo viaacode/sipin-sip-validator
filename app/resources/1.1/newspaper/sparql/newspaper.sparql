@@ -33,7 +33,10 @@ CONSTRUCT {
         bf:subject ?topic_iri ;
         bf:contribution ?contribution_iri ;
         bf:originDate ?dateCreated ;
-        bf:provisionActivity ?Publication_iri .
+        bf:provisionActivity ?publication_iri ;
+        bf:issuance ?issuance ;
+        bf:extent ?extent_iri ;
+        bf:carrier ?carrier_iri .
     
     ?identifier_iri a bf:Identifier ;
         rdfs:label ?identifier ;
@@ -74,17 +77,37 @@ CONSTRUCT {
     ?role_iri a bf:Role ;
         ?roleTerm_prop ?roleTerm .
 
-    ?Publication_iri a bf:Publication ;
+    ?publication_iri a bf:Publication ;
         bf:place ?place_iri ;
         # bf:agent ?agent_iri ;
         bf:date ?dateIssued .
 
     ?place_iri a bf:Place ;
         ?placeTerm_prop ?placeTerm ;
+        bf:source ?place_source_iri ;
         ?_place_attribute ?_place_attr_value .
+
+    ?place_source_iri a bf:Source ;
+        rdfs:label ?place_source .
+
+    ?extent_iri a bf:Extent ;
+        rdfs:label ?extent ;
+        bf:unit ?extent_unit_iri ;
+        ?_extent_attribute ?_extent_attr_value .
+
+    ?extent_unit_iri a bf:Unit ;
+        rdfs:label ?extent_unit .
+
+    ?carrier_iri a bf:Carrier ;
+        rdfs:label ?form ;
+        bf:source ?carrier_source_iri ;
+        ?_carrier_attribute ?_carrier_attr_value .
+
+    ?carrier_source_iri a bf:Source ;
+        rdfs:label ?carrier_source .
 }
 WHERE {
-    SERVICE <x-sparql-anything:location=./mods.xml> {
+    SERVICE <x-sparql-anything:location=/home/lennert/sipin-sip-validator/mods.xml> {
         OPTIONAL {
             ?modsElement a mods:mods .
             OPTIONAL {
@@ -339,7 +362,7 @@ WHERE {
                     iri(CONCAT(str(haObjId:), MD5(?_originInfo_uuid))),
                     ?_null_12
                 )
-            as ?Publication_iri)
+            as ?publication_iri)
             # mods:mods/mods:originInfo/mods:dateCreated
             OPTIONAL {
                 ?_originInfo_element ?_originInfo_element_dateCreated_prop ?_dateCreated_element .
@@ -388,6 +411,12 @@ WHERE {
                         OPTIONAL {
                             ?_placeTerm_element xyz:type ?_placeTerm_type .
                         }
+                        OPTIONAL {
+                            ?_placeTerm_element xyz:authority ?place_source .
+                        }
+                        OPTIONAL {
+                            ?_placeTerm_element xyz:authorityURI ?_placeTerm_authorityURI .
+                        }
                         BIND(
                             IF(
                                 BOUND(?_placeTerm_type),
@@ -407,10 +436,9 @@ WHERE {
                 }
                 OPTIONAL {
                     ?_place_element ?_place_attribute ?_place_attr_value .
-                    FILTER(!STRSTARTS(str(?_place_element_placeTerm_prop), str(rdf:_)) && ?_place_attribute != rdf:type)
+                    FILTER(!STRSTARTS(str(?_place_attribute), str(rdf:_)) && ?_place_attribute != rdf:type)
                 }
             }
-
             BIND(
                 IF(
                     BOUND(?_place_element),
@@ -418,6 +446,111 @@ WHERE {
                     ?_null_13
                 )
             as ?place_iri)
+            BIND(
+                IF(
+                    BOUND(?_placeTerm_element) && ?_placeTerm_type = "code",
+                    IF(
+                        BOUND(?_placeTerm_authorityURI),
+                        iri(?_placeTerm_authorityURI),
+                        IF(
+                            BOUND(?place_source),
+                            iri(CONCAT(str(haSip:), MD5(?place_source))),
+                            "No mods:placeTerm/@authorityURI or mods:placeTerm/@authority found"
+                        )
+                    ),
+                    ?_null_19
+                )
+            as ?place_source_iri)
+            # mods:mods/mods:originInfo/mods:issuance
+            OPTIONAL {
+                ?_originInfo_element ?_originInfo_element_issuance_prop ?_issuance_element .
+                ?_issuance_element a mods:issuance .
+                OPTIONAL {
+                    ?_issuance_element rdf:_1 ?issuance .
+                }
+                OPTIONAL {
+                    # TODO add to resource
+                    ?_issuance_element ?_issuance_attribute ?_issuance_attr_value .
+                    FILTER(!?_issuance_attribute != rdf:_1 && ?_issuance_attribute != rdf:type)
+                }
+            }
+            # mods:mods/mods:physicalDescription
+            OPTIONAL {
+                ?_physicalDescription_element a mods:physicalDescription .
+                BIND(
+                    strUUID()
+                as ?_physicalDescription_uuid)
+                # mods:mods/mods:physicalDescription/mods:extent
+                OPTIONAL {
+                    ?_physicalDescription_element ?_physicalDescription_element_extent_prop ?_extent_element .
+                    ?_extent_element a mods:extent .
+                    OPTIONAL {
+                        ?_extent_element rdf:_1 ?extent .
+                        OPTIONAL {
+                            ?_extent_element xyz:unit ?extent_unit .
+                        }
+                    }
+                    OPTIONAL {
+                        ?_extent_element ?_extent_attribute ?_extent_attr_value .
+                        FILTER(!?_extent_attribute != rdf:_1 && ?_extent_attribute != rdf:type)
+                    }
+                }
+                BIND(
+                    IF(
+                        BOUND(?extent),
+                        iri(CONCAT(str(haObjId:), MD5(?extent))),
+                        ?_null_15
+                    )
+                as ?extent_iri)
+                BIND(
+                    IF(
+                        BOUND(?extent_unit),
+                        iri(CONCAT(str(haObjId:), MD5(?extent_unit))),
+                        ?_null_16
+                    )
+                as ?extent_unit_iri)
+                # mods:mods/mods:physicalDescription/mods:form
+                OPTIONAL {
+                    ?_physicalDescription_element ?_physicalDescription_element_form_prop ?_form_element .
+                    ?_form_element a mods:form .
+                    OPTIONAL {
+                        ?_form_element rdf:_1 ?form .
+                        OPTIONAL {
+                            ?_form_element xyz:authority ?carrier_source .
+                        }
+                        OPTIONAL {
+                            ?_form_element xyz:authorityURI ?_form_authorityURI .
+                        }
+                    }
+                    OPTIONAL {
+                        # TODO add to resource
+                        ?_form_element ?_form_attribute ?_form_attr_value .
+                        FILTER(!?_form_attribute != rdf:_1 && ?_form_attribute != rdf:type)
+                    }
+                }
+                BIND(
+                    IF(
+                        BOUND(?_physicalDescription_element),
+                        iri(CONCAT(str(haObjId:), MD5(concat(?_physicalDescription_uuid, "_carrier")))),
+                        ?_null_17
+                    )
+                as ?carrier_iri)
+                BIND(
+                    IF(
+                        BOUND(?_form_element),
+                        IF(
+                            BOUND(?_form_authorityURI),
+                            iri(?_form_authorityURI),
+                            IF(
+                                BOUND(?carrier_source),
+                                iri(CONCAT(str(haSip:), MD5(?carrier_source))),
+                                "No mods:form authority"
+                            )
+                        ),
+                        ?_null_18
+                    )
+                as ?carrier_source_iri)
+            }
         }
     }
 }
