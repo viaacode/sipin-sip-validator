@@ -27,16 +27,21 @@ CONSTRUCT {
     ?work a bf:Work, ?extraType ;
         bf:identifiedBy ?identifier_iri ;
         rdfs:label ?mainTitle ;
-        bf:title ?altTitle_iri ;
+        bf:title ?altTitle_iri, ?mainTitle_iri ;
         bf:genreForm ?genre_iri ;
         bf:summary ?abstract_iri ;
         bf:subject ?topic_iri ;
         bf:contribution ?contribution_iri ;
-        bf:originDate ?dateCreated .
+        bf:originDate ?dateCreated ;
+        bf:provisionActivity ?Publication_iri .
     
     ?identifier_iri a bf:Identifier ;
         rdfs:label ?identifier ;
         ?_identifier_attribute ?_identifier_attr_value .
+
+    ?mainTitle_iri a bf:Title ;
+        rdfs:label ?mainTitle ;
+        ?_titleInfo_attribute ?_titleInfo_attr_value .
 
     ?altTitle_iri a bf:VariantTitle ;
         rdfs:label ?altTitle ;
@@ -52,7 +57,8 @@ CONSTRUCT {
         rdfs:label ?genre_source .
 
     ?abstract_iri a bf:Summary ;
-        rdfs:label ?abstract .
+        rdfs:label ?abstract ;
+        ?_abstract_attribute ?_abstract_attr_value .
 
     ?topic_iri a bf:Topic ;
         rdfs:label ?topic ;
@@ -67,6 +73,15 @@ CONSTRUCT {
 
     ?role_iri a bf:Role ;
         ?roleTerm_prop ?roleTerm .
+
+    ?Publication_iri a bf:Publication ;
+        bf:place ?place_iri ;
+        # bf:agent ?agent_iri ;
+        bf:date ?dateIssued .
+
+    ?place_iri a bf:Place ;
+        ?placeTerm_prop ?placeTerm ;
+        ?_place_attribute ?_place_attr_value .
 }
 WHERE {
     SERVICE <x-sparql-anything:location=./mods.xml> {
@@ -126,11 +141,11 @@ WHERE {
                 )
             AS ?altTitle)
             BIND(
-            IF(
-                BOUND(?altTitle),
-                iri(CONCAT(str(haObjId:), MD5(?altTitle))),
-                ?_null_4
-            )
+                IF(
+                    BOUND(?altTitle),
+                    iri(CONCAT(str(haObjId:), MD5(?altTitle))),
+                    ?_null_4
+                )
             as ?altTitle_iri)
             BIND(IF(
                 NOT EXISTS { 
@@ -139,13 +154,23 @@ WHERE {
                     }, ?title, ?_null_2
                 )
             AS ?mainTitle)
+            BIND(
+                IF(
+                    BOUND(?mainTitle),
+                    iri(CONCAT(str(haObjId:), MD5(?mainTitle))),
+                    ?_null_5
+                )
+            as ?mainTitle_iri)
         }
         # mods:mods/mods:typeOfResource
         OPTIONAL {
             ?root ?root_list_3 ?_typeOfResource_element .
             ?_typeOfResource_element a mods:typeOfResource ;
                 rdf:_1 ?typeOfResource .
-            ?_typeOfResource_element ?_typeOfResource_attribute ?_typeOfResource_attr_value .
+            OPTIONAL {
+                ?_typeOfResource_element ?_typeOfResource_attribute ?_typeOfResource_attr_value .
+                FILTER(?_typeOfResource_attribute != rdf:_1 && ?_typeOfResource_attribute != rdf:type)
+            }
             BIND(
                 IF(?typeOfResource = "newspaper edition", haNePa:NewspaperIssue, CONCAT("Wrong mods:typeOfResource: ", ?typeOfResource)) 
             as ?extraType)
@@ -155,8 +180,10 @@ WHERE {
             ?root ?root_list_4 ?_abstract_element .
             ?_abstract_element a mods:abstract ;
                 rdf:_1 ?abstract .
-            ?_abstract_element ?_abstract_attribute ?_abstract_attr_value .
-            FILTER(?_abstract_attribute != rdf:_1 && ?_abstract_attribute != rdf:type)
+            OPTIONAL {
+                ?_abstract_element ?_abstract_attribute ?_abstract_attr_value .
+                FILTER(?_abstract_attribute != rdf:_1 && ?_abstract_attribute != rdf:type)
+            }
         }
         BIND(
             IF(
@@ -306,6 +333,13 @@ WHERE {
             BIND(
                 strUUID()
             as ?_originInfo_uuid)
+            BIND(
+                IF(
+                    BOUND(?_originInfo_element),
+                    iri(CONCAT(str(haObjId:), MD5(?_originInfo_uuid))),
+                    ?_null_12
+                )
+            as ?Publication_iri)
             # mods:mods/mods:originInfo/mods:dateCreated
             OPTIONAL {
                 ?_originInfo_element ?_originInfo_element_dateCreated_prop ?_dateCreated_element .
@@ -342,7 +376,48 @@ WHERE {
                     )
                 AS ?dateIssued)
             }
-        }
+            # mods:mods/mods:originInfo/mods:place
+            OPTIONAL {
+                ?_originInfo_element ?_originInfo_element_place_prop ?_place_element .
+                ?_place_element a mods:place .
+                OPTIONAL {
+                    ?_place_element ?_place_element_placeTerm_prop ?_placeTerm_element .
+                    ?_placeTerm_element a mods:placeTerm .
+                    OPTIONAL {
+                        ?_placeTerm_element rdf:_1 ?placeTerm .
+                        OPTIONAL {
+                            ?_placeTerm_element xyz:type ?_placeTerm_type .
+                        }
+                        BIND(
+                            IF(
+                                BOUND(?_placeTerm_type),
+                                IF(
+                                    ?_placeTerm_type = "text",
+                                    rdfs:label,
+                                    IF(
+                                        ?_placeTerm_type = "code",
+                                        bf:code,
+                                        iri(CONCAT(str(haSip:), ?_placeTerm_type))
+                                    )
+                                ),
+                                ?_null_14
+                            )
+                        as ?placeTerm_prop)
+                    }
+                }
+                OPTIONAL {
+                    ?_place_element ?_place_attribute ?_place_attr_value .
+                    FILTER(!STRSTARTS(str(?_place_element_placeTerm_prop), str(rdf:_)) && ?_place_attribute != rdf:type)
+                }
+            }
 
+            BIND(
+                IF(
+                    BOUND(?_place_element),
+                    iri(CONCAT(str(haObjId:), MD5(concat(?_originInfo_uuid, "_place")))),
+                    ?_null_13
+                )
+            as ?place_iri)
+        }
     }
 }
