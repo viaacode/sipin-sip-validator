@@ -14,7 +14,7 @@
 @prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
 @prefix edm: <http://www.europeana.eu/schemas/edm/> .
 @prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
-@prefix haNePa: <https://data.hetarchief.be/ns/newspaper/> .
+@prefix haBib: <https://data.hetarchief.be/ns/bibliographic/> .
 
 
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
@@ -98,7 +98,7 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:in (haNePa:NewspaperIssue bf:Work) ;
+        sh:in (haBib:NewspaperIssue bf:Work) ;
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource must be newspaper edition.
             Please check `mods:mods/mods:typeOfResource`"""@en ;

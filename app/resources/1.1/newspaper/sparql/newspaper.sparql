@@ -18,8 +18,8 @@ PREFIX bf: <http://id.loc.gov/ontologies/bibframe/>
 PREFIX mods: <http://www.loc.gov/mods/v3#> 
 PREFIX fx: <http://sparql.xyz/facade-x/ns/> 
 PREFIX xyz: <http://sparql.xyz/facade-x/data/> 
-PREFIX haNePa: <https://data.hetarchief.be/ns/newspaper/>
-PREFIX haNePaId: <https://data.hetarchief.be/id/newspaper/>
+PREFIX haBib: <https://data.hetarchief.be/ns/bibliographic/>
+PREFIX haBibId: <https://data.hetarchief.be/id/bibliographic/>
 PREFIX haSip: <https://data.hetarchief.be/ns/sip/> 
 
 
@@ -81,7 +81,6 @@ CONSTRUCT {
 
     ?publication_iri a bf:Publication ;
         bf:place ?place_iri ;
-        # bf:agent ?agent_iri ;
         bf:date ?dateIssued .
 
     ?place_iri a bf:Place ;
@@ -211,7 +210,7 @@ WHERE {
                 FILTER(?_typeOfResource_attribute != rdf:_1 && ?_typeOfResource_attribute != rdf:type)
             }
             BIND(
-                IF(?typeOfResource = "newspaper edition", haNePa:NewspaperIssue, CONCAT("Wrong mods:typeOfResource: ", ?typeOfResource)) 
+                IF(?typeOfResource = "newspaper edition", haBib:NewspaperIssue, CONCAT("Wrong mods:typeOfResource: ", ?typeOfResource)) 
             as ?extraType)
         }
         # mods:mods/mods:abstract
