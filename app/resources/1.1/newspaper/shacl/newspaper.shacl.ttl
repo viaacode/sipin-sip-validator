@@ -52,7 +52,15 @@
         a sh:PropertyShape ;
         sh:path bf:title ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:class bf:VariantTitle ;
+        sh:or (
+            [ sh:node <#TitleShape> ]
+            [ sh:node <#VariantTitleShape> ]
+        ) ;
+        sh:or (
+            [ sh:class bf:VariantTitle ]
+            [ sh:class bf:Title ]
+        ) ;
+        
     ],
     # mods:mods/mods:identifier[not(@*)]
     [
@@ -265,14 +273,6 @@
         sh:name "Extent"@en ;
         sh:description "MODS extent element"@en ;
     ],
-    # [
-    #     a sh:PropertyShape ;
-    #     sh:path bf:extent ;
-    #     sh:maxCount 1 ;
-    #     sh:severity sh:Violation ;
-    #     sh:message """mods:physicalDescription/mods:extent element occurs more than once.
-    #         Please check `mods:mods/mods:physicalDescription/mods:extent`"""@en ;
-    # ],
     # mods:mods/mods:physicalDescription/mods:form
     [
         a sh:PropertyShape ;
@@ -295,9 +295,9 @@
     # mods:mods/mods:note[@type="license"]
     [
         a sh:PropertyShape ;
-        sh:path bf:credits ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
+        sh:path bf:usageAndAccessPolicy ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#UsageAndAccessPolicyShape> ;
         sh:name "Credits"@en ;
         sh:description "The credits of the newspaper."@en ;
     ] .
@@ -456,7 +456,7 @@
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
 <#AbrahamShape> a sh:NodeShape ;
-    sh:targetClass schema:Collection ;
+    sh:targetClass bf:Series ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -520,7 +520,12 @@
         a sh:PropertyShape ;
         sh:path bf:date ; 
         sh:nodeKind sh:Literal ;
-        sh:datatype edtf:EDTF-level1 ;
+        sh:or (
+            [ sh:datatype edtf:EDTF-level0 ]
+            [ sh:datatype edtf:EDTF-level1 ]
+            [ sh:datatype edtf:EDTF-level2 ]
+            [ sh:datatype edtf:EDTF ]
+        ) ;
         sh:name "Date of publication"@en ;
         sh:description "The date of publication of the newspaper."@en ;
     ],
@@ -641,7 +646,7 @@
 
 # mods:mods/mods:name[@type="personal"]
 <#AgentShape> a sh:NodeShape ;
-    sh:targetClass bf:Agent ;
+    sh:targetClass bf:Person ;
     sh:property
     # mods:mods/mods:name[@type="personal"]/namePart[@type="given"]
     [
@@ -742,7 +747,7 @@
   sh:property 
   [
     a sh:PropertyShape ;
-    sh:path rdfs:label ;
+    sh:path rdf:value ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:name "has object identifier value"@en ;
@@ -750,3 +755,15 @@
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] .
+
+<#UsageAndAccessPolicyShape> a sh:NodeShape ;
+    sh:targetClass bf:UsageAndAccessPolicy ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Usage and access policy"@en ;
+        sh:description "The usage and access policy of the newspaper."@en ;
+    ] .
