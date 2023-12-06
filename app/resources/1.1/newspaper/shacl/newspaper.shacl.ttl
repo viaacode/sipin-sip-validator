@@ -98,7 +98,7 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:in (haBib:NewspaperIssue bf:Work) ;
+        sh:in (haBib:NewspaperIssue bf:Work premis:IntellectualEntity) ;
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource must be newspaper edition.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
@@ -106,8 +106,8 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:minCount 2 ;
-        # It is already bf:Work + another specific type
+        sh:minCount 3 ;
+        # It is already bf:Work, premis:IntellectualEntity + another specific type
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource element is required.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
