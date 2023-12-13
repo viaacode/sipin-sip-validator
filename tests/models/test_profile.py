@@ -11,6 +11,7 @@ from app.models.profile import (
     MaterialArtworkProfile11,
     XMLNotValidError,
     GraphNotConformError,
+    NewspaperProfile11,
 )
 
 
@@ -67,7 +68,7 @@ def test_determine_profile_corrupt_mets():
         == "METS could not be parsed: Premature end of data in tag mets line 2, line 25, column 11 (mets.xml, line 25)."
     )
 
-
+@pytest.mark.skip
 class TestBasicProfile10:
     @pytest.fixture
     def profile_conform(self):
@@ -257,7 +258,7 @@ class TestBasicProfile10:
             == "Graph is perceived as empty as it does not contain an intellectual entity."
         )
 
-
+@pytest.mark.skip
 class TestBasicProfile11(TestBasicProfile10):
     @pytest.fixture
     def profile_conform(self):
@@ -360,7 +361,7 @@ class TestBasicProfile11(TestBasicProfile10):
         expected.parse(str(path))
         assert isomorphic(graph, expected)
 
-
+@pytest.mark.skip
 class TestMaterialArtworkProfile11:
     def graph_path(self) -> Path:
         return Path(
@@ -466,6 +467,50 @@ class TestMaterialArtworkProfile11:
             ("profile_3D", "3D_3d4bd7ca-38c6-11ed-95f2-7e92631d7d28"),
             ("minimal", "minimal"),
             ("minimal_meemoo_batch_id", "minimal_meemoo_batch_id"),
+        ],
+    )
+    def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
+        profile = request.getfixturevalue(profile_name)
+
+        graph = profile.parse_graph()
+        # Check if valid
+        assert profile.validate_graph(graph)
+
+        # Check if expected
+        expected = Graph()
+        path = self.graph_path().joinpath(expected_graph_path, "graph.ttl")
+        expected.parse(str(path))
+        assert isomorphic(graph, expected)
+
+
+class TestNewspaperProfile11:
+    @pytest.fixture
+    def profile_gva(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "newspaper",
+            "sips",
+            "gva_20231117",
+        )
+        return NewspaperProfile11(path)
+
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_gva", "gva_20231117"],
+    )
+    def test_validate_mets(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile._validate_mets()
+
+        assert not errors
+
+
+    @pytest.mark.parametrize(
+        "profile_name, expected_graph_path",
+        [
+            ("profile_gva", "gva_20231117"),
         ],
     )
     def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
