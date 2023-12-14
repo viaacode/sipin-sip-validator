@@ -36,6 +36,7 @@ CONSTRUCT {
         bf:provisionActivity ?publication_iri ;
         bf:issuance ?issuance ;
         bf:extent ?extent_iri ;
+        haBib:numberOfPages ?number_of_pages ;
         bf:carrier ?carrier_iri ;
         bf:hasSeries ?abraham_iri ;
         bf:usageAndAccessPolicy ?license_iri .
@@ -504,6 +505,14 @@ WHERE {
                         OPTIONAL {
                             ?_extent_element xyz:unit ?extent_unit .
                         }
+                        filter(?extent_unit != "pages")
+                    }
+                    OPTIONAL {
+                        ?_extent_element rdf:_1 ?_number_of_pages .
+                        OPTIONAL {
+                            ?_extent_element xyz:unit ?_pages_unit .
+                        }
+                        filter(?_pages_unit = "pages")
                     }
                     OPTIONAL {
                         ?_extent_element ?_extent_attribute ?_extent_attr_value .
@@ -524,6 +533,13 @@ WHERE {
                         ?_null_16
                     )
                 as ?extent_unit_iri)
+                BIND(
+                    IF(
+                        BOUND(?_number_of_pages),
+                        STRDT(?_number_of_pages, xsd:integer),
+                        ?_null_28
+                    )
+                as ?number_of_pages)
                 # mods:mods/mods:physicalDescription/mods:form
                 OPTIONAL {
                     ?_physicalDescription_element ?_physicalDescription_element_form_prop ?_form_element .
