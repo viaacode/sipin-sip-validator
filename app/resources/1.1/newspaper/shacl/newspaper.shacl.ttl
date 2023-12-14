@@ -15,13 +15,15 @@
 @prefix edm: <http://www.europeana.eu/schemas/edm/> .
 @prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
 @prefix haBib: <https://data.hetarchief.be/ns/bibliographic/> .
+@prefix rel: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>.
+
 
 
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
 
 
-<#WorkShape> a sh:NodeShape ;
-    sh:targetClass bf:Work ;
+<#NewspaperIssueShape> a sh:NodeShape ;
+    sh:targetClass haBib:NewspaperIssue ;
     sh:property
     # mods:mods/mods:titleInfo[not(@*)]/mods:title
     [
@@ -264,6 +266,22 @@
     ],
     # mods:mods/mods:physicalDescription
     # mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]
+    [
+        a sh:PropertyShape ;
+        sh:path haBib:numberOfPages ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:integer ;
+        sh:name "number of pages"@en ;
+        sh:description "Indicates how many pages a certain bibliographic object contains."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path haBib:numberOfPages ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:mods/mods:physicalDescription/mods:extent[@unit="pages"] element occurs more than once.
+            Please check `mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]`"""@en ;
+    ],
     # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
     [
         a sh:PropertyShape ;
@@ -300,6 +318,46 @@
         sh:node <#UsageAndAccessPolicyShape> ;
         sh:name "Credits"@en ;
         sh:description "The credits of the newspaper."@en ;
+    ] .
+
+<#NewspaperIssuePageShape> a sh:NodeShape ;
+    sh:targetClass haBib:NewspaperIssuePage ;
+    sh:property
+    # mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER
+    [
+        a sh:PropertyShape ;
+        sh:path haBib:pageNumber ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:integer ;
+        sh:name "page number"@en ;
+        sh:description "Indicates the serial number of a page within the greater object it is part of."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path haBib:pageNumber ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation
+        sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute occurs more than once.
+            Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rel:isp ;
+        sh:class haBib:NewspaperIssue ;
+        sh:name "is part of"@en ;
+        sh:description "Indicates the newspaper issue that a specific page is part of."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rel:isp ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rel:isp ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation
     ] .
 
 <#VariantTitleShape> a sh:NodeShape ;
