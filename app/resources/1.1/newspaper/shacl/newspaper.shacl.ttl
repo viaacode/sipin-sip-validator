@@ -17,10 +17,7 @@
 @prefix haBib: <https://data.hetarchief.be/ns/bibliographic/> .
 @prefix rel: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>.
 
-
-
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
-
 
 <#NewspaperIssueShape> a sh:NodeShape ;
     sh:targetClass haBib:NewspaperIssue ;
@@ -336,7 +333,7 @@
         a sh:PropertyShape ;
         sh:path haBib:pageNumber ;
         sh:maxCount 1 ;
-        sh:severity sh:Violation
+        sh:severity sh:Violation ;
         sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute occurs more than once.
             Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
     ],
