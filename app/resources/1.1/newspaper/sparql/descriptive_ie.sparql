@@ -123,7 +123,7 @@ CONSTRUCT {
         ?_license_attribute ?_license_attr_value .
 }
 WHERE {
-    SERVICE <x-sparql-anything:location=./mods.xml> {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/mods.xml> {
         OPTIONAL {
             ?modsElement a mods:mods .
             OPTIONAL {
