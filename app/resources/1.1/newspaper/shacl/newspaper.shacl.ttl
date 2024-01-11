@@ -17,7 +17,10 @@
 @prefix haBib: <https://data.hetarchief.be/ns/bibliographic/> .
 @prefix rel: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>.
 
+
+
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
+
 
 <#NewspaperIssueShape> a sh:NodeShape ;
     sh:targetClass haBib:NewspaperIssue ;
@@ -101,6 +104,7 @@
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource must be newspaper edition.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
+            # ADD or no premis:IntellectualEntity in Mods
     ],
     [
         a sh:PropertyShape ;
@@ -110,6 +114,7 @@
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource element is required.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
+            # Add or link between premis and mods is not right
     ],
     [
         a sh:PropertyShape ;
@@ -317,13 +322,11 @@
         sh:description "The credits of the newspaper."@en ;
     ] .
 
-<#NewspaperIssuePageShape> a sh:NodeShape ;
-    sh:targetClass haBib:NewspaperIssuePage ;
-    sh:property
-    # mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER
+<#FileShape> a sh:NodeShape ;
+    sh:targetClass premis:File ;
     [
         a sh:PropertyShape ;
-        sh:path haBib:pageNumber ;
+        sh:path schema:position ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:integer ;
         sh:name "page number"@en ;
@@ -331,30 +334,11 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path haBib:pageNumber ;
+        sh:path schema:position ;
         sh:maxCount 1 ;
-        sh:severity sh:Violation ;
+        sh:severity sh:Violation
         sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute occurs more than once.
             Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path rel:isp ;
-        sh:class haBib:NewspaperIssue ;
-        sh:name "is part of"@en ;
-        sh:description "Indicates the newspaper issue that a specific page is part of."@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path rel:isp ;
-        sh:minCount 1 ;
-        sh:severity sh:Violation
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path rel:isp ;
-        sh:maxCount 1 ;
-        sh:severity sh:Violation
     ] .
 
 <#VariantTitleShape> a sh:NodeShape ;
