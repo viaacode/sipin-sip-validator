@@ -324,6 +324,7 @@
 
 <#FileShape> a sh:NodeShape ;
     sh:targetClass premis:File ;
+    sh:property
     [
         a sh:PropertyShape ;
         sh:path schema:position ;
@@ -336,7 +337,7 @@
         a sh:PropertyShape ;
         sh:path schema:position ;
         sh:maxCount 1 ;
-        sh:severity sh:Violation
+        sh:severity sh:Violation ;
         sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute occurs more than once.
             Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
     ] .
