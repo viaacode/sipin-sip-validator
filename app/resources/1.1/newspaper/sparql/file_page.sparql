@@ -69,13 +69,14 @@ WHERE {
     SERVICE <x-sparql-anything:location={{ path }}/mets.xml> {
         OPTIONAL {
             ?_div_mets a mets:div ;
-                xyz:ORDER ?position ;
+                xyz:ORDER ?position_str ;
                 xyz:TYPE "page";
                 ?mets_file_1 [
                     a mets:fptr ;
                     xyz:FILEID ?_fileID
                 ]
             }
+        BIND (IF( BOUND(?position_str), xsd:integer(?position_str), ?_null_2) as ?position)
         OPTIONAL {
             ?_file_sec a mets:fileSec .
             OPTIONAL {
