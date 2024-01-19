@@ -108,14 +108,14 @@ CONSTRUCT {
     ?carrier_source_iri a bf:Source ;
         rdfs:label ?carrier_source .
 
-    ?relatedItem_iri a bf:Series ;
+    ?relatedItem_iri a ?relatedItem_type_iri ;
         schema:identifier ?abraham_iri .
 
     ?abraham_iri a bf:Identifier ;
         rdf:value ?abraham_id ;
         bf:source ?abraham_source_iri .
 
-    ?abraham_source_iri a ?relatedItem_type_iri ;
+    ?abraham_source_iri a bf:Source ;
         rdfs:label ?abraham_source_label .
 
     ?license_iri a bf:UsageAndAccessPolicy ;
