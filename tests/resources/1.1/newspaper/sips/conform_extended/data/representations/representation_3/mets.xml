@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS"
+    xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink"
+    OBJID="representation_3" TYPE="Textual works - Digital"
+    PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml"
+    xsi:schemaLocation="https://www.w3.org./1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd
+                        http://www.loc.gov/METS/ https://www.loc.gov/standards/mets/mets.xsd
+                        https://dilcis.eu/XML/METS/CSIPExtensionMETS https://earkcsip.dilcis.eu/schema/DILCISExtensionMETS.xsd
+                        https://dilcis.eu/XML/METS/SIPExtensionMETS https://earksip.dilcis.eu/schema/DILCISExtensionSIPMETS.xsd">
+
+    <!-- Creation date of the representation_3 METS file -->
+    <metsHdr CREATEDATE="2023-11-16T10:02:37.009+02:00" />
+
+    <amdSec>
+        <digiprovMD ID="uuid-9fa835d6-0af6-488a-a8a3-54c6d0bebe01">
+            <!-- Size of the premis.xml file -->
+            <!-- Creation date of the premis.xml file -->
+            <!-- Checksum of the premis.xml file -->
+            <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:type="simple"
+                xlink:href="./metadata/preservation/premis.xml" MIMETYPE="text/xml" SIZE="62046"
+                CREATED="2023-11-16T00:00:00+02:00" CHECKSUM="dea32d3ab39b9abbf67d3be1a23c6031"
+                CHECKSUMTYPE="MD5" />
+        </digiprovMD>
+    </amdSec>
+
+    <fileSec ID="uuid-70ce0e26-0f48-4da8-9b2f-f9d05c9060c1">
+        <!-- Sizes of the files in data directory -->
+        <!-- Creation dates of the files in data directory -->
+        <!-- Checksums of the files in data directory -->
+        <fileGrp USE="data" ID="uuid-5966e7f1-77b1-41dd-b82c-8a2f369fb14b">
+            <file ID="uuid-34252089-e66b-401f-931c-27838da5c2c6" MIMETYPE="text/xml" SIZE="242"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="a0e929ed7b41913e79b2996aa49806a7"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page1_1.xml" />
+            </file>
+            <file ID="uuid-a8203503-9738-4bf0-b1f9-ca702f3322a5" MIMETYPE="text/xml" SIZE="123"
+                CREATED="2013-08-14T00:00:00+02:00" CHECKSUM="100a27bf79af331e64033e4c388f48cb"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page1_2.xml" />
+            </file>
+            <file ID="uuid-31cfed9c-26fc-4ab6-b73a-146f14222b0c" MIMETYPE="text/xml" SIZE="123"
+                CREATED="2013-08-14T00:00:00+02:00" CHECKSUM="32f7f66775350c6917087efc16524ec7"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page1_3.xml" />
+            </file>
+            <file ID="uuid-a33d812c-f21a-4fb9-a866-58bcbb1f6ada" MIMETYPE="text/xml" SIZE="123"
+                CREATED="2013-08-14T00:00:00+02:00" CHECKSUM="27eca34d43269a7328ac353eb506437c"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page1_4.xml" />
+            </file>
+            <file ID="uuid-bbe20898-71af-4b1d-8846-fe329b013462" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="04cc5dd6845e5c80bfbe60ab52cb50aa"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page1_5.xml" />
+            </file>
+            <file ID="uuid-edef8b65-0b57-4eb2-a973-14dd040b3960" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="87e64df6b56242fecd1382a0d0ff8392"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page1_6.xml" />
+            </file>
+            <file ID="uuid-5d53316c-1e1f-430c-8333-105f2ad5f987" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="40a8e898756d938d9f8bca826cb1c0f3"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page1_7.xml" />
+            </file>
+            <file ID="uuid-d826d33e-a351-4af7-ae48-41ab82f2ee62" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="2a9db04abfb7644b8907b1793ea578f6"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page2_1.xml" />
+            </file>
+            <file ID="uuid-9d7d9688-7d00-43b9-9d2c-75a973115fb6" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="28568791a0f425de6461abe586c026e1"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page2_2.xml" />
+            </file>
+            <file ID="uuid-6f66d30b-6a80-40c7-aa2e-9aba70e474c6" MIMETYPE="text/xml" SIZE="123"
+                CREATED="2013-08-29T00:00:00+02:00" CHECKSUM="bda2f9271c6cc071900b54f80fe90508"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page2_3.xml" />
+            </file>
+            <file ID="uuid-1c39b723-d6a6-48fc-b6b1-04dbb1aa3c0b" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="23c307008cb47d042f0a66a27f98dd97"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page3_1.xml" />
+            </file>
+            <file ID="uuid-ae07eb4d-d5b2-480d-8410-92a9447765c5" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="5278b4493206319864f8308a48a9617c"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page3_2.xml" />
+            </file>
+            <file ID="uuid-32c59b28-1076-42a8-8e75-4d5d404ec64a" MIMETYPE="text/xml" SIZE="123"
+                CREATED="2013-08-29T00:00:00+02:00" CHECKSUM="27d43c0b3f77d4b37690b105c50f1001"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page3_3.xml" />
+            </file>
+            <file ID="uuid-f478edf0-2931-4bc4-a35c-a2d4b80f4597" MIMETYPE="text/xml" SIZE="123"
+                CREATED="2013-08-14T00:00:00+02:00" CHECKSUM="dfa01889ba2f54a349df101c81be4259"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_1.xml" />
+            </file>
+            <file ID="uuid-cb4999bd-448f-4b7a-9bbb-3a8717deda72" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="9bafda23af2388d5186a897df4c13de0"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_2.xml" />
+            </file>
+            <file ID="uuid-d5dcdf30-8890-4a77-9e93-131718b55154" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="b5748215f775a9ec473c0b02b22b0176"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_3.xml" />
+            </file>
+            <file ID="uuid-1fc1760c-9b50-4d01-ad58-4bc8b6826594" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="7f59921f9e3fe99828e5705986ebe8c8"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_4.xml" />
+            </file>
+            <file ID="uuid-110b27d8-ea34-4dca-be6b-6738dc58b442" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="2d214ea3da45c1308ab7260b26db0d00"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_5.xml" />
+            </file>
+            <file ID="uuid-175f8c1e-4977-47cc-ac75-c1ec524c1f87" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="cb6d9d5c6c2cce6dfa1f55d3f1027261"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_6.xml" />
+            </file>
+            <file ID="uuid-8cb8ad19-8243-47df-8ed7-bff1ec69c1e9" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="f9d195250f3e4ae1a579d7e328589c77"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_7.xml" />
+            </file>
+            <file ID="uuid-e1034b0c-a5c9-4825-ab67-866d59a40d4b" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="e3ca0f647ab0b2f3a77821b6cab44fae"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_8.xml" />
+            </file>
+            <file ID="uuid-67e95d71-f9a3-45bc-828f-5cf21b8e3f4c" MIMETYPE="text/xml" SIZE="252"
+                CREATED="2012-05-15T00:00:00+02:00" CHECKSUM="7f7dda3c52188bb5913d71e5812d3b87"
+                CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple"
+                    xlink:href="./data/page4_9.xml" />
+            </file>
+        </fileGrp>
+    </fileSec>
+
+    <structMap ID="uuid-e1473cd5-f255-40b6-b0f2-12ca4cdb8871" TYPE="PHYSICAL" LABEL="CSIP">
+        <div ID="uuid-e8b04092-6279-41b0-95b9-f25277046c96" LABEL="representation_3">
+            <!-- ADMID points to mets/amdSec/digiprovMD/@ID -->
+            <div ID="uuid-cbb80c93-ec13-4739-9d7a-17038ddace30" LABEL="Metadata"
+                ADMID="uuid-9fa835d6-0af6-488a-a8a3-54c6d0bebe01" />
+            <div ID="uuid-a9da91cc-5089-4798-b14e-18eee25f4284" LABEL="Representations">
+                <!-- File pointers to file IDs in mets/fileSec/fileGrp[@USE="data"]/file/@ID -->
+                <div ID="uuid-a58f701b-eba3-4bd0-bf81-b1900d7e9ced" TYPE="page" ORDER="1">
+                    <fptr FILEID="uuid-34252089-e66b-401f-931c-27838da5c2c6" />
+                    <fptr FILEID="uuid-a8203503-9738-4bf0-b1f9-ca702f3322a5" />
+                    <fptr FILEID="uuid-31cfed9c-26fc-4ab6-b73a-146f14222b0c" />
+                    <fptr FILEID="uuid-a33d812c-f21a-4fb9-a866-58bcbb1f6ada" />
+                    <fptr FILEID="uuid-bbe20898-71af-4b1d-8846-fe329b013462" />
+                    <fptr FILEID="uuid-edef8b65-0b57-4eb2-a973-14dd040b3960" />
+                    <fptr FILEID="uuid-5d53316c-1e1f-430c-8333-105f2ad5f987" />
+                </div>
+                <div ID="uuid-6272c8c1-275f-4037-be3e-60573ecaef74" TYPE="page" ORDER="2">
+                    <fptr FILEID="uuid-d826d33e-a351-4af7-ae48-41ab82f2ee62" />
+                    <fptr FILEID="uuid-9d7d9688-7d00-43b9-9d2c-75a973115fb6" />
+                    <fptr FILEID="uuid-6f66d30b-6a80-40c7-aa2e-9aba70e474c6" />
+                </div>
+                <div ID="uuid-d2a3b629-f62c-4f3a-9fe2-006c1e58f2b0" TYPE="page" ORDER="3">
+                    <fptr FILEID="uuid-1c39b723-d6a6-48fc-b6b1-04dbb1aa3c0b" />
+                    <fptr FILEID="uuid-ae07eb4d-d5b2-480d-8410-92a9447765c5" />
+                    <fptr FILEID="uuid-32c59b28-1076-42a8-8e75-4d5d404ec64a" />
+                </div>
+                <div ID="uuid-475f0c01-f7c8-4198-bf01-cdf3809275ca" TYPE="page" ORDER="4">
+                    <fptr FILEID="uuid-f478edf0-2931-4bc4-a35c-a2d4b80f4597" />
+                    <fptr FILEID="uuid-cb4999bd-448f-4b7a-9bbb-3a8717deda72" />
+                    <fptr FILEID="uuid-d5dcdf30-8890-4a77-9e93-131718b55154" />
+                    <fptr FILEID="uuid-1fc1760c-9b50-4d01-ad58-4bc8b6826594" />
+                    <fptr FILEID="uuid-110b27d8-ea34-4dca-be6b-6738dc58b442" />
+                    <fptr FILEID="uuid-175f8c1e-4977-47cc-ac75-c1ec524c1f87" />
+                    <fptr FILEID="uuid-8cb8ad19-8243-47df-8ed7-bff1ec69c1e9" />
+                    <fptr FILEID="uuid-e1034b0c-a5c9-4825-ab67-866d59a40d4b" />
+                    <fptr FILEID="uuid-67e95d71-f9a3-45bc-828f-5cf21b8e3f4c" />
+                </div>
+            </div>
+        </div>
+    </structMap>
+</mets> 

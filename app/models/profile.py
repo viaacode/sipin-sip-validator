@@ -975,7 +975,7 @@ class NewspaperProfile11(Profile):
             "1.1",
             "newspaper",
             "sparql",
-            "newspaper.sparql",
+            "descriptive_ie.sparql",
         )
 
     @staticmethod
@@ -986,7 +986,7 @@ class NewspaperProfile11(Profile):
             "1.1",
             "newspaper",
             "sparql",
-            "newspaper.sparql",
+            "descriptive_representation.sparql",
         )
 
     @staticmethod
@@ -1009,6 +1009,17 @@ class NewspaperProfile11(Profile):
             "newspaper",
             "sparql",
             "premis_representation.sparql",
+        )
+
+    @staticmethod
+    def query_file_page_representation() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "newspaper",
+            "sparql",
+            "file_page.sparql",
         )
 
     @staticmethod
@@ -1319,6 +1330,34 @@ class NewspaperProfile11(Profile):
                 f.write(profile_template.render(path=path, rep_folder=path.parts[-4]))
             premis_representation_sparqls.append(premis_representation_sparql)
 
+        # write SPARQL-anything query for the file page information.
+        query_file_page_destination = self.bag_path.joinpath(
+            self.query_file_page_representation().name
+        )
+        profile_template = self.jinja_env.get_template(
+            str(self.query_file_page_representation().name)
+        )
+
+        file_page_sparqls = []
+        for path in self.bag_path.glob(
+            str(
+                Path(
+                    "data",
+                    "representations",
+                    "representation_*",
+                )
+            )
+        ):
+            premis_file_page_sparql: Path = query_premis_rep_destination.with_name(
+                f"file_page_{path.parts[-1]}.sparql"
+            )
+            with open(
+                premis_file_page_sparql,
+                "w",
+            ) as f:
+                f.write(profile_template.render(path=path))
+            file_page_sparqls.append(premis_file_page_sparql)
+
         # Run SPARQL-anything transformation.
         sa = SparqlAnything()
         try:
@@ -1336,7 +1375,6 @@ class NewspaperProfile11(Profile):
 
             # Descriptive on representation level.
             for descriptive_representation_sparql in descriptive_representation_sparqls:
-
                 profile_descriptive_rep = sa.construct(
                     q=str(descriptive_representation_sparql), f="TTL"
                 )
@@ -1349,6 +1387,14 @@ class NewspaperProfile11(Profile):
                     q=str(premis_representation_sparql), f="TTL"
                 )
                 data_graph = data_graph + profile_premis_rep
+
+            # File page information.
+            for file_page_sparql in file_page_sparqls:
+
+                profile_file_page = sa.construct(
+                    q=str(file_page_sparql), f="TTL"
+                )
+                data_graph = data_graph + profile_file_page
 
         except Exception as e:
             raise GraphParseError(f"Error when parsing graph: {str(e)}")

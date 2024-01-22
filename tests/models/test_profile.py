@@ -1,8 +1,11 @@
 from pathlib import Path
+from io import StringIO
 
 import pytest
+import rdflib
 from rdflib import Graph
 from rdflib.compare import isomorphic
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from app.models.profile import (
     BasicProfile10,
@@ -68,7 +71,7 @@ def test_determine_profile_corrupt_mets():
         == "METS could not be parsed: Premature end of data in tag mets line 2, line 25, column 11 (mets.xml, line 25)."
     )
 
-@pytest.mark.skip
+
 class TestBasicProfile10:
     @pytest.fixture
     def profile_conform(self):
@@ -258,7 +261,7 @@ class TestBasicProfile10:
             == "Graph is perceived as empty as it does not contain an intellectual entity."
         )
 
-@pytest.mark.skip
+
 class TestBasicProfile11(TestBasicProfile10):
     @pytest.fixture
     def profile_conform(self):
@@ -361,7 +364,7 @@ class TestBasicProfile11(TestBasicProfile10):
         expected.parse(str(path))
         assert isomorphic(graph, expected)
 
-@pytest.mark.skip
+
 class TestMaterialArtworkProfile11:
     def graph_path(self) -> Path:
         return Path(
@@ -484,33 +487,70 @@ class TestMaterialArtworkProfile11:
 
 
 class TestNewspaperProfile11:
+    @classmethod
+    def setup_class(cls):
+        cls.jinja_env = Environment(
+            loader=FileSystemLoader(cls.graph_path()),
+            autoescape=select_autoescape(),
+        )
+
+    @classmethod
+    def graph_path(cls) -> Path:
+        return Path(
+            "tests",
+            "resources",
+            "1.1",
+            "newspaper",
+            "graph",
+        )
+
     @pytest.fixture
-    def profile_gva(self):
+    def profile_conform_minimal(self):
         path = Path(
             "tests",
             "resources",
             "1.1",
             "newspaper",
             "sips",
-            "gva_20231117",
+            "conform_minimal",
+        )
+        return NewspaperProfile11(path)
+
+    @pytest.fixture
+    def profile_conform_extended(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "newspaper",
+            "sips",
+            "conform_extended",
         )
         return NewspaperProfile11(path)
 
     @pytest.mark.parametrize(
-        "profile_name",
-        ["profile_gva", "gva_20231117"],
+        "profile_name, expected_graph_path",
+        [
+            ("profile_conform_minimal", "conform_minimal"),
+            ("profile_conform_extended", "conform_extended"),
+        ],
     )
-    def test_validate_mets(self, profile_name, request):
+    def test_validate_mets(self, profile_name, expected_graph_path, request):
         profile = request.getfixturevalue(profile_name)
         errors = profile._validate_mets()
 
         assert not errors
 
+    def get_suffix_uri(self, uri: rdflib.URIRef | None):
+        if uri:
+            return uri.split("/")[-1]
+        return None
 
     @pytest.mark.parametrize(
         "profile_name, expected_graph_path",
         [
-            ("profile_gva", "gva_20231117"),
+            ("profile_conform_minimal", "conform_minimal"),
+            ("profile_conform_extended", "conform_extended"),
         ],
     )
     def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
@@ -520,8 +560,72 @@ class TestNewspaperProfile11:
         # Check if valid
         assert profile.validate_graph(graph)
 
+        # Some URIs are based on UUIDs that are generated at transform-time.
+        # We fetch these URIs from the transformed graph and fill them in,
+        # in the expected graph.
+        contribution_uri_ref = graph.value(
+            object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Contribution"),
+            predicate=rdflib.URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+        )
+        contribution_uri = self.get_suffix_uri(contribution_uri_ref)
+
+        publication_uri_ref = graph.value(
+            object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Publication"),
+            predicate=rdflib.URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+        )
+        publication_uri = self.get_suffix_uri(publication_uri_ref)
+
+        series_uri = self.get_suffix_uri(
+            graph.value(
+                object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Series"),
+                predicate=rdflib.URIRef(
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                ),
+            )
+        )
+
+        place_uri = self.get_suffix_uri(
+            graph.value(
+                subject=publication_uri_ref,
+                predicate=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/place"),
+            )
+        )
+
+        carrier_uri = self.get_suffix_uri(
+            graph.value(
+                object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Carrier"),
+                predicate=rdflib.URIRef(
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                ),
+            )
+        )
+
+        agent_uri = self.get_suffix_uri(
+            graph.value(
+                subject=contribution_uri_ref,
+                predicate=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/agent"),
+            )
+        )
+
+        role_uri = self.get_suffix_uri(
+            graph.value(
+                subject=contribution_uri_ref,
+                predicate=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/role"),
+            )
+        )
+
         # Check if expected
         expected = Graph()
-        path = self.graph_path().joinpath(expected_graph_path, "graph.ttl")
-        expected.parse(str(path))
+        graph_template = self.jinja_env.get_template(f"{expected_graph_path}/graph.ttl")
+        rendered_graph_template = graph_template.render(
+            contribution_uri=contribution_uri,
+            publication_uri=publication_uri,
+            series_uri=series_uri,
+            place_uri=place_uri,
+            carrier_uri=carrier_uri,
+            agent_uri=agent_uri,
+            role_uri=role_uri,
+        )
+
+        expected.parse(StringIO(rendered_graph_template))
         assert isomorphic(graph, expected)
