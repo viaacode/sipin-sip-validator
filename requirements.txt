@@ -5,4 +5,4 @@ lxml==4.9.2
 pyshacl==0.20.0
 jinja2==3.1.2
 bagit==1.8.1
-pysparql_anything==0.8.1.2
+pysparql_anything==0.8.2.1
