@@ -340,6 +340,14 @@
         sh:severity sh:Violation ;
         sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute occurs more than once.
             Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:position ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute does not occur.
+            Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
     ] .
 
 <#VariantTitleShape> a sh:NodeShape ;
