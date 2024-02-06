@@ -7,6 +7,7 @@ from rdflib import Graph, URIRef
 from pyshacl import validate as shacl_validate
 from pysparql_anything import SparqlAnything
 
+sa = SparqlAnything()
 
 NAMESPACES = {
     "mets": "http://www.loc.gov/METS/",
@@ -341,7 +342,6 @@ class BasicProfile10(Profile):
             f.write(profile_template.render(bag_path=self.bag_path))
 
         # Run SPARQL-anything transformation.
-        sa = SparqlAnything()
         try:
             sip_graph = sa.construct(q=str(query_sip_destination), f="TTL")
             profile_descriptive_ie = sa.construct(
@@ -880,7 +880,6 @@ class MaterialArtworkProfile11(Profile):
             premis_representation_sparqls.append(premis_representation_sparql)
 
         # Run SPARQL-anything transformation.
-        sa = SparqlAnything()
         try:
             sip_graph = sa.construct(q=str(query_sip_destination), f="TTL")
             # Descriptive on IE level.
@@ -954,7 +953,6 @@ class MaterialArtworkProfile11(Profile):
 class NewspaperProfile11(Profile):
     def profile_name() -> str:
         return "https://data.hetarchief.be/id/sip/1.1/newspaper"
-
 
     @staticmethod
     def query_sip() -> Path:
@@ -1121,7 +1119,6 @@ class NewspaperProfile11(Profile):
                 errors.append(XMLNotValidError(str(e.error_log)))
 
         return errors
-
 
     def _validate_descriptive(self) -> list[XMLNotValidError]:
         """Validate the MODS or dc+schema files.
@@ -1359,7 +1356,6 @@ class NewspaperProfile11(Profile):
             file_page_sparqls.append(premis_file_page_sparql)
 
         # Run SPARQL-anything transformation.
-        sa = SparqlAnything()
         try:
             sip_graph = sa.construct(q=str(query_sip_destination), f="TTL")
             # Descriptive on IE level.
@@ -1391,9 +1387,7 @@ class NewspaperProfile11(Profile):
             # File page information.
             for file_page_sparql in file_page_sparqls:
 
-                profile_file_page = sa.construct(
-                    q=str(file_page_sparql), f="TTL"
-                )
+                profile_file_page = sa.construct(q=str(file_page_sparql), f="TTL")
                 data_graph = data_graph + profile_file_page
 
         except Exception as e:
