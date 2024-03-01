@@ -1,0 +1,817 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <https://schema.org/> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix mods: <http://www.loc.gov/mods/rdf/v1#> .
+@prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix edm: <http://www.europeana.eu/schemas/edm/> .
+@prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
+@prefix haBib: <https://data.hetarchief.be/ns/bibliographic/> .
+@prefix rel: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>.
+
+
+
+@base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
+
+
+<#NewspaperIssueShape> a sh:NodeShape ;
+    sh:targetClass haBib:NewspaperIssue ;
+    sh:property
+    # mods:mods/mods:titleInfo[not(@*)]/mods:title
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:name "Title"@en ;
+        sh:description "MODS title element"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:title element is required.
+            Please check `mods:mods/mods:titleInfo[not(@*)]/mods:title`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:title element occurs more than once.
+            Please check `mods:mods/mods:titleInfo[not(@*)]/mods:title`"""@en ;
+    ],
+    # mods:mods/mods:titleInfo[with(@*)]/mods:title
+    [
+        a sh:PropertyShape ;
+        sh:path bf:title ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:or (
+            [ sh:node <#TitleShape> ]
+            [ sh:node <#VariantTitleShape> ]
+        ) ;
+        sh:or (
+            [ sh:class bf:VariantTitle ]
+            [ sh:class bf:Title ]
+        ) ;
+        
+    ],
+    # mods:mods/mods:identifier[not(@*)]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#IdentifierShape> ;
+        sh:name "Identifier"@en ;
+        sh:description "MODS identifier element"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier element is required.
+            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier element occurs more than once.
+            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
+    ],
+    # mods:mods/mods:typeOfResource
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:name "Type"@en ;
+        sh:description "MODS type of resource element"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:in (haBib:NewspaperIssue bf:Work premis:IntellectualEntity) ;
+        sh:severity sh:Violation ;
+        sh:message """mods:typeOfResource must be newspaper edition.
+            Please check `mods:mods/mods:typeOfResource`"""@en ;
+            # ADD or no premis:IntellectualEntity in Mods
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:minCount 3 ;
+        # It is already bf:Work, premis:IntellectualEntity + another specific type
+        sh:severity sh:Violation ;
+        sh:message """mods:typeOfResource element is required.
+            Please check `mods:mods/mods:typeOfResource`"""@en ;
+            # Add or link between premis and mods is not right
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:maxCount 3 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:typeOfResource element occurs more than once.
+            Please check `mods:mods/mods:typeOfResource`"""@en ;
+    ],
+    # mods:mods/mods:abstract
+    [
+        a sh:PropertyShape ;
+        sh:path bf:summary ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SummaryShape> ;
+        sh:name "Mods abstract"@en ;
+        sh:description "MODS abstract element"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:summary ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message """mods:abstract element is not provided.
+            Please check `mods:mods/mods:abstract`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:summary ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:abstract element occurs more than once.
+            Please check `mods:mods/mods:abstract`"""@en ;
+    ],
+    # mods:mods/mods:genre
+    [
+        a sh:PropertyShape ;
+        sh:path bf:genreForm ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#GenreFormShape> ;
+        sh:name "Genre form"@en ;
+        sh:description "MODS genre element"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:genreForm ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message """mods:genre element is not provided.
+            Please check `mods:mods/mods:genre`"""@en ;
+    ],
+    # mods:mods/mods:subject/mods:topic
+    [
+        a sh:PropertyShape ;
+        sh:path bf:subject ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#TopicShape> ;
+        sh:name "Mods subject topic"@en ;
+        sh:description "A term or phrase representing the primary topic(s) on which the newspaper is focused."@en ;
+    ],
+    # mods:mods/mods:name[@type="personal"]
+    [
+        a sh:PropertyShape ; 
+        sh:path bf:contribution ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#ContributionShape> ;
+        sh:name "Mods name"@en ;
+        sh:description "The name of a person who contributed to the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:contribution ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message """mods:name[@type="personal"] element is not provided.
+            Please check `mods:mods/mods:name[@type="personal"]`"""@en ;
+    ],
+    # mods:mods/mods:originInfo/mods:dateCreated[@encoding="edtf"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:originDate ;
+        sh:nodeKind sh:Literal ;
+        sh:or (
+            [ sh:datatype edtf:EDTF-level0 ]
+            [ sh:datatype edtf:EDTF-level1 ]
+            [ sh:datatype edtf:EDTF-level2 ]
+            [ sh:datatype edtf:EDTF ]
+        ) ;
+        sh:name "Date created"@en ;
+        sh:description "The date of creation of the newspaper."@en ;
+        # sh:minCount 1 ;
+        # sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:originDate ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:originInfo/mods:dateCreated[@encoding="edtf"] element is not required.
+            Please check `mods:mods/mods:originInfo/mods:dateCreated[@encoding="edtf"]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:originDate ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:originInfo/mods:dateCreated[@encoding="edtf"] element occurs more than once.
+            Please check `mods:mods/mods:originInfo/mods:dateCreated[@encoding="edtf"]`"""@en ;
+    ],
+    # mods:mods/mods:originInfo
+    [
+        a sh:PropertyShape ;
+        sh:path bf:provisionActivity ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#PublicationShape> ;
+        sh:name "Mods origin Info"@en ;
+        sh:description "Mods origin Info"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:provisionActivity ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:originInfo element is required.
+            Please check `mods:mods/mods:originInfo`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:provisionActivity ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:originInfo element occurs more than once.
+            Please check `mods:mods/mods:originInfo`"""@en ;
+    ],
+    # mods:mods/mods:originInfo/mods:issuance
+    [
+        a sh:PropertyShape ;
+        sh:path bf:issuance ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Issuance"@en ;
+        sh:description "The issuance of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:issuance ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:originInfo/mods:issuance element occurs more than once.
+            Please check `mods:mods/mods:originInfo/mods:issuance`"""@en ;
+    ],
+    # mods:mods/mods:physicalDescription
+    # mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]
+    [
+        a sh:PropertyShape ;
+        sh:path haBib:numberOfPages ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:integer ;
+        sh:name "number of pages"@en ;
+        sh:description "Indicates how many pages a certain bibliographic object contains."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path haBib:numberOfPages ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:mods/mods:physicalDescription/mods:extent[@unit="pages"] element occurs more than once.
+            Please check `mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]`"""@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:extent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#ExtentShape> ;
+        sh:name "Extent"@en ;
+        sh:description "MODS extent element"@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:form
+    [
+        a sh:PropertyShape ;
+        sh:path bf:carrier ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#CarrierShape> ;
+        sh:name "Carrier"@en ;
+        sh:description "MODS form element"@en ;
+    ],    
+    # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]
+    # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:hasSeries ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#AbrahamShape> ;
+        sh:name "Series"@en ;
+        sh:description "Abraham ID or Abraham URI."@en ;
+    ],
+    # mods:mods/mods:note[@type="license"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:usageAndAccessPolicy ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#UsageAndAccessPolicyShape> ;
+        sh:name "Credits"@en ;
+        sh:description "The credits of the newspaper."@en ;
+    ] .
+
+<#FileShape> a sh:NodeShape ;
+    sh:targetClass premis:File ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path schema:position ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:integer ;
+        sh:name "page number"@en ;
+        sh:description "Indicates the serial number of a page within the greater object it is part of."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:position ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute occurs more than once.
+            Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:position ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute does not occur.
+            Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
+    ] .
+
+<#VariantTitleShape> a sh:NodeShape ;
+    sh:targetClass bf:VariantTitle ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:variantType ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Variant Type"@en ;
+        sh:description "The variant type of the title."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:variantType ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] element is required.
+            Please check `mods:mods/mods:titleInfo/mods:title[@type=*]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:variantType ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] element occurs more than once.
+            Please check `mods:mods/mods:titleInfo/mods:title[@type=*]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Title"@en ;
+        sh:description "The title of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:titleInfo/mods:title element is required.
+            Please check `mods:mods/mods:titleInfo/mods:title`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:titleInfo/mods:title element occurs more than once.
+            Please check `mods:mods/mods:titleInfo/mods:title`"""@en ;
+    ] .
+
+
+# mods:mods/mods:physicalDescription/mods:form
+<#CarrierShape> a sh:NodeShape ;
+    sh:targetClass bf:Carrier ;
+    sh:property
+    # mods:mods/mods:physicalDescription/mods:form
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Label"@en ;
+        sh:description "The label of the carrier."@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:form[@authority]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
+        sh:name "Source"@en ;
+        sh:description "The source of the carrier."@en ;
+    ] .
+    
+<#SourceShape> a sh:NodeShape ;
+    sh:targetClass bf:Source ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:code ;
+        sh:or (
+            # mods:mods/mods:physicalDescription/mods:form[@authority]
+            [
+                sh:nodeKind sh:Literal ;
+                sh:datatype xsd:string
+            ]
+            # mods:mods/mods:physicalDescription/mods:form[@authorityURI]
+            [ sh:nodeKind sh:IRI ]
+        ) ;
+        sh:name "MODS authority attribute"@en ;
+        sh:description "The MODS authority attribute."@en ;
+    ] .
+
+# mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]
+# mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
+<#ExtentShape> a sh:NodeShape ;
+    sh:targetClass bf:Extent ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Extent"@en ;
+        sh:description "The extent of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:unit ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#UnitShape> ;
+        sh:name "Unit"@en ;
+        sh:description "The unit of the extent of the newspaper."@en ;
+    ] .
+
+<#UnitShape> a sh:NodeShape ;
+    sh:targetClass bf:Unit ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:in ( "pages" "cm" ) ;
+        sh:name "Unit"@en ;
+        sh:description "The unit of the extent of the newspaper."@en ;
+    ] .
+
+# mods:mods/mods:genre
+<#GenreFormShape> a sh:NodeShape ;
+    sh:targetClass bf:GenreForm ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Genre form "@en ;
+        sh:description "The genre form of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
+        sh:name "Source"@en ;
+        sh:description "The source of the carrier."@en ;
+    ] .
+
+# mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]
+# mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
+<#AbrahamShape> a sh:NodeShape ;
+    sh:targetClass bf:Series ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifier ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#AbrahamIdShape> ;
+        sh:name "Identifier"@en ;
+        sh:description "The identifier of the Abraham ID or Abraham URI."@en ;
+    ] .
+
+<#AbrahamIdShape> a sh:NodeShape ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:in (haObj:AbrahamURI haObj:AbrahamId) ;
+        sh:name "Type"@en ;
+        sh:description "The type of Abraham ID or Abraham URI."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Abraham ID"@en ;
+        sh:description "The Abraham ID of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:value ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier[@type="abraham_id"] occurs more than once.
+            Please check `mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]`."""@en ;
+    ] .
+
+# mods:mods/mods:originInfo
+<#PublicationShape> a sh:NodeShape ;
+    sh:targetClass bf:Publication ;
+    sh:property
+    # mods:mods/mods:originInfo/mods:place
+    [
+        a sh:PropertyShape ;
+        sh:path bf:place ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#PlaceShape> ;
+        sh:name "Place of publication"@en ;
+        sh:description "The place of publication of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:place ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:place occurs more than once.
+            Please check `mods:mods/mods:originInfo/mods:place`."""@en ;
+    ],
+    # mods:mods/mods:originInfo/mods:dateIssued[@encoding="edtf"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:date ; 
+        sh:nodeKind sh:Literal ;
+        sh:or (
+            [ sh:datatype edtf:EDTF-level0 ]
+            [ sh:datatype edtf:EDTF-level1 ]
+            [ sh:datatype edtf:EDTF-level2 ]
+            [ sh:datatype edtf:EDTF ]
+        ) ;
+        sh:name "Date of publication"@en ;
+        sh:description "The date of publication of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:date ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:dateIssued is required.
+            Please check `mods:mods/mods:originInfo/mods:dateIssued[@encoding="edtf"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:date ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:dateIssued occurs more than once.
+            Please check `mods:mods/mods:originInfo/mods:dateIssued[@encoding="edtf"]`."""@en ;
+    ] .
+
+# mods:mods/mods:originInfo/mods:place
+<#PlaceShape> a sh:NodeShape ;
+    sh:targetClass bf:Place ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Place of publication"@en ;
+        sh:description "The place of publication of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message """mods:placeTerm[@type="text"] is not provided.
+            Please check `mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="text"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:code ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Place code"@en ;
+        sh:description "The code of the place of publication of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:code ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message """mods:placeTerm[@type="code"] is not provided.
+            Please check `mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="code"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:code ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:placeTerm[@type="code"] occurs more than once.
+            Please check `mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="code"]`."""@en ;
+    ] .
+
+
+# mods:mods/mods:name[@type="personal"]
+<#ContributionShape> a sh:NodeShape ;
+    sh:targetClass bf:Contribution ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:agent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#AgentShape> ;
+        sh:name "Mods name"@en ;
+        sh:description "The name of a person who contributed to the newspaper."@en ;
+    ],
+    # mods:mods/mods:name[@type="personal"]/role
+    [
+        a sh:PropertyShape ;
+        sh:path bf:role ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#RoleShape> ;
+        sh:name "Mods role"@en ;
+        sh:description "The role of a person who contributed to the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:role ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message """rolerTerm was not provided.
+            Please check `mods:mods/mods:name[@type="personal"]/role/roleTerm[@type="text"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:role ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """rolerTerm was provided more than once.
+            Please check `mods:mods/mods:name[@type="personal"]/role/roleTerm[@type="text"]`."""@en ;
+    ] .
+
+<#RoleShape> a sh:NodeShape ; 
+    sh:targetClass bf:Role ;
+    sh:property
+    # mods:mods/mods:name[@type="personal"]/role/roleTerm[@type="text"]
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods role term"@en ;
+        sh:description "The role term of a person who contributed to the newspaper."@en ;
+        sh:maxCount 1 ;
+    ] .
+
+# mods:mods/mods:name[@type="personal"]
+<#AgentShape> a sh:NodeShape ;
+    sh:targetClass bf:Person ;
+    sh:property
+    # mods:mods/mods:name[@type="personal"]/namePart[@type="given"]
+    [
+        a sh:PropertyShape ;
+        sh:path schema:givenName ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods name part"@en ;
+        sh:description "The given name part of a person who contributed to the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:givenName ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:namePart[@type="given"] is required.
+            Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="given"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:givenName ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:namePart[@type="given"] occurs more than once.
+            Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="given"]`."""@en ;
+    ],
+    # mods:mods/mods:name[@type="personal"]/namePart[@type="family"]
+    [
+        a sh:PropertyShape ;
+        sh:path schema:familyName ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods family name part"@en ;
+        sh:description "The family name part of a person who contributed to the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:familyName ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:namePart[@type="family"] is required.
+            Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="family"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path schema:familyName ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:namePart[@type="family"] occurs more than once.
+            Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="family"]`."""@en ;
+    ] .
+
+#mods:mods/mods:subject/mods:topic
+<#TopicShape> a sh:NodeShape ;
+    sh:targetClass bf:Topic ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods subject topic"@en ;
+        sh:description "The subject of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:topic has no value.
+            Please check `mods:mods/mods:subject/mods:topic`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:topic has more than one value.
+            Please check `mods:mods/mods:subject/mods:topic`."""@en ;
+    ] .
+
+#mods:mods/mods:abstract
+<#SummaryShape> a sh:NodeShape ;
+    sh:targetClass bf:Summary ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Mods abstract"@en ;
+        sh:description "The abstract of the newspaper."@en ;
+    ] .
+
+#mods:mods/mods:identifier[not(@*)]
+<#IdentifierShape> a sh:NodeShape ;
+  sh:targetClass bf:Identifier ;
+  sh:property 
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has object identifier value"@en ;
+    sh:description "The value of the object identifier."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+<#UsageAndAccessPolicyShape> a sh:NodeShape ;
+    sh:targetClass bf:UsageAndAccessPolicy ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Usage and access policy"@en ;
+        sh:description "The usage and access policy of the newspaper."@en ;
+    ] .

@@ -11,7 +11,7 @@ ENV PATH $JAVA_HOME/bin:$PATH
 
 # Download pysparql_anything in correct folder.
 RUN mkdir /usr/local/lib/python3.10/site-packages/pysparql_anything/ && \
-    wget -O /usr/local/lib/python3.10/site-packages/pysparql_anything/sparql-anything-v0.8.1.jar https://github.com/SPARQL-Anything/sparql.anything/releases/download/v0.8.1/sparql-anything-0.8.1.jar 
+    wget -O /usr/local/lib/python3.10/site-packages/pysparql_anything/sparql-anything-v0.8.2.jar https://github.com/SPARQL-Anything/sparql.anything/releases/download/v0.8.2/sparql-anything-0.8.2.jar 
 
 # Make a new group and user so we don't run as root.
 RUN addgroup --system appgroup && adduser --system appuser --ingroup appgroup
