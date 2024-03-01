@@ -300,6 +300,18 @@ class TestBasicProfile11(TestBasicProfile10):
         return BasicProfile11(path)
 
     @pytest.fixture
+    def profile_conform_local_ids(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "conform_local_ids",
+        )
+        return BasicProfile11(path)
+
+    @pytest.fixture
     def profile_invalid_xml(self):
         path = Path(
             "tests",
@@ -350,7 +362,8 @@ class TestBasicProfile11(TestBasicProfile10):
             ("profile_conform", "conform"),
             ("profile_conform_extended", "conform_extended"),
             ("profile_conform_batch_id", "conform_batch_id"),
-        ],
+            ("profile_conform_local_ids", "conform_local_ids"),
+        ]
     )
     def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
         profile = request.getfixturevalue(profile_name)

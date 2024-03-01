@@ -79,6 +79,7 @@
       [ sh:class haObjId:PersistenteURI_VKC_Record ]
       [ sh:class haObjId:PersistenteURI_VKC_Werk ]
       [ sh:class haObjId:MEEMOO-PID ]
+      [ sh:class haObjId:Vaf_ID ]
     );
     sh:message """Class of premis:identifier is not part of allowed list.
       Please check `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierType`."""@en ;
