@@ -43,7 +43,7 @@ WHERE {
             a mets:mets;
             xyz:OBJID ?sip_id;
             xyz:PROFILE ?mets_profile;
-            csip:CONTENTINFORMATIONTYPE ?sip_profile;
+            csip:OTHERCONTENTINFORMATIONTYPE ?sip_profile;
             ?1 [
                 a mets:metsHdr;
                 #csip:OAISPACKAGETYPE ?type;

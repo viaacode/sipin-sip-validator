@@ -52,7 +52,9 @@ def test_determine_profile_missing():
             Path("tests", "resources", "sips", "other", "missing_profile")
         )
 
-    assert str(e.value) == "METS does not contain a CONTENTINFORMATIONTYPE attribute."
+    assert (
+        str(e.value) == "METS does not contain a OTHERCONTENTINFORMATIONTYPE attribute."
+    )
 
 
 def test_determine_profile_no_mets():
@@ -68,7 +70,7 @@ def test_determine_profile_corrupt_mets():
 
     assert (
         str(e.value)
-        == "METS could not be parsed: Premature end of data in tag mets line 2, line 25, column 11 (mets.xml, line 25)."
+        == "METS could not be parsed: Premature end of data in tag mets line 2, line 26, column 11 (mets.xml, line 26)."
     )
 
 
@@ -363,7 +365,7 @@ class TestBasicProfile11(TestBasicProfile10):
             ("profile_conform_extended", "conform_extended"),
             ("profile_conform_batch_id", "conform_batch_id"),
             ("profile_conform_local_ids", "conform_local_ids"),
-        ]
+        ],
     )
     def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
         profile = request.getfixturevalue(profile_name)

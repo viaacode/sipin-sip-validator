@@ -4,7 +4,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink"
     OBJID="uuid-de61d4af-d19c-4cc7-864d-55573875b438" TYPE="Photographs – Digital"
     PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml"
-    csip:CONTENTINFORMATIONTYPE="https://data.hetarchief.be/id/sip/1.0/basic">
+    csip:CONTENTINFORMATIONTYPE="OTHER"
+    csip:OTHERCONTENTINFORMATIONTYPE="https://data.hetarchief.be/id/sip/1.0/basic">
 
 <metsHdr CREATEDATE="2022-02-16T10:01:15.014+02:00" csip:OAISPACKAGETYPE="SIP">
     <!-- information about the software -->

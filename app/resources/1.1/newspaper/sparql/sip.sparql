@@ -59,7 +59,7 @@ WHERE {
                 ?mets xyz:TYPE ?type .
             }
             OPTIONAL {
-                ?mets csip:CONTENTINFORMATIONTYPE ?_sip_profile .
+                ?mets csip:OTHERCONTENTINFORMATIONTYPE ?_sip_profile .
                 BIND(iri(?_sip_profile) AS ?sip_profile)
             }
             OPTIONAL {
