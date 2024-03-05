@@ -1449,11 +1449,13 @@ def determine_profile(path: Path) -> Profile:
     # Parse the meemoo profile in the IE METS
     try:
         profile_type = root.xpath(
-            "/mets:mets/@csip:CONTENTINFORMATIONTYPE",
+            "/mets:mets/@csip:OTHERCONTENTINFORMATIONTYPE",
             namespaces=NAMESPACES,
         )[0]
     except IndexError:
-        raise ValueError("METS does not contain a CONTENTINFORMATIONTYPE attribute.")
+        raise ValueError(
+            "METS does not contain a OTHERCONTENTINFORMATIONTYPE attribute."
+        )
 
     if profile_type == BasicProfile10.profile_name():
         return BasicProfile10(path)

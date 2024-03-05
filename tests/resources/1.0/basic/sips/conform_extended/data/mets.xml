@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS" xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" OBJID="uuid-de61d4af-d19c-4cc7-864d-55573875b438" TYPE="Photographs – Digital" PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" csip:CONTENTINFORMATIONTYPE="https://data.hetarchief.be/id/sip/1.0/basic" xsi:schemaLocation="https://www.w3.org./1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd  http://www.loc.gov/METS/ https://www.loc.gov/standards/mets/mets.xsd https://dilcis.eu/XML/METS/CSIPExtensionMETS https://earkcsip.dilcis.eu/schema/DILCISExtensionMETS.xsd https://dilcis.eu/XML/METS/SIPExtensionMETS https://earksip.dilcis.eu/schema/DILCISExtensionSIPMETS.xsd">
+<?xml version='1.0' encoding='UTF-8'?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS" xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" OBJID="uuid-de61d4af-d19c-4cc7-864d-55573875b438" TYPE="Photographs – Digital" PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" csip:CONTENTINFORMATIONTYPE="OTHER" csip:OTHERCONTENTINFORMATIONTYPE="https://data.hetarchief.be/id/sip/1.0/basic" xsi:schemaLocation="https://www.w3.org./1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd                         http://www.loc.gov/METS/ https://www.loc.gov/standards/mets/mets.xsd                         https://DILCIS.eu/XML/METS/CSIPExtensionMETS https://earkcsip.dilcis.eu/schema/DILCISExtensionMETS.xsd                         https://DILCIS.eu/XML/METS/SIPExtensionMETS https://earksip.dilcis.eu/schema/DILCISExtensionSIPMETS.xsd">
 
     <metsHdr CREATEDATE="2022-02-16T10:01:15.014+02:00" csip:OAISPACKAGETYPE="SIP">
         <!-- information about the software -->
@@ -21,32 +21,30 @@
 
     <!-- ref to descriptive metadata about IE -->
     <dmdSec ID="uuid-4d18fdda-a20c-4410-9fce-30c6bff14f50">
-        <mdRef LOCTYPE="URL" MDTYPE="DC" xlink:type="simple" xlink:href="metadata/descriptive/dc.xml" MIMETYPE="text/xml" SIZE="729" CREATED="2022-02-16T10:01:15.014+02:00" CHECKSUM="bc2be547a41f93d7c8b582eeb2d575dc" CHECKSUMTYPE="MD5" />
+        <mdRef LOCTYPE="URL" MDTYPE="DC" xlink:type="simple" xlink:href="metadata/descriptive/dc_1.xml" MIMETYPE="text/xml" SIZE="2823" CREATED="2022-02-16T10:01:15.014+02:00" CHECKSUM="5746b89f6e15252fb54fcc2d7a74f1de" CHECKSUMTYPE="MD5"/>
     </dmdSec>
 
     <!-- ref to the PREMIS metadata about IE/subIE(s)/package -->
     <amdSec>
         <digiprovMD ID="uuid-e2dcd7c5-5fad-4bcd-a7c7-762b0be75d0f">
-            <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:type="simple" xlink:href="metadata/preservation/premis.xml" MIMETYPE="text/xml" SIZE="1437" CREATED="2022-02-16T10:01:15.014+02:00" CHECKSUM="28bd59245bb09807f116cf1cdded1e75" CHECKSUMTYPE="MD5" />
+            <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:type="simple" xlink:href="metadata/preservation/premis.xml" MIMETYPE="text/xml" SIZE="1990" CREATED="2022-02-16T10:01:15.014+02:00" CHECKSUM="c23db62c2abd690a500940fe42948b5b" CHECKSUMTYPE="MD5"/>
         </digiprovMD>
     </amdSec>
 
     <!-- file section -->
     <fileSec ID="uuid-b8e1e265-7003-42e4-8c33-3fc95122d4f4">
         <fileGrp USE="Representations/representation_1" ID="uuid-6ec1cf49-0d4a-413d-9170-4dcb4bd09473">
-            <file ID="uuid-ba89c101-109a-4fe3-a4ed-0c276b20e14c" MIMETYPE="text/xml" SIZE="2992" CREATED="2022-02-16T10:01:15.014+02:00" CHECKSUM="80c501580dc75d883cdf8548a09a72d1" CHECKSUMTYPE="MD5">
-                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="representations/representation_1/mets.xml" />
+            <file ID="uuid-ba89c101-109a-4fe3-a4ed-0c276b20e14c" MIMETYPE="text/xml" SIZE="2301" CREATED="2022-02-16T10:01:15.014+02:00" CHECKSUM="e03cc894b11a9d40ef7c3980474255c9" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="representations/representation_1/mets.xml"/>
             </file>
         </fileGrp>
     </fileSec>
 
     <structMap ID="uuid-6b183791-bcf2-4491-913d-e3b553ef2b75" TYPE="PHYSICAL" LABEL="CSIP">
         <div ID="uuid-1dd9df64-94f5-46d4-9d76-3d09f2124412" LABEL="basic-package">
-            <div ID="uuid-e9a09018-9c23-46c7-9768-aaf372fd33dc" LABEL="Metadata" 
-                 DMDID="uuid-4d18fdda-a20c-4410-9fce-30c6bff14f50"
-                 ADMID="uuid-e2dcd7c5-5fad-4bcd-a7c7-762b0be75d0f" />
+            <div ID="uuid-e9a09018-9c23-46c7-9768-aaf372fd33dc" LABEL="Metadata" DMDID="uuid-4d18fdda-a20c-4410-9fce-30c6bff14f50" ADMID="uuid-e2dcd7c5-5fad-4bcd-a7c7-762b0be75d0f"/>
             <div ID="uuid-47ea3b5a-cc10-491c-94fc-46189fb266ae" LABEL="Representations/representation_1">
-                <mptr xlink:type="simple" xlink:href="representations/representation_1/mets.xml" LOCTYPE="URL" xlink:title="uuid-6ec1cf49-0d4a-413d-9170-4dcb4bd09473" />
+                <mptr xlink:type="simple" xlink:href="representations/representation_1/mets.xml" LOCTYPE="URL" xlink:title="uuid-6ec1cf49-0d4a-413d-9170-4dcb4bd09473"/>
             </div>
         </div>
     </structMap>
