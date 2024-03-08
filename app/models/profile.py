@@ -1145,13 +1145,13 @@ class NewspaperProfile11(Profile):
             "mods.xml",
         )
         try:
-            dcterms_package = etree.parse(mods_package_path)
-            mods_xsd.assertValid(dcterms_package)
+            mods_package = etree.parse(mods_package_path)
+            mods_xsd.assertValid(mods_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
             errors.append(XMLNotValidError(str(e.error_log)))
 
         # MODS on representation level
-        for dcterms_representation_path in self.bag_path.glob(
+        for mods_representation_path in self.bag_path.glob(
             str(
                 Path(
                     "data",
@@ -1164,8 +1164,8 @@ class NewspaperProfile11(Profile):
             )
         ):
             try:
-                dcterms_representation = etree.parse(dcterms_representation_path)
-                mods_xsd.assertValid(dcterms_representation)
+                mods_representation = etree.parse(mods_representation_path)
+                mods_xsd.assertValid(mods_representation)
             except (etree.DocumentInvalid, etree.ParseError) as e:
                 errors.append(XMLNotValidError(str(e.error_log)))
 
