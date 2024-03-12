@@ -544,15 +544,42 @@ class TestNewspaperProfile11:
         return NewspaperProfile11(path)
 
     @pytest.mark.parametrize(
-        "profile_name, expected_graph_path",
-        [
-            ("profile_conform_minimal", "conform_minimal"),
-            ("profile_conform_extended", "conform_extended"),
-        ],
+        "profile_name",
+        ["profile_conform_minimal", "profile_conform_extended"],
     )
-    def test_validate_mets(self, profile_name, expected_graph_path, request):
+    def test_validate_premis(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile._validate_premis()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_conform_minimal", "profile_conform_extended"],
+    )
+    def test_validate_mets(self, profile_name, request):
         profile = request.getfixturevalue(profile_name)
         errors = profile._validate_mets()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_conform_minimal", "profile_conform_extended"],
+    )
+    def test_validate_descriptive(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile._validate_descriptive()
+
+        assert not errors
+
+    @pytest.mark.parametrize(
+        "profile_name",
+        ["profile_conform_minimal", "profile_conform_extended"],
+    )
+    def test_validate_metadata(self, profile_name, request):
+        profile = request.getfixturevalue(profile_name)
+        errors = profile.validate_metadata()
 
         assert not errors
 
