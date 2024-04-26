@@ -15,13 +15,13 @@ from app.models.profile import (
     XMLNotValidError,
     GraphNotConformError,
     NewspaperProfile11,
+    ProfileVersionRetiredError
 )
 
 
 @pytest.mark.parametrize(
     "path, profile_class",
     [
-        (Path("1.0", "basic", "sips", "conform"), BasicProfile10),
         (Path("1.1", "basic", "sips", "conform"), BasicProfile11),
         (
             Path("1.1", "artwork", "sips", "2D_fa307608-35c3-11ed-9243-7e92631d7d27"),
@@ -32,6 +32,17 @@ from app.models.profile import (
 def test_determine_profile(path, profile_class):
     profile = determine_profile(Path("tests", "resources").joinpath(path))
     assert type(profile) == profile_class
+
+@pytest.mark.parametrize(
+    "path, profile_class, error",
+    [
+        (Path("1.0", "basic", "sips", "conform"), BasicProfile10, "The basic profile version 1.0 is retired!"),
+    ],
+)
+def test_determine_profile_retired(path, profile_class, error):
+    with pytest.raises(ProfileVersionRetiredError) as e:
+        determine_profile(Path("tests", "resources").joinpath(path))
+    assert str(e.value) == error
 
 
 def test_determine_profile_unknown():

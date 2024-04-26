@@ -14,6 +14,7 @@ from app.models.profile import (
     determine_profile,
     GraphNotConformError,
     GraphParseError,
+    ProfileVersionRetiredError,
 )
 from app.services.pulsar import (
     PulsarClient,
@@ -118,7 +119,23 @@ class EventListener:
                 )
 
                 # Determine profile
-                profile = determine_profile(bag_path)
+                try:
+                    profile = determine_profile(bag_path)
+                except ProfileVersionRetiredError as e:
+                    self.log.error(
+                        f"{bag_path}: {str(e)}",
+                    )
+                    self.produce_event(
+                        self.bag_validate_topic,
+                        {
+                            "message": str(e),
+                        },
+                        msg_data["destination"],
+                        EventOutcome.FAIL,
+                        incoming_event.correlation_id,
+                    )
+                    self.pulsar_client.acknowledge(message)
+                    return
 
                 # Validate XML files
                 xml_validation_errors = profile.validate_metadata()

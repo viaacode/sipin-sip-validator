@@ -26,6 +26,8 @@ class GraphParseError(Exception):
 class GraphNotConformError(Exception):
     pass
 
+class ProfileVersionRetiredError(Exception):
+    pass
 
 class Profile(ABC):
     def __init__(self, bag_path: Path):
@@ -1440,6 +1442,7 @@ def determine_profile(path: Path) -> Profile:
             - If the package METS could not be parsed.
             - If there is no profile information in the package METS.
             - If the profile is not known.
+        ProfileVersionRetiredError: When the profile of the incoming SIP is retired. 
     """
     try:
         root = etree.parse(path.joinpath("data", "mets.xml"))
@@ -1458,7 +1461,7 @@ def determine_profile(path: Path) -> Profile:
         )
 
     if profile_type == BasicProfile10.profile_name():
-        return BasicProfile10(path)
+        raise ProfileVersionRetiredError("The basic profile version 1.0 is retired!")
     elif profile_type == BasicProfile11.profile_name():
         return BasicProfile11(path)
     elif profile_type == MaterialArtworkProfile11.profile_name():
