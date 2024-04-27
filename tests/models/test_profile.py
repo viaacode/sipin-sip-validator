@@ -8,14 +8,13 @@ from rdflib.compare import isomorphic
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from app.models.profile import (
-    BasicProfile10,
     BasicProfile11,
     determine_profile,
     MaterialArtworkProfile11,
     XMLNotValidError,
     GraphNotConformError,
     NewspaperProfile11,
-    ProfileVersionRetiredError
+    ProfileVersionRetiredError,
 )
 
 
@@ -33,13 +32,17 @@ def test_determine_profile(path, profile_class):
     profile = determine_profile(Path("tests", "resources").joinpath(path))
     assert type(profile) == profile_class
 
+
 @pytest.mark.parametrize(
-    "path, profile_class, error",
+    "path, error",
     [
-        (Path("1.0", "basic", "sips", "conform"), BasicProfile10, "The basic profile version 1.0 is retired!"),
+        (
+            Path("1.0", "basic", "sips", "conform"),
+            "The basic profile version 1.0 is retired!",
+        ),
     ],
 )
-def test_determine_profile_retired(path, profile_class, error):
+def test_determine_profile_retired(path, error):
     with pytest.raises(ProfileVersionRetiredError) as e:
         determine_profile(Path("tests", "resources").joinpath(path))
     assert str(e.value) == error
@@ -85,72 +88,96 @@ def test_determine_profile_corrupt_mets():
     )
 
 
-class TestBasicProfile10:
+class TestBasicProfile11:
     @pytest.fixture
     def profile_conform(self):
         path = Path(
             "tests",
             "resources",
-            "1.0",
+            "1.1",
             "basic",
             "sips",
             "conform",
         )
-        return BasicProfile10(path)
+        return BasicProfile11(path)
 
     @pytest.fixture
     def profile_conform_extended(self):
         path = Path(
             "tests",
             "resources",
-            "1.0",
+            "1.1",
             "basic",
             "sips",
             "conform_extended",
         )
-        return BasicProfile10(path)
+        return BasicProfile11(path)
+
+    @pytest.fixture
+    def profile_conform_batch_id(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "conform_batch_id",
+        )
+        return BasicProfile11(path)
+
+    @pytest.fixture
+    def profile_conform_local_ids(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.1",
+            "basic",
+            "sips",
+            "conform_local_ids",
+        )
+        return BasicProfile11(path)
 
     @pytest.fixture
     def profile_invalid_xml(self):
         path = Path(
             "tests",
             "resources",
-            "1.0",
+            "1.1",
             "basic",
             "sips",
             "invalid_xml",
         )
-        return BasicProfile10(path)
+        return BasicProfile11(path)
 
     @pytest.fixture
     def profile_not_conform(self):
         path = Path(
             "tests",
             "resources",
-            "1.0",
+            "1.1",
             "basic",
             "sips",
             "not_conform",
         )
-        return BasicProfile10(path)
+        return BasicProfile11(path)
 
     @pytest.fixture
     def profile_empty_graph(self):
         path = Path(
             "tests",
             "resources",
-            "1.0",
+            "1.1",
             "basic",
             "sips",
             "empty_graph",
         )
-        return BasicProfile10(path)
+        return BasicProfile11(path)
 
     def graph_path(self) -> Path:
         return Path(
             "tests",
             "resources",
-            "1.0",
+            "1.1",
             "basic",
             "graph",
         )
@@ -272,101 +299,6 @@ class TestBasicProfile10:
         assert (
             str(e.value)
             == "Graph is perceived as empty as it does not contain an intellectual entity."
-        )
-
-
-class TestBasicProfile11(TestBasicProfile10):
-    @pytest.fixture
-    def profile_conform(self):
-        path = Path(
-            "tests",
-            "resources",
-            "1.1",
-            "basic",
-            "sips",
-            "conform",
-        )
-        return BasicProfile11(path)
-
-    @pytest.fixture
-    def profile_conform_extended(self):
-        path = Path(
-            "tests",
-            "resources",
-            "1.1",
-            "basic",
-            "sips",
-            "conform_extended",
-        )
-        return BasicProfile11(path)
-
-    @pytest.fixture
-    def profile_conform_batch_id(self):
-        path = Path(
-            "tests",
-            "resources",
-            "1.1",
-            "basic",
-            "sips",
-            "conform_batch_id",
-        )
-        return BasicProfile11(path)
-
-    @pytest.fixture
-    def profile_conform_local_ids(self):
-        path = Path(
-            "tests",
-            "resources",
-            "1.1",
-            "basic",
-            "sips",
-            "conform_local_ids",
-        )
-        return BasicProfile11(path)
-
-    @pytest.fixture
-    def profile_invalid_xml(self):
-        path = Path(
-            "tests",
-            "resources",
-            "1.1",
-            "basic",
-            "sips",
-            "invalid_xml",
-        )
-        return BasicProfile11(path)
-
-    @pytest.fixture
-    def profile_not_conform(self):
-        path = Path(
-            "tests",
-            "resources",
-            "1.1",
-            "basic",
-            "sips",
-            "not_conform",
-        )
-        return BasicProfile11(path)
-
-    @pytest.fixture
-    def profile_empty_graph(self):
-        path = Path(
-            "tests",
-            "resources",
-            "1.1",
-            "basic",
-            "sips",
-            "empty_graph",
-        )
-        return BasicProfile11(path)
-
-    def graph_path(self) -> Path:
-        return Path(
-            "tests",
-            "resources",
-            "1.1",
-            "basic",
-            "graph",
         )
 
     @pytest.mark.parametrize(

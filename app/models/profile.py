@@ -26,8 +26,10 @@ class GraphParseError(Exception):
 class GraphNotConformError(Exception):
     pass
 
+
 class ProfileVersionRetiredError(Exception):
     pass
+
 
 class Profile(ABC):
     def __init__(self, bag_path: Path):
@@ -74,109 +76,7 @@ class Profile(ABC):
         pass
 
 
-class BasicProfile10(Profile):
-    def profile_name() -> str:
-        return "https://data.hetarchief.be/id/sip/1.0/basic"
-
-    @staticmethod
-    def query_sip() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "sparql",
-            "sip.sparql",
-        )
-
-    @staticmethod
-    def query_descriptive_ie() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "sparql",
-            "descriptive_ie.sparql",
-        )
-
-    @staticmethod
-    def query_premis_ie() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "sparql",
-            "premis_ie.sparql",
-        )
-
-    @staticmethod
-    def query_premis_representation() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "sparql",
-            "premis_representation.sparql",
-        )
-
-    @staticmethod
-    def shacl_sip() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "shacl",
-            "sip.shacl.ttl",
-        )
-
-    @staticmethod
-    def shacl_profile() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "shacl",
-            "basic.shacl.ttl",
-        )
-
-    @staticmethod
-    def premis_xsd() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "xsd",
-            "premis-v3-0.xsd",
-        )
-
-    @staticmethod
-    def mets_xsd() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "xsd",
-            "mets.xsd",
-        )
-
-    @staticmethod
-    def dcterms_xsd() -> Path:
-        return Path(
-            "app",
-            "resources",
-            "1.0",
-            "basic",
-            "xsd",
-            "dc_basic.xsd",
-        )
-
+class BasicProfile(Profile):
     def _validate_premis(self) -> list[XMLNotValidError]:
         """Validate the PREMIS files.
 
@@ -402,7 +302,7 @@ class BasicProfile10(Profile):
         return True
 
 
-class BasicProfile11(BasicProfile10):
+class BasicProfile11(BasicProfile):
     def profile_name() -> str:
         return "https://data.hetarchief.be/id/sip/1.1/basic"
 
@@ -1442,7 +1342,7 @@ def determine_profile(path: Path) -> Profile:
             - If the package METS could not be parsed.
             - If there is no profile information in the package METS.
             - If the profile is not known.
-        ProfileVersionRetiredError: When the profile of the incoming SIP is retired. 
+        ProfileVersionRetiredError: When the profile of the incoming SIP is retired.
     """
     try:
         root = etree.parse(path.joinpath("data", "mets.xml"))
@@ -1460,7 +1360,7 @@ def determine_profile(path: Path) -> Profile:
             "METS does not contain a OTHERCONTENTINFORMATIONTYPE attribute."
         )
 
-    if profile_type == BasicProfile10.profile_name():
+    if profile_type == "https://data.hetarchief.be/id/sip/1.0/basic":
         raise ProfileVersionRetiredError("The basic profile version 1.0 is retired!")
     elif profile_type == BasicProfile11.profile_name():
         return BasicProfile11(path)
