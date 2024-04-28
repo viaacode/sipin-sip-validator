@@ -5,7 +5,11 @@ import pytest
 from cloudevents.events import EventOutcome
 
 from app.app import EventListener
-from app.models.profile import GraphParseError, GraphNotConformError
+from app.models.profile import (
+    GraphParseError,
+    GraphNotConformError,
+    ProfileVersionRetiredError,
+)
 from app.models.bag import BagParseError, BagNotValidError
 
 
@@ -313,6 +317,48 @@ class TestEventListener:
             "app.app",
             logging.ERROR,
             "test: Graph is not conform.",
+        )
+
+        event_listener.pulsar_client.acknowledge.assert_called_once()
+
+    @patch("app.app.PulsarBinding")
+    @patch("app.app.Bag")
+    @patch("app.app.EventListener.produce_event")
+    @patch("app.app.determine_profile")
+    def test_handle_incoming_message_profile_version_retired(
+        self,
+        determine_profile_mock,
+        produce_event_mock,
+        bag_mock,
+        pulsar_binding_mock,
+        event_listener,
+        event,
+        caplog,
+    ):
+        # Arrange
+        # Return an CloudEvent from a Pulsar message
+        pulsar_binding_mock.from_protocol.return_value = event
+        # There should be a ProfileVersionRetiredError determining the profile
+        determine_profile_mock.side_effect = ProfileVersionRetiredError(
+            "This profile is retired"
+        )
+        # Act
+        event_listener.handle_incoming_message("")
+
+        # Assert
+        assert produce_event_mock.call_count == 2
+        assert produce_event_mock.call_args.args == (
+            "bag.validate",
+            {"message": "This profile is retired"},
+            "test",
+            EventOutcome.FAIL,
+            "555",
+        )
+
+        assert caplog.record_tuples[1] == (
+            "app.app",
+            logging.ERROR,
+            "test: This profile is retired",
         )
 
         event_listener.pulsar_client.acknowledge.assert_called_once()
