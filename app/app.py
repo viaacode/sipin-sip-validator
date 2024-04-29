@@ -10,8 +10,8 @@ from app.models.bag import (
     BagParseError,
     BagNotValidError,
 )
-from app.models.profile import (
-    determine_profile,
+from app.models.profiles import determine_profile
+from app.models.profiles.exceptions import (
     GraphNotConformError,
     GraphParseError,
     ProfileVersionRetiredError,
@@ -83,7 +83,7 @@ class EventListener:
                 # Parse and validate bag
                 try:
                     bag.parse_validate()
-                except (BagParseError) as e:
+                except BagParseError as e:
                     self.log.error(f"'{bag_path}' could not be parsed: {str(e)}")
                     self.produce_event(
                         self.bag_validate_topic,
@@ -96,7 +96,7 @@ class EventListener:
                     )
                     self.pulsar_client.acknowledge(message)
                     return
-                except (BagNotValidError) as e:
+                except BagNotValidError as e:
                     self.log.error(f"'{bag_path}' is not a valid bag: {str(e)}")
                     self.produce_event(
                         self.bag_validate_topic,

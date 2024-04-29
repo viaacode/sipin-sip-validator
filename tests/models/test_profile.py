@@ -7,14 +7,16 @@ from rdflib import Graph
 from rdflib.compare import isomorphic
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from app.models.profile import (
-    BasicProfile11,
-    determine_profile,
-    MaterialArtworkProfile11,
+from app.models.profiles import determine_profile
+from app.models.profiles.exceptions import (
     XMLNotValidError,
     GraphNotConformError,
-    NewspaperProfile11,
     ProfileVersionRetiredError,
+)
+from app.models.profiles.profile_1_1 import (
+    BasicProfile11,
+    MaterialArtworkProfile11,
+    NewspaperProfile11,
 )
 
 

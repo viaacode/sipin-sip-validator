@@ -5,7 +5,7 @@ import pytest
 from cloudevents.events import EventOutcome
 
 from app.app import EventListener
-from app.models.profile import (
+from app.models.profiles.exceptions import (
     GraphParseError,
     GraphNotConformError,
     ProfileVersionRetiredError,
