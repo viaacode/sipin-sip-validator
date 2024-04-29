@@ -1,0 +1,198 @@
+PREFIX premis: <http://www.loc.gov/premis/v3#>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX haObjId: <https://data.hetarchief.be/id/object/>
+PREFIX haObj: <https://data.hetarchief.be/ns/object/>
+PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX schema: <https://schema.org/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX gom: <https://www.w3id.org/gom#>
+PREFIX omg: <http://www.w3id.org/omg#>
+ 
+
+CONSTRUCT
+  {
+    ?md5_uri a ?f_uri;
+        rdf:value ?file_digest.
+
+    ?rep a premisowl:Representation;
+        relSubType:rep ?ie ;
+        relSubType:inc ?file ;
+        skos:hiddenLabel "{{ rep_folder }}" .
+
+    ?file a premisowl:File;
+        relSubType:isi ?file_rep_iri;
+        premisowl:originalName ?file_original_name;
+        dct:format ?format_uri;
+        premisowl:size ?file_size_int;
+        premisowl:fixity ?md5_uri ;
+        omg:hasGeometry ?file_geo .
+
+    ?file_geo a omg:Geometry ;
+        gom:hasVertices ?num_of_vert ;
+        gom:hasFaces ?num_of_tri .
+
+    ?format_uri a dct:FileFormat.
+  }
+
+WHERE
+  {
+    SERVICE <x-sparql-anything:location={{ path }}> {
+        {
+            ?_rep a premis:object ;
+                xsi:type "premis:representation".
+            OPTIONAL {
+                ?_rep ?rep_1 [
+                    a premis:objectIdentifier;
+                    ?rep_2 [
+                        a premis:objectIdentifierType;
+                            rdf:_1 ?rep_type
+                    ];
+                    ?rep_3 [
+                        a premis:objectIdentifierValue;
+                            rdf:_1 ?rep_uuid
+                    ]
+                ] .
+            }
+            OPTIONAL {
+                ?_rep ?rep_4 [
+                    a premis:relationship;
+                    ?rep_7 [
+                        a premis:relationshipSubType;
+                        rdf:_1 "represents"
+                    ];
+                    ?rep_5 [
+                        a premis:relatedObjectIdentifier;
+                        ?rep_6 [
+                            a premis:relatedObjectIdentifierValue;
+                            rdf:_1 ?rep_rel_ie_id
+                        ]
+                    ]
+                ] .
+            }
+            BIND(iri(concat(str(haObjId:), ?rep_uuid)) AS ?rep)
+            BIND(iri(concat(str(haObjId:), ?rep_rel_ie_id)) AS  ?ie)
+            FILTER (?rep_type = "UUID")
+        }
+
+        {
+            ?_file a premis:object;
+                xsi:type "premis:file" .
+            OPTIONAL {
+                ?_file ?file_1 [
+                    a premis:objectIdentifier;
+                    ?file_2 [
+                        a premis:objectIdentifierType;
+                            rdf:_1 ?file_type
+                    ];
+                    ?file_3 [
+                        a premis:objectIdentifierValue;
+                            rdf:_1 ?file_uuid
+                    ]
+                ];
+            }
+            BIND(iri(concat(str(haObjId:), ?file_uuid)) AS ?file)
+            OPTIONAL {
+                ?_file ?file_4 [
+                    a premis:relationship;
+                    ?file_5 [
+                        a premis:relatedObjectIdentifier;
+                        ?file_6 [
+                            a premis:relatedObjectIdentifierValue;
+                            rdf:_1 ?file_rel_rep_id
+                        ]
+                    ]
+                ];
+            }
+            BIND(iri(concat(str(haObjId:), ?file_rel_rep_id)) AS ?file_rep_iri)
+            OPTIONAL {
+                ?_file ?file_7  ?object_chars .
+                ?object_chars a premis:objectCharacteristics .
+                OPTIONAL {
+                    ?object_chars ?file_8 [
+                        a premis:fixity;
+                        ?file_9 [
+                            a premis:messageDigestAlgorithm;
+                                xyz:valueURI ?fixity_uri;
+                                # rdf:_1 ?file_digest_algo;
+                        ];
+                        ?file_10 [
+                            a premis:messageDigest;
+                            rdf:_1 ?file_digest
+                        ]
+                    ];
+                }
+                OPTIONAL {
+                    ?object_chars ?file_11 [
+                        a premis:format;
+                        ?file_12 [
+                            a premis:formatRegistry;
+                            ?file_13 [
+                                a premis:formatRegistryKey;
+                                rdf:_1 ?file_format
+                            ]
+                        ]
+                    ];
+                }
+                OPTIONAL {
+                    ?object_chars ?file_14 [
+                        a premis:size;
+                        rdf:_1 ?file_size
+                    ]
+                }
+            }
+            BIND(iri(concat(str(haObjId:), ?file_digest)) AS ?md5_uri)
+            BIND(STRDT(?file_size, xsd:integer) AS ?file_size_int)
+            BIND(iri(REPLACE(?file_format, "fmt/", "http://the-fr.org/id/file-format/")) AS ?format_uri)
+            BIND(iri(?fixity_uri) AS ?f_uri)
+            OPTIONAL {
+                ?_file ?file_15 [
+                    a premis:originalName;
+                    rdf:_1 ?file_original_name
+                ]
+            }
+            OPTIONAL {
+                ?_file ?file_16 ?_sign_props .
+                ?_sign_props a premis:significantProperties .
+
+                OPTIONAL {
+                    ?_sign_props ?file_17 [
+                        a premis:significantPropertiesType ;
+                        rdf:_1 "number-of-vertices"
+                    ] ;
+                    ?file_18 [
+                        a premis:significantPropertiesValue ;
+                        rdf:_1 ?num_of_vert
+                    ] .
+                }
+                OPTIONAL {
+                    ?_sign_props ?file_19 [
+                        a premis:significantPropertiesType ;
+                        rdf:_1 "number-of-triangles"
+                    ] ;
+                    ?file_20 [
+                        a premis:significantPropertiesValue ;
+                        rdf:_1 ?num_of_tri
+                    ] .
+                }
+                
+            }
+            BIND(IF(
+                    BOUND(?num_of_vert) || BOUND(?num_of_tri),
+                    iri(concat(str(haObjId:), ?file_uuid, "-geo")),
+                    ?nothing
+                ) 
+            AS ?file_geo)
+        }
+    }
+  }

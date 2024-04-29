@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS" xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" OBJID="representation_2" TYPE="Mixed" PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" xsi:schemaLocation="https://www.w3.org./1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd                         http://www.loc.gov/METS/ https://www.loc.gov/standards/mets/mets.xsd                         https://DILCIS.eu/XML/METS/CSIPExtensionMETS https://earkcsip.dilcis.eu/schema/DILCISExtensionMETS.xsd                         https://DILCIS.eu/XML/METS/SIPExtensionMETS https://earksip.dilcis.eu/schema/DILCISExtensionSIPMETS.xsd">
+
+    <metsHdr CREATEDATE="2022-02-16T10:02:37.009+02:00"/>
+
+    <amdSec>
+        <digiprovMD ID="uuid-f7972ff5-599e-4f60-8b7e-8bbf4e035482">
+            <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:type="simple" xlink:href="./metadata/preservation/premis.xml" MIMETYPE="text/xml" SIZE="10182" CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="b38b65eb24f51717be9ddf89082ce2a7" CHECKSUMTYPE="MD5"/>
+        </digiprovMD>
+    </amdSec>
+
+    <fileSec ID="uuid-170f9654-bf8d-45df-8451-48d6203b9f03">
+        <fileGrp USE="data" ID="uuid-d020d7d1-f258-40af-8788-04cf62a0032b">
+            <file ID="uuid-67757d90-2227-11ed-84ee-7e92631d7d28" MIMETYPE="model/obj" SIZE="0" CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/qv3bz95m19_ARCH_OBJ.OBJ"/>
+            </file>
+            <file ID="uuid-6df65478-2227-11ed-9b8f-7e92631d7d28" MIMETYPE="model/mtl" SIZE="0" CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/qv3bz95m19_ARCH_MTL.MTL"/>
+            </file>
+            <file ID="uuid-73ca78ac-2227-11ed-a848-7e92631d7d28" MIMETYPE="image/tiff" SIZE="0" CREATED="2022-02-16T10:02:37.009+02:00" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/qv3bz95m19_ARCH_TIFF_COLOR.TIFF"/>
+            </file>
+        </fileGrp>
+    </fileSec>
+
+    <structMap ID="uuid-f81f8688-b278-4397-b59c-82593b11a2b9" TYPE="PHYSICAL" LABEL="CSIP">
+        <div ID="uuid-a5e05d29-49d9-4466-b070-19b8990b5029" LABEL="representation_2">
+            <div ID="uuid-af54ed63-8361-4d90-a30f-99d02de24857" LABEL="Metadata" ADMID="uuid-f7972ff5-599e-4f60-8b7e-8bbf4e035482"/>
+            <div ID="uuid-c137b167-7254-4085-b965-75980976638d" LABEL="Representations">
+                <fptr FILEID="uuid-d020d7d1-f258-40af-8788-04cf62a0032b"/>
+            </div>
+        </div>
+    </structMap>
+</mets>

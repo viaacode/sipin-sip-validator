@@ -1,0 +1,97 @@
+PREFIX premis: <http://www.loc.gov/premis/v3#>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX dct: <http://purl.org/dc/terms/> 
+PREFIX sh: <http://www.w3.org/ns/shacl#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX schema: <https://schema.org/> 
+PREFIX pav: <http://purl.org/pav/>
+PREFIX haObj: <https://data.hetarchief.be/ns/object/> 
+PREFIX haObjId: <https://data.hetarchief.be/id/object/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/> 
+PREFIX mods: <http://www.loc.gov/mods/rdf/v1#> 
+PREFIX madsrdf: <http://www.loc.gov/mads/rdf/v1#> 
+PREFIX edm: <http://www.europeana.eu/schemas/edm/> 
+PREFIX bf: <http://id.loc.gov/ontologies/bibframe/> 
+PREFIX mods: <http://www.loc.gov/mods/v3#> 
+PREFIX fx: <http://sparql.xyz/facade-x/ns/> 
+PREFIX xyz: <http://sparql.xyz/facade-x/data/> 
+PREFIX haBib: <https://data.hetarchief.be/ns/bibliographic/>
+PREFIX haBibId: <https://data.hetarchief.be/id/bibliographic/>
+PREFIX haSip: <https://data.hetarchief.be/ns/sip/> 
+PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
+PREFIX mets: <http://www.loc.gov/METS/>
+PREFIX xlink: <http://www.w3.org/1999/xlink#>
+
+
+
+CONSTRUCT {
+    ?file schema:position ?position .
+}
+WHERE {
+    SERVICE <x-sparql-anything:location={{ path }}/metadata/preservation/premis.xml> {
+        OPTIONAL {
+            ?_file a premis:object ;
+                xsi:type "premis:file" .
+            OPTIONAL {
+                ?_file ?_file_list_originalName ?_originalName_element .
+                ?_originalName_element a premis:originalName .
+                OPTIONAL {
+                    ?_originalName_element rdf:_1 ?_originalName
+                }
+            }
+            OPTIONAL {
+                ?_file ?file_1 [
+                    a premis:objectIdentifier;
+                    ?file_2 [
+                        a premis:objectIdentifierType;
+                            rdf:_1 ?file_type
+                    ];
+                    ?file_3 [
+                        a premis:objectIdentifierValue;
+                            rdf:_1 ?file_uuid
+                    ]
+                ];
+            }
+            BIND(iri(concat(str(haObjId:), ?file_uuid)) AS ?file)
+        }
+        BIND(
+            IF(
+                BOUND(?_originalName),
+                CONCAT("./data/", ?_originalName),
+                ?_null_1
+            )
+        as ?file_location)
+    }
+    SERVICE <x-sparql-anything:location={{ path }}/mets.xml> {
+        OPTIONAL {
+            ?_div_mets a mets:div ;
+                xyz:ORDER ?position_str ;
+                xyz:TYPE "page";
+                ?mets_file_1 [
+                    a mets:fptr ;
+                    xyz:FILEID ?_fileID
+                ]
+            }
+        BIND (IF( BOUND(?position_str), xsd:integer(?position_str), ?_null_2) as ?position)
+        OPTIONAL {
+            ?_file_sec a mets:fileSec .
+            OPTIONAL {
+                ?_file_sec rdf:_1 ?_file_grp .
+                OPTIONAL {
+                    ?_file_grp ?_file_grp_list ?_file_mets .
+                    ?_file_mets a mets:file ;
+                        xyz:ID ?_fileID .
+                    OPTIONAL {
+                        ?_file_mets rdf:_1 ?_flocat .
+                        ?_flocat a mets:FLocat ;
+                            xlink:href ?file_location .
+                    }
+                }
+            }
+        }
+    }
+}

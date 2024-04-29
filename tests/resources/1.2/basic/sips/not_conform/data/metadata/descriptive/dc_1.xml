@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns:dcterms="http://purl.org/dc/terms/" xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
+    xmlns:schema="http://schema.org/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://data.hetarchief.be/id/sip/1.0/basic">
+
+    <!-- velden obv. dcterms -->
+    <!-- linking id between dc and premis -->
+    <dcterms:identifier>uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4</dcterms:identifier>
+    <dcterms:title>VIAA.dc_title</dcterms:title>
+    <dcterms:abstract>VIAA.dc_description</dcterms:abstract>
+    <dcterms:description>VIAA.dc_description_lang</dcterms:description>
+    <!-- VIAA.dcterms_issued -->
+    <dcterms:issued xsi:type="edtf:EDTF-level1">XXXX</dcterms:issued>
+    <dcterms:spatial>VIAA.dc_coverages.ruimte</dcterms:spatial>
+    <dcterms:temporal>VIAA.dc_coverages.tijd</dcterms:temporal>
+    <dcterms:subject>VIAA.dc_subjects.Trefwoord</dcterms:subject>
+    <dcterms:language>VIAA.dc_languages.multiselect</dcterms:language>
+    <dcterms:hasPart xsi:type="premis:intellectualEntity">VIAA.dc_relations.bevat</dcterms:hasPart>
+    <dcterms:isPartOf xsi:type="premis:intellectualEntity">VIAA.dc_relations.is_deel_van</dcterms:isPartOf>
+    <dcterms:relation xsi:type="premis:intellectualEntity">VIAA.dc_relations.is_verwant_aan</dcterms:relation>
+    <dcterms:rights>VIAA.dc_rights_comment</dcterms:rights>
+    <dcterms:license>VIAA.dc_rights_licenses.licentie</dcterms:license>
+    <dcterms:alternative>VIAA.dc_titles.alternatief</dcterms:alternative>
+
+    <!-- alles mbt. bijdrager -->
+    <dcterms:contributor>VIAA.dc_contributors.Bijdrager</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Adviseur</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Arrangeur</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.ArtistiekDirecteur</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Assistent</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Auteur</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Belichting</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Cameraman</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Co-producer</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Commentator</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Componist</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Decorontwerper</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Dirigent</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Fotografie</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Geluid</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Kostuumontwerper</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Kunstenaar</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Make-up</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Muzikant</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Nieuwsanker</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Omroeper</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Onderzoeker</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Post-productie</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Producer</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Reporter</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Scenarist</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Soundtrack</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Sponsor</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Technischadviseur</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Uitvoerder</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Vertaler</dcterms:contributor>
+    <dcterms:contributor>VIAA.dc_contributors.Verteller</dcterms:contributor>
+    <!-- alles mbt. maker -->
+    <dcterms:creator>VIAA.dc_creators.Maker</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Acteur</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Archiefvormer</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Auteur</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Choreograaf</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Cineast</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Componist</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Danser</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Documentairemaker</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Fotograaf</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Interviewer</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Kunstenaar</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Muzikant</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Opdrachtgever</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Performer</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Producer</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Productiehuis</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Regisseur</dcterms:creator>
+    <dcterms:creator>VIAA.dc_creators.Schrijver</dcterms:creator>
+    <!-- alles mbt. publisher -->
+    <dcterms:publisher>VIAA.dc_publishers.Publisher</dcterms:publisher>
+    <dcterms:publisher>VIAA.dc_publishers.Distributeur</dcterms:publisher>
+    <dcterms:publisher>VIAA.dc_publishers.Exposant</dcterms:publisher>
+    <dcterms:publisher>VIAA.dc_publishers.Persagentschap</dcterms:publisher>
+    <!-- alles mbt. rechtenhouder -->
+    <dcterms:rightsHolder>VIAA.dc_rights_rightsOwners.Auteursrechthouder</dcterms:rightsHolder>
+    <!-- alles mbt. de VIAA licenses -->
+    <dcterms:license>VIAA-PUBLIEK-METADATA-LTD</dcterms:license>
+    <dcterms:license>VIAA-INTRA_CP-METADATA-ALL</dcterms:license>
+    <dcterms:license>VIAA-INTRA_CP-CONTENT</dcterms:license>
+    <dcterms:license>VIAA-ONDERZOEK</dcterms:license>
+    <dcterms:license>VIAA-ONDERWIJS</dcterms:license>
+
+    <!-- alles mbt. VIAA.dc_titles -->
+    <dcterms:isPartOf xsi:type="schema:CreativeWorkSeries">
+        <dcterms:title>VIAA.dc_titles.deelreeks</dcterms:title>
+        <dcterms:isPartOf xsi:type="schema:CreativeWorkSeries">
+            <dcterms:title>VIAA.dc_titles.reeks + VIAA.dc_titles.serie</dcterms:title>
+            <dcterms:identifier>VIAA.dc_titles.serienummer</dcterms:identifier>
+        </dcterms:isPartOf>
+    </dcterms:isPartOf>
+    <dcterms:isPartOf xsi:type="schema:Episode">
+        <dcterms:title>VIAA.dc_titles.aflevering + VIAA.dc_titles.episode</dcterms:title>
+    </dcterms:isPartOf>
+    <dcterms:isPartOf xsi:type="schema:ArchiveComponent">
+        <dcterms:title>VIAA.dc_titles.deelarchief</dcterms:title>
+        <dcterms:isPartOf xsi:type="schema:ArchiveComponent">
+            <dcterms:title>VIAA.dc_titles.archief</dcterms:title>
+        </dcterms:isPartOf>
+    </dcterms:isPartOf>
+    <dcterms:isPartOf xsi:type="schema:BroadCastEvent">
+        <dcterms:title>VIAA.dc_titles.programma</dcterms:title>
+        <dcterms:description>VIAA.dc_description.programme</dcterms:description>
+    </dcterms:isPartOf>
+    <dcterms:isPartOf xsi:type="schema:CreativeWorkSeason">
+        <dcterms:title>VIAA.dc_titles.seizoen</dcterms:title>
+        <schema:seasonNumber>VIAA.dc_titles.seizoennummer</schema:seasonNumber>
+    </dcterms:isPartOf>
+    <dcterms:title xsi:type="meemoo:RegistrationTitle">VIAA.dc_titles.registratie</dcterms:title>
+</metadata> 

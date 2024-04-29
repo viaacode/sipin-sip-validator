@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns="https://data.hetarchief.be/id/sip/1.2/material-artwork" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:edtf="http://id.loc.gov/datatypes/edtf/" xmlns:schema="https://schema.org">
+
+    <!-- linking id between dc and premis -->
+    <dcterms:identifier>uuid-8DA0F75B-1031-4F20-B26C-184B919B1A43</dcterms:identifier>
+
+    <!-- licenses -->
+    <dcterms:license>CCBY-NC-ND-CONTENT</dcterms:license>
+    <dcterms:license>CP-website</dcterms:license>
+
+</metadata>

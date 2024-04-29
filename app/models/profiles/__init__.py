@@ -9,6 +9,11 @@ from app.models.profiles.profile_1_1 import (
     MaterialArtworkProfile11,
     NewspaperProfile11,
 )
+from app.models.profiles.profile_1_2 import (
+    BasicProfile12,
+    MaterialArtworkProfile12,
+    BibliographicProfile12,
+)
 
 NAMESPACES = {
     "mets": "http://www.loc.gov/METS/",
@@ -52,5 +57,11 @@ def determine_profile(path: Path) -> Profile:
         return MaterialArtworkProfile11(path)
     elif profile_type == NewspaperProfile11.profile_name():
         return NewspaperProfile11(path)
+    elif profile_type == BasicProfile12.profile_name():
+        return BasicProfile12(path)
+    elif profile_type == MaterialArtworkProfile12.profile_name():
+        return MaterialArtworkProfile12(path)
+    elif profile_type == BibliographicProfile12.profile_name():
+        return BibliographicProfile12(path)
 
     raise ValueError(f"Profile not known: {profile_type}.")

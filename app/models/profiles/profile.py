@@ -215,6 +215,10 @@ class Profile(ABC):
 
 class BasicProfile(Profile):
 
+    @abstractmethod
+    def dcterms_xsd() -> Path:
+        pass
+
     def _validate_descriptive(self) -> list[XMLNotValidError]:
         """Validate the dcterms file.
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<premis:premis version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:premis="http://www.loc.gov/premis/v3"
+  xsi:schemaLocation="http://www.loc.gov/premis/v3 https://www.loc.gov/standards/premis/premis.xsd">
+
+  <!-- IE about the Felis Catus Flamens -->
+  <premis:object xsi:type="premis:representation">
+
+    <premis:objectIdentifier>
+      <premis:objectIdentifierType>local_id</premis:objectIdentifierType>
+      <premis:objectIdentifierValue>ce980d9</premis:objectIdentifierValue>
+    </premis:objectIdentifier>
+
+    <premis:objectIdentifier>
+      <premis:objectIdentifierType>Object_number</premis:objectIdentifierType>
+      <premis:objectIdentifierValue>v_2021073114124363</premis:objectIdentifierValue>
+    </premis:objectIdentifier>
+
+  </premis:object>
+
+</premis:premis>
+ 

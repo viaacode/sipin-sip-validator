@@ -18,6 +18,11 @@ from app.models.profiles.profile_1_1 import (
     MaterialArtworkProfile11,
     NewspaperProfile11,
 )
+from app.models.profiles.profile_1_2 import (
+    BasicProfile12,
+    MaterialArtworkProfile12,
+    BibliographicProfile12,
+)
 
 
 @pytest.mark.parametrize(
@@ -27,6 +32,19 @@ from app.models.profiles.profile_1_1 import (
         (
             Path("1.1", "artwork", "sips", "2D_fa307608-35c3-11ed-9243-7e92631d7d27"),
             MaterialArtworkProfile11,
+        ),
+        (
+            Path("1.1", "newspaper", "sips", "conform_minimal"),
+            NewspaperProfile11,
+        ),
+        (Path("1.2", "basic", "sips", "conform"), BasicProfile12),
+        (
+            Path("1.2", "artwork", "sips", "2D_fa307608-35c3-11ed-9243-7e92631d7d27"),
+            MaterialArtworkProfile12,
+        ),
+        (
+            Path("1.2", "bibliographic", "sips", "conform_minimal"),
+            BibliographicProfile12,
         ),
     ],
 )
