@@ -50,7 +50,7 @@ from app.models.profiles.profile_1_2 import (
 )
 def test_determine_profile(path, profile_class):
     profile = determine_profile(Path("tests", "resources").joinpath(path))
-    assert type(profile) == profile_class
+    assert type(profile) is profile_class
 
 
 @pytest.mark.parametrize(
@@ -217,14 +217,14 @@ class TestBasicProfile11:
 
         assert len(errors) == 2
         error_1 = errors[0]
-        assert type(error_1) == XMLNotValidError
+        assert type(error_1) is XMLNotValidError
         assert (
             "Element '{http://www.loc.gov/premis/v3}relationship': This element is not expected. Expected is ( {http://www.loc.gov/premis/v3}objectIdentifier )."
             in str(error_1)
         )
 
         error_2 = errors[1]
-        assert type(error_2) == XMLNotValidError
+        assert type(error_2) is XMLNotValidError
         assert (
             "Element '{http://www.loc.gov/premis/v3}objectCharacteristics': Missing child element(s). Expected is ( {http://www.loc.gov/premis/v3}format )."
             in str(error_2)
@@ -260,14 +260,14 @@ class TestBasicProfile11:
 
         assert len(errors) == 2
         error_1 = errors[0]
-        assert type(error_1) == XMLNotValidError
+        assert type(error_1) is XMLNotValidError
         assert (
             "Element '{http://www.loc.gov/METS/}mets': Missing child element(s). Expected is ( {http://www.loc.gov/METS/}structMap )."
             in str(error_1)
         )
 
         error_2 = errors[1]
-        assert type(error_2) == XMLNotValidError
+        assert type(error_2) is XMLNotValidError
         assert (
             "Element '{http://www.loc.gov/METS/}unknownSpec': This element is not expected. Expected is one of ( {http://www.loc.gov/METS/}dmdSec, {http://www.loc.gov/METS/}amdSec, {http://www.loc.gov/METS/}fileSec, {http://www.loc.gov/METS/}structMap )."
             in str(error_2)
