@@ -75,32 +75,23 @@ class Profile(ABC):
         """The name of the profile, as defined in the SIP spec."""
         pass
 
-
-class BasicProfile(Profile):
     def _validate_premis(self) -> list[XMLNotValidError]:
         """Validate the PREMIS files.
 
-        Basic profile has two premis files, one on the package level and
-        one on the representation level.
+        There are multiple premis files, one on the package level and
+        one for each representation.
 
         Returns:
             A list with errors detailing the parse/validation errors.
         """
+        errors = []
+
         premis_xsd = etree.XMLSchema(etree.parse(self.premis_xsd()))
 
         premis_package_path: Path = self.bag_path.joinpath(
             "data", "metadata", "preservation", "premis.xml"
         )
-        premis_representation_path: Path = self.bag_path.joinpath(
-            "data",
-            "representations",
-            "representation_1",
-            "metadata",
-            "preservation",
-            "premis.xml",
-        )
 
-        errors = []
         # PREMIS on package level
         try:
             premis_package = etree.parse(premis_package_path)
@@ -109,21 +100,100 @@ class BasicProfile(Profile):
             errors.append(XMLNotValidError(str(e.error_log)))
 
         # PREMIS on representation level
-        try:
-            premis_representation = etree.parse(premis_representation_path)
-            premis_xsd.assertValid(premis_representation)
-        except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e.error_log)))
+        for premis_representation_path in self.bag_path.glob(
+            str(
+                Path(
+                    "data",
+                    "representations",
+                    "representation_*",
+                    "metadata",
+                    "preservation",
+                    "premis.xml",
+                )
+            )
+        ):
+            try:
+                premis_representation = etree.parse(premis_representation_path)
+                premis_xsd.assertValid(premis_representation)
+            except (etree.DocumentInvalid, etree.ParseError) as e:
+                errors.append(XMLNotValidError(str(e.error_log)))
 
         return errors
 
-    def _validate_dcterms(self) -> XMLNotValidError | None:
+    def _validate_mets(self) -> list[XMLNotValidError]:
+        """Validate the METS files.
+
+        There are multiple METS files, one on the package level and one for
+        every representation.
+
+        Returns:
+            A list with errors detailing the parse/validation errors.
+        """
+        mets_xsd = etree.XMLSchema(etree.parse(self.mets_xsd()))
+
+        mets_package_path: Path = self.bag_path.joinpath("data", "mets.xml")
+
+        mets_representation_path: Path = self.bag_path.joinpath(
+            "data", "representations", "representation_1", "mets.xml"
+        )
+
+        errors = []
+        # METS on package level
+        try:
+            mets_package = etree.parse(mets_package_path)
+            mets_xsd.assertValid(mets_package)
+        except (etree.DocumentInvalid, etree.ParseError) as e:
+            errors.append(XMLNotValidError(str(e.error_log)))
+
+        # METS on representation level
+        for mets_representation_path in self.bag_path.glob(
+            str(Path("data", "representations", "representation_*", "mets.xml"))
+        ):
+            try:
+                mets_representation = etree.parse(mets_representation_path)
+                mets_xsd.assertValid(mets_representation)
+            except (etree.DocumentInvalid, etree.ParseError) as e:
+                errors.append(XMLNotValidError(str(e.error_log)))
+
+        return errors
+
+    def validate_metadata(self) -> list[XMLNotValidError]:
+        """Validate the metadata files.
+
+        A profile has:
+            - Multiple METS files (package and one per representation level).
+            - Multiple PREMIS files (package one per and representation level).
+            - One or more descriptive metadata file (one on package and possible
+              one per representation level).
+
+        Returns:
+            A list with errors detailing the parse/validation errors.
+        """
+        errors: list = self._validate_premis()
+        errors.extend(self._validate_mets())
+        errors.extend(self._validate_descriptive())
+
+        return errors
+
+    @abstractmethod
+    def _validate_descriptive(self) -> list[XMLNotValidError]:
+        """Validate the descriptive metadata
+
+        Returns:
+            A list with errors detailing the parse/validation errors.
+        """
+        pass
+
+
+class BasicProfile(Profile):
+
+    def _validate_descriptive(self) -> list[XMLNotValidError]:
         """Validate the dcterms file.
 
         Basic profile has one file with the descriptive metadata.
 
         Returns:
-            A parse/validation error if applicable.
+            A parse/validation error in a list if applicable.
         """
         dcterms_xsd = etree.XMLSchema(etree.parse(self.dcterms_xsd()))
 
@@ -139,62 +209,9 @@ class BasicProfile(Profile):
             dcterms_package = etree.parse(dcterms_package_path)
             dcterms_xsd.assertValid(dcterms_package)
         except (etree.DocumentInvalid, etree.ParseError) as e:
-            error = XMLNotValidError(str(e.error_log))
-            return error
+            return [XMLNotValidError(str(e.error_log))]
 
-        return None
-
-    def _validate_mets(self) -> list[XMLNotValidError]:
-        """Validate the METS files.
-
-        Basic profile has two METS files, one on the package level and one on
-        the representation level.
-
-        Returns:
-            A list with errors detailing the parse/validation errors.
-        """
-        mets_xsd = etree.XMLSchema(etree.parse(self.mets_xsd()))
-
-        mets_package_path: Path = self.bag_path.joinpath("data", "mets.xml")
-        mets_representation_path: Path = self.bag_path.joinpath(
-            "data", "representations", "representation_1", "mets.xml"
-        )
-
-        errors = []
-        # METS on package level
-        try:
-            mets_package = etree.parse(mets_package_path)
-            mets_xsd.assertValid(mets_package)
-        except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e.error_log)))
-
-        # METS on representation level
-        try:
-            mets_representation = etree.parse(mets_representation_path)
-            mets_xsd.assertValid(mets_representation)
-        except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e.error_log)))
-
-        return errors
-
-    def validate_metadata(self) -> list[XMLNotValidError]:
-        """Validate the metadata files.
-
-        Basic profile has:
-            - Two METS files (package and representation level).
-            - Two PREMIS files (package and representation level).
-            - One descriptive metadata file (dcterms).
-
-        Returns:
-            A list with errors detailing the parse/validation errors.
-        """
-        errors: list = self._validate_premis()
-        errors.extend(self._validate_mets())
-        result = self._validate_dcterms()
-        if result:
-            errors.append(result)
-
-        return errors
+        return []
 
     def parse_graph(self) -> Graph:
         """Parse the metadata as a graph.
@@ -531,51 +548,6 @@ class MaterialArtworkProfile11(Profile):
             "descriptive_material_artwork.xsd",
         )
 
-    def _validate_premis(self) -> list[XMLNotValidError]:
-        """Validate the PREMIS files.
-
-        Material profile has multiple premis files, one on the package level and
-        one for each representation.
-
-        Returns:
-            A list with errors detailing the parse/validation errors.
-        """
-        errors = []
-
-        premis_xsd = etree.XMLSchema(etree.parse(self.premis_xsd()))
-
-        premis_package_path: Path = self.bag_path.joinpath(
-            "data", "metadata", "preservation", "premis.xml"
-        )
-
-        # PREMIS on package level
-        try:
-            premis_package = etree.parse(premis_package_path)
-            premis_xsd.assertValid(premis_package)
-        except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e.error_log)))
-
-        # PREMIS on representation level
-        for premis_representation_path in self.bag_path.glob(
-            str(
-                Path(
-                    "data",
-                    "representations",
-                    "representation_*",
-                    "metadata",
-                    "preservation",
-                    "premis.xml",
-                )
-            )
-        ):
-            try:
-                premis_representation = etree.parse(premis_representation_path)
-                premis_xsd.assertValid(premis_representation)
-            except (etree.DocumentInvalid, etree.ParseError) as e:
-                errors.append(XMLNotValidError(str(e.error_log)))
-
-        return errors
-
     def _validate_descriptive(self) -> list[XMLNotValidError]:
         """Validate the dc+schema files.
 
@@ -622,61 +594,6 @@ class MaterialArtworkProfile11(Profile):
                 dc_schema_xsd.assertValid(dcterms_representation)
             except (etree.DocumentInvalid, etree.ParseError) as e:
                 errors.append(XMLNotValidError(str(e.error_log)))
-
-        return errors
-
-    def _validate_mets(self) -> list[XMLNotValidError]:
-        """Validate the METS files.
-
-        Material artwork profile has multiple METS files, one on the package level and one for
-        every representation.
-
-        Returns:
-            A list with errors detailing the parse/validation errors.
-        """
-        mets_xsd = etree.XMLSchema(etree.parse(self.mets_xsd()))
-
-        mets_package_path: Path = self.bag_path.joinpath("data", "mets.xml")
-
-        mets_representation_path: Path = self.bag_path.joinpath(
-            "data", "representations", "representation_1", "mets.xml"
-        )
-
-        errors = []
-        # METS on package level
-        try:
-            mets_package = etree.parse(mets_package_path)
-            mets_xsd.assertValid(mets_package)
-        except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e.error_log)))
-
-        # METS on representation level
-        for mets_representation_path in self.bag_path.glob(
-            str(Path("data", "representations", "representation_*", "mets.xml"))
-        ):
-            try:
-                mets_representation = etree.parse(mets_representation_path)
-                mets_xsd.assertValid(mets_representation)
-            except (etree.DocumentInvalid, etree.ParseError) as e:
-                errors.append(XMLNotValidError(str(e.error_log)))
-
-        return errors
-
-    def validate_metadata(self) -> list[XMLNotValidError]:
-        """Validate the metadata files.
-
-        Basic profile has:
-            - Multiple METS files (package and one per representation level).
-            - Multiple PREMIS files (package one per and representation level).
-            - One or more descriptive metadata file (dc+schema on package and possible
-              one per representation level).
-
-        Returns:
-            A list with errors detailing the parse/validation errors.
-        """
-        errors: list = self._validate_premis()
-        errors.extend(self._validate_mets())
-        errors.extend(self._validate_descriptive())
 
         return errors
 
@@ -977,51 +894,6 @@ class NewspaperProfile11(Profile):
             "newspaper.shacl.ttl",
         )
 
-    def _validate_premis(self) -> list[XMLNotValidError]:
-        """Validate the PREMIS files.
-
-        Newspaper profile has multiple premis files, one on the package level and
-        one for each representation.
-
-        Returns:
-            A list with errors detailing the parse/validation errors.
-        """
-        errors = []
-
-        premis_xsd = etree.XMLSchema(etree.parse(self.premis_xsd()))
-
-        premis_package_path: Path = self.bag_path.joinpath(
-            "data", "metadata", "preservation", "premis.xml"
-        )
-
-        # PREMIS on package level
-        try:
-            premis_package = etree.parse(premis_package_path)
-            premis_xsd.assertValid(premis_package)
-        except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e.error_log)))
-
-        # PREMIS on representation level
-        for premis_representation_path in self.bag_path.glob(
-            str(
-                Path(
-                    "data",
-                    "representations",
-                    "representation_*",
-                    "metadata",
-                    "preservation",
-                    "premis.xml",
-                )
-            )
-        ):
-            try:
-                premis_representation = etree.parse(premis_representation_path)
-                premis_xsd.assertValid(premis_representation)
-            except (etree.DocumentInvalid, etree.ParseError) as e:
-                errors.append(XMLNotValidError(str(e.error_log)))
-
-        return errors
-
     def _validate_descriptive(self) -> list[XMLNotValidError]:
         """Validate the MODS or dc+schema files.
 
@@ -1070,61 +942,6 @@ class NewspaperProfile11(Profile):
                 mods_xsd.assertValid(mods_representation)
             except (etree.DocumentInvalid, etree.ParseError) as e:
                 errors.append(XMLNotValidError(str(e.error_log)))
-
-        return errors
-
-    def _validate_mets(self) -> list[XMLNotValidError]:
-        """Validate the METS files.
-
-        Newspapr profile has multiple METS files, one on the package level and one for
-        every representation.
-
-        Returns:
-            A list with errors detailing the parse/validation errors.
-        """
-        mets_xsd = etree.XMLSchema(etree.parse(self.mets_xsd()))
-
-        mets_package_path: Path = self.bag_path.joinpath("data", "mets.xml")
-
-        mets_representation_path: Path = self.bag_path.joinpath(
-            "data", "representations", "representation_1", "mets.xml"
-        )
-
-        errors = []
-        # METS on package level
-        try:
-            mets_package = etree.parse(mets_package_path)
-            mets_xsd.assertValid(mets_package)
-        except (etree.DocumentInvalid, etree.ParseError) as e:
-            errors.append(XMLNotValidError(str(e.error_log)))
-
-        # METS on representation level
-        for mets_representation_path in self.bag_path.glob(
-            str(Path("data", "representations", "representation_*", "mets.xml"))
-        ):
-            try:
-                mets_representation = etree.parse(mets_representation_path)
-                mets_xsd.assertValid(mets_representation)
-            except (etree.DocumentInvalid, etree.ParseError) as e:
-                errors.append(XMLNotValidError(str(e.error_log)))
-
-        return errors
-
-    def validate_metadata(self) -> list[XMLNotValidError]:
-        """Validate the metadata files.
-
-        Basic profile has:
-            - Multiple METS files (package and one per representation level).
-            - Multiple PREMIS files (package one per and representation level).
-            - One or more descriptive metadata file (dc+schema on package and possible
-              one per representation level).
-
-        Returns:
-            A list with errors detailing the parse/validation errors.
-        """
-        errors: list = self._validate_premis()
-        errors.extend(self._validate_mets())
-        errors.extend(self._validate_descriptive())
 
         return errors
 

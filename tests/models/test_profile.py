@@ -214,16 +214,16 @@ class TestBasicProfile11:
         "profile_name",
         ["profile_conform", "profile_conform_extended"],
     )
-    def test_validate_dcterms(self, profile_name, request):
+    def test_validate_descriptive(self, profile_name, request):
         profile = request.getfixturevalue(profile_name)
-        error = profile._validate_dcterms()
+        errors = profile._validate_descriptive()
 
-        assert not error
+        assert not errors
 
-    def test_validate_dcterms_not_valid(self, profile_invalid_xml):
-        error = profile_invalid_xml._validate_dcterms()
+    def test_validate_descriptive_not_valid(self, profile_invalid_xml):
+        errors = profile_invalid_xml._validate_descriptive()
 
-        assert error
+        assert errors
 
     @pytest.mark.parametrize(
         "profile_name",
