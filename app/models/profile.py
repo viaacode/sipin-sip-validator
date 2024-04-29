@@ -177,12 +177,55 @@ class Profile(ABC):
 
     @abstractmethod
     def _validate_descriptive(self) -> list[XMLNotValidError]:
-        """Validate the descriptive metadata
+        """Validate the descriptive metadata.
 
         Returns:
             A list with errors detailing the parse/validation errors.
         """
         pass
+
+    @abstractmethod
+    def _construct_shacl_graph(self) -> Graph:
+        """Construct a graph containing the SHACLs.
+
+        This is used for validating the data graph.
+
+        Returns:
+            A SHACL graph.
+        """
+
+        pass
+
+    def validate_graph(self, data_graph: Graph) -> bool:
+        """Validate if the graph is conform.
+
+        Returns: True if the graph was conform.
+
+        Raises:
+            GraphNotConformError: If not conform, containing the reason why.
+        """
+        # An empty graph conforms with the SHACL. Check if the graph has at least
+        # a premis:intellecutalEntity node.
+        if (
+            None,
+            URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+            URIRef("http://www.loc.gov/premis/rdf/v3/IntellectualEntity"),
+        ) not in data_graph:
+            raise GraphNotConformError(
+                "Graph is perceived as empty as it does not contain an intellectual entity."
+            )
+        shacl_graph = self._construct_shacl_graph()
+        conforms, results_graph, results_text = shacl_validate(
+            data_graph=data_graph,
+            shacl_graph=shacl_graph,
+            meta_shacl=True,
+            allow_warnings=True,
+        )
+
+        if not conforms:
+            raise GraphNotConformError(results_text)
+
+        return True
 
 
 class BasicProfile(Profile):
@@ -285,38 +328,11 @@ class BasicProfile(Profile):
 
         return data_graph
 
-    def validate_graph(self, data_graph: Graph) -> bool:
-        """Validate if the graph is conform.
-
-        Returns: True if the graph was conform.
-
-        Raises:
-            GraphNotConformError: If not conform, containing the reason why.
-        """
-        # An empty graph conforms with the SHACL. Check if the graph has at least
-        # a premis:intellecutalEntity node.
-        if (
-            None,
-            URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-            URIRef("http://www.loc.gov/premis/rdf/v3/IntellectualEntity"),
-        ) not in data_graph:
-            raise GraphNotConformError(
-                "Graph is perceived as empty as it does not contain an intellectual entity."
-            )
+    def _construct_shacl_graph(self) -> Graph:
         shacl_graph = Graph()
         shacl_graph.parse(str(self.shacl_sip()), format="turtle")
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
-        conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph,
-            shacl_graph=shacl_graph,
-            meta_shacl=True,
-            allow_warnings=True,
-        )
-
-        if not conforms:
-            raise GraphNotConformError(results_text)
-
-        return True
+        return shacl_graph
 
 
 class BasicProfile11(BasicProfile):
@@ -733,40 +749,12 @@ class MaterialArtworkProfile11(Profile):
 
         return data_graph
 
-    def validate_graph(self, data_graph: Graph) -> bool:
-        """Validate if the graph is conform.
-
-        Returns: True if the graph was conform.
-
-        Raises:
-            GraphNotConformError: If not conform, containing the reason why.
-        """
-        # An empty graph conforms with the SHACL. Check if the graph has at least
-        # a premis:intellectualEntity node.
-        if (
-            None,
-            URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-            URIRef("http://www.loc.gov/premis/rdf/v3/IntellectualEntity"),
-        ) not in data_graph:
-            raise GraphNotConformError(
-                "Graph is perceived as empty as it does not contain an intellectual entity."
-            )
+    def _construct_shacl_graph(self) -> Graph:
         shacl_graph = Graph()
         shacl_graph.parse(str(self.shacl_sip()), format="turtle")
         shacl_graph.parse(str(self.shacl_basic_profile()), format="turtle")
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
-
-        conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph,
-            shacl_graph=shacl_graph,
-            meta_shacl=True,
-            allow_warnings=True,
-        )
-
-        if not conforms:
-            raise GraphNotConformError(results_text)
-
-        return True
+        return shacl_graph
 
 
 class NewspaperProfile11(Profile):
@@ -1114,39 +1102,11 @@ class NewspaperProfile11(Profile):
 
         return data_graph
 
-    def validate_graph(self, data_graph: Graph) -> bool:
-        """Validate if the graph is conform.
-
-        Returns: True if the graph was conform.
-
-        Raises:
-            GraphNotConformError: If not conform, containing the reason why.
-        """
-        # An empty graph conforms with the SHACL. Check if the graph has at least
-        # a premis:intellectualEntity node.
-        if (
-            None,
-            URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-            URIRef("http://www.loc.gov/premis/rdf/v3/IntellectualEntity"),
-        ) not in data_graph:
-            raise GraphNotConformError(
-                "Graph is perceived as empty as it does not contain an intellectual entity."
-            )
+    def _construct_shacl_graph(self) -> Graph:
         shacl_graph = Graph()
         shacl_graph.parse(str(self.shacl_sip()), format="turtle")
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
-
-        conforms, results_graph, results_text = shacl_validate(
-            data_graph=data_graph,
-            shacl_graph=shacl_graph,
-            meta_shacl=True,
-            allow_warnings=True,
-        )
-
-        if not conforms:
-            raise GraphNotConformError(results_text)
-
-        return True
+        return shacl_graph
 
 
 def determine_profile(path: Path) -> Profile:
