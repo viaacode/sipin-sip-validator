@@ -288,25 +288,6 @@ class TestBasicProfile11:
 
         assert errors
 
-    @pytest.mark.parametrize(
-        "profile_name, expected_graph_path",
-        [
-            ("profile_conform", "conform"),
-            ("profile_conform_extended", "conform_extended"),
-        ],
-    )
-    def test_parse_validate_graph(self, profile_name, expected_graph_path, request):
-        profile = request.getfixturevalue(profile_name)
-        graph = profile.parse_graph()
-        # Check if valid
-        assert profile.validate_graph(graph)
-
-        # Check if expected
-        expected = Graph()
-        path = self.graph_path().joinpath(expected_graph_path, "graph.ttl")
-        expected.parse(str(path))
-        assert isomorphic(graph, expected)
-
     def test_parse_validate_profile_not_conform(self, profile_not_conform):
         graph = profile_not_conform.parse_graph()
         with pytest.raises(GraphNotConformError):
@@ -341,6 +322,101 @@ class TestBasicProfile11:
         path = self.graph_path().joinpath(expected_graph_path, "graph.ttl")
         expected.parse(str(path))
         assert isomorphic(graph, expected)
+
+
+class TestBasicProfile12(TestBasicProfile11):
+    @pytest.fixture
+    def profile_conform(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "basic",
+            "sips",
+            "conform",
+        )
+        return BasicProfile12(path)
+
+    @pytest.fixture
+    def profile_conform_extended(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "basic",
+            "sips",
+            "conform_extended",
+        )
+        return BasicProfile12(path)
+
+    @pytest.fixture
+    def profile_conform_batch_id(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "basic",
+            "sips",
+            "conform_batch_id",
+        )
+        return BasicProfile12(path)
+
+    @pytest.fixture
+    def profile_conform_local_ids(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "basic",
+            "sips",
+            "conform_local_ids",
+        )
+        return BasicProfile12(path)
+
+    @pytest.fixture
+    def profile_invalid_xml(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "basic",
+            "sips",
+            "invalid_xml",
+        )
+        return BasicProfile12(path)
+
+    @pytest.fixture
+    def profile_not_conform(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "basic",
+            "sips",
+            "not_conform",
+        )
+        return BasicProfile12(path)
+
+    @pytest.fixture
+    def profile_empty_graph(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "basic",
+            "sips",
+            "empty_graph",
+        )
+        return BasicProfile12(path)
+
+    def graph_path(self) -> Path:
+        return Path(
+            "tests",
+            "resources",
+            "1.2",
+            "basic",
+            "graph",
+        )
 
 
 class TestMaterialArtworkProfile11:

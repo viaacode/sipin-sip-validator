@@ -7,7 +7,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX haOrgId: <https://data.hetarchief.be/id/organization/>
 PREFIX haObjId: <https://data.hetarchief.be/id/object/>
 PREFIX haObj: <https://data.hetarchief.be/ns/object/>
-PREFIX haSipId: <https://data.hetarchief.be/id/sip/1.1/>
+PREFIX haSipId: <https://data.hetarchief.be/id/sip/1.2/>
 PREFIX haSip: <https://data.hetarchief.be/ns/sip/>
 PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
 PREFIX fx: <http://sparql.xyz/facade-x/ns/>

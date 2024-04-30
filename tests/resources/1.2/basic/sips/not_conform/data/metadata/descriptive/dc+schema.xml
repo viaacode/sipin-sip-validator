@@ -3,7 +3,7 @@
     xmlns:schema="http://schema.org/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="https://data.hetarchief.be/id/sip/1.0/basic">
+    xmlns="https://data.hetarchief.be/id/sip/1.2/basic">
 
     <!-- velden obv. dcterms -->
     <!-- linking id between dc and premis -->
