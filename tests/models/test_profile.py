@@ -540,6 +540,65 @@ class TestMaterialArtworkProfile11:
         assert isomorphic(graph, expected)
 
 
+class TestMaterialArtworkProfile12:
+    def graph_path(self) -> Path:
+        return Path(
+            "tests",
+            "resources",
+            "1.2",
+            "artwork",
+            "graph",
+        )
+
+    @pytest.fixture
+    def profile_2D(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "artwork",
+            "sips",
+            "2D_fa307608-35c3-11ed-9243-7e92631d7d27",
+        )
+        return MaterialArtworkProfile12(path)
+
+    @pytest.fixture
+    def profile_3D(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "artwork",
+            "sips",
+            "3D_3d4bd7ca-38c6-11ed-95f2-7e92631d7d28",
+        )
+        return MaterialArtworkProfile12(path)
+
+    @pytest.fixture
+    def minimal(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "artwork",
+            "sips",
+            "minimal",
+        )
+        return MaterialArtworkProfile12(path)
+
+    @pytest.fixture
+    def minimal_meemoo_batch_id(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "artwork",
+            "sips",
+            "minimal_meemoo_batch_id",
+        )
+        return MaterialArtworkProfile12(path)
+
+
 class TestNewspaperProfile11:
     @classmethod
     def setup_class(cls):

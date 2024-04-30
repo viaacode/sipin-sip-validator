@@ -4,8 +4,8 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
   xmlns:schema="https://schema.org/"
-  targetNamespace="https://data.hetarchief.be/id/sip/1.1/material-artwork"
-  xmlns="https://data.hetarchief.be/id/sip/1.1/material-artwork"
+  targetNamespace="https://data.hetarchief.be/id/sip/1.2/material-artwork"
+  xmlns="https://data.hetarchief.be/id/sip/1.2/material-artwork"
   elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:annotation>
