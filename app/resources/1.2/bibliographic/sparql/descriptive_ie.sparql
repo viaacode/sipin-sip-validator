@@ -501,21 +501,21 @@ WHERE {
                 IF(
                     BOUND(?_name_element),
                     iri(CONCAT(str(haObjId:), MD5(?_name_uuid))),
-                    "none"
+                    ?_null_name
                 )
             as ?contribution_iri)
             BIND(
                 IF(
                     BOUND(?_namePart_element),
                     iri(CONCAT(str(haObjId:), MD5(CONCAT(?_name_uuid, "_agent")))),
-                    "none"
+                    ?_null_agent
                 )
             as ?agent_iri)
             BIND(
                 IF(
                     BOUND(?_role_element),
                     iri(CONCAT(str(haObjId:), MD5(CONCAT(?_name_uuid, "_role")))),
-                    "none"
+                    ?_null_role
                 )
             as ?role_iri)
         }
@@ -822,22 +822,24 @@ WHERE {
                 ?_relatedItem_element xyz:type ?relatedItem_type .
             }
             # mods:mods/mods:relatedItem/mods:identifier
-            ?_relatedItem_element ?_relatedItem_element_identifier_prop ?_relatedItem_identifier_element .
-            ?_relatedItem_identifier_element a mods:identifier .
             OPTIONAL {
+                ?_relatedItem_element ?_relatedItem_element_identifier_prop ?_relatedItem_identifier_element .
+                ?_relatedItem_identifier_element a mods:identifier .
                 OPTIONAL {
-                    ?_relatedItem_identifier_element rdf:_1 ?relatedItem_identifier .
                     OPTIONAL {
-                        ?_relatedItem_identifier_element xyz:type ?_relatedItem_identifier_type .
+                        ?_relatedItem_identifier_element rdf:_1 ?relatedItem_identifier .
+                        OPTIONAL {
+                            ?_relatedItem_identifier_element xyz:type ?_relatedItem_identifier_type .
+                        }
+                        OPTIONAL {
+                            ?_relatedItem_identifier_element xyz:typeURI ?_relatedItem_identifier_source .
+                        }
                     }
                     OPTIONAL {
-                        ?_relatedItem_identifier_element xyz:typeURI ?_relatedItem_identifier_source .
+                        # TODO add to resource
+                        ?_relatedItem_identifier_element ?_relatedItem_identifier_attribute ?_relatedItem_identifier_attr_value .
+                        FILTER(!?_relatedItem_identifier_attribute != rdf:_1 && ?_relatedItem_identifier_attribute != rdf:type)
                     }
-                }
-                OPTIONAL {
-                    # TODO add to resource
-                    ?_relatedItem_identifier_element ?_relatedItem_identifier_attribute ?_relatedItem_identifier_attr_value .
-                    FILTER(!?_relatedItem_identifier_attribute != rdf:_1 && ?_relatedItem_identifier_attribute != rdf:type)
                 }
             }
             # mods:mods/mods:relatedItem[@type="series"]/mods:titleInfo/mods:title
@@ -891,7 +893,11 @@ WHERE {
                 BOUND(?_relatedItem_identifier_element),
                 COALESCE(
                     IF(?_relatedItem_identifier_type IN ("number", "page"),
-                        ?relatedItem_identifier,
+                        iri(CONCAT(str(haObjId:), MD5(?relatedItem_identifier))),
+                        1/0
+                    ),
+                    IF(!BOUND(?_relatedItem_identifier_type),
+                        "Missing @type on mods:relatedItem/mods:identifier",
                         1/0
                     ),
                     IF(?_relatedItem_identifier_type NOT IN ("number", "page", "abraham_uri", "abraham_id"),
