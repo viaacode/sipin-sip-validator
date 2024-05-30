@@ -5,6 +5,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#> 
 PREFIX schema: <https://schema.org/> 
 PREFIX pav: <http://purl.org/pav/>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
 PREFIX haObj: <https://data.hetarchief.be/ns/object/> 
 PREFIX haObjId: <https://data.hetarchief.be/id/entity/> 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
@@ -22,7 +23,7 @@ PREFIX haSip: <https://data.hetarchief.be/ns/sip/>
 
 
 CONSTRUCT {
-    ?work a bf:Work, ?extraType, ?manuscript_type ;
+    ?work a bf:Work, premisowl:IntellectualEntity, ?extraType, ?manuscript_type ;
         bf:identifiedBy ?identifier_iri ;
         bf:adminMetadata ?record_iri ;
         rdfs:label ?mainTitle ;
@@ -168,7 +169,7 @@ WHERE {
             IF(
                 BOUND(?_identifier_element),
                 iri(CONCAT(str(haObjId:), ?identifier)),
-                "No mods:identifier found"
+                "Missing mods:identifier"
             )
         as ?work)
         BIND(
