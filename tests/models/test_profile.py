@@ -418,6 +418,11 @@ class TestBasicProfile12(TestBasicProfile11):
             "graph",
         )
 
+    def test_parse_validate_profile_empty_graph(self, profile_empty_graph):
+        graph = profile_empty_graph.parse_graph()
+        with pytest.raises(GraphNotConformError) as e:
+            profile_empty_graph.validate_graph(graph)
+
 
 class TestMaterialArtworkProfile11:
     def graph_path(self) -> Path:

@@ -3,7 +3,8 @@
     xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="https://data.hetarchief.be/id/sip/1.2/basic">
+    xmlns="https://data.hetarchief.be/id/sip/1.2/basic"
+    xmlns:schema="https://schema.org/">
 
     <dcterms:title xml:lang="en">the title of the episode</dcterms:title>
     <dcterms:title xml:lang="nl">de titel van de episode</dcterms:title>
@@ -62,5 +63,72 @@
 
     <dcterms:license>VIAA-PUBLIEK-METADATA-LTD</dcterms:license>
     <dcterms:license>VIAA-ONDERWIJS</dcterms:license>
+
+
+    <!-- Secondary titles -->
+    <!-- Series -->
+    <schema:isPartOf xsi:type="schema:CreativeWorkSeries">
+        <schema:name>serie</schema:name>
+        <schema:identifier>serie identifier</schema:identifier>
+        <schema:position>1</schema:position>
+        <!-- Partial series -->
+        <schema:hasPart xsi:type="schema:CreativeWorkSeries">
+        <schema:name>deelserie</schema:name>
+        </schema:hasPart>
+    </schema:isPartOf>
+    <!-- Episode -->
+    <schema:isPartOf xsi:type="schema:Episode">
+        <schema:name>episode</schema:name>
+    </schema:isPartOf>
+    <!-- Archive -->
+    <schema:isPartOf xsi:type="schema:ArchiveComponent">
+        <schema:name>archief</schema:name>
+        <!-- Partial archive -->
+        <schema:hasPart xsi:type="schema:ArchiveComponent">
+        <schema:name>deelarchief</schema:name>
+        </schema:hasPart>
+    </schema:isPartOf>
+    <!-- Broadcast event -->
+    <schema:isPartOf xsi:type="schema:BroadcastEvent">
+        <schema:name>programma</schema:name>
+        <schema:description>programme</schema:description>
+    </schema:isPartOf>
+    <!-- Season -->
+    <schema:isPartOf xsi:type="schema:CreativeWorkSeason">
+        <schema:name>seizoen</schema:name>
+        <schema:seasonNumber>1</schema:seasonNumber>
+    </schema:isPartOf>
+
+    <schema:isPartOf xsi:type="schema:Collection">
+        <schema:name>Top 50 hits!</schema:name>
+        <schema:identifier>uuid-855bdf50-8c81-43a2-8218-b3245502abff</schema:identifier>
+    </schema:isPartOf>
+
+    <!-- dimensions -->
+    <schema:height>
+        <schema:value>116</schema:value>
+        <schema:unitText>mm</schema:unitText>
+        <schema:unitCode>MMT</schema:unitCode>
+    </schema:height>
+    <schema:width>
+        <schema:value>220</schema:value>
+        <schema:unitText>mm</schema:unitText>
+        <schema:unitCode>MMT</schema:unitCode>
+    </schema:width>
+    <schema:depth>
+        <schema:value>130</schema:value>
+        <schema:unitText>mm</schema:unitText>
+        <schema:unitCode>MMT</schema:unitCode>
+    </schema:depth>
+    <schema:weight>
+        <schema:value>2.3</schema:value>
+        <schema:unitText>kg</schema:unitText>
+        <schema:unitCode>KGM</schema:unitCode>
+    </schema:weight>
+    <schema:artMedium xml:lang="nl">vinyl</schema:artMedium>
+    <schema:artMedium xml:lang="en">vinyl</schema:artMedium>
+    <schema:artform xml:lang="nl">langspeler</schema:artform>
+    <schema:artform xml:lang="en">LP</schema:artform>
+
 
 </metadata>
