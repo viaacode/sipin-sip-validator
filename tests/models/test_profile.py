@@ -774,3 +774,46 @@ class TestNewspaperProfile11:
 
         expected.parse(StringIO(rendered_graph_template))
         assert isomorphic(graph, expected)
+
+
+class TestBibliographicProfile12(TestNewspaperProfile11):
+    @classmethod
+    def setup_class(cls):
+        cls.jinja_env = Environment(
+            loader=FileSystemLoader(cls.graph_path()),
+            autoescape=select_autoescape(),
+        )
+
+    @classmethod
+    def graph_path(cls) -> Path:
+        return Path(
+            "tests",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "graph",
+        )
+
+    @pytest.fixture
+    def profile_conform_minimal(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "sips",
+            "conform_minimal",
+        )
+        return BibliographicProfile12(path)
+
+    @pytest.fixture
+    def profile_conform_extended(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "sips",
+            "conform_extended",
+        )
+        return BibliographicProfile12(path)
