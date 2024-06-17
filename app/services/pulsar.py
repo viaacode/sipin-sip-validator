@@ -29,7 +29,9 @@ class PulsarClient:
             f'pulsar://{self.pulsar_config["host"]}:{self.pulsar_config["port"]}'
         )
         self.consumer: Consumer = self.client.subscribe(
-            self.app_config["consumer_topic"], app_name,
+            topic=self.app_config["consumer_topic"],
+            subscription_name=app_name,
+            consumer_name=app_name,
         )
         self.log.info(f"Started consuming topic: {self.app_config['consumer_topic']}")
         self.producers = {}
