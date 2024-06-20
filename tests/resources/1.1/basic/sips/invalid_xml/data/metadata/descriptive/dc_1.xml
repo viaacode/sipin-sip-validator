@@ -2,7 +2,7 @@
 <metadata xmlns:dcterms="http://purl.org/dc/terms/" xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="https://data.hetarchief.be/id/sip/1.0/basic">
+    xmlns="https://data.hetarchief.be/id/sip/1.1/basic">
 
     <dcterms:unknown>Unknown</dcterms:unknown>
 

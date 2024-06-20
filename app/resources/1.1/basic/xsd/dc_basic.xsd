@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dcterms="http://purl.org/dc/terms/"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
-  targetNamespace="https://data.hetarchief.be/id/sip/1.0/basic"
+  targetNamespace="https://data.hetarchief.be/id/sip/1.1/basic"
   elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:annotation>
