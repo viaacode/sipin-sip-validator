@@ -431,7 +431,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:variantType ;
-        sh:value "alternative";
+        sh:hasValue "alternative";
         sh:severity sh:Violation ;
         sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] must be 'alternative'"""@en ;
     ],

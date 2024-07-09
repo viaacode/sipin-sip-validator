@@ -108,7 +108,7 @@ CONSTRUCT {
         rdfs:label ?carrier_source .
 
     ?relatedItem_iri a ?relatedItem_type_iri ;
-        schema:identifier ?abraham_iri .
+        bf:identifier ?abraham_iri .
 
     ?abraham_iri a bf:Identifier ;
         rdf:value ?abraham_id ;

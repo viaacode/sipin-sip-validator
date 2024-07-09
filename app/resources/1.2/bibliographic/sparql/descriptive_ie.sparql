@@ -129,7 +129,7 @@ CONSTRUCT {
         bf:noteType ?physDes_note_type .
 
     ?relatedItem_iri a ?relatedItem_type_iri ;
-        schema:identifier ?relatedItem_identifier_iri, ?abraham_iri ;
+        bf:identifier ?relatedItem_identifier_iri, ?abraham_iri ;
         bf:title ?mainRelatedItemTitle_iri .
 
     ?mainRelatedItemTitle_iri a bf:Title ;
