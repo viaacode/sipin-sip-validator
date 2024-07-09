@@ -37,7 +37,7 @@ CONSTRUCT {
         bf:extent ?extent_iri ;
         haBib:numberOfPages ?number_of_pages ;
         bf:carrier ?carrier_iri ;
-        bf:hasSeries ?abraham_iri ;
+        bf:hasSeries ?relatedItem_iri ;
         bf:usageAndAccessPolicy ?license_iri .
     
     ?identifier_iri a bf:Identifier ;
