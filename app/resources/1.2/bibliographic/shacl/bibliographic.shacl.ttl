@@ -21,11 +21,14 @@
 
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
 
+<#typeList> a rdf:List ;
+  rdf:first rdf:type ;
+  rdf:rest ( ) .
 
 <#IntellectualEntityShape> a sh:NodeShape ;
     sh:targetClass bf:Work ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:identifier[not(@*)]
@@ -353,8 +356,8 @@
 
 <#LanguageShape> a sh:NodeShape ;
     sh:targetClass bf:Language ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -367,8 +370,8 @@
 
 <#AdminMetadataShape> a sh:NodeShape ;
     sh:targetClass bf:AdminMetadata ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -380,8 +383,8 @@
 
 <#FileShape> a sh:NodeShape ;
     sh:targetClass premis:File ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
@@ -411,8 +414,8 @@
 
 <#VariantTitleShape> a sh:NodeShape ;
     sh:targetClass bf:VariantTitle ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -481,8 +484,8 @@
 # mods:mods/mods:physicalDescription/mods:form
 <#CarrierShape> a sh:NodeShape ;
     sh:targetClass bf:Carrier ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:physicalDescription/mods:form
@@ -506,8 +509,8 @@
     
 <#SourceShape> a sh:NodeShape ;
     sh:targetClass bf:Source ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -534,8 +537,8 @@
 # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
 <#ExtentShape> a sh:NodeShape ;
     sh:targetClass bf:Extent ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
@@ -557,8 +560,8 @@
 
 <#UnitShape> a sh:NodeShape ;
     sh:targetClass bf:Unit ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -576,8 +579,8 @@
 # mods:mods/mods:genre
 <#GenreFormShape> a sh:NodeShape ;
     sh:targetClass bf:GenreForm ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -607,8 +610,8 @@
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
 <#AbrahamShape> a sh:NodeShape ;
     sh:targetClass bf:Series ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
@@ -621,8 +624,8 @@
     ] .
 
 <#AbrahamIdShape> a sh:NodeShape ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
@@ -659,8 +662,8 @@
 # mods:mods/mods:originInfo
 <#PublicationShape> a sh:NodeShape ;
     sh:targetClass bf:Publication ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:originInfo/mods:place
@@ -726,8 +729,8 @@
 # mods:mods/mods:originInfo/mods:publisher
 <#AgentShape> a sh:NodeShape ;
     sh:targetClass bf:Agent ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -740,8 +743,8 @@
 # mods:mods/mods:originInfo/mods:place
 <#PlaceShape> a sh:NodeShape ;
     sh:targetClass bf:Place ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
@@ -819,8 +822,8 @@
 # mods:mods/mods:name[@type="personal"]
 <#ContributionShape> a sh:NodeShape ;
     sh:targetClass bf:Contribution ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
@@ -862,8 +865,8 @@
 
 <#RoleShape> a sh:NodeShape ; 
     sh:targetClass bf:Role ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:name[@type="personal"]/role/roleTerm[@type="text"]
@@ -880,8 +883,8 @@
 # mods:mods/mods:name[@type="corporate"]
 <#OrganizationShape> a sh:NodeShape ;
     sh:targetClass bf:Orgnaization ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     # mods:mods/mods:name[@type="corporate"]/mods:namePart
     [
@@ -904,8 +907,8 @@
 # mods:mods/mods:name[@type="personal"]
 <#PersonShape> a sh:NodeShape ;
     sh:targetClass bf:Person ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:name[@type="personal"]/namePart[@type="given"]
@@ -962,8 +965,8 @@
 #mods:mods/mods:subject/mods:topic
 <#TopicShape> a sh:NodeShape ;
     sh:targetClass bf:Topic ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
@@ -994,8 +997,8 @@
 #mods:mods/mods:abstract
 <#SummaryShape> a sh:NodeShape ;
     sh:targetClass bf:Summary ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
@@ -1010,8 +1013,8 @@
 #mods:mods/mods:identifier[not(@*)]
 <#IdentifierShape> a sh:NodeShape ;
     sh:targetClass bf:Identifier ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property 
     [
@@ -1033,8 +1036,8 @@
 
 <#UsageAndAccessPolicyShape> a sh:NodeShape ;
     sh:targetClass bf:UsageAndAccessPolicy ;
-    sh:closed true;
-    sh:ignoredProperties (rdf:type) ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
