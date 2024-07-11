@@ -135,6 +135,10 @@ CONSTRUCT {
     ?mainRelatedItemTitle_iri a bf:Title ;
         rdfs:label ?mainRelatedItemTitle .
 
+    ?abraham_iri a bf:Identifier ;
+        rdf:value ?abraham_id ;
+        bf:source ?abraham_source_iri .
+
     ?relatedItem_identifier_iri a bf:Identifier ;
         rdf:value ?relatedItem_identifier ;
         bf:source ?abraham_source_iri .
@@ -912,10 +916,7 @@ WHERE {
         BIND(
             IF(
                 BOUND(?_relatedItem_element),
-                COALESCE(
-                    IF(BOUND(?abraham_iri), ?abraham_iri, 1/0),
-                    iri(CONCAT(str(haObjId:), MD5(concat(?_relatedItem_uuid, "_relatedItem"))))
-                ),
+                iri(CONCAT(str(haObjId:), MD5(concat(?_relatedItem_uuid, "_relatedItem")))),
                 ?_null_19
             )
         as ?relatedItem_iri)
@@ -946,5 +947,27 @@ WHERE {
                 ?_null_24
             )
         as ?abraham_id)
+        BIND(
+            IF(
+                BOUND(?_relatedItem_identifier_element),
+                IF(
+                    BOUND(?_relatedItem_identifier_source),
+                    iri(?_relatedItem_identifier_source),
+                    IF(
+                        ?_relatedItem_identifier_type = "abraham_uri" || ?_relatedItem_identifier_type = "abraham_id",
+                        iri("https://anet.be"),
+                        "No relatedItem identifier source"
+                    )
+                ),
+                ?_null_22
+            )
+        as ?abraham_source_iri)
+        BIND(
+            IF(
+                str(?abraham_source_iri) = "https://anet.be",
+                "Abraham. Catalogus van Belgische kranten",
+                ?_null_21
+            )
+        as ?abraham_source_label)
     }
 }
