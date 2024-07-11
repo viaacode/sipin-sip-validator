@@ -12,7 +12,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
-@prefix haObjId: <https://data.hetarchief.be/id/object/> . 
+@prefix haObjId: <https://data.hetarchief.be/id/entity/> . 
 @prefix eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/> .
 @prefix eventRelAgRole: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> .
 @prefix eventRelObjRole: <http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/> .
@@ -180,7 +180,6 @@
   [
     a sh:PropertyShape ;
     sh:path relSubType:iso ;
-    sh:nodeKind sh:Literal ;
     sh:nodeKind sh:IRI ;
     sh:class premis:File ;
     sh:name "is source of"@en ;
