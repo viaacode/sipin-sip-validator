@@ -22,10 +22,11 @@
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
 
 
-<#WorkShape> a sh:NodeShape ;
+<#IntellectualEntityShape> a sh:NodeShape ;
     sh:targetClass bf:Work ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:identifier[not(@*)]
     [
@@ -381,6 +382,7 @@
     sh:targetClass premis:File ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -474,6 +476,7 @@
     sh:targetClass bf:Carrier ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:physicalDescription/mods:form
     [
@@ -526,10 +529,11 @@
     sh:targetClass bf:Extent ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdfs:label ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Extent"@en ;
@@ -598,6 +602,7 @@
     sh:targetClass bf:Series ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -611,12 +616,13 @@
 <#AbrahamIdShape> a sh:NodeShape ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:in (haObj:AbrahamURI haObj:AbrahamId) ;
+        sh:in (haObj:AbrahamURI haObj:AbrahamId bf:Identifier) ;
         sh:name "Type"@en ;
         sh:description "The type of Abraham ID or Abraham URI."@en ;
     ],
@@ -635,6 +641,12 @@
         sh:severity sh:Violation ;
         sh:message """mods:identifier[@type="abraham_id"] occurs more than once.
             Please check `mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
     ] .
 
 # mods:mods/mods:originInfo
@@ -642,6 +654,7 @@
     sh:targetClass bf:Publication ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:originInfo/mods:place
     [
@@ -722,6 +735,7 @@
     sh:targetClass bf:Place ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -800,6 +814,7 @@
     sh:targetClass bf:Contribution ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -842,6 +857,7 @@
     sh:targetClass bf:Role ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:name[@type="personal"]/role/roleTerm[@type="text"]
     [
@@ -853,7 +869,7 @@
         sh:description "The role term of a person who contributed to the newspaper."@en ;
         sh:maxCount 1 ;
     ] .
-    
+
 # mods:mods/mods:name[@type="corporate"]
 <#OrganizationShape> a sh:NodeShape ;
     sh:targetClass bf:Orgnaization ;
@@ -883,6 +899,7 @@
     sh:targetClass bf:Person ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:name[@type="personal"]/namePart[@type="given"]
     [
@@ -940,6 +957,7 @@
     sh:targetClass bf:Topic ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -971,10 +989,11 @@
     sh:targetClass bf:Summary ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdfs:label ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Mods abstract"@en ;
@@ -986,6 +1005,7 @@
     sh:targetClass bf:Identifier ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property 
     [
         a sh:PropertyShape ;
@@ -996,12 +1016,19 @@
         sh:description "The value of the object identifier."@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
     ] .
 
 <#UsageAndAccessPolicyShape> a sh:NodeShape ;
     sh:targetClass bf:UsageAndAccessPolicy ;
     sh:closed true;
     sh:ignoredProperties (rdf:type) ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;

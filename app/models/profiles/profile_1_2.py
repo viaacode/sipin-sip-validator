@@ -420,7 +420,7 @@ class BibliographicProfile12(NewspaperProfile11):
             "app",
             "resources",
             "1.2",
-            "newspaper",
+            "bibliographic",
             "shacl",
             "premis.shacl.ttl",
         )
