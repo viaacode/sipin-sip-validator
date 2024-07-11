@@ -31,7 +31,7 @@ CONSTRUCT
         skos:hiddenLabel "{{ rep_folder }}" .
 
     ?file a premisowl:File;
-        relSubType:isi ?file_rep_iri;
+        ?file_rel_prop_iri ?file_rep_iri;
         premisowl:originalName ?file_original_name;
         dct:format ?format_uri;
         premisowl:size ?file_size_int;
@@ -43,6 +43,22 @@ CONSTRUCT
         gom:hasFaces ?num_of_tri .
 
     ?format_uri a dct:FileFormat.
+
+    ?file_rel_prop_iri a skos:Concept ;
+        skos:prefLabel ?file_rel_subtype_value ;
+        skos:broader ?file_rel_type_iri ;
+        skos:inScheme ?file_rel_subtype_auth_iri .
+
+    ?file_rel_subtype_auth_iri a skos:ConceptScheme ;
+        skos:prefLabel ?file_rel_subtype_auth .
+
+    ?file_rel_type_iri a skos:Concept ;
+        skos:prefLabel ?file_rel_type_value ;
+        skos:narrower ?file_rel_prop_iri ;
+        skos:inScheme ?file_rel_type_auth_iri .
+
+    ?file_rel_type_auth_iri a skos:ConceptScheme ;
+        skos:prefLabel ?file_rel_type_auth .
   }
 
 WHERE
@@ -103,17 +119,53 @@ WHERE
             }
             BIND(iri(concat(str(haObjId:), ?file_uuid)) AS ?file)
             OPTIONAL {
-                ?_file ?file_4 [
-                    a premis:relationship;
-                    ?file_5 [
-                        a premis:relatedObjectIdentifier;
-                        ?file_6 [
-                            a premis:relatedObjectIdentifierValue;
-                            rdf:_1 ?file_rel_rep_id
-                        ]
+                ?_file ?file_4 ?file_relationship .
+                ?file_relationship a premis:relationship ;
+                OPTIONAL {
+                    ?file_relationship ?relationship_list_1 ?file_rel_obj_id .
+                    ?file_rel_obj_id a premis:relatedObjectIdentifier ;
+                    ?file_6 [
+                        a premis:relatedObjectIdentifierValue;
+                        rdf:_1 ?file_rel_rep_id
                     ]
-                ];
+                }
+                OPTIONAL {
+                    ?file_relationship ?relationship_list_2 ?file_rel_subtype .
+                    ?file_rel_subtype a premis:relationshipSubType ;
+                    OPTIONAL {
+                        ?file_rel_subtype xyz:authority ?file_rel_subtype_auth .
+                    }
+                    OPTIONAL {
+                        ?file_rel_subtype xyz:authorityURI ?file_rel_subtype_auth_iri_str .
+                    }
+                    OPTIONAL {
+                        ?file_rel_subtype rdf:_1 ?file_rel_subtype_value .
+                    }
+                    OPTIONAL {
+                        ?file_rel_subtype xyz:valueURI ?file_rel_prop .
+                    }
+                }
+                OPTIONAL {
+                    ?file_relationship ?relationship_list_3 ?file_rel_type .
+                    ?file_rel_type a premis:relationshipType ;
+                    OPTIONAL {
+                        ?file_rel_type xyz:authority ?file_rel_type_auth .
+                    }
+                    OPTIONAL {
+                        ?file_rel_type xyz:authorityURI ?file_rel_type_auth_iri_str .
+                    }
+                    OPTIONAL {
+                        ?file_rel_type rdf:_1 ?file_rel_type_value .
+                    }
+                    OPTIONAL {
+                        ?file_rel_type xyz:valueURI ?file_rel_type_iri_str .
+                    }
+                }
             }
+            BIND(iri(?file_rel_type_iri_str) AS ?file_rel_type_iri)
+            BIND(iri(?file_rel_subtype_auth_iri_str) AS ?file_rel_subtype_auth_iri)
+            BIND(iri(?file_rel_type_auth_iri_str) AS ?file_rel_type_auth_iri)
+            BIND(iri(?file_rel_prop) AS ?file_rel_prop_iri)
             BIND(iri(concat(str(haObjId:), ?file_rel_rep_id)) AS ?file_rep_iri)
             OPTIONAL {
                 ?_file ?file_7  ?object_chars .
