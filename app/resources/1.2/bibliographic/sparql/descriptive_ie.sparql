@@ -685,6 +685,8 @@ WHERE {
             BIND(
                 strUUID()
             as ?_physicalDescription_uuid)
+        }
+        OPTIONAL {
             # mods:mods/mods:physicalDescription/mods:note
             OPTIONAL {
                 ?_physicalDescription_element ?_physicalDescription_note_prop ?_physicalDescription_note_element .
@@ -696,85 +698,44 @@ WHERE {
                     ?_physicalDescription_note_element xyz:type ?physDes_note_type
                 }
             }
-
+            MINUS {?_physicalDescription_note_element xyz:type "statement of responsibility"}
+            OPTIONAL {
+                ?_physicalDescription_element ?_physicalDescription_note_sor_prop ?_physicalDescription_note_sor_element .
+                ?_physicalDescription_note_sor_element a mods:note .
+                OPTIONAL {
+                    ?_physicalDescription_note_sor_element rdf:_1 ?physDes_note_sor .
+                }
+                ?_physicalDescription_note_sor_element xyz:type "statement of responsibility"
+            }
             BIND(
                 IF(
                     BOUND(?physDes_note),
-                    COALESCE(
-                        IF(?physDes_note_type = "statement of responsibility", "skip", 1/0),
-                        iri(CONCAT(str(haObjId:), MD5(?physDes_note)))
-                    ),
+                    iri(CONCAT(str(haObjId:), MD5(?physDes_note))),
                     ?_null_physDes_note
                 )
             as ?physDes_note_iri)
-            FILTER(?physDes_note_iri != "skip" )
             BIND(
                 IF(
                     BOUND(?physDes_note),
                     COALESCE(
-                        IF(?physDes_note_type = "statement of responsibility", "skip", 1/0),
                         IF(!BOUND(?physDes_note_type), "Missing @type on mods:physicalDescription/mods:note", 1/0),
                         IF(?physDes_note_type in ("condition"), bf:Note, 1/0),
-                        STR(?physDes_note_type = "statement of responsibility")
-                        # CONCAT("Unkown @type on mods:physicalDescription/mods:note: ", ?physDes_note_type)
+                        CONCAT("Unkown @type on mods:physicalDescription/mods:note: ", ?physDes_note_type)
                     ),
                     ?_null_physDes_note_type
                 )
             as ?physDes_note_type_iri)
-            FILTER(?physDes_note_type_iri != "skip" )
-            # FILTER(!ISBLANK(?physDes_note_type_iri))
+            
             BIND(
                 IF(
-                    BOUND(?physDes_note) && lcase(?physDes_note_type) = "statement of responsibility",
-                    ?physDes_note,
+                    BOUND(?physDes_note_sor),
+                    ?physDes_note_sor,
                     ?_null_physDes_note_resp
                 )
             as ?responsibilityStatement)
-            # mods:mods/mods:physicalDescription/mods:extent
-            OPTIONAL {
-                ?_physicalDescription_element ?_physicalDescription_element_extent_prop ?_extent_element .
-                ?_extent_element a mods:extent .
-                OPTIONAL {
-                    ?_extent_element rdf:_1 ?extent .
-                }
-                OPTIONAL {
-                    ?_extent_element xyz:unit ?extent_unit .
-                }
-                OPTIONAL {
-                    ?_extent_element ?_extent_attribute ?_extent_attr_value .
-                    FILTER(!?_extent_attribute != rdf:_1 && ?_extent_attribute != rdf:type && ?_extent_attribute != xyz:unit)
-                }
-            }
-            BIND(
-                IF(
-                    BOUND(?extent),
-                    COALESCE(
-                        IF(lcase(?extent_unit) = "pages", "skip", 1/0),
-                        iri(CONCAT(str(haObjId:), MD5(?extent)))
-                    ),
-                    ?_null_extent
-                )
-            as ?extent_iri)
-            FILTER(?extent_iri != "skip" )
-            BIND(
-                IF(
-                    BOUND(?extent),
-                    COALESCE(
-                        IF(lcase(?extent_unit) = "pages", "skip", 1/0),
-                        IF(!BOUND(?extent_unit), "Missing @unit on mods:physicalDescription/mods:extent", 1/0),
-                        iri(CONCAT(str(haObjId:), MD5(?extent_unit)))
-                    ),
-                    ?_null_unit
-                )
-            as ?extent_unit_iri)
-            FILTER(?extent_unit_iri != "skip" )
-            BIND(
-                IF(
-                    BOUND(?extent) && lcase(?extent_unit) = "pages",
-                    STRDT(?extent, xsd:integer),
-                    ?_null_number_of_pages
-                )
-            as ?number_of_pages)
+            
+        }
+        OPTIONAL {
             # mods:mods/mods:physicalDescription/mods:form
             OPTIONAL {
                 ?_physicalDescription_element ?_physicalDescription_element_form_prop ?_form_element .
@@ -795,13 +756,6 @@ WHERE {
             }
             BIND(
                 IF(
-                    BOUND(?_physicalDescription_element),
-                    iri(CONCAT(str(haObjId:), MD5(concat(?_physicalDescription_uuid, "_carrier")))),
-                    ?_null_17
-                )
-            as ?carrier_iri)
-            BIND(
-                IF(
                     BOUND(?_form_element),
                     IF(
                         BOUND(?_form_authorityURI),
@@ -816,6 +770,65 @@ WHERE {
                 )
             as ?carrier_source_iri)
         }
+        OPTIONAL {
+            # mods:mods/mods:physicalDescription/mods:extent
+            OPTIONAL {
+                ?_physicalDescription_element ?_physicalDescription_element_extent_prop ?_extent_element .
+                ?_extent_element a mods:extent .
+                OPTIONAL {
+                    ?_extent_element rdf:_1 ?extent .
+                }
+                OPTIONAL {
+                    ?_extent_element xyz:unit ?extent_unit .
+                }
+                OPTIONAL {
+                    ?_extent_element ?_extent_attribute ?_extent_attr_value .
+                    FILTER(!?_extent_attribute != rdf:_1 && ?_extent_attribute != rdf:type && ?_extent_attribute != xyz:unit)
+                }
+            }
+            MINUS { ?_extent_element xyz:unit "pages"}
+            OPTIONAL {
+                ?_physicalDescription_element ?_physicalDescription_element_extent_pages_prop ?_extent_pages_element .
+                ?_extent_pages_element a mods:extent .
+                OPTIONAL {
+                    ?_extent_pages_element rdf:_1 ?extent_pages .
+                }
+                ?_extent_pages_element xyz:unit "pages" .
+            }
+            BIND(
+                IF(
+                    BOUND(?extent),
+                    COALESCE(
+                        iri(CONCAT(str(haObjId:), MD5(?extent)))
+                    ),
+                    ?_null_extent
+                )
+            as ?extent_iri)
+            BIND(
+                IF(
+                    BOUND(?extent),
+                    COALESCE(
+                        IF(!BOUND(?extent_unit), "Missing @unit on mods:physicalDescription/mods:extent", 1/0),
+                        iri(CONCAT(str(haObjId:), MD5(?extent_unit)))
+                    ),
+                    ?_null_unit
+                )
+            as ?extent_unit_iri)
+            BIND(
+                IF(
+                    BOUND(?extent_pages),
+                    STRDT(?extent_pages, xsd:integer),
+                    ?_null_number_of_pages
+                )
+            as ?number_of_pages)
+        }
+        BIND(
+            IF(
+                BOUND(?_physicalDescription_element),
+                iri(CONCAT(str(haObjId:), MD5(concat(?_physicalDescription_uuid, "_carrier")))),
+                ?_null_17
+            )
+        as ?carrier_iri)
         # mods:mods/mods:relatedItem
         OPTIONAL {
             ?_relatedItem_element a mods:relatedItem .
