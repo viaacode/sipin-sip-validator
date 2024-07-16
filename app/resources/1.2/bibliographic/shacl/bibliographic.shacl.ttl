@@ -95,8 +95,8 @@
         sh:path bf:title ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:or (
-            [ sh:node <#TitleShape> ]
             [ sh:node <#VariantTitleShape> ]
+            [ sh:node <#TitleShape> ]
         ) ;
         sh:or (
             [ sh:class bf:VariantTitle ]
@@ -331,7 +331,7 @@
         a sh:PropertyShape ;
         sh:path bf:hasSeries ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#AbrahamShape> ;
+        sh:node <#SeriesShape> ;
         sh:name "Series"@en ;
         sh:description "Abraham ID or Abraham URI."@en ;
     ],
@@ -401,6 +401,18 @@
         sh:severity sh:Violation ;
         sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute does not occur.
             Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
+    ] .
+
+<#TitleShape> a sh:NodeShape ; 
+    sh:targetClass bf:Title ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ; 
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
     ] .
 
 <#VariantTitleShape> a sh:NodeShape ;
@@ -643,7 +655,7 @@
 
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
-<#AbrahamShape> a sh:NodeShape ;
+<#SeriesShape> a sh:NodeShape ;
     sh:targetClass bf:Series ;
     sh:closed true ;
     sh:ignoredProperties <#typeList> ;
@@ -651,48 +663,54 @@
     sh:property
     [
         a sh:PropertyShape ;
+        sh:path bf:title ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#TitleShape> ;
+    ],
+    [
+        a sh:PropertyShape ;
         sh:path bf:identifier ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#AbrahamIdShape> ;
+        sh:node <#IdentifierShape> ;
         sh:name "Identifier"@en ;
         sh:description "The identifier of the Abraham ID or Abraham URI."@en ;
     ] .
 
-<#AbrahamIdShape> a sh:NodeShape ;
-    sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
-    sh:nodeKind sh:IRI ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path rdf:type ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:in (haObj:AbrahamURI haObj:AbrahamId bf:Identifier) ;
-        sh:name "Type"@en ;
-        sh:description "The type of Abraham ID or Abraham URI."@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path rdf:value ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Abraham ID"@en ;
-        sh:description "The Abraham ID of the newspaper."@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path rdf:value ;
-        sh:maxCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:identifier[@type="abraham_id"] occurs more than once.
-            Please check `mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]`."""@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path bf:source ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#SourceShape> ;
-    ] .
+# <#AbrahamIdShape> a sh:NodeShape ;
+#     sh:closed true ;
+#     sh:ignoredProperties <#typeList> ;
+#     sh:nodeKind sh:IRI ;
+#     sh:property
+#     [
+#         a sh:PropertyShape ;
+#         sh:path rdf:type ;
+#         sh:nodeKind sh:BlankNodeOrIRI ;
+#         sh:in (haObj:AbrahamURI haObj:AbrahamId bf:Identifier) ;
+#         sh:name "Type"@en ;
+#         sh:description "The type of Abraham ID or Abraham URI."@en ;
+#     ],
+#     [
+#         a sh:PropertyShape ;
+#         sh:path rdf:value ;
+#         sh:nodeKind sh:Literal ;
+#         sh:datatype xsd:string ;
+#         sh:name "Abraham ID"@en ;
+#         sh:description "The Abraham ID of the newspaper."@en ;
+#     ],
+#     [
+#         a sh:PropertyShape ;
+#         sh:path rdf:value ;
+#         sh:maxCount 1 ;
+#         sh:severity sh:Violation ;
+#         sh:message """mods:identifier[@type="abraham_id"] occurs more than once.
+#             Please check `mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]`."""@en ;
+#     ],
+#     [
+#         a sh:PropertyShape ;
+#         sh:path bf:source ;
+#         sh:nodeKind sh:BlankNodeOrIRI ;
+#         sh:node <#SourceShape> ;
+#     ] .
 
 # mods:mods/mods:originInfo
 <#PublicationShape> a sh:NodeShape ;
@@ -806,28 +824,6 @@
         sh:message """mods:placeTerm[@type="code"] occurs more than once.
             Please check `mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="code"]`."""@en ;
     ],
-    # ] ;
-    # sh:or(
-    #     [
-    #         sh:hasValue bf:code;
-    #         sh:property
-    #         [
-    #             a sh:PropertyShape ;
-    #             sh:path bf:Source ;
-    #             sh:minCount 1 ;
-    #         ];
-    #     ]
-    #     [
-    #         sh:not [ sh:hasValue bf:code ];
-    #         sh:property
-    #         [
-    #             a sh:PropertyShape ;
-    #             sh:path bf:Source ;
-    #             sh:minCount 0 ;
-    #         ];
-    #     ]
-    # );
-    # sh:property
     [
         a sh:PropertyShape ;
         sh:path bf:code ;
