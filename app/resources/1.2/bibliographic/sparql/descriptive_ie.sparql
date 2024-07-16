@@ -141,6 +141,7 @@ CONSTRUCT {
 
     ?relatedItem_identifier_iri a bf:Identifier ;
         rdf:value ?relatedItem_identifier ;
+        rdfs:label ?relatedItem_identifier_type ;
         bf:source ?abraham_source_iri .
 
     ?abraham_source_iri a bf:Source ;
@@ -963,18 +964,13 @@ WHERE {
         BIND(
             IF(
                 BOUND(?_relatedItem_identifier_element),
-                IF(
-                    BOUND(?_relatedItem_identifier_source),
-                    iri(?_relatedItem_identifier_source),
-                    IF(
-                        ?_relatedItem_identifier_type = "abraham_uri" || ?_relatedItem_identifier_type = "abraham_id",
-                        iri("https://anet.be"),
-                        "No relatedItem identifier source"
-                    )
+                IF(?_relatedItem_identifier_type NOT IN ("abraham_uri", "abraham_id"),
+                    ?_relatedItem_identifier_type,
+                    ?_null_relitemid_type
                 ),
                 ?_null_22
             )
-        as ?abraham_source_iri)
+        as ?relatedItem_identifier_type)
         BIND(
             IF(
                 str(?abraham_source_iri) = "https://anet.be",
@@ -982,5 +978,20 @@ WHERE {
                 ?_null_21
             )
         as ?abraham_source_label)
+        BIND(
+            IF(
+                BOUND(?_relatedItem_identifier_element),
+                IF(
+                    BOUND(?_relatedItem_identifier_source),
+                    iri(?_relatedItem_identifier_source),
+                    IF(
+                        ?_relatedItem_identifier_type = "abraham_uri" || ?_relatedItem_identifier_type = "abraham_id",
+                        iri("https://anet.be"),
+                        ?_null_relItemid_source
+                    )
+                ),
+                ?_null_22
+            )
+        as ?abraham_source_iri)
     }
 }
