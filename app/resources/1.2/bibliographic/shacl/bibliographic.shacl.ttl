@@ -316,15 +316,6 @@
         sh:message """mods:mods/mods:physicalDescription/mods:extent[@unit="pages"] element occurs more than once.
             Please check `mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]`"""@en ;
     ],
-    # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
-    [
-        a sh:PropertyShape ;
-        sh:path bf:extent ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#ExtentShape> ;
-        sh:name "Extent"@en ;
-        sh:description "MODS extent element"@en ;
-    ],
     # mods:mods/mods:physicalDescription/mods:form
     [
         a sh:PropertyShape ;
@@ -481,7 +472,7 @@
     ] .
 
 
-# mods:mods/mods:physicalDescription/mods:form
+# mods:mods/mods:physicalDescription
 <#CarrierShape> a sh:NodeShape ;
     sh:targetClass bf:Carrier ;
     sh:closed true ;
@@ -497,6 +488,31 @@
         sh:name "Label"@en ;
         sh:description "The label of the carrier."@en ;
     ],
+    # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:extent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#ExtentShape> ;
+        sh:name "Extent"@en ;
+        sh:description "MODS extent element"@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:note
+    [
+        a sh:PropertyShape ;
+        sh:path bf:note ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#NoteShape> ;
+        sh:name "Note"@en ;
+        sh:description "MODS Note element"@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:note
+    [
+        a sh:PropertyShape ;
+        sh:path bf:responsibilityStatement ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+    ],
     # mods:mods/mods:physicalDescription/mods:form[@authority]
     [
         a sh:PropertyShape ;
@@ -507,6 +523,25 @@
         sh:description "The source of the carrier."@en ;
     ] .
     
+<#NoteShape> a sh:NodeShape ;
+    sh:targetClass bf:Note ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKine sh:Literal ;
+        sh:datatype xsd:string ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:noteType ;
+        sh:nodeKine sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:in ("condition")
+    ] .
+
 <#SourceShape> a sh:NodeShape ;
     sh:targetClass bf:Source ;
     sh:closed true ;
