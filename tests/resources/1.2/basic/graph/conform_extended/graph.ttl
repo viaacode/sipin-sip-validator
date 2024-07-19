@@ -31,6 +31,22 @@ haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
 
 <http://the-fr.org/id/file-format/1507> a dct:FileFormat .
 
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
+
 haObjId:0132fb50cb37f922f0810f1740306382 a schema:BroadcastEvent ;
     schema:hasPart haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 ;
     schema:name "programma" .
