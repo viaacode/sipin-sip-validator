@@ -21,7 +21,33 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 haObjId:{{series_uri}} a bf:Series ;
-    schema:identifier <https://anet.be/record/opacbnc/c:bnc:99999/N> .
+    bf:identifier <https://anet.be/record/opacbnc/c:bnc:99999/N> .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+relSubType:iso a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/der> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is source of" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/der> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:iso ;
+    skos:prefLabel "derivation" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
 
 haObjId:uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e a premisowl:Event,
         haObj:transcription ;
@@ -426,8 +452,8 @@ haOrgId:OR-YYYYYYY a org:Organization ;
     rdf:value "c:bnc:99999" .
 
 haObjId:uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd a premisowl:File ;
-    relSubType:isi haObjId:uuid-4f8f37ab-a3f0-478c-becb-3e1826663558,
-        haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:iso haObjId:uuid-4f8f37ab-a3f0-478c-becb-3e1826663558 ;
     dct:format <http://the-fr.org/id/file-format/353> ;
     premisowl:fixity haObjId:534af70a2909841bc3d93a19322eede0 ;
     premisowl:originalName "page2.tif" ;
@@ -435,8 +461,8 @@ haObjId:uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd a premisowl:File ;
     schema:position 2 .
 
 haObjId:uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824 a premisowl:File ;
-    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99,
-        haObjId:uuid-df553be9-759a-4560-b8e7-9b06d220b57c ;
+    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:iso haObjId:uuid-df553be9-759a-4560-b8e7-9b06d220b57c ;
     dct:format <http://the-fr.org/id/file-format/353> ;
     premisowl:fixity haObjId:ab9f05e1d16e3583fdfd6031cfaad3b0 ;
     premisowl:originalName "page1.tif" ;
@@ -444,8 +470,8 @@ haObjId:uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824 a premisowl:File ;
     schema:position 1 .
 
 haObjId:uuid-45040a1c-8600-4c9e-8a57-153c88aad298 a premisowl:File ;
-    relSubType:isi haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f,
-        haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:iso haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f ;
     dct:format <http://the-fr.org/id/file-format/101> ;
     premisowl:fixity haObjId:930c2ea3505021d8bb0cd4ef8b7d7508 ;
     premisowl:originalName "page4_alto.xml" ;
@@ -453,8 +479,8 @@ haObjId:uuid-45040a1c-8600-4c9e-8a57-153c88aad298 a premisowl:File ;
     schema:position 4 .
 
 haObjId:uuid-4f8f37ab-a3f0-478c-becb-3e1826663558 a premisowl:File ;
-    relSubType:isi haObjId:uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd,
-        haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:iso haObjId:uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd ;
     dct:format <http://the-fr.org/id/file-format/101> ;
     premisowl:fixity haObjId:9618480b3b4466a8679e7f742293e471 ;
     premisowl:originalName "page2_alto.xml" ;
@@ -462,8 +488,8 @@ haObjId:uuid-4f8f37ab-a3f0-478c-becb-3e1826663558 a premisowl:File ;
     schema:position 2 .
 
 haObjId:uuid-5b321487-6077-49d0-96b3-2923ed7bd5d9 a premisowl:File ;
-    relSubType:isi haObjId:uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a,
-        haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:iso haObjId:uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a ;
     dct:format <http://the-fr.org/id/file-format/101> ;
     premisowl:fixity haObjId:2fd3dec88cead1d784895918fb6bb06b ;
     premisowl:originalName "page3_alto.xml" ;
@@ -471,8 +497,8 @@ haObjId:uuid-5b321487-6077-49d0-96b3-2923ed7bd5d9 a premisowl:File ;
     schema:position 3 .
 
 haObjId:uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a a premisowl:File ;
-    relSubType:isi haObjId:uuid-5b321487-6077-49d0-96b3-2923ed7bd5d9,
-        haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:iso haObjId:uuid-5b321487-6077-49d0-96b3-2923ed7bd5d9 ;
     dct:format <http://the-fr.org/id/file-format/353> ;
     premisowl:fixity haObjId:a65d975de019813ff2d1835579ce2671 ;
     premisowl:originalName "page3.tif" ;
@@ -480,8 +506,8 @@ haObjId:uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a a premisowl:File ;
     schema:position 3 .
 
 haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f a premisowl:File ;
-    relSubType:isi haObjId:uuid-45040a1c-8600-4c9e-8a57-153c88aad298,
-        haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:iso haObjId:uuid-45040a1c-8600-4c9e-8a57-153c88aad298 ;
     dct:format <http://the-fr.org/id/file-format/353> ;
     premisowl:fixity haObjId:b203825339525959f488ba1849b61114 ;
     premisowl:originalName "page4.tif" ;
@@ -489,8 +515,8 @@ haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f a premisowl:File ;
     schema:position 4 .
 
 haObjId:uuid-df553be9-759a-4560-b8e7-9b06d220b57c a premisowl:File ;
-    relSubType:isi haObjId:uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824,
-        haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:iso haObjId:uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824 ;
     dct:format <http://the-fr.org/id/file-format/101> ;
     premisowl:fixity haObjId:987049735baa85af6b0998079fc30df3 ;
     premisowl:originalName "page1_alto.xml" ;
@@ -506,7 +532,7 @@ haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
     bf:extent haObjId:7d0278ab7c1b0a64d600b450d32d5129 ;
     bf:genreForm haObjId:0485df95bbfad639457c6573459c5983,
         haObjId:69da234ae73a51cbeca323b8cefd1f4e ;
-    bf:hasSeries <https://anet.be/record/opacbnc/c:bnc:99999/N> ;
+    bf:hasSeries haObjId:{{series_uri}};
     bf:identifiedBy haObjId:99757a38731eb21418cd5836bc95d1e1 ;
     bf:issuance "serial" ;
     bf:originDate "2022-08-02"^^edtf:EDTF ;
