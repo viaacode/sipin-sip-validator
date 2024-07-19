@@ -27,8 +27,7 @@ CONSTRUCT
 
     ?rep a premisowl:Representation;
         relSubType:rep ?ie ;
-        relSubType:inc ?file ;
-        skos:hiddenLabel "{{ rep_folder }}" .
+        relSubType:inc ?file .
 
     ?file a premisowl:File;
         ?file_rel_prop_iri ?file_rep_iri;
@@ -205,7 +204,12 @@ WHERE
             }
             BIND(iri(concat(str(haObjId:), ?file_digest)) AS ?md5_uri)
             BIND(STRDT(?file_size, xsd:integer) AS ?file_size_int)
-            BIND(iri(REPLACE(?file_format, "fmt/", "http://the-fr.org/id/file-format/")) AS ?format_uri)
+            BIND(iri(
+                REPLACE(
+                    REPLACE(?file_format, "fmt/", "http://the-fr.org/id/file-format/"),
+                    "fmt-", "http://the-fr.org/id/file-format/"
+                )
+            ) AS ?format_uri)
             BIND(iri(?fixity_uri) AS ?f_uri)
             OPTIONAL {
                 ?_file ?file_15 [
