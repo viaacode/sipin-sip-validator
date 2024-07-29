@@ -700,14 +700,7 @@ WHERE {
                 }
             }
             MINUS {?_physicalDescription_note_element xyz:type "statement of responsibility"}
-            OPTIONAL {
-                ?_physicalDescription_element ?_physicalDescription_note_sor_prop ?_physicalDescription_note_sor_element .
-                ?_physicalDescription_note_sor_element a mods:note .
-                OPTIONAL {
-                    ?_physicalDescription_note_sor_element rdf:_1 ?physDes_note_sor .
-                }
-                ?_physicalDescription_note_sor_element xyz:type "statement of responsibility"
-            }
+            
             BIND(
                 IF(
                     BOUND(?physDes_note),
@@ -727,6 +720,18 @@ WHERE {
                 )
             as ?physDes_note_type_iri)
             
+            
+            
+        }
+        OPTIONAL {
+            OPTIONAL {
+                ?_physicalDescription_element ?_physicalDescription_note_sor_prop ?_physicalDescription_note_sor_element .
+                ?_physicalDescription_note_sor_element a mods:note .
+                OPTIONAL {
+                    ?_physicalDescription_note_sor_element rdf:_1 ?physDes_note_sor .
+                }
+                ?_physicalDescription_note_sor_element xyz:type "statement of responsibility"
+            }
             BIND(
                 IF(
                     BOUND(?physDes_note_sor),
@@ -734,7 +739,6 @@ WHERE {
                     ?_null_physDes_note_resp
                 )
             as ?responsibilityStatement)
-            
         }
         OPTIONAL {
             # mods:mods/mods:physicalDescription/mods:form
@@ -788,14 +792,7 @@ WHERE {
                 }
             }
             MINUS { ?_extent_element xyz:unit "pages"}
-            OPTIONAL {
-                ?_physicalDescription_element ?_physicalDescription_element_extent_pages_prop ?_extent_pages_element .
-                ?_extent_pages_element a mods:extent .
-                OPTIONAL {
-                    ?_extent_pages_element rdf:_1 ?extent_pages .
-                }
-                ?_extent_pages_element xyz:unit "pages" .
-            }
+            
             BIND(
                 IF(
                     BOUND(?extent),
@@ -815,6 +812,17 @@ WHERE {
                     ?_null_unit
                 )
             as ?extent_unit_iri)
+            
+        }
+        OPTIONAL {
+            OPTIONAL {
+                ?_physicalDescription_element ?_physicalDescription_element_extent_pages_prop ?_extent_pages_element .
+                ?_extent_pages_element a mods:extent .
+                OPTIONAL {
+                    ?_extent_pages_element rdf:_1 ?extent_pages .
+                }
+                ?_extent_pages_element xyz:unit "pages" .
+            }
             BIND(
                 IF(
                     BOUND(?extent_pages),
