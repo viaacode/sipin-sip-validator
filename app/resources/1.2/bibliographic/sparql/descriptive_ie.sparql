@@ -979,13 +979,7 @@ WHERE {
                 ?_null_22
             )
         as ?relatedItem_identifier_type)
-        BIND(
-            IF(
-                str(?abraham_source_iri) = "https://anet.be",
-                "Abraham. Catalogus van Belgische kranten",
-                ?_null_21
-            )
-        as ?abraham_source_label)
+        
         BIND(
             IF(
                 BOUND(?_relatedItem_identifier_element),
@@ -1001,5 +995,12 @@ WHERE {
                 ?_null_22
             )
         as ?abraham_source_iri)
+        BIND(
+            IF(
+                str(?abraham_source_iri) = "https://anet.be",
+                "Abraham. Catalogus van Belgische kranten",
+                ?_null_21
+            )
+        as ?abraham_source_label)
     }
 }
