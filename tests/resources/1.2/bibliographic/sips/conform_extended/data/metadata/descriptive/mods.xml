@@ -11,7 +11,7 @@
   <mods:abstract>Newspaper abstract</mods:abstract>
   <mods:genre authority="marcgt" authorityURI="https://www.loc.gov/standards/valuelist/marcgt.html">newspaper</mods:genre>
   <mods:genre authority="ngl" authorityURI="https://www.lib.washington.edu/gmm/collections/mcnews/ngl">amateur newspapers</mods:genre>
-  <mods:originInfo>
+  <mods:originInfo eventType="publication">
     <mods:issuance>serial</mods:issuance>
     <mods:dateIssued encoding="edtf">2022-08-02</mods:dateIssued>
     <mods:place>

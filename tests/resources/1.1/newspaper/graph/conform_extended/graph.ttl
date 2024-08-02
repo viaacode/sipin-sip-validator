@@ -20,7 +20,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-haObjId:{{series_uri}} a bf:Series ;
+haObjId:{{main_series_uri}} a bf:Series ;
     bf:identifier <https://anet.be/record/opacbnc/c:bnc:99999/N> .
 
 relSubType:isi a skos:Concept ;
@@ -532,7 +532,7 @@ haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
     bf:extent haObjId:7d0278ab7c1b0a64d600b450d32d5129 ;
     bf:genreForm haObjId:0485df95bbfad639457c6573459c5983,
         haObjId:69da234ae73a51cbeca323b8cefd1f4e ;
-    bf:hasSeries haObjId:{{series_uri}};
+    bf:hasSeries haObjId:{{main_series_uri}};
     bf:identifiedBy haObjId:99757a38731eb21418cd5836bc95d1e1 ;
     bf:issuance "serial" ;
     bf:originDate "2022-08-02"^^edtf:EDTF ;

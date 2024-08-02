@@ -20,7 +20,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-haObjId:{{series_uri}} a bf:Series ;
+haObjId:{{main_series_uri}} a bf:Series ;
     bf:identifier <https://anet.be/record/opacbnc/c:bnc:XX/N> .
 
 haObjId:uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e a premisowl:Event,
@@ -482,7 +482,7 @@ haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
     rdfs:label "Newspaper title" ;
     bf:carrier haObjId:{{carrier_uri}} ;
     bf:genreForm haObjId:69da234ae73a51cbeca323b8cefd1f4e ;
-    bf:hasSeries haObjId:{{series_uri}} ;
+    bf:hasSeries haObjId:{{main_series_uri}} ;
     bf:identifiedBy haObjId:99757a38731eb21418cd5836bc95d1e1 ;
     bf:issuance "serial" ;
     bf:originDate "1892-01-01"^^edtf:EDTF ;
