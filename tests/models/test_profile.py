@@ -545,7 +545,7 @@ class TestMaterialArtworkProfile11:
         assert isomorphic(graph, expected)
 
 
-class TestMaterialArtworkProfile12:
+class TestMaterialArtworkProfile12(TestMaterialArtworkProfile11):
     def graph_path(self) -> Path:
         return Path(
             "tests",

@@ -38,6 +38,22 @@ haObjId:uuid-07DBD6F2-182C-4C58-BCFC-FDCDFC9048F4 a premisowl:Event,
     haObj:scan-setup "vaste opstelling, persoon met scanner beweegt rond beeld" ; 
     schema:instrument haObjId:uuid-1cc1fe7a-da78-4c53-847a-0fd141ce2d3b . 
  
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
+
 haObjId:0132fb50cb37f922f0810f1740306382 a schema:BroadcastEvent ;
     schema:hasPart haObjId:uuid-645392be-fa36-40fe-92e7-16c9fa60fe46 ;
     schema:name "programma" .
