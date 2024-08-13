@@ -1,0 +1,208 @@
+@prefix cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix haObjId: <https://data.hetarchief.be/id/entity/> .
+@prefix haOrgId: <https://data.hetarchief.be/id/organization/> .
+@prefix haSip: <https://data.hetarchief.be/ns/sip/> .
+@prefix haSipId: <https://data.hetarchief.be/id/sip/1.2/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
+    dct:conformsTo haSipId:basic,
+        <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+    dct:format "Photographs – Digital" ;
+    schema:agent [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
+            schema:roleName "ARCHIVIST" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:570f779526a5acda5c2935ad1a346b2d ;
+            schema:roleName "CREATOR" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
+            schema:roleName "CREATOR" ] .
+
+<http://the-fr.org/id/file-format/1507> a dct:FileFormat .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
+
+haObjId:02e4eb2f74ac06dd9cdfab861553697e a cryptographicHashFunctions:md5 ;
+    rdf:value "02e4eb2f74ac06dd9cdfab861553697e" .
+
+haObjId:123236afb8b6f426acd4f880fc9efac4 a haObjId:Ardome ;
+    rdf:value "Ardome" .
+
+haObjId:12bfcca0c049d5c6799be5bb892eb7ae a haObjId:DataPID ;
+    rdf:value "DataPID" .
+
+haObjId:18fc2948e1554ab5f0edab54f9c3351c a haObjId:WorkPID ;
+    rdf:value "WorkPID" .
+
+haObjId:28a5402e2cabee2d2f7dfc2cbe92ff7e a haObjId:Historical_carrier ;
+    rdf:value "Historical carrier" .
+
+haObjId:32128dae3190f832772f6880be6e3c62 a haObjId:PersistenteURI_Record ;
+    rdf:value "PersistenteURI Record" .
+
+haObjId:38e2c58dcc377e8430badd77156b7b87 a haObjId:PersistenteURI_VKC_Record ;
+    rdf:value "PersistenteURI VKC Record" .
+
+haObjId:497c66021c9da977bd22e6cc48f9893a a haObjId:Pdf ;
+    rdf:value "Pdf" .
+
+haObjId:5105d9e294f92fa389f13114e198c255 a haObjId:Acquisition_number ;
+    rdf:value "Acquisition number" .
+
+haObjId:595ad5df1da1bac70b6dfb274d658c81 a haObjId:MEEMOO-LOCAL-ID ;
+    rdf:value "ce980d9" .
+
+haObjId:5fb9f344648b3962f354360e0184adb0 a haObjId:Api ;
+    rdf:value "Api" .
+
+haObjId:77c0115a08f5da5f9eead71ff28956da a haObjId:MEDIA_ID ;
+    rdf:value "MEDIA ID" .
+
+haObjId:890ca28a977095c2dcb232babc875278 a haObjId:Bestandsnaam ;
+    rdf:value "Bestandsnaam" .
+
+haObjId:89bee237d4da0e8c3166565d7e314d85 a haObjId:PersistenteURI_Werk ;
+    rdf:value "PersistenteURI Werk" .
+
+haObjId:9186865a1f53ff5cb8d7c5abfaff6c57 a haObjId:Analoge_drager ;
+    rdf:value "Analoge drager" .
+
+haObjId:9af239296fefa5b219d81a0f31df2ce8 a haObjId:Word_ID ;
+    rdf:value "Word ID" .
+
+haObjId:Acquisition_number rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Alternative_number rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Analoge_drager rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Api rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Ardome rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Bestandsnaam rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:DataPID rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Historical_carrier rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Historical_record_number rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Inventarisnummer rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:MEDIA_ID rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:MEEMOO-LOCAL-ID rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Object_number rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Pdf rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:PersistenteURI_Record rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:PersistenteURI_VKC_Record rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:PersistenteURI_VKC_Werk rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:PersistenteURI_Werk rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Priref rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Vaf_ID rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:Word_ID rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:WorkPID rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:b8b3c63608fa73a292c2310921e10e56 a haObjId:Alternative_number ;
+    rdf:value "Alternative number" .
+
+haObjId:bf949f0f54fef15f1994a8dae1b2a54c a haObjId:PersistenteURI_VKC_Werk ;
+    rdf:value "PersistenteURI VKC Werk" .
+
+haObjId:c98e7e377b5811fd0d1130d2ec5a2f06 a haObjId:Inventarisnummer ;
+    rdf:value "Inventarisnummer" .
+
+haObjId:db0a8c1ddaca9b30f2ba003dd78c31eb a haObjId:Historical_record_number ;
+    rdf:value "Historical record number" .
+
+haObjId:ddf08d834276945bc1f9a7582515147b a haObjId:Vaf_ID ;
+    rdf:value "Vaf ID" .
+
+haObjId:f27f26e20db6bf26672b9467aba2ea57 a haObjId:Object_number ;
+    rdf:value "v_2021073114124363" .
+
+haObjId:ff50e8586884623f7087c5a33c0aedee a haObjId:Priref ;
+    rdf:value "Priref" .
+
+haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity;
+    relSubType:isr haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
+    dct:created "2020"^^edtf:EDTF ;
+    dct:description "Descriptie"@nl ;
+    dct:title "Titel"@nl ;
+    premisowl:identifier haObjId:123236afb8b6f426acd4f880fc9efac4,
+        haObjId:12bfcca0c049d5c6799be5bb892eb7ae,
+        haObjId:18fc2948e1554ab5f0edab54f9c3351c,
+        haObjId:28a5402e2cabee2d2f7dfc2cbe92ff7e,
+        haObjId:32128dae3190f832772f6880be6e3c62,
+        haObjId:38e2c58dcc377e8430badd77156b7b87,
+        haObjId:497c66021c9da977bd22e6cc48f9893a,
+        haObjId:5105d9e294f92fa389f13114e198c255,
+        haObjId:595ad5df1da1bac70b6dfb274d658c81,
+        haObjId:5fb9f344648b3962f354360e0184adb0,
+        haObjId:77c0115a08f5da5f9eead71ff28956da,
+        haObjId:890ca28a977095c2dcb232babc875278,
+        haObjId:89bee237d4da0e8c3166565d7e314d85,
+        haObjId:9186865a1f53ff5cb8d7c5abfaff6c57,
+        haObjId:9af239296fefa5b219d81a0f31df2ce8,
+        haObjId:b8b3c63608fa73a292c2310921e10e56,
+        haObjId:bf949f0f54fef15f1994a8dae1b2a54c,
+        haObjId:c98e7e377b5811fd0d1130d2ec5a2f06,
+        haObjId:db0a8c1ddaca9b30f2ba003dd78c31eb,
+        haObjId:ddf08d834276945bc1f9a7582515147b,
+        haObjId:f27f26e20db6bf26672b9467aba2ea57,
+        haObjId:ff50e8586884623f7087c5a33c0aedee .
+
+haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d a premisowl:File ;
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
+    dct:format <http://the-fr.org/id/file-format/1507> ;
+    premisowl:fixity haObjId:02e4eb2f74ac06dd9cdfab861553697e ;
+    premisowl:originalName "D523F963.jpg" ;
+    premisowl:size 520 .
+
+haOrgId:570f779526a5acda5c2935ad1a346b2d a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1" .
+
+haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ;
+    relSubType:inc haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d ;
+    relSubType:rep haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 .
+
+haOrgId:OR-m30wc4t a org:Organization ;
+    skos:prefLabel "Flemish Cat Museum"@nl ;
+    schema:identifier "OR-m30wc4t" .

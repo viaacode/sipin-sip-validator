@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<mods:mods xmlns:mods="http://www.loc.gov/mods/v3" version="3.7" xmlns:xs="http://www.w3.org/2001/XMLSchema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd" xmlns:null="http://www.w3.org/1999/xlink">
+  <mods:titleInfo>
+    <mods:title>Newspaper title</mods:title>
+  </mods:titleInfo>
+  <mods:titleInfo type="alternative" otherType="incipit">
+    <mods:title>Newspaper title: alt</mods:title>
+  </mods:titleInfo>
+  <mods:identifier>uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c</mods:identifier>
+  <mods:typeOfResource>newspaper edition</mods:typeOfResource>
+  <mods:abstract>Newspaper abstract</mods:abstract>
+  <mods:genre authority="marcgt" authorityURI="https://www.loc.gov/standards/valuelist/marcgt.html">newspaper</mods:genre>
+  <mods:genre authority="ngl" authorityURI="https://www.lib.washington.edu/gmm/collections/mcnews/ngl">amateur newspapers</mods:genre>
+  <mods:originInfo eventType="publication">
+    <mods:issuance>serial</mods:issuance>
+    <mods:dateIssued encoding="edtf">2022-08-02</mods:dateIssued>
+    <mods:place>
+      <mods:placeTerm type="text">Ghent, Belgium</mods:placeTerm>
+      <mods:placeTerm type="code" authority="iso3166" authorityURI="https://www.iso.org/iso-3166-country-codes.html">BEL</mods:placeTerm>
+    </mods:place>
+    <mods:dateCreated encoding="edtf">2022-08-02</mods:dateCreated>
+  </mods:originInfo>
+  <mods:subject>
+    <mods:topic>certain cat</mods:topic>
+    <mods:topic>cats</mods:topic>
+  </mods:subject>
+  <mods:name type="personal">
+    <mods:namePart type="given">given</mods:namePart>
+    <mods:namePart type="family">family</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text">author</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:relatedItem type="series">
+    <mods:identifier type="abraham_id" typeURI="https://anet.be">c:bnc:99999</mods:identifier>
+    <mods:identifier type="abraham_uri" typeURI="https://anet.be">https://anet.be/record/opacbnc/c:bnc:99999/N</mods:identifier>
+  </mods:relatedItem>
+  <mods:relatedItem type="series">
+    <mods:identifier type="number">4</mods:identifier>
+    <mods:titleInfo>
+      <mods:title>Number series title</mods:title>
+    </mods:titleInfo>
+  </mods:relatedItem>
+  <mods:relatedItem type="series">
+    <mods:identifier type="page">3</mods:identifier>
+    <mods:titleInfo>
+      <mods:title>Page series title</mods:title>
+    </mods:titleInfo>
+  </mods:relatedItem>
+  <mods:physicalDescription>
+    <mods:note type="condition">Bad</mods:note>
+    <mods:note type="statement of responsibility">This is the statement of responsibility</mods:note>
+    <mods:form authority="marcform" authorityURI="https://www.loc.gov/standards/valuelist/marcform.html">print</mods:form>
+    <mods:extent unit="pages">4</mods:extent>
+    <mods:extent unit="cm">59.7 x 74.9</mods:extent>
+  </mods:physicalDescription>
+  <mods:note type="license">VIAA-ONDERWIJS</mods:note>
+  <mods:note type="license">VIAA-ONDERZOEK</mods:note>
+  <mods:note type="license">VIAA-INTRA_CP-CONTENT</mods:note>
+  <mods:note type="license">VIAA-INTRA_CP-METADATA-ALL</mods:note>
+  <mods:note type="license">VIAA-PUBLIEK-METADATA-LTD</mods:note>
+  <mods:note type="license">BEZOEKERTOOL-CONTENT</mods:note>
+  <mods:note type="license">BEZOEKERTOOL-METADATA-ALL</mods:note>
+</mods:mods> 

@@ -2,7 +2,7 @@
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
 @prefix haObj: <https://data.hetarchief.be/ns/object/> .
-@prefix haObjId: <https://data.hetarchief.be/id/object/> .
+@prefix haObjId: <https://data.hetarchief.be/id/entity/> .
 @prefix haOrgId: <https://data.hetarchief.be/id/organization/> .
 @prefix haSip: <https://data.hetarchief.be/ns/sip/> .
 @prefix haSipId: <https://data.hetarchief.be/id/sip/1.1/> .
@@ -30,6 +30,22 @@ haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
             schema:roleName "CREATOR" ] .
 
 <http://the-fr.org/id/file-format/1507> a dct:FileFormat .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
 
 haObjId:02e4eb2f74ac06dd9cdfab861553697e a cryptographicHashFunctions:md5 ;
     rdf:value "02e4eb2f74ac06dd9cdfab861553697e" .
@@ -69,7 +85,6 @@ haOrgId:570f779526a5acda5c2935ad1a346b2d a premisowl:SoftwareAgent ;
 haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ;
     relSubType:inc haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d ;
     relSubType:rep haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 .
-
 haOrgId:OR-m30wc4t a org:Organization ;
     skos:prefLabel "Flemish Cat Museum"@nl ;
     schema:identifier "OR-m30wc4t" .

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://data.hetarchief.be/id/sip/1.2/basic">
+
+    <dcterms:identifier>uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4</dcterms:identifier>
+    <dcterms:title xml:lang="nl">Titel</dcterms:title>
+    <dcterms:description xml:lang="nl">Descriptie</dcterms:description>
+    <dcterms:created xsi:type="edtf:EDTF-level1">2020</dcterms:created>
+
+</metadata> 

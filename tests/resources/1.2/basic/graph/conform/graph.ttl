@@ -1,0 +1,91 @@
+@prefix cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix haObjId: <https://data.hetarchief.be/id/entity/> .
+@prefix haOrgId: <https://data.hetarchief.be/id/organization/> .
+@prefix haSip: <https://data.hetarchief.be/ns/sip/> .
+@prefix haSipId: <https://data.hetarchief.be/id/sip/1.2/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
+    dct:conformsTo haSipId:basic,
+        <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+    dct:format "Photographs – Digital" ;
+    schema:agent [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
+            schema:roleName "ARCHIVIST" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:570f779526a5acda5c2935ad1a346b2d ;
+            schema:roleName "CREATOR" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:OR-m30wc4t ;
+            schema:roleName "CREATOR" ] .
+
+<http://the-fr.org/id/file-format/1507> a dct:FileFormat .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
+
+haObjId:02e4eb2f74ac06dd9cdfab861553697e a cryptographicHashFunctions:md5 ;
+    rdf:value "02e4eb2f74ac06dd9cdfab861553697e" .
+
+haObjId:Object_number rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:f27f26e20db6bf26672b9467aba2ea57 a haObjId:Object_number ; 
+    rdf:value "v_2021073114124363" . 
+
+haObjId:MEEMOO-LOCAL-ID rdfs:subClassOf haObj:LocalIdentifier .
+
+haObjId:595ad5df1da1bac70b6dfb274d658c81 a haObjId:MEEMOO-LOCAL-ID ; 
+    rdf:value "ce980d9" . 
+
+haObjId:f27f26e20db6bf26672b9467aba2ea57 a haObjId:Object_number ; 
+    rdf:value "v_2021073114124363" . 
+
+haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 a premisowl:IntellectualEntity;
+    relSubType:isr haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
+    dct:created "2020"^^edtf:EDTF ;
+    dct:description "Descriptie"@nl ;
+    dct:title "Titel"@nl ;
+    premisowl:identifier haObjId:595ad5df1da1bac70b6dfb274d658c81, 
+        haObjId:f27f26e20db6bf26672b9467aba2ea57 . 
+
+haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d a premisowl:File ;
+    relSubType:isi haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 ;
+    dct:format <http://the-fr.org/id/file-format/1507> ;
+    premisowl:fixity haObjId:02e4eb2f74ac06dd9cdfab861553697e ;
+    premisowl:originalName "D523F963.jpg" ;
+    premisowl:size 520 .
+
+haOrgId:570f779526a5acda5c2935ad1a346b2d a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1" .
+
+haObjId:uuid-4e475706-2752-4f77-9069-1f71c0e22572 a premisowl:Representation ;
+    relSubType:inc haObjId:uuid-945a16cd-eeb6-4a4c-95bb-4656a9f0909d ;
+    relSubType:rep haObjId:uuid-6b80a848-f2d2-44a4-bc55-56f272a8e5b4 .
+
+haOrgId:OR-m30wc4t a org:Organization ;
+    skos:prefLabel "Flemish Cat Museum"@nl ;
+    schema:identifier "OR-m30wc4t" .

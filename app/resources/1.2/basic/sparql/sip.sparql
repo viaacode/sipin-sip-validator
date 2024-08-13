@@ -1,0 +1,169 @@
+PREFIX premis: <http://www.loc.gov/premis/v3#>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX haOrgId: <https://data.hetarchief.be/id/organization/>
+PREFIX haObjId: <https://data.hetarchief.be/id/entity/>
+PREFIX haObj: <https://data.hetarchief.be/ns/object/>
+PREFIX haSipId: <https://data.hetarchief.be/id/sip/1.2/>
+PREFIX haSip: <https://data.hetarchief.be/ns/sip/>
+PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX schema: <https://schema.org/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX mets: <http://www.loc.gov/METS/>
+PREFIX csip: <https://DILCIS.eu/XML/METS/CSIPExtensionMETS#>
+PREFIX org: <http://www.w3.org/ns/org#> 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+CONSTRUCT {
+    ?sip a haSip:SIP;
+        dct:conformsTo ?mets_profile;
+        dct:conformsTo ?sip_profile;
+        dct:format ?type;
+        schema:agent [
+            a schema:Role ;
+            schema:roleName ?role;
+            schema:agent ?agent
+        ] ;
+        schema:isPartOf ?batch .
+
+    ?agent  a ?atype;
+        skos:prefLabel ?alabel;
+        schema:name ?aname;
+        schema:identifier ?agent_id;
+        schema:version ?agent_software_version .
+
+    ?batch a haSip:Batch;
+        schema:identifier ?bagIdValue;
+        schema:hasPart ?sip .
+}
+WHERE {
+    SERVICE <x-sparql-anything:location={{ bag_path }}/data/mets.xml> {
+        {
+            ?mets a mets:mets .
+            OPTIONAL {
+                ?mets xyz:OBJID ?sip_id .
+            }
+            OPTIONAL {
+                ?mets xyz:PROFILE ?_mets_profile .
+                BIND(iri(?_mets_profile) AS ?mets_profile)
+            }
+            OPTIONAL {
+                ?mets xyz:TYPE ?type .
+            }
+            OPTIONAL {
+                ?mets csip:OTHERCONTENTINFORMATIONTYPE ?_sip_profile .
+                BIND(iri(?_sip_profile) AS ?sip_profile)
+            }
+            OPTIONAL {
+                ?mets ?1 ?_mets_hdr .
+                ?_mets_hdr a mets:metsHdr .
+                OPTIONAL {
+                    ?_mets_hdr ?2 ?_agent .
+                    ?_agent a mets:agent .
+                    OPTIONAL {
+                        ?_agent ?3 ?_name .
+                        ?_name a mets:name ;
+                            rdf:_1 ?agent_name .
+                    }
+                    OPTIONAL {
+                        ?_agent ?4 ?_note .
+                        ?_note a mets:note ;
+                            csip:NOTETYPE "IDENTIFICATIONCODE" ;
+                            rdf:_1 ?agent_id .
+                    }
+                    OPTIONAL {
+                        ?_agent ?5 ?_note .
+                        ?_note a mets:note ;
+                            csip:NOTETYPE "SOFTWARE VERSION" ;
+                            rdf:_1 ?agent_software_version .
+                    }
+                    OPTIONAL {
+                        ?_agent xyz:ROLE ?role .
+                    }
+                    OPTIONAL {
+                        ?_agent xyz:TYPE ?agent_type .
+                        
+                    }
+                    OPTIONAL {
+                        ?_agent xyz:OTHERTYPE ?agent_other_type .
+                    }
+                }
+            }
+            BIND(
+                IF(
+                    BOUND(?sip_id),
+                    iri(concat(str(haSipId:), ?sip_id)),
+                    BNODE()
+                )
+            AS ?sip)
+        }
+        
+        BIND(
+            IF(
+                BOUND(?agent_type) && ?agent_type = "ORGANIZATION",
+                org:Organization,
+                IF(
+                    BOUND(?agent_type) && ?agent_type = "INDIVIDUAL",
+                    schema:Person,
+                    IF(
+                        BOUND(?agent_type) && ?agent_type = "OTHER",
+                        IF(
+                            BOUND(?agent_other_type) && ?agent_other_type = "SOFTWARE",
+                            premisowl:SoftwareAgent,
+                            "Unkown Agent OtherType"
+                        ),
+                        "Unkown Agent Type"
+                    )
+                )
+            )
+        AS ?atype)
+        BIND(
+            IF(
+                BOUND(?agent_type) && ?agent_type = "ORGANIZATION",
+                STRLANG(?agent_name, "nl"),
+                ?null2
+            ) 
+        AS ?alabel)
+        BIND(
+            IF(
+                !BOUND(?agent_type) || ?agent_type != "ORGANIZATION", 
+                STRDT(?agent_name, xsd:string), 
+                ?null3
+            ) 
+        AS ?aname)
+        BIND(
+            IF(
+                BOUND(?agent_id),
+                iri(concat(str(haOrgId:), ?agent_id)),
+                IF(
+                    BOUND(?agent_name) && BOUND(?agent_software_version),
+                    iri(concat(str(haOrgId:), MD5(CONCAT(?agent_name, ?agent_software_version)))),
+                    IF(
+                        BOUND(?agent_name),
+                        iri(concat(str(haOrgId:), MD5(?agent_name))),
+                        "No name (or if software, software version) found"
+                    )
+                )
+            )
+        AS ?agent)
+    }
+    SERVICE <x-sparql-anything:location={{ bag_path }}/bag-info.txt> {
+        OPTIONAL { 
+            fx:properties
+                  fx:txt.split  "\\n" .
+            [] fx:anySlot    ?o .
+            BIND(STRBEFORE(?o, ": ") AS ?_bagLabel)
+            BIND(STRAFTER(?o, ": ") AS ?bagIdValue)
+            FILTER(?_bagLabel = "Meemoo-Batch-Identifier")
+            BIND(iri(concat(str(haSipId:), ?bagIdValue)) AS ?batch)
+        }
+    }
+}

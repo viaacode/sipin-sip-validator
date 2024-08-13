@@ -1,0 +1,765 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
+@prefix relType: <http://id.loc.gov/vocabulary/preservation/relationshipType/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <https://schema.org/> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix haObjId: <https://data.hetarchief.be/id/entity/> . 
+@prefix eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/> .
+@prefix eventRelAgRole: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> .
+@prefix eventRelObjRole: <http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+@base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
+
+<#typeList> a rdf:List ;
+  rdf:first rdf:type ;
+  rdf:rest ( ) .
+
+<#IntellectualEntityCountShape>
+  a sh:NodeShape ;
+  sh:targetNode premis:IntellectualEntity ;
+  sh:property [
+    sh:path [ sh:inversePath rdf:type ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """No Intellectual Entity found."""@en ;
+  ] .
+
+<#IntellectualEntityShape> a sh:NodeShape ;
+  sh:targetClass premis:IntellectualEntity ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property 
+  [
+    a sh:PropertyShape ;
+    sh:path premis:identifier ;
+    sh:or (
+      [ sh:class haObjId:MEEMOO-LOCAL-ID ]
+      [ sh:class haObjId:Acquisition_number ]
+      [ sh:class haObjId:Alternative_number ]
+      [ sh:class haObjId:Analoge_drager ]
+      [ sh:class haObjId:Ardome ]
+      [ sh:class haObjId:Basis ]
+      [ sh:class haObjId:Historical_carrier ]
+      [ sh:class haObjId:Historical_record_number ]
+      [ sh:class haObjId:Inventarisnummer ]
+      [ sh:class haObjId:MEDIA_ID ]
+      [ sh:class haObjId:Object_number ]
+      [ sh:class haObjId:Priref ]
+      [ sh:class haObjId:Word_ID ]
+      [ sh:class haObjId:Topstuk_ID ]
+      [ sh:class haObjId:WorkPID ]
+      [ sh:class haObjId:DataPID ]
+      [ sh:class haObjId:Bestandsnaam ]
+      [ sh:class haObjId:Api ]
+      [ sh:class haObjId:Pdf ]
+      [ sh:class haObjId:PersistenteURI_Record ]
+      [ sh:class haObjId:PersistenteURI_Werk ]
+      [ sh:class haObjId:PersistenteURI_VKC_Record ]
+      [ sh:class haObjId:PersistenteURI_VKC_Werk ]
+      [ sh:class haObjId:MEEMOO-PID ]
+      [ sh:class haObjId:Vaf_ID ]
+    );
+    sh:message """Class of premis:identifier is not part of allowed list.
+      Please check `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierType`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:isr ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:Representation ;
+    # sh:node <#RepresentationShape> ;
+    sh:name "is represented by"@en ;
+    sh:description "The representation of the intellectual entity."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """No representation or mismatch between IE's `objectIdentifier` and Representation's `objectIdentifier` and their relationships.
+      Please check the identifiers in `premis:premis/premis:object/premis:relationship/premis:relatedObjectIdentifier`."""@en ;
+  ] .
+
+<#RepresentationCountShape>
+  a sh:NodeShape ;
+  sh:targetNode premis:Representation ;
+  sh:property [
+    sh:path [ sh:inversePath rdf:type ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """No Representation found."""@en ;
+  ] .
+
+<#RepresentationShape> a sh:NodeShape ;
+  sh:targetClass premis:Representation ;
+  sh:closed true ;
+  sh:ignoredProperties (rdf:type skos:hiddenLabel) ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:rep ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:IntellectualEntity ;
+    sh:name "represents"@en ;
+    sh:description "The intellectual entity represented by the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message """The Representation's value for `represents` relationshipSubType is not an IE .
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=represents)`
+      OR check for mismatch between IE id's in the different files.
+        (`premis:premis/premis:object/premis:objectIdentifier` in root `premis.xml`file)"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:rep ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Representation has no value IE for `represents` relationshipSubType.
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=represents)`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:rep ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Representation has multiple values for `represents` relationshipSubType.
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=represents)`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:inc ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:File ;
+    sh:name "includes"@en ;
+    sh:description "The file(s) included in the representation."@en ;
+    sh:severity sh:Violation ;
+    sh:message """The Representation's value for `includes` relationshipSubType is not a File .
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=includes)`
+      OR check for mismatch between File id's.
+        (`premis:premis/premis:object[@xsi:type=premis:File]/premis:objectIdentifier`.)"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:inc ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Representation has no value File for `includes` relationshipSubType.
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=includes)`"""@en ;
+  ] .
+
+<#FileShape> a sh:NodeShape ;
+  sh:targetClass premis:File ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:isi ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:Representation ;
+    sh:name "is included in"@en ;
+    sh:description "The representation in which the file is included."@en ;
+    sh:severity sh:Violation ;
+    sh:message """The File's value for `is included in` relationshipSubType is not a Representation.
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is included in")`
+      OR check for mismatch between the Representation id's `premis:premis/premis:object[@xsi:type=premis:Representation]/premis:objectIdentifier`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:isi ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has no value for `is included in` relationshipSubType.
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is included in")`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:iso ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:File ;
+    sh:name "is source of"@en ;
+    sh:description "The source of the file"@en ;
+    sh:message """The File's value for `is source of` relationshipSubType is not a File.
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is included in")`
+      OR check for mismatch between the File ids `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierValue`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:fixity ;
+    sh:nodeKind sh:IRI ;
+    sh:class <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5> ;
+    sh:name "has fixity"@en ;
+    sh:description "The calculated fixity checksum of the file."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:fixity ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has no value for `fixity`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:fixity`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:fixity ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has more than one value for `fixity`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:fixity`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:size ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:name "has size"@en ;
+    sh:description "The size of the file in bytes."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:size ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has no value for `size`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:size`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:size ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has more than one value for `size`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:size`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:format ;
+    sh:nodeKind sh:IRI ;
+    sh:class dcterms:FileFormat ;
+    sh:name "has format"@en ;
+    sh:description "The format of the file."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:format ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message """File has no value for `dcterms:format`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:format`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path dcterms:format ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has more than one value for `dcterms:format`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:format`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:originalName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has original name"@en ;
+    sh:description "The original name of the file."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:originalName ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has no value for `premis:originalName`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:originalName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:originalName ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """File has more than one value for `premis:originalName`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:originalName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:originalName ;
+    sh:pattern "^[a-zA-Z0-9]{1}[a-zA-Z0-9._-]{0,128}\\.{1}[a-zA-Z0-9]{1,12}$" ;
+    sh:severity sh:Violation ;
+    sh:message """File has a non valid value for `premis:originalName`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:originalName`"""@en ;
+  ] .
+
+<#Md5Shape> a sh:NodeShape ;
+  sh:targetClass <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5> ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has message digest"@en ;
+    sh:description "The calculated message digest."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Message digest has no value for `rdf:value`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:fixity/premis:messageDigestAlgorithm`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path rdf:value ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Message digest has more than one value for `rdf:value`.
+      Please check `premis:premis/premis:object[@xsi:type="premis:File"]/premis:objectCharacteristics/premis:fixity/premis:messageDigestAlgorithm`"""@en ;
+  ] .
+
+<#EventShape> a sh:NodeShape ;
+  sh:targetClass premis:Event ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path prov:startedAtTime ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:name "has start time"@en ;
+    sh:description "The start time of the event."@en ;
+    sh:severity sh:Violation ;
+    sh:message """eventDateTime is not of type xsd:dateTime, or is not a valid dateTime.
+      Please check `premis:premis/premis:eventDateTime`. The right format is YYYY-MM-DDThh:mm:ssTZD"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:startedAtTime ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has no value for `prov:startedAtTime`.
+      Please check `premis:premis/premis:eventDateTime`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:startedAtTime ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has more than one value for `prov:startedAtTime`.
+      Please check `premis:premis/premis:eventDateTime`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:endedAtTime ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:name "has end time"@en ;
+    sh:description "The end time of the event."@en ;
+    sh:severity sh:Violation ;
+    sh:message """eventDateTime is not of type xsd:dateTime, or is not a valid dateTime.
+      Please check `premis:premis/premis:eventDateTime`. The right format is YYYY-MM-DDThh:mm:ssTZD"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:endedAtTime ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has no value for `prov:endedAtTime`.
+      Please check `premis:premis/premis:eventDateTime`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path prov:endedAtTime ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has more than one value for `prov:endedAtTime`.
+      Please check `premis:premis/premis:eventDateTime`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:note ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has note"@en ;
+    sh:description "A note about the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:note ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message """Event has no value for `premis:note`.
+      Please check `premis:premis/premis:event/premis:eventDetailInformation/premis:eventDetail`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:note ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has more than one value for `premis:note`.
+      Please check `premis:premis/premis:event/premis:eventDetailInformation/premis:eventDetail`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path premis:outcome ;
+    sh:nodeKind sh:IRI ;
+    sh:in (eventOutcome:suc eventOutcome:fai eventOutcome:war) ;
+    sh:name "has outcome"@en ;
+    sh:description "The outcome of the event."@en ;
+    sh:severity sh:Violation ;
+    sh:message """Event value should be one of `fail`, `success` or `warning`.
+      Please check `premis:premis/premis:eventOutcomeInformation/premis:eventOutcome`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelAgRole:exe ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:SoftwareAgent ;
+    sh:name "has executing agent"@en ;
+    sh:description "The agent that executed the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelAgRole:imp ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has implementing agent"@en ;
+    sh:description "The organization that implemented the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelAgRole:val ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has validating agent"@en ;
+    sh:description "The agent that validated the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelAgRole:aut ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has authorizing agent"@en ;
+    sh:description "The agent that authorized the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:instrument ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:HardwareAgent ;
+    sh:name "has instrument"@en ;
+    sh:description "The hardware agent that performed the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path [ sh:alternativePath (eventRelAgRole:exe eventRelAgRole:imp schema:instrument eventRelAgRole:val eventRelAgRole:aut) ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has no value for `premis:hasEventRelatedAgent`.
+      Please check `premis:premis/premis:hasEventRelatedAgent`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelObjRole:out ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has output"@en ;
+    sh:description "The output of the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path eventRelObjRole:sou ;
+    sh:nodeKind sh:IRI ;
+    sh:name "has source"@en ;
+    sh:description "The source of the event."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path [ sh:alternativePath (eventRelObjRole:out eventRelObjRole:sou) ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Event has no value for `outcome` or `source` linking object.
+      Please check `premis:premis/premis:event/premis:linkingObjectIdentifier`"""@en ;
+  ] .
+
+<#HardwareAgentShape> a sh:NodeShape ;
+  sh:targetClass premis:HardwareAgent ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has name"@en ;
+    sh:description "The name of the hardware agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has no value for `schema:name`.
+      Please check `premis:premis/premis:agent/premis:agentName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has more than one value for `schema:name`.
+      Please check `premis:premis/premis:agent/premis:agentName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:model ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has model"@en ;
+    sh:description "The model of the hardware agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:model ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has more than one value for `schema:model`.
+      Please check `premis:premis/premis:agent[premis:agentType='hardware']/premis:agentExtension/schema:model`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:version ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has version"@en ;
+    sh:description "The version of the hardware agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:version ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has more than one value for `schema:version`.
+      Please check `premis:premis/premis:agent[premis:agentType='hardware']/premis:agentExtension/schema:version`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:additionalType ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has additionalType"@en ;
+    sh:description "Additional type of the hardware agent, e.g. scantype."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:additionalType ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent has more than one value for `schema:additionalType`.
+      Please check `premis:premis/premis:agent[premis:agentType='hardware']/premis:agentExtension/schema:additionalType`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path [ sh:inversePath schema:instrument ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Hardware agent is not used as an instrument in any event.
+      Please check `premis:premis/premis:event[premis:eventType='digitization']/premis:linkingAgentIdentifier`"""@en ;
+  ] .
+
+<#SoftwareAgentShape> a sh:NodeShape ;
+  sh:targetClass premis:SoftwareAgent ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has name"@en ;
+    sh:description "The name of the software agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Software agent has no value for `schema:name`.
+      Please check `premis:premis/premis:agent/premis:agentName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:name ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Software agent has more than one value for `schema:name`.
+      Please check `premis:premis/premis:agent/premis:agentName`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:version ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:name "has version"@en ;
+    sh:description "The version of the software agent."@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:version ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Software agent has more than one value for `schema:version`.
+      Please check `premis:premis/premis:agent[premis:agentType='software']/premis:agentExtension/schema:version`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path [sh:alternativePath ([ sh:inversePath eventRelAgRole:exe ] [ sh:inversePath schema:agent])];
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """Software agent is not used as an executor in any event.
+      Please check `premis:premis/premis:event[premis:eventType='digitization']/premis:linkingAgentIdentifier`
+      OR Software agent is not used as Agent for SIP creation.
+      Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']`"""@en ;
+  ] .
+
+<#iso> a sh:NodeShape ;
+  sh:targetNode relSubType:iso ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:hasValue "is source of" ;
+    sh:name "label"@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path skos:broader ;
+    sh:hasValue relType:der ;
+  ],
+  [
+    a sh:PropertyShape ; 
+    sh:path skos:inScheme ;
+    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+  ] .
+
+<#isi> a sh:NodeShape ;
+  sh:targetNode relSubType:isi ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:hasValue "is included in" ;
+    sh:name "label"@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path skos:broader ;
+    sh:hasValue relType:str ;
+  ],
+  [
+    a sh:PropertyShape ; 
+    sh:path skos:inScheme ;
+    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+  ] .
+
+<#relationshipSubType> a sh:NodeShape ;
+  sh:targetNode <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:hasValue "relationshipSubType" ;
+    sh:name "label"@en ;
+  ] .
+
+<#der> a sh:NodeShape ;
+  sh:targetNode relType:der ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:hasValue "derivation" ;
+    sh:name "label"@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path skos:narrower ;
+  ],
+  [
+    a sh:PropertyShape ; 
+    sh:path skos:inScheme ;
+    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+  ] .
+
+<#str> a sh:NodeShape ;
+  sh:targetNode relType:str ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:hasValue "structural" ;
+    sh:name "label"@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path skos:narrower ;
+  ],
+  [
+    a sh:PropertyShape ; 
+    sh:path skos:inScheme ;
+    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+  ] .
+
+
+<#relationshipType> a sh:NodeShape ;
+  sh:targetNode <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+  sh:closed true ;
+  sh:ignoredProperties <#typeList> ;
+  sh:nodeKind sh:IRI ;
+  sh:property
+  [
+    a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:hasValue "relationshipType" ;
+    sh:name "label"@en ;
+  ] .

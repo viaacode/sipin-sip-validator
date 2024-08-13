@@ -1,0 +1,6 @@
+80679dad00dd4519b9f302392c9f1eba  data/mets.xml
+52e02444e8da664c660e2179a46847ed  data/metadata/descriptive/dc+schema.xml
+71039e5984dff60e6b6acc1378863fad  data/metadata/preservation/premis.xml
+e03cc894b11a9d40ef7c3980474255c9  data/representations/representation_1/mets.xml
+02e4eb2f74ac06dd9cdfab861553697e  data/representations/representation_1/data/D523F963.jpg
+031eda3d71f10ad6506575bdc27b197c  data/representations/representation_1/metadata/preservation/premis.xml

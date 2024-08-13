@@ -1,0 +1,631 @@
+@prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
+@prefix cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix evtRelAgent: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> .
+@prefix evtRelObject: <http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/> .
+@prefix haDes: <https://data.hetarchief.be/ns/description/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix haObjId: <https://data.hetarchief.be/id/entity/> .
+@prefix haOrgId: <https://data.hetarchief.be/id/organization/> .
+@prefix haSip: <https://data.hetarchief.be/ns/sip/> .
+@prefix haSipId: <https://data.hetarchief.be/id/sip/1.2/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+haObjId:{{main_series_uri}} a bf:Series ;
+    bf:identifier <https://anet.be/record/opacbnc/c:bnc:99999/N> .
+
+haObjId:uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e a premisowl:Event,
+        haObj:transcription ;
+    evtRelAgent:exe haObjId:uuid-29e1716b-55a3-4e98-bcf5-ea3a57ca469c ;
+    evtRelObject:out haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    evtRelObject:sou haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    premisowl:note "Generate ALTO XML from TIFF via OCR" ;
+    prov:endedAtTime "2023-11-10T00:00:00+02:00"^^xsd:dateTime ;
+    prov:startedAtTime "2023-11-10T00:00:00+02:00"^^xsd:dateTime .
+
+haSipId:uuid-f82f9e39-3760-4dcd-8f3d-7e482f231988 a haSip:SIP ;
+    dct:conformsTo haSipId:bibliographic,
+        <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+    dct:format "Textual works - Print" ;
+    schema:agent [ a schema:Role ;
+            schema:agent haOrgId:OR-XXXXXXX ;
+            schema:roleName "ARCHIVIST" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:3139ac42aa0f553ac530101ffb02cc28 ;
+            schema:roleName "CREATOR" ],
+        [ a schema:Role ;
+            schema:agent haOrgId:OR-YYYYYYY ;
+            schema:roleName "CREATOR" ] .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+relSubType:iso a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/der> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is source of" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/der> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:iso ;
+    skos:prefLabel "derivation" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
+
+<https://anet.be> a bf:Source ;
+    rdfs:label "Abraham. Catalogus van Belgische kranten" .
+
+haObjId:0485df95bbfad639457c6573459c5983 a bf:GenreForm ;
+    rdfs:label "amateur newspapers" ;
+    bf:source <https://www.lib.washington.edu/gmm/collections/mcnews/ngl> .
+
+haObjId:0832c1202da8d382318e329a7c133ea0 a bf:Topic ;
+    rdfs:label "cats" .
+
+haObjId:7f7dda3c52188bb5913d71e5812d3b87 a cryptographicHashFunctions:md5 ;
+    rdf:value "7f7dda3c52188bb5913d71e5812d3b87" .
+
+haObjId:{{carrier_uri}} a bf:Carrier ;
+    bf:extent haObjId:7d0278ab7c1b0a64d600b450d32d5129 ;
+    bf:note haObjId:7ff3e75ce6aca348bc513ed3d5882946 ;
+    bf:responsibilityStatement "This is the statement of responsibility" ;
+    rdfs:label "print" ;
+    bf:source <https://www.loc.gov/standards/valuelist/marcform.html> .
+
+haObjId:{{role_uri}} a bf:Role ;
+    rdfs:label "author" .
+
+haObjId:2a9db04abfb7644b8907b1793ea578f6 a cryptographicHashFunctions:md5 ;
+    rdf:value "2a9db04abfb7644b8907b1793ea578f6" .
+
+haObjId:bda2f9271c6cc071900b54f80fe90508 a cryptographicHashFunctions:md5 ;
+    rdf:value "bda2f9271c6cc071900b54f80fe90508" .
+
+haObjId:97d1c02dfa33bc353d4aa2448c224b63 a bf:Summary ;
+    rdfs:label "Newspaper abstract" .
+
+haObjId:b5748215f775a9ec473c0b02b22b0176 a cryptographicHashFunctions:md5 ;
+    rdf:value "b5748215f775a9ec473c0b02b22b0176" .
+
+haObjId:2fd3dec88cead1d784895918fb6bb06b a cryptographicHashFunctions:md5 ;
+    rdf:value "2fd3dec88cead1d784895918fb6bb06b" .
+
+haObjId:100a27bf79af331e64033e4c388f48cb a cryptographicHashFunctions:md5 ;
+    rdf:value "100a27bf79af331e64033e4c388f48cb" .
+
+haObjId:b07dbaacb8d6858e7b09386a249b676d a bf:Topic ;
+    rdfs:label "certain cat" .
+
+haObjId:40a8e898756d938d9f8bca826cb1c0f3 a cryptographicHashFunctions:md5 ;
+    rdf:value "40a8e898756d938d9f8bca826cb1c0f3" .
+
+haObjId:04cc5dd6845e5c80bfbe60ab52cb50aa a cryptographicHashFunctions:md5 ;
+    rdf:value "04cc5dd6845e5c80bfbe60ab52cb50aa" .
+
+haObjId:534af70a2909841bc3d93a19322eede0 a cryptographicHashFunctions:md5 ;
+    rdf:value "534af70a2909841bc3d93a19322eede0" .
+
+haObjId:dfa01889ba2f54a349df101c81be4259 a cryptographicHashFunctions:md5 ;
+    rdf:value "dfa01889ba2f54a349df101c81be4259" .
+
+haObjId:9bafda23af2388d5186a897df4c13de0 a cryptographicHashFunctions:md5 ;
+    rdf:value "9bafda23af2388d5186a897df4c13de0" .
+
+haObjId:69da234ae73a51cbeca323b8cefd1f4e a bf:GenreForm ;
+    rdfs:label "newspaper" ;
+    bf:source <https://www.loc.gov/standards/valuelist/marcgt.html> .
+
+haObjId:cb6d9d5c6c2cce6dfa1f55d3f1027261 a cryptographicHashFunctions:md5 ;
+    rdf:value "cb6d9d5c6c2cce6dfa1f55d3f1027261" .
+
+haObjId:a0e929ed7b41913e79b2996aa49806a7 a cryptographicHashFunctions:md5 ;
+    rdf:value "a0e929ed7b41913e79b2996aa49806a7" .
+
+haObjId:27eca34d43269a7328ac353eb506437c a cryptographicHashFunctions:md5 ;
+    rdf:value "27eca34d43269a7328ac353eb506437c" .
+
+haObjId:7d0278ab7c1b0a64d600b450d32d5129 a bf:Extent ;
+    rdfs:label "59.7 x 74.9" ;
+    bf:unit haObjId:820eb5b696ea2a657c0db1e258dc7d81 .
+
+haObjId:820eb5b696ea2a657c0db1e258dc7d81 a bf:Unit ;
+    rdfs:label "cm" .
+
+haObjId:e3ca0f647ab0b2f3a77821b6cab44fae a cryptographicHashFunctions:md5 ;
+    rdf:value "e3ca0f647ab0b2f3a77821b6cab44fae" .
+
+haObjId:{{publication_uri}} a bf:Publication ;
+    bf:date "2022-08-02"^^edtf:EDTF ;
+    bf:place haObjId:{{place_uri}} .
+
+haObjId:930c2ea3505021d8bb0cd4ef8b7d7508 a cryptographicHashFunctions:md5 ;
+    rdf:value "930c2ea3505021d8bb0cd4ef8b7d7508" .
+
+haObjId:9618480b3b4466a8679e7f742293e471 a cryptographicHashFunctions:md5 ;
+    rdf:value "9618480b3b4466a8679e7f742293e471" .
+
+haObjId:987049735baa85af6b0998079fc30df3 a cryptographicHashFunctions:md5 ;
+    rdf:value "987049735baa85af6b0998079fc30df3" .
+
+haObjId:99757a38731eb21418cd5836bc95d1e1 a bf:Identifier ;
+    rdf:value "uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c" .
+
+haObjId:BEZOEKERTOOL-CONTENT a bf:UsageAndAccessPolicy ;
+    rdfs:label "BEZOEKERTOOL-CONTENT" .
+
+haObjId:BEZOEKERTOOL-METADATA-ALL a bf:UsageAndAccessPolicy ;
+    rdfs:label "BEZOEKERTOOL-METADATA-ALL" .
+
+haObjId:VIAA-INTRA_CP-CONTENT a bf:UsageAndAccessPolicy ;
+    rdfs:label "VIAA-INTRA_CP-CONTENT" .
+
+haObjId:VIAA-INTRA_CP-METADATA-ALL a bf:UsageAndAccessPolicy ;
+    rdfs:label "VIAA-INTRA_CP-METADATA-ALL" .
+
+haObjId:VIAA-ONDERWIJS a bf:UsageAndAccessPolicy ;
+    rdfs:label "VIAA-ONDERWIJS" .
+
+haObjId:VIAA-ONDERZOEK a bf:UsageAndAccessPolicy ;
+    rdfs:label "VIAA-ONDERZOEK" .
+
+haObjId:VIAA-PUBLIEK-METADATA-LTD a bf:UsageAndAccessPolicy ;
+    rdfs:label "VIAA-PUBLIEK-METADATA-LTD" .
+
+haObjId:{{place_uri}} a bf:Place ;
+    rdfs:label "Ghent, Belgium" ;
+    bf:code "BEL" ;
+    bf:source <https://www.iso.org/iso-3166-country-codes.html> .
+
+haObjId:a65d975de019813ff2d1835579ce2671 a cryptographicHashFunctions:md5 ;
+    rdf:value "a65d975de019813ff2d1835579ce2671" .
+
+haObjId:32f7f66775350c6917087efc16524ec7 a cryptographicHashFunctions:md5 ;
+    rdf:value "32f7f66775350c6917087efc16524ec7" .
+
+haObjId:ab9f05e1d16e3583fdfd6031cfaad3b0 a cryptographicHashFunctions:md5 ;
+    rdf:value "ab9f05e1d16e3583fdfd6031cfaad3b0" .
+
+haObjId:87e64df6b56242fecd1382a0d0ff8392 a cryptographicHashFunctions:md5 ;
+    rdf:value "87e64df6b56242fecd1382a0d0ff8392" .
+
+haObjId:2d214ea3da45c1308ab7260b26db0d00 a cryptographicHashFunctions:md5 ;
+    rdf:value "2d214ea3da45c1308ab7260b26db0d00" .
+
+haObjId:b203825339525959f488ba1849b61114 a cryptographicHashFunctions:md5 ;
+    rdf:value "b203825339525959f488ba1849b61114" .
+
+haObjId:28568791a0f425de6461abe586c026e1 a cryptographicHashFunctions:md5 ;
+    rdf:value "28568791a0f425de6461abe586c026e1" .
+
+haObjId:{{contribution_uri}} a bf:Contribution ;
+    bf:agent haObjId:{{agent_uri}} ;
+    bf:role haObjId:{{role_uri}} .
+
+{% for serie in series %}
+haObjId:{{serie[0]}} a bf:Series;
+    bf:identifier haObjId:{{serie[1]}} ;
+    bf:title haObjId:{{serie[2]}} .
+{% endfor %}
+
+haObjId:f3aebcf18fc97ab23f287e891cd90fc0 a bf:Title ;
+    rdfs:label "Page series title" .
+
+haObjId:eccbc87e4b5ce2fe28308fd9f2a7baf3 a bf:Identifier ;
+    rdfs:label "page" ;
+    rdf:value "3" .
+
+haObjId:d09fecd552aca01939f0fef5c3dfcd30 a bf:Title ;
+    rdfs:label "Number series title" .
+
+haObjId:a87ff679a2f3e71d9181a67b7542122c a bf:Identifier ;
+    rdfs:label "number" ;
+    rdf:value "4" .
+
+haObjId:7ff3e75ce6aca348bc513ed3d5882946 a bf:Note ;
+    rdfs:label "Bad" ;
+    bf:noteType "condition" .
+
+haObjId:2cae6de8e67d853680bb34cddef30288 a bf:Title ;
+    rdfs:label "Newspaper title" .
+
+haObjId:{{agent_uri}} a bf:Person ;
+    schema:familyName "family" ;
+    schema:givenName "given" .
+
+haObjId:23c307008cb47d042f0a66a27f98dd97 a cryptographicHashFunctions:md5 ;
+    rdf:value "23c307008cb47d042f0a66a27f98dd97" .
+
+haObjId:27d43c0b3f77d4b37690b105c50f1001 a cryptographicHashFunctions:md5 ;
+    rdf:value "27d43c0b3f77d4b37690b105c50f1001" .
+
+haObjId:f9d195250f3e4ae1a579d7e328589c77 a cryptographicHashFunctions:md5 ;
+    rdf:value "f9d195250f3e4ae1a579d7e328589c77" .
+
+haObjId:5278b4493206319864f8308a48a9617c a cryptographicHashFunctions:md5 ;
+    rdf:value "5278b4493206319864f8308a48a9617c" .
+
+haObjId:01b19476c174b17916370088d5a1bc24 a bf:VariantTitle ;
+    rdfs:label "Newspaper title: alt" ;
+    bf:variantType "alternative" ,
+        "incipit" .
+
+haObjId:7f59921f9e3fe99828e5705986ebe8c8 a cryptographicHashFunctions:md5 ;
+    rdf:value "7f59921f9e3fe99828e5705986ebe8c8" .
+
+haObjId:uuid-002f116f-fd66-4fad-9fd9-225755bb06ac a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:a0e929ed7b41913e79b2996aa49806a7 ;
+    premisowl:originalName "page1_1.xml" ;
+    premisowl:size 242 ;
+    schema:position 1 .
+
+haObjId:uuid-0647c3d1-7d4a-4933-ae03-ea9170ac8fbf a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:28568791a0f425de6461abe586c026e1 ;
+    premisowl:originalName "page2_2.xml" ;
+    premisowl:size 252 ;
+    schema:position 2 .
+
+haObjId:uuid-15066343-19b7-4e1d-bf9b-1f5dfae65920 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:2a9db04abfb7644b8907b1793ea578f6 ;
+    premisowl:originalName "page2_1.xml" ;
+    premisowl:size 252 ;
+    schema:position 2 .
+
+haObjId:uuid-15400cb8-b1f4-465e-903d-467edeb3ce76 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:b5748215f775a9ec473c0b02b22b0176 ;
+    premisowl:originalName "page4_3.xml" ;
+    premisowl:size 252 ;
+    schema:position 4 .
+
+haObjId:uuid-1e4c8c3d-3781-45c5-b40f-dd9393caad0e a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:23c307008cb47d042f0a66a27f98dd97 ;
+    premisowl:originalName "page3_1.xml" ;
+    premisowl:size 252 ;
+    schema:position 3 .
+
+haObjId:uuid-29e1716b-55a3-4e98-bcf5-ea3a57ca469c a premisowl:SoftwareAgent ;
+    schema:name "EasyData Cloud OCR" .
+
+haObjId:uuid-2c0c2002-f4b5-4044-a2a7-8d66bb7ca263 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:e3ca0f647ab0b2f3a77821b6cab44fae ;
+    premisowl:originalName "page4_8.xml" ;
+    premisowl:size 252 ;
+    schema:position 4 .
+
+haObjId:uuid-320097f7-9d94-4872-92c7-6297877a81fc a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:5278b4493206319864f8308a48a9617c ;
+    premisowl:originalName "page3_2.xml" ;
+    premisowl:size 252 ;
+    schema:position 3 .
+
+haObjId:uuid-32f60ec2-c3d9-4897-b7b7-c855b25d46ae a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:100a27bf79af331e64033e4c388f48cb ;
+    premisowl:originalName "page1_2.xml" ;
+    premisowl:size 123 ;
+    schema:position 1 .
+
+haObjId:uuid-4672ce2c-f86c-4419-91af-3924cda1ecd6 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:04cc5dd6845e5c80bfbe60ab52cb50aa ;
+    premisowl:originalName "page1_5.xml" ;
+    premisowl:size 252 ;
+    schema:position 1 .
+
+haObjId:uuid-48881331-b7dc-4043-afd8-355318de6e0f a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:40a8e898756d938d9f8bca826cb1c0f3 ;
+    premisowl:originalName "page1_7.xml" ;
+    premisowl:size 252 ;
+    schema:position 1 .
+
+haObjId:uuid-4a7cd48c-c5bd-4fb8-a52d-5f2c231a4ede a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:27eca34d43269a7328ac353eb506437c ;
+    premisowl:originalName "page1_4.xml" ;
+    premisowl:size 123 ;
+    schema:position 1 .
+
+haObjId:uuid-57362369-f43e-4502-a5d9-59734ad053f1 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:f9d195250f3e4ae1a579d7e328589c77 ;
+    premisowl:originalName "page4_7.xml" ;
+    premisowl:size 252 ;
+    schema:position 4 .
+
+haObjId:uuid-5934b085-791c-4083-a5a8-8b3de347e8b5 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:cb6d9d5c6c2cce6dfa1f55d3f1027261 ;
+    premisowl:originalName "page4_6.xml" ;
+    premisowl:size 252 ;
+    schema:position 4 .
+
+haObjId:uuid-5b843289-b9fd-4cf2-900f-79a9d7852b2d a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:32f7f66775350c6917087efc16524ec7 ;
+    premisowl:originalName "page1_3.xml" ;
+    premisowl:size 123 ;
+    schema:position 1 .
+
+haObjId:uuid-68e884fc-bbb1-4688-902c-48b0ea0b8c13 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:9bafda23af2388d5186a897df4c13de0 ;
+    premisowl:originalName "page4_2.xml" ;
+    premisowl:size 252 ;
+    schema:position 4 .
+
+haObjId:uuid-7eb5a221-ac73-41ba-8a75-4eb281fa2155 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:87e64df6b56242fecd1382a0d0ff8392 ;
+    premisowl:originalName "page1_6.xml" ;
+    premisowl:size 252 ;
+    schema:position 1 .
+
+haObjId:uuid-8233b3d6-2228-43a1-af69-75582184c3c2 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:dfa01889ba2f54a349df101c81be4259 ;
+    premisowl:originalName "page4_1.xml" ;
+    premisowl:size 123 ;
+    schema:position 4 .
+
+haObjId:uuid-9100c2eb-fc43-4049-8c65-c5a26d67bdd1 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:27d43c0b3f77d4b37690b105c50f1001 ;
+    premisowl:originalName "page3_3.xml" ;
+    premisowl:size 123 ;
+    schema:position 3 .
+
+haObjId:uuid-d7f710e6-d65a-4545-be82-ad19a53f818d a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:bda2f9271c6cc071900b54f80fe90508 ;
+    premisowl:originalName "page2_3.xml" ;
+    premisowl:size 123 ;
+    schema:position 2 .
+
+haObjId:uuid-d8b719dd-61a3-4c53-b7d3-09771b369c71 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:7f7dda3c52188bb5913d71e5812d3b87 ;
+    premisowl:originalName "page4_9.xml" ;
+    premisowl:size 252 ;
+    schema:position 4 .
+
+haObjId:uuid-eed731fb-53e1-4817-96ba-0dad2e15ea10 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:2d214ea3da45c1308ab7260b26db0d00 ;
+    premisowl:originalName "page4_5.xml" ;
+    premisowl:size 252 ;
+    schema:position 4 .
+
+haObjId:uuid-f78b6428-b0d0-4797-8404-443de4c0f910 a premisowl:File ;
+    relSubType:isi haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:7f59921f9e3fe99828e5705986ebe8c8 ;
+    premisowl:originalName "page4_4.xml" ;
+    premisowl:size 252 ;
+    schema:position 4 .
+
+haOrgId:3139ac42aa0f553ac530101ffb02cc28 a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1.0" .
+
+haOrgId:OR-XXXXXXX a org:Organization ;
+    skos:prefLabel "archivalcreator"@nl ;
+    schema:identifier "OR-XXXXXXX" .
+
+haOrgId:OR-YYYYYYY a org:Organization ;
+    skos:prefLabel "submittingorganization"@nl ;
+    schema:identifier "OR-YYYYYYY" .
+
+<https://www.iso.org/iso-3166-country-codes.html> a bf:Source ;
+    rdfs:label "iso3166" .
+
+<https://www.lib.washington.edu/gmm/collections/mcnews/ngl> a bf:Source ;
+    rdfs:label "ngl" .
+
+<https://www.loc.gov/standards/valuelist/marcform.html> a bf:Source ;
+    rdfs:label "marcform" .
+
+<https://www.loc.gov/standards/valuelist/marcgt.html> a bf:Source ;
+    rdfs:label "marcgt" .
+
+<https://anet.be/record/opacbnc/c:bnc:99999/N> a bf:Identifier ;
+    bf:source <https://anet.be> ;
+    rdf:value "c:bnc:99999" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
+
+haObjId:uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd a premisowl:File ;
+    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:iso haObjId:uuid-4f8f37ab-a3f0-478c-becb-3e1826663558 ;
+    dct:format <http://the-fr.org/id/file-format/353> ;
+    premisowl:fixity haObjId:534af70a2909841bc3d93a19322eede0 ;
+    premisowl:originalName "page2.tif" ;
+    premisowl:size 1007 ;
+    schema:position 2 .
+
+haObjId:uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824 a premisowl:File ;
+    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:iso haObjId:uuid-df553be9-759a-4560-b8e7-9b06d220b57c ;
+    dct:format <http://the-fr.org/id/file-format/353> ;
+    premisowl:fixity haObjId:ab9f05e1d16e3583fdfd6031cfaad3b0 ;
+    premisowl:originalName "page1.tif" ;
+    premisowl:size 1007 ;
+    schema:position 1 .
+
+haObjId:uuid-45040a1c-8600-4c9e-8a57-153c88aad298 a premisowl:File ;
+    relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:iso haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:930c2ea3505021d8bb0cd4ef8b7d7508 ;
+    premisowl:originalName "page4_alto.xml" ;
+    premisowl:size 946 ;
+    schema:position 4 .
+
+haObjId:uuid-4f8f37ab-a3f0-478c-becb-3e1826663558 a premisowl:File ;
+    relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:iso haObjId:uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:9618480b3b4466a8679e7f742293e471 ;
+    premisowl:originalName "page2_alto.xml" ;
+    premisowl:size 946 ;
+    schema:position 2 .
+
+haObjId:uuid-5b321487-6077-49d0-96b3-2923ed7bd5d9 a premisowl:File ;
+    relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:iso haObjId:uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:2fd3dec88cead1d784895918fb6bb06b ;
+    premisowl:originalName "page3_alto.xml" ;
+    premisowl:size 946 ;
+    schema:position 3 .
+
+haObjId:uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a a premisowl:File ;
+    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:iso haObjId:uuid-5b321487-6077-49d0-96b3-2923ed7bd5d9 ;
+    dct:format <http://the-fr.org/id/file-format/353> ;
+    premisowl:fixity haObjId:a65d975de019813ff2d1835579ce2671 ;
+    premisowl:originalName "page3.tif" ;
+    premisowl:size 1007 ;
+    schema:position 3 .
+
+haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f a premisowl:File ;
+    relSubType:isi haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 ;
+    relSubType:iso haObjId:uuid-45040a1c-8600-4c9e-8a57-153c88aad298 ;
+    dct:format <http://the-fr.org/id/file-format/353> ;
+    premisowl:fixity haObjId:b203825339525959f488ba1849b61114 ;
+    premisowl:originalName "page4.tif" ;
+    premisowl:size 1007 ;
+    schema:position 4 .
+
+haObjId:uuid-df553be9-759a-4560-b8e7-9b06d220b57c a premisowl:File ;
+    relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    relSubType:iso haObjId:uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824 ;
+    dct:format <http://the-fr.org/id/file-format/101> ;
+    premisowl:fixity haObjId:987049735baa85af6b0998079fc30df3 ;
+    premisowl:originalName "page1_alto.xml" ;
+    premisowl:size 948 ;
+    schema:position 1 .
+
+haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
+        premisowl:IntellectualEntity,
+        haDes:NewspaperIssue ;
+    rdfs:label "Newspaper title" ;
+    bf:carrier haObjId:{{carrier_uri}} ;
+    bf:contribution haObjId:{{contribution_uri}} ;
+    bf:genreForm haObjId:0485df95bbfad639457c6573459c5983,
+        haObjId:69da234ae73a51cbeca323b8cefd1f4e ;
+    bf:hasSeries haObjId:{{main_series_uri}},
+    {%- for serie in series %}
+        haObjId:{{serie[0]}}{% if not loop.last %},{% endif %}
+    {% endfor -%};
+    bf:identifiedBy haObjId:99757a38731eb21418cd5836bc95d1e1 ;
+    bf:issuance "serial" ;
+    bf:originDate "2022-08-02"^^edtf:EDTF ;
+    bf:provisionActivity haObjId:{{publication_uri}} ;
+    bf:subject haObjId:0832c1202da8d382318e329a7c133ea0,
+        haObjId:b07dbaacb8d6858e7b09386a249b676d ;
+    bf:summary haObjId:97d1c02dfa33bc353d4aa2448c224b63 ;
+    bf:title haObjId:2cae6de8e67d853680bb34cddef30288,
+        haObjId:01b19476c174b17916370088d5a1bc24 ;
+    bf:usageAndAccessPolicy haObjId:BEZOEKERTOOL-CONTENT,
+        haObjId:BEZOEKERTOOL-METADATA-ALL,
+        haObjId:VIAA-INTRA_CP-CONTENT,
+        haObjId:VIAA-INTRA_CP-METADATA-ALL,
+        haObjId:VIAA-ONDERWIJS,
+        haObjId:VIAA-ONDERZOEK,
+        haObjId:VIAA-PUBLIEK-METADATA-LTD ;
+    relSubType:isr haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74,
+        haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99,
+        haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
+    haDes:numberOfPages 4 .
+
+<http://the-fr.org/id/file-format/353> a dct:FileFormat .
+
+haObjId:uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99 a premisowl:Representation ;
+    relSubType:inc haObjId:uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd,
+        haObjId:uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824,
+        haObjId:uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a,
+        haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f ;
+    relSubType:rep haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c ;
+    skos:hiddenLabel "representation_1" .
+
+haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 a premisowl:Representation ;
+    relSubType:inc haObjId:uuid-45040a1c-8600-4c9e-8a57-153c88aad298,
+        haObjId:uuid-4f8f37ab-a3f0-478c-becb-3e1826663558,
+        haObjId:uuid-5b321487-6077-49d0-96b3-2923ed7bd5d9,
+        haObjId:uuid-df553be9-759a-4560-b8e7-9b06d220b57c ;
+    relSubType:rep haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c ;
+    skos:hiddenLabel "representation_2" .
+
+haObjId:uuid-7eb2ca82-b89c-4e3b-b8bf-843c9fef3f74 a premisowl:Representation ;
+    relSubType:inc haObjId:uuid-002f116f-fd66-4fad-9fd9-225755bb06ac,
+        haObjId:uuid-0647c3d1-7d4a-4933-ae03-ea9170ac8fbf,
+        haObjId:uuid-15066343-19b7-4e1d-bf9b-1f5dfae65920,
+        haObjId:uuid-15400cb8-b1f4-465e-903d-467edeb3ce76,
+        haObjId:uuid-1e4c8c3d-3781-45c5-b40f-dd9393caad0e,
+        haObjId:uuid-2c0c2002-f4b5-4044-a2a7-8d66bb7ca263,
+        haObjId:uuid-320097f7-9d94-4872-92c7-6297877a81fc,
+        haObjId:uuid-32f60ec2-c3d9-4897-b7b7-c855b25d46ae,
+        haObjId:uuid-4672ce2c-f86c-4419-91af-3924cda1ecd6,
+        haObjId:uuid-48881331-b7dc-4043-afd8-355318de6e0f,
+        haObjId:uuid-4a7cd48c-c5bd-4fb8-a52d-5f2c231a4ede,
+        haObjId:uuid-57362369-f43e-4502-a5d9-59734ad053f1,
+        haObjId:uuid-5934b085-791c-4083-a5a8-8b3de347e8b5,
+        haObjId:uuid-5b843289-b9fd-4cf2-900f-79a9d7852b2d,
+        haObjId:uuid-68e884fc-bbb1-4688-902c-48b0ea0b8c13,
+        haObjId:uuid-7eb5a221-ac73-41ba-8a75-4eb281fa2155,
+        haObjId:uuid-8233b3d6-2228-43a1-af69-75582184c3c2,
+        haObjId:uuid-9100c2eb-fc43-4049-8c65-c5a26d67bdd1,
+        haObjId:uuid-d7f710e6-d65a-4545-be82-ad19a53f818d,
+        haObjId:uuid-d8b719dd-61a3-4c53-b7d3-09771b369c71,
+        haObjId:uuid-eed731fb-53e1-4817-96ba-0dad2e15ea10,
+        haObjId:uuid-f78b6428-b0d0-4797-8404-443de4c0f910 ;
+    relSubType:rep haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c ;
+    skos:hiddenLabel "representation_3" .
+
+<http://the-fr.org/id/file-format/101> a dct:FileFormat .

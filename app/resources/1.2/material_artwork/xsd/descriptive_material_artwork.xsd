@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:edtf="http://id.loc.gov/datatypes/edtf/"
+  xmlns:schema="https://schema.org/"
+  targetNamespace="https://data.hetarchief.be/id/sip/1.2/material-artwork"
+  xmlns="https://data.hetarchief.be/id/sip/1.2/material-artwork"
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation xml:lang="en"> </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+    schemaLocation="xml.xsd">
+  </xs:import>
+  <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="dc.xsd" />
+  <xs:import namespace="http://purl.org/dc/terms/" schemaLocation="dcterms.xsd" />
+  <xs:import namespace="http://id.loc.gov/datatypes/edtf/" schemaLocation="edtf.xsd" />
+  <xs:import namespace="https://schema.org/" schemaLocation="schema.xsd" />
+
+
+  <xs:group name="dc_schema_elementsAndRefinementsGroup">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This group is included as a convenience for schema authors
+                who need to refer to all the DC elements and schema elements and element refinements.
+            </xs:documentation>
+        </xs:annotation>
+
+    <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="dc:any"/>
+            <xs:element ref="schema:any"/>
+        </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:complexType name="dc_schema_elementOrRefinementContainer">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This is included as a convenience for schema authors who need to define a root
+                or container element for all of the DC elements and schema elements and element refinements.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:choice>
+            <xs:group ref="dc_schema_elementsAndRefinementsGroup"/>
+        </xs:choice>
+  </xs:complexType>
+
+  <xs:element name="metadata" type="dc_schema_elementOrRefinementContainer" />
+
+</xs:schema>

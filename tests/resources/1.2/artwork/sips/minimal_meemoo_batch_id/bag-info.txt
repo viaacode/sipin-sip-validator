@@ -1,0 +1,4 @@
+Bag-Software-Agent: bagit.py v1.8.1 <https://github.com/LibraryOfCongress/bagit-python>
+Bagging-Date: 2024-04-29
+Payload-Oxum: 18129.7
+Meemoo-Batch-Identifier: batch-id

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<premis:premis version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:premis="http://www.loc.gov/premis/v3"
+    xsi:schemaLocation="http://www.loc.gov/premis/v3 https://www.loc.gov/standards/premis/premis.xsd">
+
+    <premis:object xsi:type="premis:representation">
+
+        <premis:objectIdentifier>
+            <premis:objectIdentifierType>wrong</premis:objectIdentifierType>
+            <premis:objectIdentifierValue>uuid-4e475706-2752-4f77-9069-1f71c0e22572</premis:objectIdentifierValue>
+        </premis:objectIdentifier>
+
+    </premis:object>
+
+</premis:premis>

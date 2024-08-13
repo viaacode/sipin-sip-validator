@@ -1,0 +1,106 @@
+@prefix cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix edtf: <http://id.loc.gov/datatypes/edtf/> .
+@prefix eventOutcome: <http://id.loc.gov/vocabulary/preservation/eventOutcome/> .
+@prefix evtRelAgent: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> .
+@prefix evtRelObject: <http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/> .
+@prefix haObj: <https://data.hetarchief.be/ns/object/> .
+@prefix haObjId: <https://data.hetarchief.be/id/entity/> .
+@prefix haOrgId: <https://data.hetarchief.be/id/organization/> .
+@prefix haSip: <https://data.hetarchief.be/ns/sip/> .
+@prefix haSipId: <https://data.hetarchief.be/id/sip/1.2/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix premisowl: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+haObjId:uuid-AA32FAEC-A8CF-4B6A-9F3E-E2216A396B21 a premisowl:Event,
+        haObj:digitization ;
+    evtRelAgent:imp haObjId:OR-xg9fb0b ;
+    evtRelObject:out haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 ;
+    premisowl:outcome eventOutcome:suc ;
+    prov:endedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime ;
+    prov:startedAtTime "2022-06-15T00:00:00+00:00"^^xsd:dateTime .
+
+    haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 a haSip:SIP ;
+        dct:conformsTo haSipId:material-artwork,
+            <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
+        dct:format "Physical object" ;
+        schema:agent [ a schema:Role ;
+                schema:agent haOrgId:3139ac42aa0f553ac530101ffb02cc28 ;
+                schema:roleName "CREATOR" ],
+            [ a schema:Role ;
+                schema:agent haOrgId:OR-5h7bt1n ;
+                schema:roleName "ARCHIVIST" ],
+            [ a schema:Role ;
+                schema:agent haOrgId:OR-m30wc4t ;
+                schema:roleName "CREATOR" ] ;
+        schema:isPartOf haSipId:batch-id .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
+
+<http://the-fr.org/id/file-format/154> a dct:FileFormat .
+
+haObjId:73b7d2c4fd0f8601ed7a70b36b192f16 a cryptographicHashFunctions:md5 ;
+    rdf:value "73b7d2c4fd0f8601ed7a70b36b192f16" .
+
+haObjId:OR-xg9fb0b a premisowl:Agent ;
+    schema:name "Cedric Verhelst" .
+
+haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 a premisowl:IntellectualEntity ;
+    relSubType:isr haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 ;
+    dct:created "1628/1629"^^edtf:EDTF ;
+    dct:description """Rond 1629 geschilderd voor het hoogaltaar van de Begijnhofkerk
+    te Antwerpen. Een tweede exemplaar wordt bewaard te Madrid (Prado); schetsen te Leningrad
+    (Hermitage) een kleinere herhaling te Hagley (Lord Littleton) een tekening in Atger Museum te
+    Montpellier en een grisaille studie tenslotte bevond zich in 1776 in de veiling Randon de
+    Boisset. Het schilderij werd gegraveerd door Paul Pontius en Andreas van Rymsdyck."""@nl ;
+    dct:title "Bewening van Christus"@nl .
+
+haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B a premisowl:File ;
+    relSubType:isi haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 ;
+    dct:format <http://the-fr.org/id/file-format/154> ;
+    premisowl:fixity haObjId:73b7d2c4fd0f8601ed7a70b36b192f16 ;
+    premisowl:originalName "7m03z1634f_overzichtsopname_metlijst_tiff.tiff" ;
+    premisowl:size 1067 .
+
+haOrgId:OR-5h7bt1n a org:Organization ;
+    skos:prefLabel "KMSKA"@nl ;
+    schema:identifier "OR-5h7bt1n" .
+
+haOrgId:OR-m30wc4t a org:Organization ;
+    skos:prefLabel "artinflanders"@nl ;
+    schema:identifier "OR-m30wc4t" .
+
+haSipId:batch-id a haSip:Batch ;
+    schema:hasPart haSipId:uuid-de61d4af-d19c-4cc7-864d-55573875b438 ;
+    schema:identifier "batch-id" .
+
+haOrgId:3139ac42aa0f553ac530101ffb02cc28 a premisowl:SoftwareAgent ;
+    schema:name "meemoo SIP creator" ;
+    schema:version "0.1.0" .
+
+haObjId:uuid-187DA428-6BA1-4EB7-B786-CD4AF85A02B1 a premisowl:Representation ;
+    relSubType:inc haObjId:uuid-6A07B2FE-3363-4B46-953E-59A30BE67F9B ;
+    relSubType:rep haObjId:uuid-2767ce00-0b91-4eb8-80fb-e6f293f19675 ;
+    dct:license "CCBY-NC-ND-CONTENT",
+        "CP-website" ;
+    skos:hiddenLabel "representation_1" .
