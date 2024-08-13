@@ -307,6 +307,8 @@ class TestEventListener:
             {
                 "message": "Graph is not conform.",
                 "errors": "Missing node",
+                "metadata_graph_fmt": "turtle",
+                "metadata_graph": b'{"graph": "info"}',
             },
             "test",
             EventOutcome.FAIL,

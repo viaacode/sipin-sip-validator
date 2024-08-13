@@ -208,6 +208,10 @@ class EventListener:
                         {
                             "message": "Graph is not conform.",
                             "errors": str(e),
+                            "metadata_graph_fmt": METADATA_GRAPH_FMT,
+                            "metadata_graph": graph.serialize(
+                                format=METADATA_GRAPH_FMT
+                            ),
                         },
                         msg_data["destination"],
                         EventOutcome.FAIL,
