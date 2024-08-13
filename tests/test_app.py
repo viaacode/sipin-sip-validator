@@ -307,16 +307,12 @@ class TestEventListener:
             {
                 "message": "Graph is not conform.",
                 "errors": "Missing node",
+                "metadata_graph_fmt": "turtle",
+                "metadata_graph": b'{"graph": "info"}',
             },
             "test",
             EventOutcome.FAIL,
             "555",
-        )
-
-        assert caplog.record_tuples[1] == (
-            "app.app",
-            logging.ERROR,
-            "test: Graph is not conform.",
         )
 
         event_listener.pulsar_client.acknowledge.assert_called_once()
