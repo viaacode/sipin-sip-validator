@@ -315,6 +315,12 @@ class TestEventListener:
             "555",
         )
 
+        assert caplog.record_tuples[1] == (
+            "app.app",
+            logging.ERROR,
+            "test: Graph is not conform.",
+        )
+
         event_listener.pulsar_client.acknowledge.assert_called_once()
 
     @patch("app.app.PulsarBinding")
