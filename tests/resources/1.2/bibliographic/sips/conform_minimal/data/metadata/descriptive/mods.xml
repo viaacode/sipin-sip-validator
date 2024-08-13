@@ -7,7 +7,7 @@
   <mods:identifier>uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c</mods:identifier>
   <mods:typeOfResource>newspaper edition</mods:typeOfResource>
   <mods:genre authority="marcgt" authorityURI="https://www.loc.gov/standards/valuelist/marcgt.html">newspaper</mods:genre>
-  <mods:originInfo>
+  <mods:originInfo eventType="publication">
     <mods:issuance>serial</mods:issuance>
     <mods:dateIssued encoding="edtf">1892-01-01</mods:dateIssued>
     <mods:dateCreated encoding="edtf">1892-01-01</mods:dateCreated>

@@ -14,17 +14,57 @@
 @prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
 @prefix edm: <http://www.europeana.eu/schemas/edm/> .
 @prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
-@prefix haBib: <https://data.hetarchief.be/ns/bibliographic/> .
+@prefix haDes: <https://data.hetarchief.be/ns/description/> .
 @prefix rel: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>.
 
 
 
 @base <https://data.hetarchief.be/ns/sip_kranten/shapes> .
 
+<#typeList> a rdf:List ;
+  rdf:first rdf:type ;
+  rdf:rest ( ) .
 
-<#NewspaperIssueShape> a sh:NodeShape ;
-    sh:targetClass haBib:NewspaperIssue ;
+<#IntellectualEntityShape> a sh:NodeShape ;
+    sh:targetClass bf:Work ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
+    # mods:mods/mods:identifier[not(@*)]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#IdentifierShape> ;
+        sh:name "Identifier"@en ;
+        sh:description "MODS identifier element"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier element is required.
+            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier element occurs more than once.
+            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
+    ],
+    # mods:mods/mods:recordInfo/mods:recordIdentifier
+    [
+        a sh:PropertyShape ;
+        sh:path bf:adminMetadata ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#AdminMetadataShape> ;
+        sh:name "record identifier"@en ;
+        sh:description "MODS record identifier element"@en ;
+    ],
     # mods:mods/mods:titleInfo[not(@*)]/mods:title
     [
         a sh:PropertyShape ;
@@ -55,39 +95,21 @@
         sh:path bf:title ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:or (
-            [ sh:node <#TitleShape> ]
             [ sh:node <#VariantTitleShape> ]
+            [ sh:node <#TitleShape> ]
         ) ;
         sh:or (
             [ sh:class bf:VariantTitle ]
             [ sh:class bf:Title ]
         ) ;
-        
     ],
-    # mods:mods/mods:identifier[not(@*)]
+    # mods:mods/mods:language
     [
         a sh:PropertyShape ;
-        sh:path bf:identifiedBy ;
+        sh:path bf:language ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#IdentifierShape> ;
-        sh:name "Identifier"@en ;
-        sh:description "MODS identifier element"@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path bf:identifiedBy ;
-        sh:minCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:identifier element is required.
-            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path bf:identifiedBy ;
-        sh:maxCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:identifier element occurs more than once.
-            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
+        sh:node <#LanguageShape> ;
+        sh:class bf:Language ;
     ],
     # mods:mods/mods:typeOfResource
     [
@@ -100,7 +122,7 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:in (haBib:NewspaperIssue bf:Work premis:IntellectualEntity) ;
+        sh:in (haDes:NewspaperIssue bf:Work premis:IntellectualEntity haDes:NotatedMusic haDes:Text bf:Manuscript) ;
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource must be newspaper edition.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
@@ -154,9 +176,14 @@
         a sh:PropertyShape ;
         sh:path bf:genreForm ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#GenreFormShape> ;
         sh:name "Genre form"@en ;
         sh:description "MODS genre element"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:genreForm ;
+        sh:node <#GenreFormShape> ;
+        sh:severity sh:Warning ;
     ],
     [
         a sh:PropertyShape ;
@@ -213,7 +240,7 @@
         sh:path bf:originDate ;
         sh:minCount 1 ;
         sh:severity sh:Violation ;
-        sh:message """mods:originInfo/mods:dateCreated[@encoding="edtf"] element is not required.
+        sh:message """mods:originInfo/mods:dateCreated[@encoding="edtf"] element is required.
             Please check `mods:mods/mods:originInfo/mods:dateCreated[@encoding="edtf"]`"""@en ;
     ],
     [
@@ -229,9 +256,14 @@
         a sh:PropertyShape ;
         sh:path bf:provisionActivity ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#PublicationShape> ;
         sh:name "Mods origin Info"@en ;
         sh:description "Mods origin Info"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:provisionActivity ;
+        sh:node <#PublicationShape> ;
+        sh:severity sh:Warning ;
     ],
     [
         a sh:PropertyShape ;
@@ -270,7 +302,7 @@
     # mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]
     [
         a sh:PropertyShape ;
-        sh:path haBib:numberOfPages ;
+        sh:path haDes:numberOfPages ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:integer ;
         sh:name "number of pages"@en ;
@@ -278,20 +310,11 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path haBib:numberOfPages ;
+        sh:path haDes:numberOfPages ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
         sh:message """mods:mods/mods:physicalDescription/mods:extent[@unit="pages"] element occurs more than once.
             Please check `mods:mods/mods:physicalDescription/mods:extent[@unit="pages"]`"""@en ;
-    ],
-    # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
-    [
-        a sh:PropertyShape ;
-        sh:path bf:extent ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#ExtentShape> ;
-        sh:name "Extent"@en ;
-        sh:description "MODS extent element"@en ;
     ],
     # mods:mods/mods:physicalDescription/mods:form
     [
@@ -308,7 +331,7 @@
         a sh:PropertyShape ;
         sh:path bf:hasSeries ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#AbrahamShape> ;
+        sh:node <#SeriesShape> ;
         sh:name "Series"@en ;
         sh:description "Abraham ID or Abraham URI."@en ;
     ],
@@ -322,8 +345,38 @@
         sh:description "The credits of the newspaper."@en ;
     ] .
 
+<#LanguageShape> a sh:NodeShape ;
+    sh:targetClass bf:Language ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:minCount 1;
+        sh:name "language element" ;
+    ] .
+
+<#AdminMetadataShape> a sh:NodeShape ;
+    sh:targetClass bf:AdminMetadata ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:node <#IdentifierShape> ;
+        sh:minCount 1;
+        sh:name "record identifier" ;
+    ] .
+
 <#FileShape> a sh:NodeShape ;
     sh:targetClass premis:File ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -350,8 +403,22 @@
             Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
     ] .
 
+<#TitleShape> a sh:NodeShape ; 
+    sh:targetClass bf:Title ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ; 
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+    ] .
+
 <#VariantTitleShape> a sh:NodeShape ;
     sh:targetClass bf:VariantTitle ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -364,7 +431,7 @@
     [
         a sh:PropertyShape ;
         sh:path bf:variantType ;
-        sh:minCount 1 ;
+        sh:minCount 2 ;
         sh:severity sh:Violation ;
         sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] element is required.
             Please check `mods:mods/mods:titleInfo/mods:title[@type=*]`"""@en ;
@@ -372,7 +439,21 @@
     [
         a sh:PropertyShape ;
         sh:path bf:variantType ;
-        sh:maxCount 1 ;
+        sh:hasValue "alternative";
+        sh:severity sh:Violation ;
+        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] must be 'alternative'"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:variantType ;
+        sh:in ( "alternative" "incipit" "incipit brief" "correspondenten");
+        sh:severity sh:Violation ;
+        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] must be 'alternative'"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:variantType ;
+        sh:maxCount 2 ;
         sh:severity sh:Violation ;
         sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] element occurs more than once.
             Please check `mods:mods/mods:titleInfo/mods:title[@type=*]`"""@en ;
@@ -403,9 +484,12 @@
     ] .
 
 
-# mods:mods/mods:physicalDescription/mods:form
+# mods:mods/mods:physicalDescription
 <#CarrierShape> a sh:NodeShape ;
     sh:targetClass bf:Carrier ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:physicalDescription/mods:form
     [
@@ -415,6 +499,31 @@
         sh:datatype xsd:string ;
         sh:name "Label"@en ;
         sh:description "The label of the carrier."@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:extent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#ExtentShape> ;
+        sh:name "Extent"@en ;
+        sh:description "MODS extent element"@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:note
+    [
+        a sh:PropertyShape ;
+        sh:path bf:note ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#NoteShape> ;
+        sh:name "Note"@en ;
+        sh:description "MODS Note element"@en ;
+    ],
+    # mods:mods/mods:physicalDescription/mods:note
+    [
+        a sh:PropertyShape ;
+        sh:path bf:responsibilityStatement ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
     ],
     # mods:mods/mods:physicalDescription/mods:form[@authority]
     [
@@ -426,9 +535,35 @@
         sh:description "The source of the carrier."@en ;
     ] .
     
+<#NoteShape> a sh:NodeShape ;
+    sh:targetClass bf:Note ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKine sh:Literal ;
+        sh:datatype xsd:string ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:noteType ;
+        sh:nodeKine sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:in ("condition")
+    ] .
+
 <#SourceShape> a sh:NodeShape ;
     sh:targetClass bf:Source ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKine sh:Literal ;
+    ],
     [
         a sh:PropertyShape ;
         sh:path bf:code ;
@@ -449,10 +584,13 @@
 # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
 <#ExtentShape> a sh:NodeShape ;
     sh:targetClass bf:Extent ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdfs:label ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Extent"@en ;
@@ -469,24 +607,31 @@
 
 <#UnitShape> a sh:NodeShape ;
     sh:targetClass bf:Unit ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
         sh:path rdfs:label ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
-        sh:in ( "pages" "cm" ) ;
+        sh:in ( "pages" "cm" "mm" "sheets" ) ;
         sh:name "Unit"@en ;
         sh:description "The unit of the extent of the newspaper."@en ;
+        sh:message """mods:physicalDescription/mods:extent unit attribute is not one of 'pages, cm, mm or sheets'
+            Please check `mods:physicalDescription/mods:extent[@unit]`.
+        """
     ] .
 
 # mods:mods/mods:genre
 <#GenreFormShape> a sh:NodeShape ;
     sh:targetClass bf:GenreForm ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdfs:label ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Genre form "@en ;
@@ -499,61 +644,94 @@
         sh:node <#SourceShape> ;
         sh:name "Source"@en ;
         sh:description "The source of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:minCount 1 ;
+        sh:message """mods:mods/mods:genre/@authority is required.
+            Please check `mods:mods/mods:genre/@authority`."""
     ] .
 
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]
 # mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_uri"]
-<#AbrahamShape> a sh:NodeShape ;
+<#SeriesShape> a sh:NodeShape ;
     sh:targetClass bf:Series ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:title ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#TitleShape> ;
+    ],
     [
         a sh:PropertyShape ;
         sh:path bf:identifier ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#AbrahamIdShape> ;
+        sh:node <#IdentifierShape> ;
         sh:name "Identifier"@en ;
         sh:description "The identifier of the Abraham ID or Abraham URI."@en ;
     ] .
 
-<#AbrahamIdShape> a sh:NodeShape ;
-    sh:property
-    [
-        a sh:PropertyShape ;
-        sh:path rdf:type ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:in (haObj:AbrahamURI haObj:AbrahamId) ;
-        sh:name "Type"@en ;
-        sh:description "The type of Abraham ID or Abraham URI."@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path rdf:value ;
-        sh:nodeKind sh:Literal ;
-        sh:datatype xsd:string ;
-        sh:name "Abraham ID"@en ;
-        sh:description "The Abraham ID of the newspaper."@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path rdf:value ;
-        sh:maxCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:identifier[@type="abraham_id"] occurs more than once.
-            Please check `mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]`."""@en ;
-    ] .
+# <#AbrahamIdShape> a sh:NodeShape ;
+#     sh:closed true ;
+#     sh:ignoredProperties <#typeList> ;
+#     sh:nodeKind sh:IRI ;
+#     sh:property
+#     [
+#         a sh:PropertyShape ;
+#         sh:path rdf:type ;
+#         sh:nodeKind sh:BlankNodeOrIRI ;
+#         sh:in (haObj:AbrahamURI haObj:AbrahamId bf:Identifier) ;
+#         sh:name "Type"@en ;
+#         sh:description "The type of Abraham ID or Abraham URI."@en ;
+#     ],
+#     [
+#         a sh:PropertyShape ;
+#         sh:path rdf:value ;
+#         sh:nodeKind sh:Literal ;
+#         sh:datatype xsd:string ;
+#         sh:name "Abraham ID"@en ;
+#         sh:description "The Abraham ID of the newspaper."@en ;
+#     ],
+#     [
+#         a sh:PropertyShape ;
+#         sh:path rdf:value ;
+#         sh:maxCount 1 ;
+#         sh:severity sh:Violation ;
+#         sh:message """mods:identifier[@type="abraham_id"] occurs more than once.
+#             Please check `mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]`."""@en ;
+#     ],
+#     [
+#         a sh:PropertyShape ;
+#         sh:path bf:source ;
+#         sh:nodeKind sh:BlankNodeOrIRI ;
+#         sh:node <#SourceShape> ;
+#     ] .
 
 # mods:mods/mods:originInfo
 <#PublicationShape> a sh:NodeShape ;
     sh:targetClass bf:Publication ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:originInfo/mods:place
     [
         a sh:PropertyShape ;
         sh:path bf:place ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#PlaceShape> ;
         sh:name "Place of publication"@en ;
         sh:description "The place of publication of the newspaper."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:place ;
+        sh:node <#PlaceShape> ;
+        sh:severity sh:Warning ;
     ],
     [
         a sh:PropertyShape ;
@@ -592,11 +770,35 @@
         sh:severity sh:Violation ;
         sh:message """mods:dateIssued occurs more than once.
             Please check `mods:mods/mods:originInfo/mods:dateIssued[@encoding="edtf"]`."""@en ;
+    ],
+    # mods:mods/mods:originInfo/mods:publisher
+    [
+        a sh:PropertyShape ;
+        sh:path bf:agent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#AgentShape> ;
+    ] .
+
+# mods:mods/mods:originInfo/mods:publisher
+<#AgentShape> a sh:NodeShape ;
+    sh:targetClass bf:Agent ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
     ] .
 
 # mods:mods/mods:originInfo/mods:place
 <#PlaceShape> a sh:NodeShape ;
     sh:targetClass bf:Place ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -617,6 +819,14 @@
     [
         a sh:PropertyShape ;
         sh:path bf:code ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:placeTerm[@type="code"] occurs more than once.
+            Please check `mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="code"]`."""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:code ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Place code"@en ;
@@ -630,25 +840,31 @@
         sh:message """mods:placeTerm[@type="code"] is not provided.
             Please check `mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="code"]`."""@en ;
     ],
+    # mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="code"]/@authority
+    # mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="code"]/@authorityURI
     [
         a sh:PropertyShape ;
-        sh:path bf:code ;
-        sh:maxCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:placeTerm[@type="code"] occurs more than once.
-            Please check `mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type="code"]`."""@en ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
     ] .
 
 
 # mods:mods/mods:name[@type="personal"]
 <#ContributionShape> a sh:NodeShape ;
     sh:targetClass bf:Contribution ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
         sh:path bf:agent ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#AgentShape> ;
+        sh:or (
+            [ sh:node <#PersonShape> ]
+            [ sh:node <#OrganizationShape> ]
+        );
         sh:name "Mods name"@en ;
         sh:description "The name of a person who contributed to the newspaper."@en ;
     ],
@@ -680,6 +896,9 @@
 
 <#RoleShape> a sh:NodeShape ; 
     sh:targetClass bf:Role ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:name[@type="personal"]/role/roleTerm[@type="text"]
     [
@@ -692,9 +911,36 @@
         sh:maxCount 1 ;
     ] .
 
+# mods:mods/mods:name[@type="corporate"]
+<#OrganizationShape> a sh:NodeShape ;
+    sh:targetClass bf:Orgnaization ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    # mods:mods/mods:name[@type="corporate"]/mods:namePart
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Name of a company or organization"@en ;
+        sh:description "The name of a company or organization associated with the written work."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:name[@type="corporate"]/mods:namePart is required.
+            Please check `mods:mods/mods:name[@type="corporate"]/mods:namePart`."""@en ;
+    ].
+
 # mods:mods/mods:name[@type="personal"]
-<#AgentShape> a sh:NodeShape ;
+<#PersonShape> a sh:NodeShape ;
     sh:targetClass bf:Person ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     # mods:mods/mods:name[@type="personal"]/namePart[@type="given"]
     [
@@ -750,6 +996,9 @@
 #mods:mods/mods:subject/mods:topic
 <#TopicShape> a sh:NodeShape ;
     sh:targetClass bf:Topic ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -779,10 +1028,13 @@
 #mods:mods/mods:abstract
 <#SummaryShape> a sh:NodeShape ;
     sh:targetClass bf:Summary ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;
-        sh:path rdf:value ;
+        sh:path rdfs:label ;
         sh:nodeKind sh:Literal ;
         sh:datatype xsd:string ;
         sh:name "Mods abstract"@en ;
@@ -791,21 +1043,39 @@
 
 #mods:mods/mods:identifier[not(@*)]
 <#IdentifierShape> a sh:NodeShape ;
-  sh:targetClass bf:Identifier ;
-  sh:property 
-  [
-    a sh:PropertyShape ;
-    sh:path rdf:value ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:name "has object identifier value"@en ;
-    sh:description "The value of the object identifier."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] .
+    sh:targetClass bf:Identifier ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
+    sh:property 
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:value ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "has object identifier value"@en ;
+        sh:description "The value of the object identifier."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
+    ] .
 
 <#UsageAndAccessPolicyShape> a sh:NodeShape ;
     sh:targetClass bf:UsageAndAccessPolicy ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
     sh:property
     [
         a sh:PropertyShape ;

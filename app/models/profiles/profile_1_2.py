@@ -413,3 +413,14 @@ class BibliographicProfile12(NewspaperProfile11):
             "shacl",
             "bibliographic.shacl.ttl",
         )
+
+    @staticmethod
+    def shacl_premis() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "shacl",
+            "premis.shacl.ttl",
+        )

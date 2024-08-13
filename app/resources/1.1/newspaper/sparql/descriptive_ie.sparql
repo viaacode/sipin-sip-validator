@@ -6,7 +6,7 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX schema: <https://schema.org/> 
 PREFIX pav: <http://purl.org/pav/>
 PREFIX haObj: <https://data.hetarchief.be/ns/object/> 
-PREFIX haObjId: <https://data.hetarchief.be/id/object/> 
+PREFIX haObjId: <https://data.hetarchief.be/id/entity/> 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
 PREFIX edtf: <http://id.loc.gov/datatypes/edtf/> 
@@ -37,7 +37,7 @@ CONSTRUCT {
         bf:extent ?extent_iri ;
         haBib:numberOfPages ?number_of_pages ;
         bf:carrier ?carrier_iri ;
-        bf:hasSeries ?abraham_iri ;
+        bf:hasSeries ?relatedItem_iri ;
         bf:usageAndAccessPolicy ?license_iri .
     
     ?identifier_iri a bf:Identifier ;
@@ -108,7 +108,7 @@ CONSTRUCT {
         rdfs:label ?carrier_source .
 
     ?relatedItem_iri a ?relatedItem_type_iri ;
-        schema:identifier ?abraham_iri .
+        bf:identifier ?abraham_iri .
 
     ?abraham_iri a bf:Identifier ;
         rdf:value ?abraham_id ;

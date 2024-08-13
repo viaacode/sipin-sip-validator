@@ -4,7 +4,7 @@ PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
 PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX haObjId: <https://data.hetarchief.be/id/object/>
+PREFIX haObjId: <https://data.hetarchief.be/id/entity/>
 PREFIX haObj: <https://data.hetarchief.be/ns/object/>
 PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
 PREFIX fx: <http://sparql.xyz/facade-x/ns/>
@@ -55,7 +55,7 @@ WHERE
             a dct:identifier;
             rdf:_1 ?id
         ] .
-        BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",?id)) AS ?rep)
+        BIND(IRI(CONCAT("https://data.hetarchief.be/id/entity/",?id)) AS ?rep)
         # endregion
 
         # region Creator
@@ -88,8 +88,8 @@ WHERE
                     ?creator_b_value
                 )
             AS ?creator_o)
-            BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Role")))) AS ?creatorRole)
-            BIND(IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?creatorName, "Creator")))) AS ?creator)
+            BIND(IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?creatorName, "Role")))) AS ?creatorRole)
+            BIND(IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?creatorName, "Creator")))) AS ?creator)
         }
         # endregion
 
@@ -113,7 +113,7 @@ WHERE
         BIND(
             IF(
                 bound(?root_list_3),
-                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Height")))),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?id, "Height")))),
                 ?root_list_3
             )
         AS ?height)
@@ -136,7 +136,7 @@ WHERE
         BIND(
             IF(
                 bound(?root_list_4),
-                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Width")))),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?id, "Width")))),
                 ?root_list_4
             )
         AS ?width)
@@ -161,7 +161,7 @@ WHERE
         BIND(
             IF(
                 bound(?root_list_5),
-                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Depth")))),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?id, "Depth")))),
                 ?root_list_5
             )
         AS ?depth)
@@ -185,7 +185,7 @@ WHERE
         BIND(
             IF(
                 bound(?root_list_6),
-                IRI(CONCAT("https://data.hetarchief.be/id/object/",MD5(CONCAT(?id, "Weight")))),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?id, "Weight")))),
                 ?root_list_6
             )
         AS ?weight)

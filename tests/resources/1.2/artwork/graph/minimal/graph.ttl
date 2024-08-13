@@ -5,7 +5,7 @@
 @prefix evtRelAgent: <http://id.loc.gov/vocabulary/preservation/eventRelatedAgentRole/> .
 @prefix evtRelObject: <http://id.loc.gov/vocabulary/preservation/eventRelatedObjectRole/> .
 @prefix haObj: <https://data.hetarchief.be/ns/object/> .
-@prefix haObjId: <https://data.hetarchief.be/id/object/> .
+@prefix haObjId: <https://data.hetarchief.be/id/entity/> .
 @prefix haOrgId: <https://data.hetarchief.be/id/organization/> .
 @prefix haSip: <https://data.hetarchief.be/ns/sip/> .
 @prefix haSipId: <https://data.hetarchief.be/id/sip/1.2/> .
@@ -39,6 +39,22 @@ haObjId:uuid-AA32FAEC-A8CF-4B6A-9F3E-E2216A396B21 a premisowl:Event,
             [ a schema:Role ;
                 schema:agent haOrgId:OR-m30wc4t ;
                 schema:roleName "CREATOR" ] .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipSubType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipSubType" .
+
+relSubType:isi a skos:Concept ;
+    skos:broader <http://id.loc.gov/vocabulary/preservation/relationshipType/str> ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    skos:prefLabel "is included in" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType> a skos:ConceptScheme ;
+    skos:prefLabel "relationshipType" .
+
+<http://id.loc.gov/vocabulary/preservation/relationshipType/str> a skos:Concept ;
+    skos:inScheme <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    skos:narrower relSubType:isi ;
+    skos:prefLabel "structural" .
 
 <http://the-fr.org/id/file-format/154> a dct:FileFormat .
 

@@ -3,7 +3,7 @@
   <mods:titleInfo>
     <mods:title>Newspaper title</mods:title>
   </mods:titleInfo>
-  <mods:titleInfo type="alternative">
+  <mods:titleInfo type="alternative" otherType="incipit">
     <mods:title>Newspaper title: alt</mods:title>
   </mods:titleInfo>
   <mods:identifier>uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c</mods:identifier>
@@ -11,7 +11,7 @@
   <mods:abstract>Newspaper abstract</mods:abstract>
   <mods:genre authority="marcgt" authorityURI="https://www.loc.gov/standards/valuelist/marcgt.html">newspaper</mods:genre>
   <mods:genre authority="ngl" authorityURI="https://www.lib.washington.edu/gmm/collections/mcnews/ngl">amateur newspapers</mods:genre>
-  <mods:originInfo>
+  <mods:originInfo eventType="publication">
     <mods:issuance>serial</mods:issuance>
     <mods:dateIssued encoding="edtf">2022-08-02</mods:dateIssued>
     <mods:place>
@@ -35,7 +35,21 @@
     <mods:identifier type="abraham_id" typeURI="https://anet.be">c:bnc:99999</mods:identifier>
     <mods:identifier type="abraham_uri" typeURI="https://anet.be">https://anet.be/record/opacbnc/c:bnc:99999/N</mods:identifier>
   </mods:relatedItem>
+  <mods:relatedItem type="series">
+    <mods:identifier type="number">4</mods:identifier>
+    <mods:titleInfo>
+      <mods:title>Number series title</mods:title>
+    </mods:titleInfo>
+  </mods:relatedItem>
+  <mods:relatedItem type="series">
+    <mods:identifier type="page">3</mods:identifier>
+    <mods:titleInfo>
+      <mods:title>Page series title</mods:title>
+    </mods:titleInfo>
+  </mods:relatedItem>
   <mods:physicalDescription>
+    <mods:note type="condition">Bad</mods:note>
+    <mods:note type="statement of responsibility">This is the statement of responsibility</mods:note>
     <mods:form authority="marcform" authorityURI="https://www.loc.gov/standards/valuelist/marcform.html">print</mods:form>
     <mods:extent unit="pages">4</mods:extent>
     <mods:extent unit="cm">59.7 x 74.9</mods:extent>

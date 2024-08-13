@@ -1,56 +1,316 @@
-PREFIX premis: <http://www.loc.gov/premis/v3#>
-PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
 PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance#>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX haObjId: <https://data.hetarchief.be/id/object/>
-PREFIX haObj: <https://data.hetarchief.be/ns/object/>
-PREFIX relSubType: <http://id.loc.gov/vocabulary/preservation/relationshipSubType/>
-PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/> 
 PREFIX dct: <http://purl.org/dc/terms/>
-PREFIX cryptographicHashFunctions: <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace#>
+PREFIX haObjId: <https://data.hetarchief.be/id/entity/>
+PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
+PREFIX premis: <http://www.loc.gov/premis/v3#>
 PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
 PREFIX schema: <https://schema.org/>
-PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
+
 CONSTRUCT
-  {
-    ?ie a premisowl:IntellectualEntity;
-        ?dcterm_p ?dcterm_o;
-        a ?dcterm_xsi_type .
-  }
+{
+    ?is_part_of a ?is_part_of_type_iri ;
+        schema:hasPart ?ie ;
+        schema:name ?is_part_of_name ;
+        schema:identifier ?is_part_of_id ;
+        schema:position ?is_part_of_series_number ;
+        schema:seasonNumber ?is_part_of_season_number ;
+        schema:hasPart ?has_part_iri .
+
+    ?has_part_iri a ?has_party_type_iri;
+        schema:name ?has_part_name .
+
+    ?ie a premisowl:IntellectualEntity ;
+        ?p ?o;
+        schema:creator ?creatorRole ;
+        schema:height ?height ;
+        schema:width ?width ;
+        schema:depth ?depth ;
+        schema:weight ?weight ;
+        schema:isPartOf ?is_part_of .
+
+    ?height a schema:QuantitativeValue ;
+        ?height_p ?height_b_value_dt .
+
+    ?width a schema:QuantitativeValue ;
+        ?width_p ?width_b_value_dt .
+
+    ?depth a schema:QuantitativeValue ;
+        ?depth_p ?depth_b_value_dt .
+
+    ?weight a schema:QuantitativeValue ;
+        ?weight_p ?weight_b_value_dt .
+
+    ?creatorRole a schema:Role;
+        schema:roleName ?creatorRoleName;
+        schema:creator ?creator .
+
+    ?creator a schema:Person;
+        ?creator_p ?creator_o .
+}
 WHERE
-  {
+{ 
     SERVICE <x-sparql-anything:location={{ bag_path }}/data/metadata/descriptive/dc+schema.xml> {
-        [] a fx:root;
-            ?dc_1 [
+        
+        # region IRI of the intellectual entity
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_1 [ 
                 a dct:identifier;
                 rdf:_1 ?id
-            ];
-            ?dc_2 ?dcterm .
-
-        ?dcterm a ?dcterm_p;
-           rdf:_1 ?dcterm_value .
-        
-        OPTIONAL {
-            ?dcterm xml:lang ?dcterm_xml_lang.
+            ] .
         }
+        BIND(
+            IF(
+                bound(?id),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",?id)),
+                "IE dcterms:identifier not found"
+            )
+        AS ?ie)
+        # endregion
 
-        BIND(iri(concat(str(haObjId:), ?id)) AS ?ie)
+        # region Creator
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_2 [
+                a schema:creator;
+                schema:roleName ?creatorRoleName;
+                ?creator_list ?creator_b ;
+                ?creator_list_name [
+                    a schema:name ;
+                    rdf:_1 ?creatorName ;
+                ] ;
+            ].
+            ?creator_b a ?creator_p ;
+                rdf:_1 ?creator_b_value .
+            OPTIONAL {
+                ?creator_b xsi:type ?creator_b_type .
+            }
+            OPTIONAL {
+                ?creator_b xml:lang ?creator_b_lang .
+            }
+            
+            BIND(
+                COALESCE(
+                    IF(?creator_p = schema:birthDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
+                    IF(?creator_p = schema:deathDate, STRDT(?creator_b_value, edtf:EDTF), 1/0),
+                    IF(bound(?creator_b_lang), STRLANG(?creator_b_value, ?creator_b_lang), 1/0),
+                    ?creator_b_value
+                )
+            AS ?creator_o)
+            BIND(IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?creatorName, "Role")))) AS ?creatorRole)
+            BIND(IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?creatorName, "Creator")))) AS ?creator)
+        }
+        # endregion
+
+        # region Quantitative values
+
+        # region Height
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_3 [
+                a schema:height ;
+                ?height_list ?height_b ;
+            ] .
+
+            ?height_b a ?height_p ;
+                rdf:_1 ?height_b_value .
+
+            BIND(IF(?height_p = schema:value,STRDT(?height_b_value, xsd:float),?height_b_value) AS ?height_b_value_dt)
+
+        }
+        BIND(
+            IF(
+                bound(?root_list_3),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?id, "Height")))),
+                ?root_list_3
+            )
+        AS ?height)
+        # endregion
+
+        # region Width
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_4 [
+                a schema:width ;
+                ?width_list ?width_b ;
+            ] .
+
+            ?width_b a ?width_p ;
+                rdf:_1 ?width_b_value .
+
+            BIND(IF(?width_p = schema:value,STRDT(?width_b_value, xsd:float),?width_b_value) AS ?width_b_value_dt)
+        }
+        BIND(
+            IF(
+                bound(?root_list_4),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?id, "Width")))),
+                ?root_list_4
+            )
+        AS ?width)
+        # endregion
+
+
+        # region Depth
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_5 [
+                a schema:depth ;
+                ?depth_list ?depth_b ;
+            ] .
+
+            ?depth_b a ?depth_p ;
+                rdf:_1 ?depth_b_value .
+
+            BIND(IF(?depth_p = schema:value, STRDT(?depth_b_value, xsd:float),?depth_b_value) AS ?depth_b_value_dt)
+
+        }
+        BIND(
+            IF(
+                bound(?root_list_5),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?id, "Depth")))),
+                ?root_list_5
+            )
+        AS ?depth)
+        # endregion
+
+        # region Weight
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_6 [
+                a schema:weight ;
+                ?weight_list ?weight_b ;
+            ] .
+
+            ?weight_b a ?weight_p ;
+                rdf:_1 ?weight_b_value .
+
+            BIND(IF(?weight_p = schema:value, STRDT(?weight_b_value, xsd:float),?weight_b_value) AS ?weight_b_value_dt)
+
+        }
+        BIND(
+            IF(
+                bound(?root_list_6),
+                IRI(CONCAT("https://data.hetarchief.be/id/entity/",MD5(CONCAT(?id, "Weight")))),
+                ?root_list_6
+            )
+        AS ?weight)
+        # endregion
+
+        # endregion
+
+        # region isPartOf
+        OPTIONAL {
+            [] a fx:root;
+            ?root_list_7 ?_is_part_of .
+            ?_is_part_of a schema:isPartOf ;
+                xsi:type ?is_part_of_type .
+            OPTIONAL {
+                ?_is_part_of ?is_part_of_1 [
+                    a schema:name ;
+                    rdf:_1 ?is_part_of_name ;
+                ] ;
+            }
+            Optional {
+                ?_is_part_of ?is_part_of_2 [
+                    a schema:identifier ;
+                    rdf:_1 ?is_part_of_id ;
+                ] 
+            }
+            Optional {
+                ?_is_part_of ?is_part_of_3 [
+                    a schema:seasonNumber ;
+                    rdf:_1 ?_is_part_of_season_number ;
+                ] 
+            }
+            Optional {
+                ?_is_part_of ?is_part_of_4 [
+                    a schema:position ;
+                    rdf:_1 ?_is_part_of_series_number ;
+                ] 
+            }
+            Optional {
+                ?_is_part_of ?is_part_of_5 [
+                    a schema:hasPart ;
+                    xsi:type ?has_part_type ;
+                    ?_has_part [
+                        a schema:name ;
+                        rdf:_1 ?has_part_name ;
+                    ]
+                ]
+            }
+        }
 
         BIND(
             COALESCE(
-                IF(?dcterm_p = dct:created, STRDT(?dcterm_value, edtf:EDTF), 1/0),
-                IF(?dcterm_p = dct:issued, STRDT(?dcterm_value, edtf:EDTF), 1/0),
-                IF(?dcterm_p = dct:available, xsd:dateTime(?dcterm_value), 1/0),
-                IF(?dcterm_p = dct:extent, xsd:duration(?dcterm_value), 1/0),
-                IF(bound(?dcterm_xml_lang), STRLANG(?dcterm_value, ?dcterm_xml_lang), 1/0),
-                ?dcterm_value
+                IF(bound(?is_part_of_id), IRI(CONCAT(str(haObjId:), ?is_part_of_id)), 1/0),
+                IRI(CONCAT(str(haObjId:), MD5(?is_part_of_name)))
             )
-            AS ?dcterm_o)
+            AS ?is_part_of
+        )
+        BIND(IRI(REPLACE(?is_part_of_type, "schema:", "https://schema.org/")) AS ?is_part_of_type_iri)
 
-        FILTER (?dcterm_p != dct:identifier)
+        BIND(
+            IF(BOUND(?has_part_name), IRI(CONCAT(str(haObjId:), MD5(?has_part_name))), ?undefined_1)
+            AS ?has_part_iri
+        )
+        BIND(IRI(REPLACE(?has_part_type, "schema:", "https://schema.org/")) AS ?has_party_type_iri)
+        BIND(
+            IF(BOUND(?_is_part_of_season_number), STRDT(?_is_part_of_season_number, xsd:integer), ?undefined_2 )
+            AS ?is_part_of_season_number
+        )
+        BIND(
+            IF(BOUND(?_is_part_of_series_number), STRDT(?_is_part_of_series_number, xsd:integer), ?undefined_3 )
+            AS ?is_part_of_series_number
+        )
+
+        # endregion
+
+        # region Rest of properties
+        OPTIONAL {
+            [] a fx:root;
+
+            ?root_list_n ?b .
+            ?b a ?p;
+                rdf:_1 ?b_value .
+            OPTIONAL {
+                ?b xsi:type ?b_type .
+            }
+            OPTIONAL {
+                ?b xml:lang ?b_lang .
+            }
+
+
+            BIND(
+                COALESCE(
+                    IF(?p = dct:created, STRDT(?b_value, edtf:EDTF), 1/0),
+                    IF(?p = dct:issued, STRDT(?b_value, edtf:EDTF), 1/0),
+                    IF(?p = dct:available, xsd:dateTime(?b_value), 1/0),
+                    IF(?p = dct:extent, xsd:duration(?b_value), 1/0),
+                    IF(bound(?b_lang), STRLANG(?b_value, ?b_lang), 1/0),
+                    ?b_value
+                )
+            AS ?o)
+
+            FILTER (?p != dct:identifier)
+            FILTER (?p != schema:creator)
+            FILTER (?p != schema:height)
+            FILTER (?p != schema:width)
+            FILTER (?p != schema:depth)
+            FILTER (?p != schema:weight)
+            FILTER (?p != schema:isPartOf)
+
+        }
+        # endregion
     }
-  }
+}   

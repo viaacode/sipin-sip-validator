@@ -4,7 +4,7 @@ from io import StringIO
 import pytest
 import rdflib
 from rdflib import Graph
-from rdflib.compare import isomorphic
+from rdflib.compare import isomorphic, graph_diff
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from app.models.profiles import determine_profile
@@ -418,6 +418,11 @@ class TestBasicProfile12(TestBasicProfile11):
             "graph",
         )
 
+    def test_parse_validate_profile_empty_graph(self, profile_empty_graph):
+        graph = profile_empty_graph.parse_graph()
+        with pytest.raises(GraphNotConformError) as e:
+            profile_empty_graph.validate_graph(graph)
+
 
 class TestMaterialArtworkProfile11:
     def graph_path(self) -> Path:
@@ -540,7 +545,7 @@ class TestMaterialArtworkProfile11:
         assert isomorphic(graph, expected)
 
 
-class TestMaterialArtworkProfile12:
+class TestMaterialArtworkProfile12(TestMaterialArtworkProfile11):
     def graph_path(self) -> Path:
         return Path(
             "tests",
@@ -710,19 +715,47 @@ class TestNewspaperProfile11:
         contribution_uri = self.get_suffix_uri(contribution_uri_ref)
 
         publication_uri_ref = graph.value(
-            object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Publication"),
+            object=rdflib.URIRef(
+                "http://id.loc.gov/ontologies/bibframe/ProvisionActivity"
+            ),
             predicate=rdflib.URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
         )
-        publication_uri = self.get_suffix_uri(publication_uri_ref)
-
-        series_uri = self.get_suffix_uri(
-            graph.value(
-                object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Series"),
+        if not publication_uri_ref:
+            publication_uri_ref = graph.value(
+                object=rdflib.URIRef(
+                    "http://id.loc.gov/ontologies/bibframe/Publication"
+                ),
                 predicate=rdflib.URIRef(
                     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
                 ),
             )
+        publication_uri = self.get_suffix_uri(publication_uri_ref)
+
+        series_generator = graph.subjects(
+            object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Series"),
+            predicate=rdflib.URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
         )
+
+        series = []
+        for series_uri in series_generator:
+            title, identifier = None, None
+            for p, o in graph.predicate_objects(subject=series_uri):
+                if p == rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/title"):
+                    title = o
+                elif p == rdflib.URIRef(
+                    "http://id.loc.gov/ontologies/bibframe/identifier"
+                ):
+                    identifier = o
+            if title is None:
+                main_series_uri = self.get_suffix_uri(series_uri)
+            else:
+                series.append(
+                    (
+                        self.get_suffix_uri(series_uri),
+                        self.get_suffix_uri(identifier),
+                        self.get_suffix_uri(title),
+                    )
+                )
 
         place_uri = self.get_suffix_uri(
             graph.value(
@@ -760,7 +793,8 @@ class TestNewspaperProfile11:
         rendered_graph_template = graph_template.render(
             contribution_uri=contribution_uri,
             publication_uri=publication_uri,
-            series_uri=series_uri,
+            main_series_uri=main_series_uri,
+            series=series,
             place_uri=place_uri,
             carrier_uri=carrier_uri,
             agent_uri=agent_uri,
@@ -769,3 +803,46 @@ class TestNewspaperProfile11:
 
         expected.parse(StringIO(rendered_graph_template))
         assert isomorphic(graph, expected)
+
+
+class TestBibliographicProfile12(TestNewspaperProfile11):
+    @classmethod
+    def setup_class(cls):
+        cls.jinja_env = Environment(
+            loader=FileSystemLoader(cls.graph_path()),
+            autoescape=select_autoescape(),
+        )
+
+    @classmethod
+    def graph_path(cls) -> Path:
+        return Path(
+            "tests",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "graph",
+        )
+
+    @pytest.fixture
+    def profile_conform_minimal(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "sips",
+            "conform_minimal",
+        )
+        return BibliographicProfile12(path)
+
+    @pytest.fixture
+    def profile_conform_extended(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "sips",
+            "conform_extended",
+        )
+        return BibliographicProfile12(path)
