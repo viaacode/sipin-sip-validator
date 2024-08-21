@@ -174,7 +174,8 @@ WHERE {
             BIND(
                 IF(
                     BOUND(?_identifier_type_element),
-                    iri(CONCAT(str(haObjId:), MD5(?identifier_with_type))),
+                    """mods:identifier can not have a 'type' attribute. Local Identifiers should be defined in Premis.
+Please check mods:mods/mods:identifier""",
                     ?_null
                 )
             as ?identifier_iri)
