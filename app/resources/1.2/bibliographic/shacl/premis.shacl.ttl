@@ -646,18 +646,18 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "is source of" ;
+    sh:in ( "is source of" ) ;
     sh:name "label"@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path skos:broader ;
-    sh:hasValue relType:der ;
+    sh:in ( relType:der ) ;
   ],
   [
     a sh:PropertyShape ; 
     sh:path skos:inScheme ;
-    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    sh:in ( <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ) ;
   ] .
 
 <#isi> a sh:NodeShape ;
@@ -671,18 +671,18 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "is included in" ;
+    sh:in ( "is included in" ) ;
     sh:name "label"@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path skos:broader ;
-    sh:hasValue relType:str ;
+    sh:in ( relType:str ) ;
   ],
   [
     a sh:PropertyShape ; 
     sh:path skos:inScheme ;
-    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    sh:in ( <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ) ;
   ] .
 
 <#relationshipSubType> a sh:NodeShape ;
@@ -696,7 +696,7 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "relationshipSubType" ;
+    sh:in ( "relationshipSubType" ) ;
     sh:name "label"@en ;
   ] .
 
@@ -711,7 +711,7 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "derivation" ;
+    sh:in ( "derivation" ) ;
     sh:name "label"@en ;
   ],
   [
@@ -721,7 +721,7 @@
   [
     a sh:PropertyShape ; 
     sh:path skos:inScheme ;
-    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    sh:in ( <http://id.loc.gov/vocabulary/preservation/relationshipType> ) ;
   ] .
 
 <#str> a sh:NodeShape ;
@@ -735,7 +735,7 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "structural" ;
+    sh:in ( "structural" ) ;
     sh:name "label"@en ;
   ],
   [
@@ -745,7 +745,7 @@
   [
     a sh:PropertyShape ; 
     sh:path skos:inScheme ;
-    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    sh:in ( <http://id.loc.gov/vocabulary/preservation/relationshipType> ) ;
   ] .
 
 
@@ -760,6 +760,6 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "relationshipType" ;
+    sh:in ( "relationshipType" ) ;
     sh:name "label"@en ;
   ] .
