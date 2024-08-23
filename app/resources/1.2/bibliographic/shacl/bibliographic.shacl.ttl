@@ -35,10 +35,14 @@
     [
         a sh:PropertyShape ;
         sh:path bf:identifiedBy ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#IdentifierShape> ;
-        sh:name "Identifier"@en ;
-        sh:description "MODS identifier element"@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message """'mods:mods/mods:identifier' can not have an '@type' attribute.
+            Please check `mods:mods/mods:identifier`. Local Identifiers should be defined in premis.xml."""
     ],
     [
         a sh:PropertyShape ;
@@ -94,10 +98,10 @@
         a sh:PropertyShape ;
         sh:path bf:title ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:or (
-            [ sh:node <#VariantTitleShape> ]
-            [ sh:node <#TitleShape> ]
-        ) ;
+        # sh:or (
+        #     [ sh:node <#VariantTitleShape> ]
+        #     [ sh:node <#TitleShape> ]
+        # ) ;
         sh:or (
             [ sh:class bf:VariantTitle ]
             [ sh:class bf:Title ]
@@ -115,18 +119,23 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:name "Type"@en ;
         sh:description "MODS type of resource element"@en ;
     ],
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message """mods:typeOfResource is required.
+            Please check `mods:mods/mods:typeOfResource`"""
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
         sh:in (haDes:NewspaperIssue bf:Work premis:IntellectualEntity haDes:NotatedMusic haDes:Text bf:Manuscript) ;
         sh:severity sh:Violation ;
-        sh:message """mods:typeOfResource must be newspaper edition.
+        sh:message """mods:typeOfResource should be one of: Newspaper Edition, Notated music, Text.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
-            # ADD or no premis:IntellectualEntity in Mods
     ],
     [
         a sh:PropertyShape ;
@@ -262,9 +271,24 @@
     [
         a sh:PropertyShape ;
         sh:path bf:provisionActivity ;
-        sh:node <#PublicationShape> ;
-        sh:severity sh:Warning ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
     ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:provisionActivity ;
+        sh:or (
+            [ sh:class bf:Publication ]
+            [ sh:class bf:ProvisionActivity ]
+        ) ;
+        sh:message """Attribute '@eventType' of mods:originInfo should either be 'publication' or not present.
+            Please check `mods:mods/mods:originInfo/@eventType`"""
+    ],
+    # [
+    #     a sh:PropertyShape ;
+    #     sh:path bf:provisionActivity ;
+    #     sh:node <#PublicationShape> ;
+    #     sh:severity sh:Warning ;
+    # ],
     [
         a sh:PropertyShape ;
         sh:path bf:provisionActivity ;
@@ -321,7 +345,7 @@
         a sh:PropertyShape ;
         sh:path bf:carrier ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:node <#CarrierShape> ;
+        # sh:node <#CarrierShape> ;
         sh:name "Carrier"@en ;
         sh:description "MODS form element"@en ;
     ],    
@@ -399,8 +423,9 @@
         sh:path schema:position ;
         sh:minCount 1 ;
         sh:severity sh:Violation ;
-        sh:message """mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute does not occur.
-            Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER`"""@en ;
+        sh:message """
+        mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute does not occur.
+            Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER` This property is used to indicate the page number that this file represents."""@en ;
     ] .
 
 <#TitleShape> a sh:NodeShape ; 
@@ -433,29 +458,31 @@
         sh:path bf:variantType ;
         sh:minCount 2 ;
         sh:severity sh:Violation ;
-        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] element is required.
-            Please check `mods:mods/mods:titleInfo/mods:title[@type=*]`"""@en ;
+        sh:message """Attribute '@othertype' of mods:titleInfo[@type="alternative"]/@type element is required.
+            Please check `mods:mods/mods:titleInfo[@type="alternative"]/@type`"""@en ;
     ],
     [
         a sh:PropertyShape ;
         sh:path bf:variantType ;
         sh:hasValue "alternative";
         sh:severity sh:Violation ;
-        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] must be 'alternative'"""@en ;
+        sh:message """Attribute '@type' of mods:titleInfo/mods:title[@type=*] must be 'alternative'"""@en ;
     ],
     [
         a sh:PropertyShape ;
         sh:path bf:variantType ;
         sh:in ( "alternative" "incipit" "incipit brief" "correspondenten");
         sh:severity sh:Violation ;
-        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] must be 'alternative'"""@en ;
+        sh:message """Attribute '@type' of mods:titleInfo/mods:title[@type=*] must be 'alternative'
+and attribute '@othertype' should be one of 'incipit, incipit brief, correspondenten'.
+Please check `mods:mods/mods:titleInfo[@type="alternative"]`"""@en ;
     ],
     [
         a sh:PropertyShape ;
         sh:path bf:variantType ;
         sh:maxCount 2 ;
         sh:severity sh:Violation ;
-        sh:message """Attribute type of mods:titleInfo/mods:title[@type=*] element occurs more than once.
+        sh:message """Attribute '@type' of mods:titleInfo/mods:title[@type=*] element occurs more than once.
             Please check `mods:mods/mods:titleInfo/mods:title[@type=*]`"""@en ;
     ],
     [
@@ -529,10 +556,16 @@
     [
         a sh:PropertyShape ;
         sh:path bf:source ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#SourceShape> ;
         sh:name "Source"@en ;
         sh:description "The source of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message """'authority' attribute of mods:form is required.
+            Please check `mods:mods/mods:physicalDescription/mods:form/@authority`."""
     ] .
     
 <#NoteShape> a sh:NodeShape ;
@@ -675,42 +708,6 @@
         sh:name "Identifier"@en ;
         sh:description "The identifier of the Abraham ID or Abraham URI."@en ;
     ] .
-
-# <#AbrahamIdShape> a sh:NodeShape ;
-#     sh:closed true ;
-#     sh:ignoredProperties <#typeList> ;
-#     sh:nodeKind sh:IRI ;
-#     sh:property
-#     [
-#         a sh:PropertyShape ;
-#         sh:path rdf:type ;
-#         sh:nodeKind sh:BlankNodeOrIRI ;
-#         sh:in (haObj:AbrahamURI haObj:AbrahamId bf:Identifier) ;
-#         sh:name "Type"@en ;
-#         sh:description "The type of Abraham ID or Abraham URI."@en ;
-#     ],
-#     [
-#         a sh:PropertyShape ;
-#         sh:path rdf:value ;
-#         sh:nodeKind sh:Literal ;
-#         sh:datatype xsd:string ;
-#         sh:name "Abraham ID"@en ;
-#         sh:description "The Abraham ID of the newspaper."@en ;
-#     ],
-#     [
-#         a sh:PropertyShape ;
-#         sh:path rdf:value ;
-#         sh:maxCount 1 ;
-#         sh:severity sh:Violation ;
-#         sh:message """mods:identifier[@type="abraham_id"] occurs more than once.
-#             Please check `mods:mods/mods:relatedItem[@type="series"]/mods:identifier[@type="abraham_id"]`."""@en ;
-#     ],
-#     [
-#         a sh:PropertyShape ;
-#         sh:path bf:source ;
-#         sh:nodeKind sh:BlankNodeOrIRI ;
-#         sh:node <#SourceShape> ;
-#     ] .
 
 # mods:mods/mods:originInfo
 <#PublicationShape> a sh:NodeShape ;
@@ -1046,8 +1043,12 @@
     sh:targetClass bf:Identifier ;
     sh:closed true ;
     sh:ignoredProperties <#typeList> ;
-    sh:nodeKind sh:IRI ;
-    sh:property 
+    sh:property
+    # [
+    #     a sh:PropertyShape ;
+    #     sh:path rdf:type ;
+    #     sh:in (bf:Identifier)
+    # ],
     [
         a sh:PropertyShape ;
         sh:path rdf:value ;

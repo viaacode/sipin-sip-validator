@@ -424,3 +424,14 @@ class BibliographicProfile12(NewspaperProfile11):
             "shacl",
             "premis.shacl.ttl",
         )
+
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
+        )

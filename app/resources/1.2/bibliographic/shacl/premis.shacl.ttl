@@ -25,16 +25,6 @@
   rdf:first rdf:type ;
   rdf:rest ( ) .
 
-<#IntellectualEntityCountShape>
-  a sh:NodeShape ;
-  sh:targetNode premis:IntellectualEntity ;
-  sh:property [
-    sh:path [ sh:inversePath rdf:type ] ;
-    sh:minCount 1 ;
-    sh:severity sh:Violation ;
-    sh:message """No Intellectual Entity found."""@en ;
-  ] .
-
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
   sh:closed true ;
@@ -152,7 +142,9 @@
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     sh:message """Representation has no value File for `includes` relationshipSubType.
-      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=includes)`"""@en ;
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=includes)`
+      OR 'is represented by' relationship of Intellectual Entity is not to a Representation.
+      Please check `premis:premis/premis:object/premis:relationship/premis:relatedObjectIdentifier`."""@en ;
   ] .
 
 <#FileShape> a sh:NodeShape ;

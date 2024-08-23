@@ -24,7 +24,7 @@ PREFIX haSip: <https://data.hetarchief.be/ns/sip/>
 
 CONSTRUCT {
     ?work a bf:Work, premisowl:IntellectualEntity, ?extraType, ?manuscript_type ;
-        bf:identifiedBy ?identifier_iri ;
+        bf:identifiedBy ?identifier_with_type_iri, ?identifier_iri ;
         bf:adminMetadata ?record_iri ;
         rdfs:label ?mainTitle ;
         bf:title ?altTitle_iri, ?mainTitle_iri ;
@@ -41,9 +41,12 @@ CONSTRUCT {
         bf:hasSeries ?relatedItem_iri ;
         bf:usageAndAccessPolicy ?license_iri .
     
-    ?identifier_iri a bf:Identifier, ?identifier_type_iri ;
+    ?identifier_with_type_iri a bf:Identifier, ?identifier_type_iri ;
         rdf:value ?identifier_with_type .
 
+    ?identifier_iri a bf:Identifier;
+        rdf:value ?identifier .
+        
     ?record_iri a bf:AdminMetadata ;
         bf:identifiedBy ?recordInfo_identifier_iri .
 
@@ -174,11 +177,10 @@ WHERE {
             BIND(
                 IF(
                     BOUND(?_identifier_type_element),
-                    """mods:identifier can not have a 'type' attribute. Local Identifiers should be defined in Premis.
-Please check mods:mods/mods:identifier""",
+                    concat("""mods:identifier can not have a 'type' attribute. (""", ?_identifier_with_type_type, ", ", ?identifier_with_type, """)""") ,
                     ?_null
                 )
-            as ?identifier_iri)
+            as ?identifier_with_type_iri)
             BIND(
                 IF(
                     BOUND(?_identifier_type_element),
@@ -209,9 +211,21 @@ Please check mods:mods/mods:identifier""",
                     iri(CONCAT(str(haObjId:), ?identifier)),
                     ?_null_identifier
                 ),
-                "Missing mods:identifier"
+                ?_null_work
             )
         as ?work)
+        BIND(
+            IF(
+                BOUND(?_identifier_element),
+                IF(
+                    !BOUND(?_identifier_type),
+                    iri(CONCAT(str(haObj:), MD5(?identifier))),
+                    ?_null_identifier_iri
+                ),
+                ?_null_identifier_iri_2
+            )
+        as ?identifier_iri)
+
         # mods:mods/mods:recordInfo/mods:recordIdentifier
         OPTIONAL {
             ?root ?root_list_recordInfo ?_recordInfo_element .

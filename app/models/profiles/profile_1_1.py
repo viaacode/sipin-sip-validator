@@ -668,6 +668,17 @@ class NewspaperProfile11(Profile):
             "shacl",
             "premis.shacl.ttl",
         )
+    
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "newspaper",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
+        )
 
     def _validate_descriptive(self) -> list[XMLNotValidError]:
         """Validate the MODS or dc+schema files.
@@ -892,3 +903,10 @@ class NewspaperProfile11(Profile):
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
         shacl_graph.parse(str(self.shacl_premis()), format="turtle")
         return shacl_graph
+    
+    def _construct_ie_shacl_graph(self) -> Graph:
+        shacl_graph = Graph()
+        shacl_graph.parse(str(self.shacl_ie()), format="turtle")
+        return shacl_graph
+
+
