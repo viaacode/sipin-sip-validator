@@ -185,9 +185,8 @@ class Profile(ABC):
         """
         pass
 
-    @abstractmethod
     def _construct_ie_shacl_graph(self) -> Graph:
-        """Construct a graph containing the count Intellecutal Entity SHACL.
+        """Construct a graph containing the count Intellectual Entity SHACL.
 
         This is used for validating the data graph.
 
@@ -195,7 +194,9 @@ class Profile(ABC):
             A SHACL graph.
         """
 
-        pass
+        shacl_graph = Graph()
+        shacl_graph.parse(str(self.shacl_ie()), format="turtle")
+        return shacl_graph
 
     def validate_graph(self, data_graph: Graph) -> bool:
         """Validate if the graph is conform.
@@ -234,11 +235,13 @@ class Profile(ABC):
             meta_shacl=True,
             allow_warnings=True,
         )
-        
+
         if not conforms:
-            results = json.loads(results_graph.query(result_query).serialize(format='json'))
+            results = json.loads(
+                results_graph.query(result_query).serialize(format="json")
+            )
             result_formatted_text = ""
-            for result in results['results']['bindings']:
+            for result in results["results"]["bindings"]:
                 result_formatted_text += f"Severity: {result['severity']['value']}\n"
                 result_formatted_text += f"Id: {result['focusNode']['value']}\n"
                 result_formatted_text += f"Message: {result['message']['value']}\n\n"
@@ -253,9 +256,11 @@ class Profile(ABC):
         )
 
         if not conforms:
-            results = json.loads(results_graph.query(result_query).serialize(format='json'))
+            results = json.loads(
+                results_graph.query(result_query).serialize(format="json")
+            )
             result_formatted_text = ""
-            for result in results['results']['bindings']:
+            for result in results["results"]["bindings"]:
                 result_formatted_text += f"Severity: {result['severity']['value']}\n"
                 result_formatted_text += f"Id: {result['focusNode']['value']}\n"
                 result_formatted_text += f"Message: {result['message']['value']}\n\n"

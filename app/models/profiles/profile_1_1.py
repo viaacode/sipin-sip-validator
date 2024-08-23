@@ -110,6 +110,17 @@ class BasicProfile11(Profile):
             "dc_basic.xsd",
         )
 
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
+        )
+
     def _validate_descriptive(self) -> list[XMLNotValidError]:
         """Validate the dcterms file.
 
@@ -338,6 +349,17 @@ class MaterialArtworkProfile11(Profile):
             "material_artwork",
             "xsd",
             "descriptive_material_artwork.xsd",
+        )
+
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "material_artwork",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
         )
 
     def _validate_descriptive(self) -> list[XMLNotValidError]:
@@ -668,7 +690,7 @@ class NewspaperProfile11(Profile):
             "shacl",
             "premis.shacl.ttl",
         )
-    
+
     @staticmethod
     def shacl_ie() -> Path:
         return Path(
@@ -903,10 +925,3 @@ class NewspaperProfile11(Profile):
         shacl_graph.parse(str(self.shacl_profile()), format="turtle")
         shacl_graph.parse(str(self.shacl_premis()), format="turtle")
         return shacl_graph
-    
-    def _construct_ie_shacl_graph(self) -> Graph:
-        shacl_graph = Graph()
-        shacl_graph.parse(str(self.shacl_ie()), format="turtle")
-        return shacl_graph
-
-
