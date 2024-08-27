@@ -625,6 +625,14 @@
       Please check `premis:premis/premis:event[premis:eventType='digitization']/premis:linkingAgentIdentifier`
       OR Software agent is not used as Agent for SIP creation.
       Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:identifier ;
+    sh:maxCount 0 ;
+    sh:severity sh:Warning ;
+    sh:message """Software agents should not have an identifier. It will be ignored.
+      Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/note[csip:NOTETYPE="IDENTIFICATIONCODE"]`"""
   ] .
 
 <#iso> a sh:NodeShape ;
