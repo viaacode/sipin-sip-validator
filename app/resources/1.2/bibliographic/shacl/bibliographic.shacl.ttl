@@ -471,15 +471,6 @@
     [
         a sh:PropertyShape ;
         sh:path bf:variantType ;
-        sh:in ( "alternative" "incipit" "incipit brief" "correspondenten");
-        sh:severity sh:Violation ;
-        sh:message """Attribute '@type' of mods:titleInfo/mods:title[@type=*] must be 'alternative'
-and attribute '@othertype' should be one of 'incipit, incipit brief, correspondenten'.
-Please check `mods:mods/mods:titleInfo[@type="alternative"]`"""@en ;
-    ],
-    [
-        a sh:PropertyShape ;
-        sh:path bf:variantType ;
         sh:maxCount 2 ;
         sh:severity sh:Violation ;
         sh:message """Attribute '@type' of mods:titleInfo/mods:title[@type=*] element occurs more than once.
