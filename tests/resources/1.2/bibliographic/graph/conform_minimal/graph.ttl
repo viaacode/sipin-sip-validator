@@ -91,7 +91,7 @@ haObjId:9618480b3b4466a8679e7f742293e471 a cryptographicHashFunctions:md5 ;
 haObjId:987049735baa85af6b0998079fc30df3 a cryptographicHashFunctions:md5 ;
     rdf:value "987049735baa85af6b0998079fc30df3" .
 
-haObjId:99757a38731eb21418cd5836bc95d1e1 a bf:Identifier ;
+haObj:99757a38731eb21418cd5836bc95d1e1 a bf:Identifier ;
     rdf:value "uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c" .
 
 haObjId:2cae6de8e67d853680bb34cddef30288 a bf:Title ;
@@ -483,7 +483,7 @@ haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
     bf:carrier haObjId:{{carrier_uri}} ;
     bf:genreForm haObjId:69da234ae73a51cbeca323b8cefd1f4e ;
     bf:hasSeries haObjId:{{main_series_uri}} ;
-    bf:identifiedBy haObjId:99757a38731eb21418cd5836bc95d1e1 ;
+    bf:identifiedBy haObj:99757a38731eb21418cd5836bc95d1e1 ;
     bf:issuance "serial" ;
     bf:originDate "1892-01-01"^^edtf:EDTF ;
     bf:provisionActivity haObjId:{{publication_uri}} ;

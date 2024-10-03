@@ -24,7 +24,7 @@ PREFIX haSip: <https://data.hetarchief.be/ns/sip/>
 
 CONSTRUCT {
     ?work a bf:Work, premisowl:IntellectualEntity, ?extraType, ?manuscript_type ;
-        bf:identifiedBy ?identifier_iri ;
+        bf:identifiedBy ?identifier_with_type_iri, ?identifier_iri ;
         bf:adminMetadata ?record_iri ;
         rdfs:label ?mainTitle ;
         bf:title ?altTitle_iri, ?mainTitle_iri ;
@@ -41,10 +41,12 @@ CONSTRUCT {
         bf:hasSeries ?relatedItem_iri ;
         bf:usageAndAccessPolicy ?license_iri .
     
-    ?identifier_iri a bf:Identifier ;
-        rdf:value ?identifier ;
-        ?_identifier_attribute ?_identifier_attr_value .
+    ?identifier_with_type_iri a bf:Identifier, ?identifier_type_iri ;
+        rdf:value ?identifier_with_type .
 
+    ?identifier_iri a bf:Identifier;
+        rdf:value ?identifier .
+        
     ?record_iri a bf:AdminMetadata ;
         bf:identifiedBy ?recordInfo_identifier_iri .
 
@@ -159,12 +161,43 @@ WHERE {
                 ?modsElement xyz:version ?modsVersion .
             }
         }
+        OPTIONAL {
+            {
+                SELECT DISTINCT ?identifier_with_type ?_identifier_with_type_type ?_identifier_type_element
+                WHERE {
+                    OPTIONAL {
+                        ?root a fx:root .
+                        ?root ?root_list_1 ?_identifier_type_element .
+                        ?_identifier_type_element a mods:identifier ;
+                            rdf:_1 ?identifier_with_type ;
+                         xyz:type ?_identifier_with_type_type
+                    }
+                }
+            }
+            BIND(
+                IF(
+                    BOUND(?_identifier_type_element),
+                    concat("""mods:identifier can not have a 'type' attribute. (""", ?_identifier_with_type_type, ", ", ?identifier_with_type, """)""") ,
+                    ?_null
+                )
+            as ?identifier_with_type_iri)
+            BIND(
+                IF(
+                    BOUND(?_identifier_type_element),
+                    iri(CONCAT(str(haObj:), ?_identifier_with_type_type)),
+                    ?_null
+                )
+            as ?identifier_type_iri)
+        }
         ?root a fx:root .
         # mods:mods/mods:identifier[not(@*)]
         OPTIONAL {
             ?root ?root_list_1 ?_identifier_element .
             ?_identifier_element a mods:identifier ;
                 rdf:_1 ?identifier .
+            OPTIONAL {
+                ?_identifier_element xyz:type ?_identifier_type
+            }
             OPTIONAL {
                 ?_identifier_element ?_identifier_attribute ?_identifier_attr_value .
                 FILTER(?_identifier_attribute != rdf:_1 && ?_identifier_attribute != rdf:type)
@@ -173,17 +206,26 @@ WHERE {
         BIND(
             IF(
                 BOUND(?_identifier_element),
-                iri(CONCAT(str(haObjId:), ?identifier)),
-                "Missing mods:identifier"
+                IF(
+                    !BOUND(?_identifier_type),
+                    iri(CONCAT(str(haObjId:), ?identifier)),
+                    ?_null_identifier
+                ),
+                ?_null_work
             )
         as ?work)
         BIND(
             IF(
                 BOUND(?_identifier_element),
-                iri(CONCAT(str(haObjId:), MD5(?identifier))),
-                ?_null_3
+                IF(
+                    !BOUND(?_identifier_type),
+                    iri(CONCAT(str(haObj:), MD5(?identifier))),
+                    ?_null_identifier_iri
+                ),
+                ?_null_identifier_iri_2
             )
         as ?identifier_iri)
+
         # mods:mods/mods:recordInfo/mods:recordIdentifier
         OPTIONAL {
             ?root ?root_list_recordInfo ?_recordInfo_element .

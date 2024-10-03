@@ -161,7 +161,7 @@ haObjId:9618480b3b4466a8679e7f742293e471 a cryptographicHashFunctions:md5 ;
 haObjId:987049735baa85af6b0998079fc30df3 a cryptographicHashFunctions:md5 ;
     rdf:value "987049735baa85af6b0998079fc30df3" .
 
-haObjId:99757a38731eb21418cd5836bc95d1e1 a bf:Identifier ;
+haObj:99757a38731eb21418cd5836bc95d1e1 a bf:Identifier ;
     rdf:value "uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c" .
 
 haObjId:BEZOEKERTOOL-CONTENT a bf:UsageAndAccessPolicy ;
@@ -261,7 +261,7 @@ haObjId:5278b4493206319864f8308a48a9617c a cryptographicHashFunctions:md5 ;
 haObjId:01b19476c174b17916370088d5a1bc24 a bf:VariantTitle ;
     rdfs:label "Newspaper title: alt" ;
     bf:variantType "alternative" ,
-        "incipit" .
+        "alt" .
 
 haObjId:7f59921f9e3fe99828e5705986ebe8c8 a cryptographicHashFunctions:md5 ;
     rdf:value "7f59921f9e3fe99828e5705986ebe8c8" .
@@ -563,7 +563,7 @@ haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
     {%- for serie in series %}
         haObjId:{{serie[0]}}{% if not loop.last %},{% endif %}
     {% endfor -%};
-    bf:identifiedBy haObjId:99757a38731eb21418cd5836bc95d1e1 ;
+    bf:identifiedBy haObj:99757a38731eb21418cd5836bc95d1e1 ;
     bf:issuance "serial" ;
     bf:originDate "2022-08-02"^^edtf:EDTF ;
     bf:provisionActivity haObjId:{{publication_uri}} ;

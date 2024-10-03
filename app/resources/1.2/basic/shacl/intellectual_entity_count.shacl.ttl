@@ -1,0 +1,21 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<#IntellectualEntityCountShape>
+  a sh:NodeShape ;
+  sh:targetNode premis:IntellectualEntity ;
+  sh:property [
+    sh:path [ sh:inversePath rdf:type ] ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """No Intellectual Entity found.
+Please check `premis:premis/premis:object/premis:objectIdentifier` and `mods:mods/mods:identifier[not(@type)]`"""@en ;
+  ],
+  [
+    sh:path [ sh:inversePath rdf:type ] ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message """More than one Intellectual Entity found.
+Please check if `premis:premis/premis:object/premis:objectIdentifier` and `mods:mods/mods:identifier[not(@type)]` have the same value."""@en ;
+  ] .

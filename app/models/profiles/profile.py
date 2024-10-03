@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
+import json
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from lxml import etree
@@ -51,6 +52,11 @@ class Profile(ABC):
     @staticmethod
     @abstractmethod
     def shacl_profile() -> Path:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def shacl_ie() -> Path:
         pass
 
     @staticmethod
@@ -177,8 +183,20 @@ class Profile(ABC):
         Returns:
             A SHACL graph.
         """
-
         pass
+
+    def _construct_ie_shacl_graph(self) -> Graph:
+        """Construct a graph containing the count Intellectual Entity SHACL.
+
+        This is used for validating the data graph.
+
+        Returns:
+            A SHACL graph.
+        """
+
+        shacl_graph = Graph()
+        shacl_graph.parse(str(self.shacl_ie()), format="turtle")
+        return shacl_graph
 
     def validate_graph(self, data_graph: Graph) -> bool:
         """Validate if the graph is conform.
@@ -198,6 +216,37 @@ class Profile(ABC):
             raise GraphNotConformError(
                 "Graph is perceived as empty as it does not contain an intellectual entity."
             )
+        result_query = """
+                PREFIX sh: <http://www.w3.org/ns/shacl#> 
+                PREFIX haObjId: <https://data.hetarchief.be/id/entity/>
+                SELECT ?message ?severity ?focusNode
+                WHERE {
+                    ?s sh:resultMessage ?message ;
+                    sh:resultSeverity ?severity_iri ;
+                    sh:focusNode ?focusNode_iri
+                    BIND(REPLACE(str(?severity_iri), str(sh:), "") as ?severity)
+                    BIND(REPLACE(str(?focusNode_iri), str(haObjId:), "") as ?focusNode)
+                } ORDER BY ?severity
+        """
+        ie_shacl_graph = self._construct_ie_shacl_graph()
+        conforms, results_graph, results_text = shacl_validate(
+            data_graph=data_graph,
+            shacl_graph=ie_shacl_graph,
+            meta_shacl=True,
+            allow_warnings=True,
+        )
+
+        if not conforms:
+            results = json.loads(
+                results_graph.query(result_query).serialize(format="json")
+            )
+            result_formatted_text = ""
+            for result in results["results"]["bindings"]:
+                result_formatted_text += f"Severity: {result['severity']['value']}\n"
+                result_formatted_text += f"Id: {result['focusNode']['value']}\n"
+                result_formatted_text += f"Message: {result['message']['value']}\n\n"
+            raise GraphNotConformError(result_formatted_text)
+
         shacl_graph = self._construct_shacl_graph()
         conforms, results_graph, results_text = shacl_validate(
             data_graph=data_graph,
@@ -207,6 +256,14 @@ class Profile(ABC):
         )
 
         if not conforms:
-            raise GraphNotConformError(results_text)
+            results = json.loads(
+                results_graph.query(result_query).serialize(format="json")
+            )
+            result_formatted_text = ""
+            for result in results["results"]["bindings"]:
+                result_formatted_text += f"Severity: {result['severity']['value']}\n"
+                result_formatted_text += f"Id: {result['focusNode']['value']}\n"
+                result_formatted_text += f"Message: {result['message']['value']}\n\n"
+            raise GraphNotConformError(result_formatted_text)
 
         return True
