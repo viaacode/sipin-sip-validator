@@ -261,7 +261,7 @@ haObjId:5278b4493206319864f8308a48a9617c a cryptographicHashFunctions:md5 ;
 haObjId:01b19476c174b17916370088d5a1bc24 a bf:VariantTitle ;
     rdfs:label "Newspaper title: alt" ;
     bf:variantType "alternative" ,
-        "incipit" .
+        "alt" .
 
 haObjId:7f59921f9e3fe99828e5705986ebe8c8 a cryptographicHashFunctions:md5 ;
     rdf:value "7f59921f9e3fe99828e5705986ebe8c8" .

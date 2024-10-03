@@ -3,7 +3,7 @@
   <mods:titleInfo>
     <mods:title>Newspaper title</mods:title>
   </mods:titleInfo>
-  <mods:titleInfo type="alternative" otherType="incipit">
+  <mods:titleInfo type="alternative" otherType="alt">
     <mods:title>Newspaper title: alt</mods:title>
   </mods:titleInfo>
   <mods:identifier>uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c</mods:identifier>
