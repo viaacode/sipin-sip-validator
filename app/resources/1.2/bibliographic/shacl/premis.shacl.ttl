@@ -187,9 +187,20 @@
     sh:nodeKind sh:IRI ;
     sh:class premis:File ;
     sh:name "is source of"@en ;
-    sh:description "The source of the file"@en ;
+    sh:description "Is the source of the file"@en ;
     sh:message """The File's value for `is source of` relationshipSubType is not a File.
-      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is included in")`
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is source of")`
+      OR check for mismatch between the File ids `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierValue`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:hss ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:File ;
+    sh:name "has source"@en ;
+    sh:description "The source of the file"@en ;
+    sh:message """The File's value for `has source` relationshipSubType is not a File.
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="has source")`
       OR check for mismatch between the File ids `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierValue`."""@en ;
   ],
   [
