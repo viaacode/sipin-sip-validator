@@ -456,10 +456,8 @@
     [
         a sh:PropertyShape ;
         sh:path bf:variantType ;
-        sh:minCount 2 ;
+        sh:minCount 1 ;
         sh:severity sh:Violation ;
-        sh:message """Attribute '@othertype' of mods:titleInfo[@type="alternative"]/@type element is required.
-            Please check `mods:mods/mods:titleInfo[@type="alternative"]/@type`"""@en ;
     ],
     [
         a sh:PropertyShape ;
