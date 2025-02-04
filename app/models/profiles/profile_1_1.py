@@ -110,6 +110,17 @@ class BasicProfile11(Profile):
             "dc_basic.xsd",
         )
 
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "basic",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
+        )
+
     def _validate_descriptive(self) -> list[XMLNotValidError]:
         """Validate the dcterms file.
 
@@ -338,6 +349,17 @@ class MaterialArtworkProfile11(Profile):
             "material_artwork",
             "xsd",
             "descriptive_material_artwork.xsd",
+        )
+
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "material_artwork",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
         )
 
     def _validate_descriptive(self) -> list[XMLNotValidError]:
@@ -667,6 +689,17 @@ class NewspaperProfile11(Profile):
             "newspaper",
             "shacl",
             "premis.shacl.ttl",
+        )
+
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.1",
+            "newspaper",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
         )
 
     def _validate_descriptive(self) -> list[XMLNotValidError]:

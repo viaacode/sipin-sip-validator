@@ -2,8 +2,7 @@ from pathlib import Path
 from lxml import etree
 from rdflib import Graph
 
-from app.models.profiles.profile import sa
-from app.models.profiles.exceptions import XMLNotValidError, GraphParseError
+from app.models.profiles.exceptions import XMLNotValidError
 from app.models.profiles.profile_1_1 import (
     BasicProfile11,
     NewspaperProfile11,
@@ -127,6 +126,17 @@ class BasicProfile12(BasicProfile11):
             "basic",
             "xsd",
             "descriptive_basic.xsd",
+        )
+
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.2",
+            "basic",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
         )
 
     def _validate_descriptive(self) -> list[XMLNotValidError]:
@@ -288,6 +298,17 @@ class MaterialArtworkProfile12(MaterialArtworkProfile11):
             "descriptive_material_artwork.xsd",
         )
 
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.2",
+            "material_artwork",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
+        )
+
 
 class BibliographicProfile12(NewspaperProfile11):
     def profile_name() -> str:
@@ -423,4 +444,15 @@ class BibliographicProfile12(NewspaperProfile11):
             "bibliographic",
             "shacl",
             "premis.shacl.ttl",
+        )
+
+    @staticmethod
+    def shacl_ie() -> Path:
+        return Path(
+            "app",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "shacl",
+            "intellectual_entity_count.shacl.ttl",
         )

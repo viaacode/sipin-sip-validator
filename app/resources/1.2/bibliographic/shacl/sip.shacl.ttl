@@ -81,7 +81,7 @@
       [sh:class premis:SoftwareAgent]
     );
     sh:message """No (valid) TYPE or (valid) OTHERTYPE specified in agent.
-    Please check `mets/metsHdr/agent/@TYPE` or `mets/metsHdr/agent/@OTHERTYPE`"""@en ;
+      Please check `mets/metsHdr/agent/@TYPE` or `mets/metsHdr/agent/@OTHERTYPE`"""@en ;
   ] .
 
 <#OrganizationShape> a sh:NodeShape;
@@ -94,8 +94,8 @@ sh:targetClass org:Organization;
     sh:minCount 1;
     sh:maxCount 1;
     sh:datatype xsd:string;
-    sh:message """No agent identifier provided
-      Please check `mets/metsHdr/agent[@TYPE='ORGANIZATION']/note`"""@en ;
+    sh:message """No agent identifier provided or csip:NOTETYPE="IDENTIFICATIONCODE" is missing.
+      Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @TYPE='ORGANIZATION']/note`"""@en ;
   ],[
     sh:path skos:prefLabel;
     sh:minCount 1;

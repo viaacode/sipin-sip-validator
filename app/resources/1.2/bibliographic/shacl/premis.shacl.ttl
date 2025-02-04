@@ -25,16 +25,6 @@
   rdf:first rdf:type ;
   rdf:rest ( ) .
 
-<#IntellectualEntityCountShape>
-  a sh:NodeShape ;
-  sh:targetNode premis:IntellectualEntity ;
-  sh:property [
-    sh:path [ sh:inversePath rdf:type ] ;
-    sh:minCount 1 ;
-    sh:severity sh:Violation ;
-    sh:message """No Intellectual Entity found."""@en ;
-  ] .
-
 <#IntellectualEntityShape> a sh:NodeShape ;
   sh:targetClass premis:IntellectualEntity ;
   sh:closed true ;
@@ -152,7 +142,9 @@
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     sh:message """Representation has no value File for `includes` relationshipSubType.
-      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=includes)`"""@en ;
+      Please check `premis:premis/premis:object/premis:relationship/(premis:relationshipSubType=includes)`
+      OR check if the 'is represented by' relationship on the package level (`data/metadata/preservation/premis.xml`) is linked to the (corresponding) Representation.
+      Please check `premis:premis/premis:object/premis:relationship/premis:relatedObjectIdentifier`."""@en ;
   ] .
 
 <#FileShape> a sh:NodeShape ;
@@ -187,9 +179,20 @@
     sh:nodeKind sh:IRI ;
     sh:class premis:File ;
     sh:name "is source of"@en ;
-    sh:description "The source of the file"@en ;
+    sh:description "Is the source of the file"@en ;
     sh:message """The File's value for `is source of` relationshipSubType is not a File.
-      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is included in")`
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="is source of")`
+      OR check for mismatch between the File ids `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierValue`."""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path relSubType:hss ;
+    sh:nodeKind sh:IRI ;
+    sh:class premis:File ;
+    sh:name "has source"@en ;
+    sh:description "The source of the file"@en ;
+    sh:message """The File's value for `has source` relationshipSubType is not a File.
+      Please check `premis:premis/premis:object[@xsi:type=premis:File]/premis:relationship/(premis:relationshipSubType="has source")`
       OR check for mismatch between the File ids `premis:premis/premis:object/premis:objectIdentifier/premis:objectIdentifierValue`."""@en ;
   ],
   [
@@ -633,6 +636,14 @@
       Please check `premis:premis/premis:event[premis:eventType='digitization']/premis:linkingAgentIdentifier`
       OR Software agent is not used as Agent for SIP creation.
       Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']`"""@en ;
+  ],
+  [
+    a sh:PropertyShape ;
+    sh:path schema:identifier ;
+    sh:maxCount 0 ;
+    sh:severity sh:Warning ;
+    sh:message """Software agents should not have an identifier. It will be ignored.
+      Please check `mets/metsHdr/agent[@ROLE='CREATOR' and @OTHERTYPE='SOFTWARE']/note[csip:NOTETYPE="IDENTIFICATIONCODE"]`"""
   ] .
 
 <#iso> a sh:NodeShape ;
@@ -646,18 +657,18 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "is source of" ;
+    sh:in ( "is source of" ) ;
     sh:name "label"@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path skos:broader ;
-    sh:hasValue relType:der ;
+    sh:in ( relType:der ) ;
   ],
   [
     a sh:PropertyShape ; 
     sh:path skos:inScheme ;
-    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    sh:in ( <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ) ;
   ] .
 
 <#isi> a sh:NodeShape ;
@@ -671,18 +682,18 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "is included in" ;
+    sh:in ( "is included in" ) ;
     sh:name "label"@en ;
   ],
   [
     a sh:PropertyShape ;
     sh:path skos:broader ;
-    sh:hasValue relType:str ;
+    sh:in ( relType:str ) ;
   ],
   [
     a sh:PropertyShape ; 
     sh:path skos:inScheme ;
-    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ;
+    sh:in ( <http://id.loc.gov/vocabulary/preservation/relationshipSubType> ) ;
   ] .
 
 <#relationshipSubType> a sh:NodeShape ;
@@ -696,7 +707,7 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "relationshipSubType" ;
+    sh:in ( "relationshipSubType" ) ;
     sh:name "label"@en ;
   ] .
 
@@ -711,7 +722,7 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "derivation" ;
+    sh:in ( "derivation" ) ;
     sh:name "label"@en ;
   ],
   [
@@ -721,7 +732,7 @@
   [
     a sh:PropertyShape ; 
     sh:path skos:inScheme ;
-    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    sh:in ( <http://id.loc.gov/vocabulary/preservation/relationshipType> ) ;
   ] .
 
 <#str> a sh:NodeShape ;
@@ -735,7 +746,7 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "structural" ;
+    sh:in ( "structural" ) ;
     sh:name "label"@en ;
   ],
   [
@@ -745,7 +756,7 @@
   [
     a sh:PropertyShape ; 
     sh:path skos:inScheme ;
-    sh:hasValue <http://id.loc.gov/vocabulary/preservation/relationshipType> ;
+    sh:in ( <http://id.loc.gov/vocabulary/preservation/relationshipType> ) ;
   ] .
 
 
@@ -760,6 +771,6 @@
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:hasValue "relationshipType" ;
+    sh:in ( "relationshipType" ) ;
     sh:name "label"@en ;
   ] .
