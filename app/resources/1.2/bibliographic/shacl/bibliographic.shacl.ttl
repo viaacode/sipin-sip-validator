@@ -26,7 +26,7 @@
   rdf:rest ( ) .
 
 <#IntellectualEntityShape> a sh:NodeShape ;
-    sh:targetClass bf:Work ;
+    sh:targetClass premis:IntellectualEntity ;
     sh:closed true ;
     sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
@@ -358,6 +358,15 @@
         sh:node <#SeriesShape> ;
         sh:name "Series"@en ;
         sh:description "Abraham ID or Abraham URI."@en ;
+    ],
+    # mods:mods/mods:relatedItem/mods:identifier[@type="MEEMOO-LOCAL-ID"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:relatedTo ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#RelatedItemWorkShape> ;
+        sh:name "Related Item"@en ;
+        sh:description "MEEMOO-LOCAL-ID."@en ;
     ],
     # mods:mods/mods:note[@type="license"]
     [
@@ -691,7 +700,7 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path bf:identifier ;
+        sh:path bf:identifiedBy ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#IdentifierShape> ;
         sh:name "Identifier"@en ;
@@ -1029,14 +1038,14 @@
 
 #mods:mods/mods:identifier[not(@*)]
 <#IdentifierShape> a sh:NodeShape ;
-    sh:targetClass bf:Identifier ;
+    sh:targetClass bf:identifiedBy ;
     sh:closed true ;
     sh:ignoredProperties <#typeList> ;
     sh:property
     # [
     #     a sh:PropertyShape ;
     #     sh:path rdf:type ;
-    #     sh:in (bf:Identifier)
+    #     sh:in (bf:identifiedBy)
     # ],
     [
         a sh:PropertyShape ;
@@ -1074,4 +1083,38 @@
         sh:datatype xsd:string ;
         sh:name "Usage and access policy"@en ;
         sh:description "The usage and access policy of the newspaper."@en ;
+    ] .
+
+<#RelatedItemWorkShape> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:node <#IdentifierShape> ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message """'mods:mods/mods:identifier' can not have an '@type' attribute.
+            Please check `mods:mods/mods:identifier`. Local Identifiers should be defined in premis.xml."""
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier element is required.
+            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier element occurs more than once.
+            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
     ] .
