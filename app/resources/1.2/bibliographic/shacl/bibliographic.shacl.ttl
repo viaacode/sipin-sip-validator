@@ -937,6 +937,15 @@
     sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
+    # mods:mods/mods:name[@type="personal"]/mods:namePart
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Full name"@en ;
+        sh:description "The full name of a person who contributed to the newspaper."@en ;
+    ],
     # mods:mods/mods:name[@type="personal"]/namePart[@type="given"]
     [
         a sh:PropertyShape ;
