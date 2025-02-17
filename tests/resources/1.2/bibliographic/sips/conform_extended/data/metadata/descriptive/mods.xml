@@ -27,7 +27,6 @@
   <mods:name type="personal">
     <mods:namePart type="given">given</mods:namePart>
     <mods:namePart type="family">family</mods:namePart>
-    <mods:namePart>given family</mods:namePart>
     <mods:role>
       <mods:roleTerm type="text">author</mods:roleTerm>
     </mods:role>
@@ -47,9 +46,6 @@
     <mods:titleInfo>
       <mods:title>Page series title</mods:title>
     </mods:titleInfo>
-  </mods:relatedItem>
-  <mods:relatedItem>
-    <mods:identifier type="MEEMOO-LOCAL-ID">MEEMOOID</mods:identifier>
   </mods:relatedItem>
   <mods:physicalDescription>
     <mods:note type="condition">Bad</mods:note>

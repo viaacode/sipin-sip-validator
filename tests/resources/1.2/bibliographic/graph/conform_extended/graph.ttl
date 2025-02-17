@@ -21,7 +21,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 haObjId:{{main_series_uri}} a bf:Series ;
-    bf:identifier <https://anet.be/record/opacbnc/c:bnc:99999/N> .
+    bf:identifiedBy <https://anet.be/record/opacbnc/c:bnc:99999/N> .
 
 haObjId:uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e a premisowl:Event,
         haObj:transcription ;
@@ -217,7 +217,7 @@ haObjId:{{contribution_uri}} a bf:Contribution ;
 
 {% for serie in series %}
 haObjId:{{serie[0]}} a bf:Series;
-    bf:identifier haObjId:{{serie[1]}} ;
+    bf:identifiedBy haObjId:{{serie[1]}} ;
     bf:title haObjId:{{serie[2]}} .
 {% endfor %}
 

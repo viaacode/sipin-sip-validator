@@ -743,7 +743,7 @@ class TestNewspaperProfile11:
                 if p == rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/title"):
                     title = o
                 elif p == rdflib.URIRef(
-                    "http://id.loc.gov/ontologies/bibframe/identifier"
+                    "http://id.loc.gov/ontologies/bibframe/identifiedBy"
                 ):
                     identifier = o
             if title is None:
