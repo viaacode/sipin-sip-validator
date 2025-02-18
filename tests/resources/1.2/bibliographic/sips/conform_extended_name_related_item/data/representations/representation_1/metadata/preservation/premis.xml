@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<premis:premis version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:premis="http://www.loc.gov/premis/v3" xsi:schemaLocation="http://www.loc.gov/premis/v3 https://www.loc.gov/standards/premis/premis.xsd">
+
+  <premis:object xsi:type="premis:representation">
+
+    <!-- Create PREMIS object for the representation itself -->
+    <premis:objectIdentifier>
+      <premis:objectIdentifierType>UUID</premis:objectIdentifierType>
+      <premis:objectIdentifierValue>uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99</premis:objectIdentifierValue>
+    </premis:objectIdentifier>
+
+    <!-- relationship between representation and its files, detailed below -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/str">structural</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/inc">includes</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-d4922046-839d-4bbb-a27a-f7d3d065525f</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+    </premis:relationship>
+
+    <!-- relationship between representation and its IE -->
+    <!-- uuid from bag/data/metadata/preservation/premis.xml -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/str">structural</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/rep">represents</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+    </premis:relationship>
+  </premis:object>
+
+  <premis:object xsi:type="premis:file">
+
+    <premis:objectIdentifier>
+      <premis:objectIdentifierType>UUID</premis:objectIdentifierType>
+      <premis:objectIdentifierValue>uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824</premis:objectIdentifierValue>
+    </premis:objectIdentifier>
+
+    <premis:objectCharacteristics>
+      <premis:fixity>
+        <premis:messageDigestAlgorithm authority="cryptographicHashFunctions" authorityURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions" valueURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5">
+                MD5
+        </premis:messageDigestAlgorithm>
+        <premis:messageDigest>ab9f05e1d16e3583fdfd6031cfaad3b0</premis:messageDigest>
+      </premis:fixity>
+      <premis:size>1007</premis:size>
+      <premis:format>
+        <premis:formatRegistry>
+          <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+          <premis:formatRegistryKey>fmt/353</premis:formatRegistryKey>
+          <premis:formatRegistryRole authority="formatRegistryRole" authorityURI="http://id.loc.gov/vocabulary/preservation/formatRegistryRole" valueURI="http://id.loc.gov/vocabulary/preservation/formatRegistryRole/spe">specification</premis:formatRegistryRole>
+        </premis:formatRegistry>
+      </premis:format>
+    </premis:objectCharacteristics>
+
+    <premis:originalName>page1.tif</premis:originalName>
+
+    <!-- relationship between file and its representation -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/str">structural</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/isi">is included in</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+    </premis:relationship>
+
+    <!-- relationship between tiff file and its alto encoded text -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/der">derivation</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/iso">is source of</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-df553be9-759a-4560-b8e7-9b06d220b57c</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+      <premis:relatedEventIdentifier>
+        <premis:relatedEventIdentifierType>UUID</premis:relatedEventIdentifierType>
+        <premis:relatedEventIdentifierValue>uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e</premis:relatedEventIdentifierValue>
+      </premis:relatedEventIdentifier>
+    </premis:relationship>
+
+  </premis:object>
+
+  <premis:object xsi:type="premis:file">
+
+    <premis:objectIdentifier>
+      <premis:objectIdentifierType>UUID</premis:objectIdentifierType>
+      <premis:objectIdentifierValue>uuid-0d2d63c7-4a29-48ca-ae06-5e7c6f8aa7fd</premis:objectIdentifierValue>
+    </premis:objectIdentifier>
+
+    <premis:objectCharacteristics>
+      <premis:fixity>
+        <premis:messageDigestAlgorithm authority="cryptographicHashFunctions" authorityURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions" valueURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5">
+                MD5
+        </premis:messageDigestAlgorithm>
+        <premis:messageDigest>534af70a2909841bc3d93a19322eede0</premis:messageDigest>
+      </premis:fixity>
+      <premis:size>1007</premis:size>
+      <premis:format>
+        <premis:formatRegistry>
+          <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+          <premis:formatRegistryKey>fmt/353</premis:formatRegistryKey>
+          <premis:formatRegistryRole authority="formatRegistryRole" authorityURI="http://id.loc.gov/vocabulary/preservation/formatRegistryRole" valueURI="http://id.loc.gov/vocabulary/preservation/formatRegistryRole/spe">specification</premis:formatRegistryRole>
+        </premis:formatRegistry>
+      </premis:format>
+    </premis:objectCharacteristics>
+
+    <premis:originalName>page2.tif</premis:originalName>
+
+    <!-- relationship between file and its representation -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/str">structural</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/isi">is included in</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+    </premis:relationship>
+
+    <!-- relationship between tiff file and its alto encoded text -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/der">derivation</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/iso">is source of</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-4f8f37ab-a3f0-478c-becb-3e1826663558</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+      <premis:relatedEventIdentifier>
+        <premis:relatedEventIdentifierType>UUID</premis:relatedEventIdentifierType>
+        <premis:relatedEventIdentifierValue>uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e</premis:relatedEventIdentifierValue>
+      </premis:relatedEventIdentifier>
+    </premis:relationship>
+
+  </premis:object>
+
+  <premis:object xsi:type="premis:file">
+
+    <premis:objectIdentifier>
+      <premis:objectIdentifierType>UUID</premis:objectIdentifierType>
+      <premis:objectIdentifierValue>uuid-ace2e92b-50ba-4cbc-8d7d-3921ec05758a</premis:objectIdentifierValue>
+    </premis:objectIdentifier>
+
+    <premis:objectCharacteristics>
+      <premis:fixity>
+        <premis:messageDigestAlgorithm authority="cryptographicHashFunctions" authorityURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions" valueURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5">
+                MD5
+        </premis:messageDigestAlgorithm>
+        <premis:messageDigest>a65d975de019813ff2d1835579ce2671</premis:messageDigest>
+      </premis:fixity>
+      <premis:size>1007</premis:size>
+      <premis:format>
+        <premis:formatRegistry>
+          <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+          <premis:formatRegistryKey>fmt/353</premis:formatRegistryKey>
+          <premis:formatRegistryRole authority="formatRegistryRole" authorityURI="http://id.loc.gov/vocabulary/preservation/formatRegistryRole" valueURI="http://id.loc.gov/vocabulary/preservation/formatRegistryRole/spe">specification</premis:formatRegistryRole>
+        </premis:formatRegistry>
+      </premis:format>
+    </premis:objectCharacteristics>
+
+    <premis:originalName>page3.tif</premis:originalName>
+
+    <!-- relationship between file and its representation -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/str">structural</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/isi">is included in</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+    </premis:relationship>
+
+    <!-- relationship between tiff file and its alto encoded text -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/der">derivation</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/iso">is source of</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-5b321487-6077-49d0-96b3-2923ed7bd5d9</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+      <premis:relatedEventIdentifier>
+        <premis:relatedEventIdentifierType>UUID</premis:relatedEventIdentifierType>
+        <premis:relatedEventIdentifierValue>uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e</premis:relatedEventIdentifierValue>
+      </premis:relatedEventIdentifier>
+    </premis:relationship>
+
+  </premis:object>
+
+  <premis:object xsi:type="premis:file">
+
+    <premis:objectIdentifier>
+      <premis:objectIdentifierType>UUID</premis:objectIdentifierType>
+      <premis:objectIdentifierValue>uuid-d4922046-839d-4bbb-a27a-f7d3d065525f</premis:objectIdentifierValue>
+    </premis:objectIdentifier>
+
+    <premis:objectCharacteristics>
+      <premis:fixity>
+        <premis:messageDigestAlgorithm authority="cryptographicHashFunctions" authorityURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions" valueURI="http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/md5">
+                MD5
+        </premis:messageDigestAlgorithm>
+        <premis:messageDigest>b203825339525959f488ba1849b61114</premis:messageDigest>
+      </premis:fixity>
+      <premis:size>1007</premis:size>
+      <premis:format>
+        <premis:formatRegistry>
+          <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+          <premis:formatRegistryKey>fmt/353</premis:formatRegistryKey>
+          <premis:formatRegistryRole authority="formatRegistryRole" authorityURI="http://id.loc.gov/vocabulary/preservation/formatRegistryRole" valueURI="http://id.loc.gov/vocabulary/preservation/formatRegistryRole/spe">specification</premis:formatRegistryRole>
+        </premis:formatRegistry>
+      </premis:format>
+    </premis:objectCharacteristics>
+
+    <premis:originalName>page4.tif</premis:originalName>
+
+    <!-- relationship between file and its representation -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/str">structural</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/isi">is included in</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-be3538f9-4f00-4a92-ad63-c4b12e06fc99</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+    </premis:relationship>
+
+    <!-- relationship between tiff file and its alto encoded text -->
+    <premis:relationship>
+      <premis:relationshipType authority="relationshipType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipType/der">derivation</premis:relationshipType>
+      <premis:relationshipSubType authority="relationshipSubType" authorityURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType" valueURI="http://id.loc.gov/vocabulary/preservation/relationshipSubType/iso">is source of</premis:relationshipSubType>
+      <premis:relatedObjectIdentifier>
+        <premis:relatedObjectIdentifierType>UUID</premis:relatedObjectIdentifierType>
+        <premis:relatedObjectIdentifierValue>uuid-45040a1c-8600-4c9e-8a57-153c88aad298</premis:relatedObjectIdentifierValue>
+      </premis:relatedObjectIdentifier>
+      <premis:relatedEventIdentifier>
+        <premis:relatedEventIdentifierType>UUID</premis:relatedEventIdentifierType>
+        <premis:relatedEventIdentifierValue>uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e</premis:relatedEventIdentifierValue>
+      </premis:relatedEventIdentifier>
+    </premis:relationship>
+
+  </premis:object>
+
+</premis:premis>

@@ -743,7 +743,7 @@ class TestNewspaperProfile11:
                 if p == rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/title"):
                     title = o
                 elif p == rdflib.URIRef(
-                    "http://id.loc.gov/ontologies/bibframe/identifier"
+                    "http://id.loc.gov/ontologies/bibframe/identifiedBy"
                 ):
                     identifier = o
             if title is None:
@@ -846,3 +846,132 @@ class TestBibliographicProfile12(TestNewspaperProfile11):
             "conform_extended",
         )
         return BibliographicProfile12(path)
+
+    @pytest.fixture
+    def conform_extended_name_related_item(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "sips",
+            "conform_extended_name_related_item",
+        )
+        return BibliographicProfile12(path)
+
+    def test_parse_validate_graph_name_related_item(self, request):
+        profile = request.getfixturevalue("conform_extended_name_related_item")
+
+        graph = profile.parse_graph()
+        # Check if valid
+        assert profile.validate_graph(graph)
+
+        # Some URIs are based on UUIDs that are generated at transform-time.
+        # We fetch these URIs from the transformed graph and fill them in,
+        # in the expected graph.
+        contribution_uri_ref = graph.value(
+            object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Contribution"),
+            predicate=rdflib.URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+        )
+        contribution_uri = self.get_suffix_uri(contribution_uri_ref)
+
+        publication_uri_ref = graph.value(
+            object=rdflib.URIRef(
+                "http://id.loc.gov/ontologies/bibframe/ProvisionActivity"
+            ),
+            predicate=rdflib.URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+        )
+        if not publication_uri_ref:
+            publication_uri_ref = graph.value(
+                object=rdflib.URIRef(
+                    "http://id.loc.gov/ontologies/bibframe/Publication"
+                ),
+                predicate=rdflib.URIRef(
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                ),
+            )
+        publication_uri = self.get_suffix_uri(publication_uri_ref)
+
+        series_generator = graph.subjects(
+            object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Series"),
+            predicate=rdflib.URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+        )
+
+        related_to_uri = graph.value(
+            subject=rdflib.URIRef(
+                "https://data.hetarchief.be/id/entity/uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c"
+            ),
+            predicate=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/relatedTo"),
+        )
+        related_to = self.get_suffix_uri(related_to_uri)
+
+        series = []
+        for series_uri in series_generator:
+            title, identifier = None, None
+            for p, o in graph.predicate_objects(subject=series_uri):
+                if p == rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/title"):
+                    title = o
+                elif p == rdflib.URIRef(
+                    "http://id.loc.gov/ontologies/bibframe/identifiedBy"
+                ):
+                    identifier = o
+            if title is None:
+                main_series_uri = self.get_suffix_uri(series_uri)
+            else:
+                series.append(
+                    (
+                        self.get_suffix_uri(series_uri),
+                        self.get_suffix_uri(identifier),
+                        self.get_suffix_uri(title),
+                    )
+                )
+
+        place_uri = self.get_suffix_uri(
+            graph.value(
+                subject=publication_uri_ref,
+                predicate=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/place"),
+            )
+        )
+
+        carrier_uri = self.get_suffix_uri(
+            graph.value(
+                object=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/Carrier"),
+                predicate=rdflib.URIRef(
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                ),
+            )
+        )
+
+        agent_uri = self.get_suffix_uri(
+            graph.value(
+                subject=contribution_uri_ref,
+                predicate=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/agent"),
+            )
+        )
+
+        role_uri = self.get_suffix_uri(
+            graph.value(
+                subject=contribution_uri_ref,
+                predicate=rdflib.URIRef("http://id.loc.gov/ontologies/bibframe/role"),
+            )
+        )
+
+        # Check if expected
+        expected = Graph()
+        graph_template = self.jinja_env.get_template(
+            "conform_extended_name_related_item/graph.ttl"
+        )
+        rendered_graph_template = graph_template.render(
+            contribution_uri=contribution_uri,
+            publication_uri=publication_uri,
+            main_series_uri=main_series_uri,
+            series=series,
+            place_uri=place_uri,
+            carrier_uri=carrier_uri,
+            agent_uri=agent_uri,
+            role_uri=role_uri,
+            related_to=related_to,
+        )
+
+        expected.parse(StringIO(rendered_graph_template))
+        assert isomorphic(graph, expected)

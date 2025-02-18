@@ -38,7 +38,7 @@ CONSTRUCT {
         bf:issuance ?issuance ;
         haDes:numberOfPages ?number_of_pages ;
         bf:carrier ?carrier_iri ;
-        bf:hasSeries ?relatedItem_iri ;
+        ?relatedItem_prop_iri ?relatedItem_iri ;
         bf:usageAndAccessPolicy ?license_iri .
     
     ?identifier_with_type_iri a bf:Identifier, ?identifier_type_iri ;
@@ -131,7 +131,7 @@ CONSTRUCT {
         bf:noteType ?physDes_note_type .
 
     ?relatedItem_iri a ?relatedItem_type_iri ;
-        bf:identifier ?relatedItem_identifier_iri, ?abraham_iri ;
+        bf:identifiedBy ?relatedItem_identifier_iri, ?abraham_iri ;
         bf:title ?mainRelatedItemTitle_iri .
 
     ?mainRelatedItemTitle_iri a bf:Title ;
@@ -961,7 +961,7 @@ WHERE {
             IF(
                 BOUND(?_relatedItem_identifier_element),
                 COALESCE(
-                    IF(?_relatedItem_identifier_type IN ("number", "page"),
+                    IF(?_relatedItem_identifier_type IN ("number", "page", "MEEMOO-LOCAL-ID"),
                         iri(CONCAT(str(haObjId:), MD5(?relatedItem_identifier))),
                         1/0
                     ),
@@ -992,13 +992,29 @@ WHERE {
                     bf:Series,
                     IF(
                         !BOUND(?relatedItem_type),
-                        "Missing @type on mods:relatedItem",
+                        bf:Work,
                         concat("Unexpected @type on mods:relatedItem: ", ?relatedItem_type)
                     )
                 ),
                 ?_null_26
             )
         as ?relatedItem_type_iri)
+
+        BIND(
+            IF(
+                BOUND(?_relatedItem_element),
+                IF(
+                    BOUND(?relatedItem_type) && ?relatedItem_type = "series",
+                    bf:hasSeries,
+                    IF(
+                        !BOUND(?relatedItem_type),
+                        bf:relatedTo,
+                        concat("Unexpected @type on mods:relatedItem: ", ?relatedItem_type)
+                    )
+                ),
+                ?_null_28
+            )
+        as ?relatedItem_prop_iri)
         
         BIND(
             IF(
