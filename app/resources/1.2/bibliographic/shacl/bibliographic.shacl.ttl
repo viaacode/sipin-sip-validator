@@ -959,8 +959,8 @@
         a sh:PropertyShape ;
         sh:path schema:givenName ;
         sh:minCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:namePart[@type="given"] is required.
+        sh:severity sh:Warning ;
+        sh:message """mods:namePart[@type="given"] is not provided.
             Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="given"]`."""@en ;
     ],
     [
@@ -984,8 +984,8 @@
         a sh:PropertyShape ;
         sh:path schema:familyName ;
         sh:minCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:namePart[@type="family"] is required.
+        sh:severity sh:Warning ;
+        sh:message """mods:namePart[@type="family"] is not provided.
             Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="family"]`."""@en ;
     ],
     [
