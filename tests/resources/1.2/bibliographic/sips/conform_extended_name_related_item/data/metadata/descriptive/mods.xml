@@ -52,6 +52,8 @@
   <mods:physicalDescription>
     <mods:note type="condition">Bad</mods:note>
     <mods:note type="statement of responsibility">This is the statement of responsibility</mods:note>
+    <mods:form type="schrijfstoffen" authority="meemoo">inkt</mods:form>
+    <mods:form type="papiersoort" authority="meemoo">wit</mods:form>
     <mods:form authority="marcform" authorityURI="https://www.loc.gov/standards/valuelist/marcform.html">print</mods:form>
     <mods:extent unit="pages">4</mods:extent>
     <mods:extent unit="cm">59.7 x 74.9</mods:extent>

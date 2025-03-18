@@ -82,12 +82,21 @@ haObjId:7f7dda3c52188bb5913d71e5812d3b87 a cryptographicHashFunctions:md5 ;
 haObjId:{{carrier_uri}} a bf:Carrier ;
     bf:extent haObjId:7d0278ab7c1b0a64d600b450d32d5129 ;
     bf:note haObjId:7ff3e75ce6aca348bc513ed3d5882946 ;
+    bf:appliedMaterial haObjId:d18089537410b6a02d4b201affedca24 ;
+    bf:baseMaterial haObjId:26f6bd393df766642c4e6215573c6059 ;
     bf:responsibilityStatement "This is the statement of responsibility" ;
     rdfs:label "print" ;
     bf:source <https://www.loc.gov/standards/valuelist/marcform.html> .
 
+haSip:f4a3ab6dde3562b994c0e47c6c285a7b a bf:Source .
+
 haObjId:{{role_uri}} a bf:Role ;
     rdfs:label "author" .
+
+haObjId:d18089537410b6a02d4b201affedca24 a bf:AppliedMaterial ;
+    rdfs:label "inkt" ;
+    bf:source haSip:f4a3ab6dde3562b994c0e47c6c285a7b ;
+    skos:note "schrijfstoffen" .
 
 haObjId:2a9db04abfb7644b8907b1793ea578f6 a cryptographicHashFunctions:md5 ;
     rdf:value "2a9db04abfb7644b8907b1793ea578f6" .
@@ -547,6 +556,11 @@ haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f a premisowl:File ;
 
 haObjId:{{related_to}} a bf:Work ;
     bf:identifiedBy haObjId:41224f50f3f2862c7eedf930c09f1b78 .
+
+haObjId:26f6bd393df766642c4e6215573c6059 a bf:BaseMaterial ;
+    rdfs:label "wit" ;
+    bf:source haSip:f4a3ab6dde3562b994c0e47c6c285a7b ;
+    skos:note "papiersoort" .
 
 haObjId:uuid-df553be9-759a-4560-b8e7-9b06d220b57c a premisowl:File ;
     relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
