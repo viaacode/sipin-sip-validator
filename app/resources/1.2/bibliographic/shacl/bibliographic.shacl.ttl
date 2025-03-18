@@ -525,6 +525,22 @@
         sh:name "Label"@en ;
         sh:description "The label of the carrier."@en ;
     ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:appliedMaterial ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#AppliedMaterialShape> ;
+        sh:name "Applied Material"@en ;
+        sh:description "The applied material of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:baseMaterial ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#BaseMaterialShape> ;
+        sh:name "Base Material"@en ;
+        sh:description "The base material of the carrier."@en ;
+    ],
     # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
     [
         a sh:PropertyShape ;
@@ -565,7 +581,51 @@
         sh:message """'authority' attribute of mods:form is required.
             Please check `mods:mods/mods:physicalDescription/mods:form/@authority`."""
     ] .
-    
+
+<#AppliedMaterialShape> a sh:NodeShape ;
+    sh:targetClass bf:AppliedMaterial ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Applied Material"@en ;
+        sh:description "The applied material of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
+        sh:name "Source"@en ;
+        sh:description "The source of the carrier."@en ;
+    ] .
+
+<#BaseMaterialShape> a sh:NodeShape ;
+    sh:targetClass bf:BaseMaterial ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Base Material"@en ;
+        sh:description "The base material of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
+        sh:name "Source"@en ;
+        sh:description "The source of the carrier."@en ;
+    ] .
+
 <#NoteShape> a sh:NodeShape ;
     sh:targetClass bf:Note ;
     sh:closed true ;
