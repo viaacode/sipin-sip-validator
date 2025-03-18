@@ -602,6 +602,14 @@
         sh:node <#SourceShape> ;
         sh:name "Source"@en ;
         sh:description "The source of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path skos:note ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Type attribute"@en ;
+        sh:description "Type attribute"@en ;
     ] .
 
 <#BaseMaterialShape> a sh:NodeShape ;
@@ -624,6 +632,14 @@
         sh:node <#SourceShape> ;
         sh:name "Source"@en ;
         sh:description "The source of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path skos:note ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Type attribute"@en ;
+        sh:description "Type attribute"@en ;
     ] .
 
 <#NoteShape> a sh:NodeShape ;
