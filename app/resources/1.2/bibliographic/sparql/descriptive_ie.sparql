@@ -38,7 +38,7 @@ CONSTRUCT {
         bf:issuance ?issuance ;
         haDes:numberOfPages ?number_of_pages ;
         bf:carrier ?carrier_iri ;
-        bf:hasSeries ?relatedItem_iri ;
+        ?relatedItem_prop_iri ?relatedItem_iri ;
         bf:usageAndAccessPolicy ?license_iri .
     
     ?identifier_with_type_iri a bf:Identifier, ?identifier_type_iri ;
@@ -117,11 +117,29 @@ CONSTRUCT {
 
     ?carrier_iri a bf:Carrier ;
         rdfs:label ?form ;
+        bf:appliedMaterial ?applied_material_iri ;
+        bf:baseMaterial ?base_material_iri ;
         bf:source ?carrier_source_iri ;
         bf:note ?physDes_note_iri ;
         bf:responsibilityStatement ?responsibilityStatement ;
         bf:extent ?extent_iri ;
         ?_form_attribute ?_form_attr_value .
+
+    ?applied_material_iri a bf:AppliedMaterial ;
+        rdfs:label ?form_schrijfstoffen ;
+        skos:note "schrijfstoffen" ;
+        bf:source ?applied_material_source_iri .
+
+    ?applied_material_source_iri a bf:Source ;
+        rdfs:label ?applied_material_source .
+
+    ?base_material_iri a bf:BaseMaterial ;
+        rdfs:label ?form_papiersoort ;
+        skos:note "papiersoort" ;
+        bf:source ?base_material_source_iri .
+
+    ?base_material_source_iri a bf:Source ;
+        rdfs:label ?base_material_source .
 
     ?carrier_source_iri a bf:Source ;
         rdfs:label ?carrier_source .
@@ -131,7 +149,7 @@ CONSTRUCT {
         bf:noteType ?physDes_note_type .
 
     ?relatedItem_iri a ?relatedItem_type_iri ;
-        bf:identifier ?relatedItem_identifier_iri, ?abraham_iri ;
+        bf:identifiedBy ?relatedItem_identifier_iri, ?abraham_iri ;
         bf:title ?mainRelatedItemTitle_iri .
 
     ?mainRelatedItemTitle_iri a bf:Title ;
@@ -789,18 +807,23 @@ WHERE {
                 ?_form_element a mods:form .
                 OPTIONAL {
                     ?_form_element rdf:_1 ?form .
-                    OPTIONAL {
-                        ?_form_element xyz:authority ?carrier_source .
-                    }
-                    OPTIONAL {
-                        ?_form_element xyz:authorityURI ?_form_authorityURI .
-                    }
+                }
+                OPTIONAL {
+                    ?_form_element xyz:authority ?carrier_source .
+                }
+                OPTIONAL {
+                    ?_form_element xyz:authorityURI ?_form_authorityURI .
+                }
+                OPTIONAL {
+                    ?_form_element xyz:type ?_form_authorityType .
                 }
                 OPTIONAL {
                     ?_form_element ?_form_attribute ?_form_attr_value .
                     FILTER(!?_form_attribute != rdf:_1 && ?_form_attribute != rdf:type)
                 }
             }
+            MINUS { ?_form_element xyz:type "schrijfstoffen" }
+            MINUS { ?_form_element xyz:type "papiersoort" }
             BIND(
                 IF(
                     BOUND(?_form_element),
@@ -816,6 +839,83 @@ WHERE {
                     ?_null_18
                 )
             as ?carrier_source_iri)
+        }
+        OPTIONAL {
+            OPTIONAL {
+                ?_physicalDescription_element ?_physicalDescription_element_form_schrijfstoffen_prop ?_form_schrijfstoffen_element .
+                ?_form_schrijfstoffen_element a mods:form .
+                ?_form_schrijfstoffen_element xyz:type "schrijfstoffen" .
+                OPTIONAL {
+                    ?_form_schrijfstoffen_element rdf:_1 ?form_schrijfstoffen .
+                    OPTIONAL {
+                        ?_form_schrijfstoffen_element xyz:authority ?_form_schrijfstoffen_source .
+                    }
+                    OPTIONAL {
+                        ?_form_schrijfstoffen_element xyz:authorityURI ?_form_schrijfstoffen_authorityURI .
+                    }
+                }
+            }
+            BIND(
+                IF(
+                    BOUND(?_form_schrijfstoffen_element),
+                    iri(CONCAT(str(haObjId:), MD5(?form_schrijfstoffen))),
+                    ?_null_21
+                )
+            as ?applied_material_iri)
+            BIND(
+                IF(
+                    BOUND(?_form_schrijfstoffen_element),
+                    IF(
+                        BOUND(?_form_schrijfstoffen_authorityURI),
+                        iri(?_form_schrijfstoffen_authorityURI),
+                        IF(
+                            BOUND(?_form_schrijfstoffen_source),
+                            iri(CONCAT(str(haSip:), MD5(?_form_schrijfstoffen_source))),
+                            "No mods:form authority"
+                        )
+                    ),
+                    ?_null_schrijfstoffen_source_iri
+                )
+            as ?applied_material_source_iri)
+        }
+        OPTIONAL {
+            OPTIONAL {
+                ?_physicalDescription_element ?_physicalDescription_element_form_papiersoort_prop ?_form_papiersoort_element .
+                ?_form_papiersoort_element a mods:form .
+                ?_form_papiersoort_element xyz:type "papiersoort" .
+                OPTIONAL {
+                    ?_form_papiersoort_element rdf:_1 ?form_papiersoort .
+                    OPTIONAL {
+                        ?_form_papiersoort_element xyz:authority ?_form_papiersoort_source .
+                    }
+                    OPTIONAL {
+                        ?_form_papiersoort_element xyz:authorityURI ?_form_papiersoort_authorityURI .
+                    }
+
+                }
+            }
+            BIND(
+                IF(
+                    BOUND(?_form_papiersoort_element),
+                    iri(CONCAT(str(haObjId:), MD5(?form_papiersoort))),
+                    ?_null_21
+                )
+            as ?base_material_iri)
+            BIND(
+            IF(
+                BOUND(?_form_papiersoort_element),
+                IF(
+                    BOUND(?_form_papiersoort_authorityURI),
+                    iri(?_form_papiersoort_authorityURI),
+                    IF(
+                        BOUND(?_form_papiersoort_source),
+                        iri(CONCAT(str(haSip:), MD5(?_form_papiersoort_source))),
+                        "No mods:form authority"
+                    )
+                ),
+                ?_null_papiersoort_source_iri
+                )
+            as ?base_material_source_iri)
         }
         OPTIONAL {
             # mods:mods/mods:physicalDescription/mods:extent
@@ -860,10 +960,10 @@ WHERE {
             OPTIONAL {
                 ?_physicalDescription_element ?_physicalDescription_element_extent_pages_prop ?_extent_pages_element .
                 ?_extent_pages_element a mods:extent .
+                ?_extent_pages_element xyz:unit "pages" .
                 OPTIONAL {
                     ?_extent_pages_element rdf:_1 ?extent_pages .
                 }
-                ?_extent_pages_element xyz:unit "pages" .
             }
             BIND(
                 IF(
@@ -961,7 +1061,7 @@ WHERE {
             IF(
                 BOUND(?_relatedItem_identifier_element),
                 COALESCE(
-                    IF(?_relatedItem_identifier_type IN ("number", "page"),
+                    IF(?_relatedItem_identifier_type IN ("number", "page", "MEEMOO-LOCAL-ID"),
                         iri(CONCAT(str(haObjId:), MD5(?relatedItem_identifier))),
                         1/0
                     ),
@@ -992,13 +1092,29 @@ WHERE {
                     bf:Series,
                     IF(
                         !BOUND(?relatedItem_type),
-                        "Missing @type on mods:relatedItem",
+                        bf:Work,
                         concat("Unexpected @type on mods:relatedItem: ", ?relatedItem_type)
                     )
                 ),
                 ?_null_26
             )
         as ?relatedItem_type_iri)
+
+        BIND(
+            IF(
+                BOUND(?_relatedItem_element),
+                IF(
+                    BOUND(?relatedItem_type) && ?relatedItem_type = "series",
+                    bf:hasSeries,
+                    IF(
+                        !BOUND(?relatedItem_type),
+                        bf:relatedTo,
+                        concat("Unexpected @type on mods:relatedItem: ", ?relatedItem_type)
+                    )
+                ),
+                ?_null_28
+            )
+        as ?relatedItem_prop_iri)
         
         BIND(
             IF(

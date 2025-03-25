@@ -82,12 +82,21 @@ haObjId:7f7dda3c52188bb5913d71e5812d3b87 a cryptographicHashFunctions:md5 ;
 haObjId:{{carrier_uri}} a bf:Carrier ;
     bf:extent haObjId:7d0278ab7c1b0a64d600b450d32d5129 ;
     bf:note haObjId:7ff3e75ce6aca348bc513ed3d5882946 ;
+    bf:appliedMaterial haObjId:d18089537410b6a02d4b201affedca24 ;
+    bf:baseMaterial haObjId:26f6bd393df766642c4e6215573c6059 ;
     bf:responsibilityStatement "This is the statement of responsibility" ;
     rdfs:label "print" ;
     bf:source <https://www.loc.gov/standards/valuelist/marcform.html> .
 
+haSip:f4a3ab6dde3562b994c0e47c6c285a7b a bf:Source .
+
 haObjId:{{role_uri}} a bf:Role ;
     rdfs:label "author" .
+
+haObjId:d18089537410b6a02d4b201affedca24 a bf:AppliedMaterial ;
+    rdfs:label "inkt" ;
+    bf:source haSip:f4a3ab6dde3562b994c0e47c6c285a7b ;
+    skos:note "schrijfstoffen" .
 
 haObjId:2a9db04abfb7644b8907b1793ea578f6 a cryptographicHashFunctions:md5 ;
     rdf:value "2a9db04abfb7644b8907b1793ea578f6" .
@@ -124,6 +133,10 @@ haObjId:dfa01889ba2f54a349df101c81be4259 a cryptographicHashFunctions:md5 ;
 
 haObjId:9bafda23af2388d5186a897df4c13de0 a cryptographicHashFunctions:md5 ;
     rdf:value "9bafda23af2388d5186a897df4c13de0" .
+
+haObjId:41224f50f3f2862c7eedf930c09f1b78 a bf:Identifier ;
+    rdfs:label "MEEMOO-LOCAL-ID" ;
+    rdf:value "MEEMOOID" .
 
 haObjId:69da234ae73a51cbeca323b8cefd1f4e a bf:GenreForm ;
     rdfs:label "newspaper" ;
@@ -243,8 +256,7 @@ haObjId:2cae6de8e67d853680bb34cddef30288 a bf:Title ;
     rdfs:label "Newspaper title" .
 
 haObjId:{{agent_uri}} a bf:Person ;
-    schema:familyName "family" ;
-    schema:givenName "given" .
+    rdfs:label "given family" .
 
 haObjId:23c307008cb47d042f0a66a27f98dd97 a cryptographicHashFunctions:md5 ;
     rdf:value "23c307008cb47d042f0a66a27f98dd97" .
@@ -542,6 +554,14 @@ haObjId:uuid-d4922046-839d-4bbb-a27a-f7d3d065525f a premisowl:File ;
     premisowl:size 1007 ;
     schema:position 4 .
 
+haObjId:{{related_to}} a bf:Work ;
+    bf:identifiedBy haObjId:41224f50f3f2862c7eedf930c09f1b78 .
+
+haObjId:26f6bd393df766642c4e6215573c6059 a bf:BaseMaterial ;
+    rdfs:label "wit" ;
+    bf:source haSip:f4a3ab6dde3562b994c0e47c6c285a7b ;
+    skos:note "papiersoort" .
+
 haObjId:uuid-df553be9-759a-4560-b8e7-9b06d220b57c a premisowl:File ;
     relSubType:isi haObjId:uuid-f59f6fc6-bd50-4cb2-ae41-2a29eec96e52 ;
     relSubType:iso haObjId:uuid-2e9943fb-9b5a-4fd4-846f-3ad7a60e5824 ;
@@ -564,6 +584,7 @@ haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
         haObjId:{{serie[0]}}{% if not loop.last %},{% endif %}
     {% endfor -%};
     bf:identifiedBy haObj:99757a38731eb21418cd5836bc95d1e1 ;
+    bf:relatedTo haObjId:{{related_to}} ;
     bf:issuance "serial" ;
     bf:originDate "2022-08-02"^^edtf:EDTF ;
     bf:provisionActivity haObjId:{{publication_uri}} ;

@@ -26,7 +26,7 @@
   rdf:rest ( ) .
 
 <#IntellectualEntityShape> a sh:NodeShape ;
-    sh:targetClass bf:Work ;
+    sh:targetClass premis:IntellectualEntity ;
     sh:closed true ;
     sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
@@ -359,6 +359,15 @@
         sh:name "Series"@en ;
         sh:description "Abraham ID or Abraham URI."@en ;
     ],
+    # mods:mods/mods:relatedItem/mods:identifier[@type="MEEMOO-LOCAL-ID"]
+    [
+        a sh:PropertyShape ;
+        sh:path bf:relatedTo ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#RelatedItemWorkShape> ;
+        sh:name "Related Item"@en ;
+        sh:description "MEEMOO-LOCAL-ID."@en ;
+    ],
     # mods:mods/mods:note[@type="license"]
     [
         a sh:PropertyShape ;
@@ -516,6 +525,22 @@
         sh:name "Label"@en ;
         sh:description "The label of the carrier."@en ;
     ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:appliedMaterial ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#AppliedMaterialShape> ;
+        sh:name "Applied Material"@en ;
+        sh:description "The applied material of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:baseMaterial ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#BaseMaterialShape> ;
+        sh:name "Base Material"@en ;
+        sh:description "The base material of the carrier."@en ;
+    ],
     # mods:mods/mods:physicalDescription/mods:extent[@unit="cm"]
     [
         a sh:PropertyShape ;
@@ -556,7 +581,67 @@
         sh:message """'authority' attribute of mods:form is required.
             Please check `mods:mods/mods:physicalDescription/mods:form/@authority`."""
     ] .
-    
+
+<#AppliedMaterialShape> a sh:NodeShape ;
+    sh:targetClass bf:AppliedMaterial ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Applied Material"@en ;
+        sh:description "The applied material of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
+        sh:name "Source"@en ;
+        sh:description "The source of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path skos:note ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Type attribute"@en ;
+        sh:description "Type attribute"@en ;
+    ] .
+
+<#BaseMaterialShape> a sh:NodeShape ;
+    sh:targetClass bf:BaseMaterial ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Base Material"@en ;
+        sh:description "The base material of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:source ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node <#SourceShape> ;
+        sh:name "Source"@en ;
+        sh:description "The source of the carrier."@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path skos:note ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Type attribute"@en ;
+        sh:description "Type attribute"@en ;
+    ] .
+
 <#NoteShape> a sh:NodeShape ;
     sh:targetClass bf:Note ;
     sh:closed true ;
@@ -691,7 +776,7 @@
     ],
     [
         a sh:PropertyShape ;
-        sh:path bf:identifier ;
+        sh:path bf:identifiedBy ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node <#IdentifierShape> ;
         sh:name "Identifier"@en ;
@@ -928,6 +1013,15 @@
     sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
+    # mods:mods/mods:name[@type="personal"]/mods:namePart
+    [
+        a sh:PropertyShape ;
+        sh:path rdfs:label ;
+        sh:nodeKind sh:Literal ;
+        sh:datatype xsd:string ;
+        sh:name "Full name"@en ;
+        sh:description "The full name of a person who contributed to the newspaper."@en ;
+    ],
     # mods:mods/mods:name[@type="personal"]/namePart[@type="given"]
     [
         a sh:PropertyShape ;
@@ -941,8 +1035,8 @@
         a sh:PropertyShape ;
         sh:path schema:givenName ;
         sh:minCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:namePart[@type="given"] is required.
+        sh:severity sh:Warning ;
+        sh:message """mods:namePart[@type="given"] is not provided.
             Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="given"]`."""@en ;
     ],
     [
@@ -966,8 +1060,8 @@
         a sh:PropertyShape ;
         sh:path schema:familyName ;
         sh:minCount 1 ;
-        sh:severity sh:Violation ;
-        sh:message """mods:namePart[@type="family"] is required.
+        sh:severity sh:Warning ;
+        sh:message """mods:namePart[@type="family"] is not provided.
             Please check `mods:mods/mods:name[@type="personal"]/namePart[@type="family"]`."""@en ;
     ],
     [
@@ -1029,14 +1123,14 @@
 
 #mods:mods/mods:identifier[not(@*)]
 <#IdentifierShape> a sh:NodeShape ;
-    sh:targetClass bf:Identifier ;
+    sh:targetClass bf:identifiedBy ;
     sh:closed true ;
     sh:ignoredProperties <#typeList> ;
     sh:property
     # [
     #     a sh:PropertyShape ;
     #     sh:path rdf:type ;
-    #     sh:in (bf:Identifier)
+    #     sh:in (bf:identifiedBy)
     # ],
     [
         a sh:PropertyShape ;
@@ -1074,4 +1168,38 @@
         sh:datatype xsd:string ;
         sh:name "Usage and access policy"@en ;
         sh:description "The usage and access policy of the newspaper."@en ;
+    ] .
+
+<#RelatedItemWorkShape> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties <#typeList> ;
+    sh:nodeKind sh:IRI ;
+    sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:node <#IdentifierShape> ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message """'mods:mods/mods:identifier' can not have an '@type' attribute.
+            Please check `mods:mods/mods:identifier`. Local Identifiers should be defined in premis.xml."""
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier element is required.
+            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
+    ],
+    [
+        a sh:PropertyShape ;
+        sh:path bf:identifiedBy ;
+        sh:maxCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message """mods:identifier element occurs more than once.
+            Please check `mods:mods/mods:identifier[not(@*)]`"""@en ;
     ] .
