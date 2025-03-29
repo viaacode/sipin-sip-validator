@@ -20,7 +20,7 @@ class PulsarClient:
         producer: A Pulsar producer to send messages to.
     """
 
-    def __init__(self):
+    def __init__(self, app_name):
         config_parser = ConfigParser()
         self.log = logging.get_logger(__name__, config=config_parser)
         self.pulsar_config: dict = config_parser.app_cfg["pulsar"]
@@ -29,7 +29,9 @@ class PulsarClient:
             f'pulsar://{self.pulsar_config["host"]}:{self.pulsar_config["port"]}'
         )
         self.consumer: Consumer = self.client.subscribe(
-            self.app_config["consumer_topic"], "sipin-sip-validator"
+            topic=self.app_config["consumer_topic"],
+            subscription_name=app_name,
+            consumer_name=app_name,
         )
         self.log.info(f"Started consuming topic: {self.app_config['consumer_topic']}")
         self.producers = {}

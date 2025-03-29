@@ -30,7 +30,7 @@ class EventListener:
         self.log = logging.get_logger(__name__, config=config_parser)
         self.config = config_parser.app_cfg
         # Init Pulsar client
-        self.pulsar_client = PulsarClient()
+        self.pulsar_client = PulsarClient(APP_NAME)
 
         # Topics
         app_config = self.config["sip-parser"]
