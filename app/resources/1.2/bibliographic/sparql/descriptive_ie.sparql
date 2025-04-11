@@ -1106,11 +1106,7 @@ WHERE {
                 IF(
                     BOUND(?relatedItem_type) && ?relatedItem_type = "series",
                     bf:hasSeries,
-                    IF(
-                        !BOUND(?relatedItem_type),
-                        bf:relatedTo,
-                        concat("Unexpected @type on mods:relatedItem: ", ?relatedItem_type)
-                    )
+                    bf:relatedTo
                 ),
                 ?_null_28
             )
