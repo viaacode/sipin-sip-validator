@@ -381,7 +381,6 @@
 <#LanguageShape> a sh:NodeShape ;
     sh:targetClass bf:Language ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -651,7 +650,6 @@
 <#NoteShape> a sh:NodeShape ;
     sh:targetClass bf:Note ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -866,7 +864,6 @@
 <#AgentShape> a sh:NodeShape ;
     sh:targetClass bf:Agent ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
     sh:property
     [
         a sh:PropertyShape ;
@@ -1195,7 +1192,6 @@
 
 <#RelatedItemWorkShape> a sh:NodeShape ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
     [
