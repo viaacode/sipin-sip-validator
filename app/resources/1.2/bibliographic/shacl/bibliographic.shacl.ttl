@@ -381,8 +381,13 @@
 <#LanguageShape> a sh:NodeShape ;
     sh:targetClass bf:Language ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
     sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:in ( bf:Language ) ;
+    ],
     [
         a sh:PropertyShape ;
         sh:path rdfs:label ;
@@ -645,8 +650,13 @@
 <#NoteShape> a sh:NodeShape ;
     sh:targetClass bf:Note ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
     sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:in ( bf:Note ) ;
+    ],
     [
         a sh:PropertyShape ;
         sh:path rdfs:label ;
@@ -854,8 +864,13 @@
 <#AgentShape> a sh:NodeShape ;
     sh:targetClass bf:Agent ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
     sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:in ( bf:Person bf:Organization ) ;
+    ],
     [
         a sh:PropertyShape ;
         sh:path rdfs:label ;
@@ -1158,9 +1173,14 @@
 <#UsageAndAccessPolicyShape> a sh:NodeShape ;
     sh:targetClass bf:UsageAndAccessPolicy ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
+    # sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:in (bf:UsageAndAccessPolicy)
+    ],
     [
         a sh:PropertyShape ;
         sh:path rdfs:label ;
@@ -1172,9 +1192,13 @@
 
 <#RelatedItemWorkShape> a sh:NodeShape ;
     sh:closed true ;
-    sh:ignoredProperties <#typeList> ;
     sh:nodeKind sh:IRI ;
     sh:property
+    [
+        a sh:PropertyShape ;
+        sh:path rdf:type ;
+        sh:in (bf:Work)
+    ],
     [
         a sh:PropertyShape ;
         sh:path bf:identifiedBy ;
