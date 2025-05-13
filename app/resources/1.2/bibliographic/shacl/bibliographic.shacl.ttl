@@ -150,7 +150,7 @@
     [
         a sh:PropertyShape ;
         sh:path rdf:type ;
-        sh:maxCount 3 ;
+        sh:maxCount 4 ;
         sh:severity sh:Violation ;
         sh:message """mods:typeOfResource element occurs more than once.
             Please check `mods:mods/mods:typeOfResource`"""@en ;
