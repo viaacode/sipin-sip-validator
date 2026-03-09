@@ -1,8 +1,8 @@
-pulsar-client==2.10.2
+pulsar-client==3.10.0
 viaa-chassis==0.2.0rc1
 meemoo-cloudevents==0.1.0rc3
-lxml==4.9.2
-pyshacl==0.20.0
+lxml==6.0.2
+pyshacl==0.31.0
 jinja2==3.1.2
-bagit==1.8.1
-pysparql_anything==0.8.2.1
+bagit==1.9.0
+pysparql_anything==1.0.0.0

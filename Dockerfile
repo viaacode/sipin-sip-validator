@@ -1,17 +1,17 @@
-FROM python:3.10-slim
+FROM python:3.12-slim
 
-# Install OpenJDK-17 and wget
+# Install OpenJDK-21 and wget
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk-headless wget && \
+    apt-get install -y openjdk-21-jdk-headless wget && \
     apt-get clean;
 
 # Set Java path.
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64/
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Download pysparql_anything in correct folder.
-RUN mkdir /usr/local/lib/python3.10/site-packages/pysparql_anything/ && \
-    wget -O /usr/local/lib/python3.10/site-packages/pysparql_anything/sparql-anything-v0.8.2.jar https://github.com/SPARQL-Anything/sparql.anything/releases/download/v0.8.2/sparql-anything-0.8.2.jar 
+RUN mkdir /usr/local/lib/python3.12/site-packages/pysparql_anything/ && \
+    wget -O /usr/local/lib/python3.12/site-packages/pysparql_anything/sparql-anything-v1.0.0.jar https://github.com/SPARQL-Anything/sparql.anything/releases/download/v1.0.0/sparql-anything-server-v1.0.0.jar
 
 # Make a new group and user so we don't run as root.
 RUN addgroup --system appgroup && adduser --system appuser --ingroup appgroup

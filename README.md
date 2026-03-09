@@ -12,7 +12,7 @@ A service that parses and validates the unzipped SIP:
 
 * Git
 * Docker (optional)
-* Python 3.10+
+* Python 3.12+
 * Access to the meemoo PyPi
 
 ## Usage
@@ -52,7 +52,7 @@ Included in this repository is a config.yml file detailing the required configur
 
 5. Set Java path. On linux, for example: 
 
-    `export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/`
+    `export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64/`
 
 6. Run the tests with:
 

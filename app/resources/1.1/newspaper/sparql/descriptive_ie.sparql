@@ -1,25 +1,25 @@
-PREFIX dct: <http://purl.org/dc/terms/> 
-PREFIX sh: <http://www.w3.org/ns/shacl#> 
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
-PREFIX owl: <http://www.w3.org/2002/07/owl#> 
-PREFIX schema: <https://schema.org/> 
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX schema: <https://schema.org/>
 PREFIX pav: <http://purl.org/pav/>
-PREFIX haObj: <https://data.hetarchief.be/ns/object/> 
-PREFIX haObjId: <https://data.hetarchief.be/id/entity/> 
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
-PREFIX edtf: <http://id.loc.gov/datatypes/edtf/> 
-PREFIX mods: <http://www.loc.gov/mods/rdf/v1#> 
-PREFIX madsrdf: <http://www.loc.gov/mads/rdf/v1#> 
-PREFIX edm: <http://www.europeana.eu/schemas/edm/> 
-PREFIX bf: <http://id.loc.gov/ontologies/bibframe/> 
-PREFIX mods: <http://www.loc.gov/mods/v3#> 
-PREFIX fx: <http://sparql.xyz/facade-x/ns/> 
-PREFIX xyz: <http://sparql.xyz/facade-x/data/> 
+PREFIX haObj: <https://data.hetarchief.be/ns/object/>
+PREFIX haObjId: <https://data.hetarchief.be/id/entity/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX mods: <http://www.loc.gov/mods/rdf/v1#>
+PREFIX madsrdf: <http://www.loc.gov/mads/rdf/v1#>
+PREFIX edm: <http://www.europeana.eu/schemas/edm/>
+PREFIX bf: <http://id.loc.gov/ontologies/bibframe/>
+PREFIX mods: <http://www.loc.gov/mods/v3#>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX haBib: <https://data.hetarchief.be/ns/bibliographic/>
 PREFIX haBibId: <https://data.hetarchief.be/id/bibliographic/>
-PREFIX haSip: <https://data.hetarchief.be/ns/sip/> 
+PREFIX haSip: <https://data.hetarchief.be/ns/sip/>
 
 
 CONSTRUCT {
@@ -39,7 +39,7 @@ CONSTRUCT {
         bf:carrier ?carrier_iri ;
         bf:hasSeries ?relatedItem_iri ;
         bf:usageAndAccessPolicy ?license_iri .
-    
+
     ?identifier_iri a bf:Identifier ;
         rdf:value ?identifier ;
         ?_identifier_attribute ?_identifier_attr_value .
@@ -172,7 +172,7 @@ WHERE {
                 FILTER(?_titleInfo_attribute != rdf:_1 && ?_titleInfo_attribute != rdf:type && ?_titleInfo_attribute != xyz:type)
             }
             BIND(IF(
-                EXISTS { 
+                EXISTS {
                     ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
                     FILTER(?_titleInfo_attributeX != rdf:_1 && ?_titleInfo_attributeX != rdf:type)
                     }, ?title, ?_null_1
@@ -186,7 +186,7 @@ WHERE {
                 )
             as ?altTitle_iri)
             BIND(IF(
-                NOT EXISTS { 
+                NOT EXISTS {
                     ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
                     FILTER(?_titleInfo_attributeX != rdf:_1 && ?_titleInfo_attributeX != rdf:type)
                     }, ?title, ?_null_2
@@ -210,7 +210,7 @@ WHERE {
                 FILTER(?_typeOfResource_attribute != rdf:_1 && ?_typeOfResource_attribute != rdf:type)
             }
             BIND(
-                IF(?typeOfResource = "newspaper edition", haBib:NewspaperIssue, CONCAT("Wrong mods:typeOfResource: ", ?typeOfResource)) 
+                IF(?typeOfResource = "newspaper edition", haBib:NewspaperIssue, CONCAT("Wrong mods:typeOfResource: ", ?typeOfResource))
             as ?extraType)
         }
         # mods:mods/mods:abstract
@@ -584,10 +584,11 @@ WHERE {
         }
         # mods:mods/mods:relatedItem
         OPTIONAL {
+            ?root ?root_list_relatedItem ?_relatedItem_element .
             ?_relatedItem_element a mods:relatedItem .
             BIND(
-                strUUID()
-            as ?_relatedItem_uuid)
+                iri(CONCAT(str(haObjId:), MD5(STR(?_relatedItem_element))))
+            as ?relatedItem_iri)
             # mods:mods/mods:relatedItem[@type]
             OPTIONAL {
                 ?_relatedItem_element xyz:type ?relatedItem_type .
@@ -613,13 +614,6 @@ WHERE {
             }
 
         }
-        BIND(
-            IF(
-                BOUND(?_relatedItem_element),
-                iri(CONCAT(str(haObjId:), MD5(concat(?_relatedItem_uuid, "_relatedItem")))),
-                ?_null_19
-            )
-        as ?relatedItem_iri)
         BIND(
             IF(
                 BOUND(?_relatedItem_element),

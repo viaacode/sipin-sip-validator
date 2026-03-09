@@ -1,25 +1,25 @@
-PREFIX dct: <http://purl.org/dc/terms/> 
-PREFIX sh: <http://www.w3.org/ns/shacl#> 
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
-PREFIX owl: <http://www.w3.org/2002/07/owl#> 
-PREFIX schema: <https://schema.org/> 
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX schema: <https://schema.org/>
 PREFIX pav: <http://purl.org/pav/>
 PREFIX premisowl: <http://www.loc.gov/premis/rdf/v3/>
-PREFIX haObj: <https://data.hetarchief.be/ns/object/> 
-PREFIX haObjId: <https://data.hetarchief.be/id/entity/> 
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
-PREFIX edtf: <http://id.loc.gov/datatypes/edtf/> 
-PREFIX mods: <http://www.loc.gov/mods/rdf/v1#> 
-PREFIX madsrdf: <http://www.loc.gov/mads/rdf/v1#> 
-PREFIX edm: <http://www.europeana.eu/schemas/edm/> 
-PREFIX bf: <http://id.loc.gov/ontologies/bibframe/> 
-PREFIX mods: <http://www.loc.gov/mods/v3#> 
-PREFIX fx: <http://sparql.xyz/facade-x/ns/> 
-PREFIX xyz: <http://sparql.xyz/facade-x/data/> 
+PREFIX haObj: <https://data.hetarchief.be/ns/object/>
+PREFIX haObjId: <https://data.hetarchief.be/id/entity/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX edtf: <http://id.loc.gov/datatypes/edtf/>
+PREFIX mods: <http://www.loc.gov/mods/rdf/v1#>
+PREFIX madsrdf: <http://www.loc.gov/mads/rdf/v1#>
+PREFIX edm: <http://www.europeana.eu/schemas/edm/>
+PREFIX bf: <http://id.loc.gov/ontologies/bibframe/>
+PREFIX mods: <http://www.loc.gov/mods/v3#>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX haDes: <https://data.hetarchief.be/ns/description/>
-PREFIX haSip: <https://data.hetarchief.be/ns/sip/> 
+PREFIX haSip: <https://data.hetarchief.be/ns/sip/>
 
 
 CONSTRUCT {
@@ -40,13 +40,13 @@ CONSTRUCT {
         bf:carrier ?carrier_iri ;
         ?relatedItem_prop_iri ?relatedItem_iri ;
         bf:usageAndAccessPolicy ?license_iri .
-    
+
     ?identifier_with_type_iri a bf:Identifier, ?identifier_type_iri ;
         rdf:value ?identifier_with_type .
 
     ?identifier_iri a bf:Identifier;
         rdf:value ?identifier .
-        
+
     ?record_iri a bf:AdminMetadata ;
         bf:identifiedBy ?recordInfo_identifier_iri .
 
@@ -69,7 +69,7 @@ CONSTRUCT {
 
     ?genre_source_iri a bf:Source ;
         rdfs:label ?genre_source .
-        
+
     ?language_iri a ?language_type ;
         rdfs:label ?language .
 
@@ -95,7 +95,7 @@ CONSTRUCT {
         bf:place ?place_iri ;
         bf:agent ?prov_agent_iri ;
         bf:date ?dateIssued .
-    
+
     ?prov_agent_iri a bf:Agent ;
         rdfs:label ?publisher .
 
@@ -278,7 +278,7 @@ WHERE {
                 ?_titleInfo_element rdf:_1 ?_title_element .
                 OPTIONAL {
                     ?_title_element rdf:_1 ?title ;
-                        a mods:title . 
+                        a mods:title .
                 }
             }
             OPTIONAL {
@@ -290,14 +290,14 @@ WHERE {
             }
             OPTIONAL {
                 ?_titleInfo_element ?_titleInfo_attribute ?_titleInfo_attr_value .
-                FILTER(?_titleInfo_attribute != rdf:_1 
-                    && ?_titleInfo_attribute != rdf:type 
+                FILTER(?_titleInfo_attribute != rdf:_1
+                    && ?_titleInfo_attribute != rdf:type
                     && ?_titleInfo_attribute != xyz:type
                     && ?_titleInfo_attribute != xyz:otherType
                 )
             }
             BIND(IF(
-                EXISTS { 
+                EXISTS {
                     ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
                     FILTER(?_titleInfo_attributeX != rdf:_1 && ?_titleInfo_attributeX != rdf:type)
                     }, ?title, ?_null_1
@@ -311,7 +311,7 @@ WHERE {
                 )
             as ?altTitle_iri)
             BIND(IF(
-                NOT EXISTS { 
+                NOT EXISTS {
                     ?_titleInfo_element ?_titleInfo_attributeX ?_titleInfo_attr_valueX .
                     FILTER(?_titleInfo_attributeX != rdf:_1 && ?_titleInfo_attributeX != rdf:type)
                     }, ?title, ?_null_2
@@ -333,7 +333,7 @@ WHERE {
                 ?_language_element rdf:_1 ?_language_term .
                 OPTIONAL {
                     ?_language_term rdf:_1 ?language ;
-                        a mods:languageTerm . 
+                        a mods:languageTerm .
                 }
                 OPTIONAL {
                     ?_language_term xyz:type ?_language_term_type .
@@ -377,7 +377,7 @@ WHERE {
                     && ?_typeOfResource_attribute != rdf:type
                 )
             }
-            
+
         }
         BIND(
             COALESCE(
@@ -394,7 +394,7 @@ WHERE {
                 IF(BOUND(?_is_manuscript), CONCAT("Unexpected @manuscript value on mods:typeOfResource: ", ?_is_manuscript), 1/0),
                 ?_null_manuscript
             )
-            
+
         as ?manuscript_type)
         # mods:mods/mods:abstract
         OPTIONAL {
@@ -492,7 +492,7 @@ WHERE {
         BIND(
             IF(
                 BOUND(?_note_element),
-                IF(BOUND(?note_type) && ?note_type = "license", 
+                IF(BOUND(?note_type) && ?note_type = "license",
                     iri(CONCAT(str(haObjId:), ?note)),
                     iri(CONCAT(str(haObjId:), MD5(?note)))
                 ),
@@ -742,10 +742,11 @@ WHERE {
         }
         # mods:mods/mods:physicalDescription
         OPTIONAL {
+            ?root ?root_list_phys ?_physicalDescription_element .
             ?_physicalDescription_element a mods:physicalDescription .
             BIND(
-                strUUID()
-            as ?_physicalDescription_uuid)
+                iri(CONCAT(str(haObjId:), MD5(STR(?_physicalDescription_element))))
+            as ?carrier_iri)
         }
         OPTIONAL {
             # mods:mods/mods:physicalDescription/mods:note
@@ -760,7 +761,7 @@ WHERE {
                 }
             }
             MINUS {?_physicalDescription_note_element xyz:type "statement of responsibility"}
-            
+
             BIND(
                 IF(
                     BOUND(?physDes_note),
@@ -779,9 +780,9 @@ WHERE {
                     ?_null_physDes_note_type
                 )
             as ?physDes_note_type_iri)
-            
-            
-            
+
+
+
         }
         OPTIONAL {
             OPTIONAL {
@@ -934,7 +935,7 @@ WHERE {
                 }
             }
             MINUS { ?_extent_element xyz:unit "pages"}
-            
+
             BIND(
                 IF(
                     BOUND(?extent),
@@ -954,7 +955,7 @@ WHERE {
                     ?_null_unit
                 )
             as ?extent_unit_iri)
-            
+
         }
         OPTIONAL {
             OPTIONAL {
@@ -973,19 +974,13 @@ WHERE {
                 )
             as ?number_of_pages)
         }
-        BIND(
-            IF(
-                BOUND(?_physicalDescription_element),
-                iri(CONCAT(str(haObjId:), MD5(concat(?_physicalDescription_uuid, "_carrier")))),
-                ?_null_17
-            )
-        as ?carrier_iri)
         # mods:mods/mods:relatedItem
         OPTIONAL {
+            ?root ?root_list_relatedItem ?_relatedItem_element .
             ?_relatedItem_element a mods:relatedItem .
             BIND(
-                strUUID()
-            as ?_relatedItem_uuid)
+                iri(CONCAT(str(haObjId:), MD5(STR(?_relatedItem_element))))
+            as ?relatedItem_iri)
             # mods:mods/mods:relatedItem[@type]
             OPTIONAL {
                 ?_relatedItem_element xyz:type ?relatedItem_type .
@@ -1019,12 +1014,12 @@ WHERE {
                     ?_relatedItem_titleInfo_element rdf:_1 ?_relatedItem_title_element .
                     OPTIONAL {
                         ?_relatedItem_title_element rdf:_1 ?relatedItem_title ;
-                            a mods:title . 
+                            a mods:title .
                     }
                 }
             }
             BIND(IF(
-                NOT EXISTS { 
+                NOT EXISTS {
                     ?_relatedItem_titleInfo_element ?_relatedItem_titleInfo_attributeX ?_relatedItem_titleInfo_attr_valueX .
                     FILTER(?_relatedItem_titleInfo_attributeX != rdf:_1 && ?_relatedItem_titleInfo_attributeX != rdf:type)
                     }, ?relatedItem_title, ?_null_2
@@ -1070,20 +1065,13 @@ WHERE {
                         1/0
                     ),
                     IF(?_relatedItem_identifier_type NOT IN ("number", "page", "abraham_uri", "abraham_id"),
-                        concat("Unexpected @type on mods:relatedItem/mods:identifier: ", ?_relatedItem_identifier_type), 
+                        concat("Unexpected @type on mods:relatedItem/mods:identifier: ", ?_relatedItem_identifier_type),
                         ?_null_relitemid
                     )
                 ),
                 ?_null_20
             )
         as ?relatedItem_identifier_iri)
-        BIND(
-            IF(
-                BOUND(?_relatedItem_element),
-                iri(CONCAT(str(haObjId:), MD5(concat(?_relatedItem_uuid, "_relatedItem")))),
-                ?_null_19
-            )
-        as ?relatedItem_iri)
         BIND(
             IF(
                 BOUND(?_relatedItem_element),
@@ -1111,7 +1099,7 @@ WHERE {
                 ?_null_28
             )
         as ?relatedItem_prop_iri)
-        
+
         BIND(
             IF(
                 BOUND(?_relatedItem_identifier_element),
@@ -1133,7 +1121,7 @@ WHERE {
                 ?_null_22
             )
         as ?relatedItem_identifier_type)
-        
+
         BIND(
             IF(
                 BOUND(?_relatedItem_identifier_element),
