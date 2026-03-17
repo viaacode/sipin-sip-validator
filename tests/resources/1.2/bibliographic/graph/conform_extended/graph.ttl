@@ -35,7 +35,7 @@ haObjId:uuid-b05d1f1b-fc5d-4a55-819a-ffb5ce2c1f1e a premisowl:Event,
 haSipId:uuid-f82f9e39-3760-4dcd-8f3d-7e482f231988 a haSip:SIP ;
     dct:conformsTo haSipId:bibliographic,
         <https://earksip.dilcis.eu/profile/E-ARK-SIP.xml> ;
-    dct:format "Textual works - Print" ;
+    dct:format "Some Other Type" ;
     schema:agent [ a schema:Role ;
             schema:agent haOrgId:OR-XXXXXXX ;
             schema:roleName "ARCHIVIST" ],

@@ -26,7 +26,7 @@ CONSTRUCT {
     ?sip a haSip:SIP;
         dct:conformsTo ?mets_profile;
         dct:conformsTo ?sip_profile;
-        dct:format ?type;
+        dct:format ?sip_type;
         schema:agent [
             a schema:Role ;
             schema:roleName ?role;
@@ -58,6 +58,16 @@ WHERE {
             OPTIONAL {
                 ?mets xyz:TYPE ?type .
             }
+            OPTIONAL {
+                ?mets csip:OTHERTYPE ?_mets_other_type .
+            }
+            BIND(
+                IF(
+                    ?type = "OTHER" && BOUND(?_mets_other_type),
+                    ?_mets_other_type,
+                    ?type
+                )
+            as ?sip_type)
             OPTIONAL {
                 ?mets csip:OTHERCONTENTINFORMATIONTYPE ?_sip_profile .
                 BIND(iri(?_sip_profile) AS ?sip_profile)
