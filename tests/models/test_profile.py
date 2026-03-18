@@ -1,17 +1,18 @@
-from pathlib import Path
 from io import StringIO
+from pathlib import Path
 
 import pytest
 import rdflib
-from rdflib import Graph
-from rdflib.compare import isomorphic, graph_diff
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from rdflib import Graph, Namespace
+from rdflib.compare import graph_diff, isomorphic
+from rdflib.namespace import RDF, RDFS
 
 from app.models.profiles import determine_profile
 from app.models.profiles.exceptions import (
-    XMLNotValidError,
     GraphNotConformError,
     ProfileVersionRetiredError,
+    XMLNotValidError,
 )
 from app.models.profiles.profile_1_1 import (
     BasicProfile11,
@@ -20,9 +21,12 @@ from app.models.profiles.profile_1_1 import (
 )
 from app.models.profiles.profile_1_2 import (
     BasicProfile12,
-    MaterialArtworkProfile12,
     BibliographicProfile12,
+    MaterialArtworkProfile12,
 )
+
+BF = Namespace("http://id.loc.gov/ontologies/bibframe/")
+SCHEMA = Namespace("https://schema.org/")
 
 
 @pytest.mark.parametrize(
@@ -975,3 +979,65 @@ class TestBibliographicProfile12(TestNewspaperProfile11):
 
         expected.parse(StringIO(rendered_graph_template))
         assert isomorphic(graph, expected)
+
+    @pytest.fixture
+    def conform_extended_creators_contributors(self):
+        path = Path(
+            "tests",
+            "resources",
+            "1.2",
+            "bibliographic",
+            "sips",
+            "conform_extended_creators_contributors",
+        )
+        return BibliographicProfile12(path)
+
+    def test_parse_validate_graph_creators_contributors(self, request):
+        profile = request.getfixturevalue("conform_extended_creators_contributors")
+
+        graph = profile.parse_graph()
+        actual = set()
+
+        for contribution in graph.subjects(RDF.type, BF.Contribution):
+            agent = graph.value(contribution, BF.agent)
+            role = graph.value(contribution, BF.role)
+            role_label = graph.value(role, RDFS.label)
+
+            label = graph.value(agent, RDFS.label)
+            if label:
+                agent_name = str(label)
+            else:
+                given = graph.value(agent, SCHEMA.givenName)
+                family = graph.value(agent, SCHEMA.familyName)
+                agent_name = f"{given} {family}"
+
+            actual.add((agent_name, str(role_label)))
+
+        expected = {
+            ("Copyist", "contributor"),
+            ("Arrangeur", "arrangeur"),
+            ("Theme", "contributor"),
+            ("Harmonization", "harmonization"),
+            ("Briefschrijver - corporate", "briefschrijver"),
+            ("Lyricist", "lyricist"),
+            ("Auteur - corporate", "auteur"),
+            ("Briefontvanger - given Briefontvanger - family", "briefontvanger"),
+            ("Accompaniment", "contributor"),
+            ("Adaptation", "adaptation"),
+            ("Performer", "contributor"),
+            ("Auteur - given Auteur - family", "auteur"),
+            ("Briefschrijver - given Briefschrijver - family", "briefschrijver"),
+            ("Composer", "composer"),
+            ("Briefontvanger - corporate", "briefontvanger"),
+            ("Author", "author"),
+            ("Editor", "contributor"),
+            ("Handschrijver", "handschrift"),
+            ("Producer", "contributor"),
+            ("Translator", "translator"),
+            ("Txt", "contributor"),
+        }
+
+        assert actual == expected
+
+        # Check if valid
+        assert profile.validate_graph(graph)
