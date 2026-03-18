@@ -869,7 +869,7 @@
         a sh:PropertyShape ;
         sh:path rdf:type ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:in ( bf:Person bf:Organization ) ;
+        sh:in ( bf:Agent ) ;
     ],
     [
         a sh:PropertyShape ;

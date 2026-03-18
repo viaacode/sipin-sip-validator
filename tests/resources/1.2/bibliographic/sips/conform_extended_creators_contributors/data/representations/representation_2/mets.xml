@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:csip="https://DILCIS.eu/XML/METS/CSIPExtensionMETS" xmlns:sip="https://DILCIS.eu/XML/METS/SIPExtensionMETS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" OBJID="representation_2" TYPE="Textual works - Digital" PROFILE="https://earksip.dilcis.eu/profile/E-ARK-SIP.xml" xsi:schemaLocation="https://www.w3.org./1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd                         http://www.loc.gov/METS/ https://www.loc.gov/standards/mets/mets.xsd                         https://DILCIS.eu/XML/METS/CSIPExtensionMETS https://earkcsip.dilcis.eu/schema/DILCISExtensionMETS.xsd                         https://DILCIS.eu/XML/METS/SIPExtensionMETS https://earksip.dilcis.eu/schema/DILCISExtensionSIPMETS.xsd">
+
+    <!-- Creation date of the representation_2 METS file -->
+    <metsHdr CREATEDATE="2023-11-16T10:02:37.009+02:00"/>
+
+    <amdSec>
+        <digiprovMD ID="uuid-5c66e0d1-f480-492f-b9a3-c25060ea6830">
+            <!-- Size of the premis.xml file -->
+            <!-- Creation date of the premis.xml file -->
+            <!-- Checksum of the premis.xml file -->
+
+            <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:type="simple" xlink:href="./metadata/preservation/premis.xml" MIMETYPE="text/xml" SIZE="17543" CREATED="2023-11-16T00:00:00+02:00" CHECKSUM="1c3facb73ceb51dadfb42c7e833b2957" CHECKSUMTYPE="MD5"/>
+        </digiprovMD>
+    </amdSec>
+
+    <fileSec ID="uuid-8d39b710-6f5c-424a-9203-d279e10ad115">
+        <!-- Sizes of the files in data directory -->
+        <!-- Creation dates of the files in data directory -->
+        <!-- Checksums of the files in data directory -->
+        <fileGrp USE="data" ID="uuid-16480e44-e436-46cb-a615-3b5d48e57406">
+            <file ID="uuid-8867f1a5-2c00-4218-b7ef-b26a65a5965f" MIMETYPE="text/xml" SIZE="948" CREATED="2023-11-10T12:01:00+02:00" CHECKSUM="987049735baa85af6b0998079fc30df3" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/page1_alto.xml"/>
+            </file>
+            <file ID="uuid-9176fc73-f15c-4fc1-9cba-86837b150fc0" MIMETYPE="text/xml" SIZE="946" CREATED="2023-11-10T12:01:00+02:00" CHECKSUM="9618480b3b4466a8679e7f742293e471" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/page2_alto.xml"/>
+            </file>
+            <file ID="uuid-f00c5303-f951-4d3a-9ff9-25ea5a9c3c6b" MIMETYPE="text/xml" SIZE="946" CREATED="2023-11-10T12:01:00+02:00" CHECKSUM="2fd3dec88cead1d784895918fb6bb06b" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/page3_alto.xml"/>
+            </file>
+            <file ID="uuid-a7f7032b-fbba-4bf5-9729-8be327e897f7" MIMETYPE="text/xml" SIZE="946" CREATED="2023-11-10T12:01:00+02:00" CHECKSUM="930c2ea3505021d8bb0cd4ef8b7d7508" CHECKSUMTYPE="MD5">
+                <FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="./data/page4_alto.xml"/>
+            </file>
+        </fileGrp>
+    </fileSec>
+
+    <structMap ID="uuid-0241b6e1-0749-41f4-8108-59cbbf726f35" TYPE="PHYSICAL" LABEL="CSIP">
+        <div ID="uuid-4ad1d284-07c9-49ea-9686-0094b11ce13c" LABEL="representation_2">
+            <!-- ADMID points to mets/amdSec/digiprovMD/@ID -->
+            <div ID="uuid-fc6400ec-6115-4f65-8ea1-9ffe025d4f3f" LABEL="Metadata" ADMID="uuid-5c66e0d1-f480-492f-b9a3-c25060ea6830"/>
+            <div ID="uuid-afec0ac9-b892-42ad-bd54-9a77b5f02fc5" LABEL="Representations">
+                <!-- File pointers to file IDs in mets/fileSec/fileGrp[@USE="data"]/file/@ID -->
+                <div ID="uuid-1914741d-e543-4cb4-aa2f-8eb787f9b03b" TYPE="page" ORDER="1">
+                    <fptr FILEID="uuid-8867f1a5-2c00-4218-b7ef-b26a65a5965f"/>
+                </div>
+                <div ID="uuid-8c1d55fb-1f43-47b3-bf86-bf0e814c89d0" TYPE="page" ORDER="2">
+                    <fptr FILEID="uuid-9176fc73-f15c-4fc1-9cba-86837b150fc0"/>
+                </div>
+                <div ID="uuid-6ab4fd17-7870-4fdb-871e-e14c176e1863" TYPE="page" ORDER="3">
+                    <fptr FILEID="uuid-f00c5303-f951-4d3a-9ff9-25ea5a9c3c6b"/>
+                </div>
+                <div ID="uuid-cff93570-b637-4b3e-a1e4-62ad33600b5f" TYPE="page" ORDER="4">
+                    <fptr FILEID="uuid-a7f7032b-fbba-4bf5-9729-8be327e897f7"/>
+                </div>
+            </div>
+        </div>
+    </structMap>
+</mets>
