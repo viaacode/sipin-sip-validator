@@ -94,7 +94,7 @@ haObjId:987049735baa85af6b0998079fc30df3 a cryptographicHashFunctions:md5 ;
 haObj:99757a38731eb21418cd5836bc95d1e1 a bf:Identifier ;
     rdf:value "uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c" .
 
-haObjId:2cae6de8e67d853680bb34cddef30288 a bf:Title ;
+haObjId:fa8ea773536e7656493630c611a793cc a bf:Title ;
     rdfs:label "Newspaper title" .
 
 haObjId:BEZOEKERTOOL-CONTENT a bf:UsageAndAccessPolicy ;
@@ -487,7 +487,7 @@ haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
     bf:issuance "serial" ;
     bf:originDate "1892-01-01"^^edtf:EDTF ;
     bf:provisionActivity haObjId:{{publication_uri}} ;
-    bf:title haObjId:2cae6de8e67d853680bb34cddef30288 ;
+    bf:title haObjId:fa8ea773536e7656493630c611a793cc ;
     bf:usageAndAccessPolicy haObjId:BEZOEKERTOOL-CONTENT,
         haObjId:BEZOEKERTOOL-METADATA-ALL,
         haObjId:VIAA-INTRA_CP-CONTENT,
