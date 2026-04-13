@@ -252,7 +252,7 @@ haObjId:7ff3e75ce6aca348bc513ed3d5882946 a bf:Note ;
     rdfs:label "Bad" ;
     bf:noteType "condition" .
 
-haObjId:2cae6de8e67d853680bb34cddef30288 a bf:Title ;
+haObjId:fa8ea773536e7656493630c611a793cc a bf:Title ;
     rdfs:label "Newspaper title" .
 
 haObjId:{{agent_uri}} a bf:Person ;
@@ -591,7 +591,7 @@ haObjId:uuid-9f07a3eb-1edb-4119-a98e-83ec7fd8d61c a bf:Work,
     bf:subject haObjId:0832c1202da8d382318e329a7c133ea0,
         haObjId:b07dbaacb8d6858e7b09386a249b676d ;
     bf:summary haObjId:97d1c02dfa33bc353d4aa2448c224b63 ;
-    bf:title haObjId:2cae6de8e67d853680bb34cddef30288,
+    bf:title haObjId:fa8ea773536e7656493630c611a793cc,
         haObjId:01b19476c174b17916370088d5a1bc24 ;
     bf:usageAndAccessPolicy haObjId:BEZOEKERTOOL-CONTENT,
         haObjId:BEZOEKERTOOL-METADATA-ALL,

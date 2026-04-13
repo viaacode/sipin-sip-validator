@@ -320,7 +320,7 @@ WHERE {
             BIND(
                 IF(
                     BOUND(?mainTitle),
-                    iri(CONCAT(str(haObjId:), MD5(?mainTitle))),
+                    iri(CONCAT(str(haObjId:), MD5(concat(?mainTitle, "Title")))),
                     ?_null_5
                 )
             as ?mainTitle_iri)
