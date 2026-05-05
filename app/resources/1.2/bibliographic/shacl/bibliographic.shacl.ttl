@@ -436,7 +436,7 @@
         a sh:PropertyShape ;
         sh:path schema:position ;
         sh:minCount 1 ;
-        sh:severity sh:Violation ;
+        sh:severity sh:Warning ;
         sh:message """
         mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER attribute does not occur.
             Please check `mets/structMap[@LABEL='CSIP']/div/div[@LABEL='Representations']/div/@ORDER` This property is used to indicate the page number that this file represents."""@en ;
